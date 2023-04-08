@@ -5,7 +5,7 @@ div#logo {
     img {
         margin-top   : $logo_margin;
         margin-left  : $logo_margin;
-        margin-bottom: $logo_margin / 2;
+        margin-bottom: calc( $logo_margin / 2 );
     }
 
     img,

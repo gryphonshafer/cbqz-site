@@ -4,12 +4,12 @@ article {
         margin  : 4rem 0 2rem 0;
 
         $img_div_size: 440px;
-        padding-left : $img_div_size * 1.15;
-        min-height   : $img_div_size / 1.26;
+        padding-left : calc( $img_div_size * 1.15 );
+        min-height   : calc( $img_div_size / 1.26 );
 
         @media (max-width: 1060px) {
             padding-left : 0;
-            padding-top: $img_div_size / 1.26;
+            padding-top: calc( $img_div_size / 1.26 );
 
             h2{
                 margin-top: 4rem;
@@ -44,7 +44,7 @@ article {
             top     : 2.9rem;
 
             width : $img_div_size;
-            height: $img_div_size / 1.26;
+            height: calc( $img_div_size / 1.26 );
 
             background: radial-gradient(
                 ellipse at center,
@@ -56,11 +56,11 @@ article {
         }
 
         div.orb_large {
-            $div_size: $img_div_size / 5;
+            $div_size: calc( $img_div_size / 5 );
 
             position: absolute;
             z-index : 20;
-            left    : $img_div_size - $div_size * 1.5;
+            left    : calc( $img_div_size - $div_size * 1.5 );
             top     : 0;
 
             width : $div_size;
@@ -72,11 +72,11 @@ article {
         }
 
         div.orb_small {
-            $div_size: $img_div_size / 12;
+            $div_size: calc( $img_div_size / 12 );
 
             position: absolute;
             z-index : 20;
-            left    : $img_div_size - $div_size / 3;
+            left    : calc( $img_div_size - $div_size / 3 );
             top     : $div_size * 2;
 
             width : $div_size;
