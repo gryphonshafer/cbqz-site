@@ -1,0 +1,28 @@
+@media print {
+    div#logo,
+    nav,
+    header,
+    footer,
+    img.page_photo,
+    div.gallary {
+        display: none;
+    }
+
+    article {
+        padding    : 1rem;
+        margin-left: 0;
+        background : none;
+    }
+
+    * {
+        color: black;
+    }
+
+    a:link,
+    a:visited,
+    a:hover,
+    a:active {
+        text-decoration: none;
+        color: black;
+    }
+}

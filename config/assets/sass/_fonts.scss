@@ -1,0 +1,29 @@
+@use '../css/fonts/poppins';
+@use '../css/fonts/material-icons';
+
+:root {
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size  : 1rem;
+    line-height: 1.5rem;
+}
+
+article {
+    a.footnote,
+    a.reversefootnote {
+        vertical-align : super;
+        display        : inline-block;
+        font-size      : 0.85em;
+        margin         : 0 0.1em;
+        text-decoration: none;
+    }
+
+    a.footnote:hover,
+    a.reversefootnote:hover {
+        text-decoration: underline;
+    }
+}

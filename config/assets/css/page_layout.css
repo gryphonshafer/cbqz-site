@@ -1,0 +1,72 @@
+:root {
+    --logo_height  : 7rem;
+    --nav_width    : 10rem;
+    --header_height: 3.5rem;
+    --footer_height: 4.5rem;
+}
+
+body {
+    margin   : 0;
+    min-width: 325px;
+}
+
+div#logo,
+nav {
+    position: fixed;
+    left    : 0;
+}
+
+div#logo {
+    top   : 0;
+    width : var(--nav_width);
+    height: var(--logo_height);
+}
+
+nav {
+    top       : var(--logo_height);
+    width     : calc( var(--nav_width) - 2rem);
+    height    : calc( 100vh - var(--logo_height) - 1rem );
+    overflow-y: auto;
+    padding   : 0rem 1rem 1rem 1rem;
+}
+
+header,
+article,
+footer {
+    margin-left: var(--nav_width);
+}
+
+header {
+    height : calc( var(--header_height) - 2rem );
+    padding: 1rem;
+}
+
+article {
+    min-height: calc( 100vh - var(--header_height) - var(--footer_height) - 2rem );
+    padding   : 1rem 3rem;
+}
+
+footer {
+    height : calc( var(--footer_height) - 3rem );
+    padding: 1.5rem 2rem;
+}
+
+@media (max-width: 690px) {
+    header,
+    article,
+    footer {
+        margin-left: 0;
+    }
+
+    div#logo {
+        width   : auto;
+        height  : 3.5rem;
+        position: relative;
+    }
+}
+
+@media (max-width: 740px) {
+    img.page_photo {
+        display: none;
+    }
+}

@@ -1,0 +1,11 @@
+[% page.title = title %]
+
+<img class="page_photo" src="[% c.url_for( photos.shift ) %]">
+
+[% html %]
+
+<div class="gallary">
+    <img src="[% c.url_for( photos.shift ) %]">
+    <img src="[% c.url_for( photos.shift ) %]">
+    <img src="[% c.url_for( photos.shift ) %]">
+</div>

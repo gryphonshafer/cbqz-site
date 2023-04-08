@@ -1,0 +1,19 @@
+---
+preinclude : ../../omniframe/config/app.yaml
+default    :
+    omniframe    : ../../omniframe
+    libs         : ../../omniframe/lib
+    mojo_app_lib : CBQ::Control
+    mojolicious  :
+        secrets:
+            - gd824qfOpPOF6qUWya0QT0nU9U82JKVu
+        session:
+            cookie_name: cbq_site_session
+    bcrypt:
+        salt: 54XYZdnG4FjvcTJD
+    docs:
+        dir        : docs
+        home_type  : md
+        home_title : Christian Bible Quizzing
+        home_name  : CBQ Home
+optional_include: local/config.yaml

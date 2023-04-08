@@ -1,0 +1,70 @@
+@use 'colors';
+@use 'sass:color';
+
+button {
+    font-size       : 0.9em;
+    padding         : 0.7em 1.25em;
+    border-radius   : 0.4em;
+    background-color: transparent;
+    border-color    : color.adjust( colors.$light_text, $lightness: 30% ) !important;
+
+    &:hover {
+        background-color: #abcbf7;
+        border-color    : transparent !important;
+    }
+
+    &.colored {
+        color     : colors.$background;
+        border    : none;
+        padding   : calc( 0.7em + 1px ) calc( 1.25em + 1px );
+        background: linear-gradient(
+            45deg,
+            rgba(  50, 100, 255, 1 ) 0%,
+            rgba( 100, 150, 255, 1 ) 100%
+        );
+
+        &:hover {
+            background: linear-gradient(
+                225deg,
+                rgba(  50, 100, 255, 1 ) 0%,
+                rgba( 100, 150, 255, 1 ) 100%
+            );
+        }
+    }
+}
+
+a.button {
+    display         : inline-block;
+    font-size       : 0.9em;
+    padding         : calc( 0.7em - 2px ) 1.25em;
+    background-color: transparent;
+    border          : 1px solid;
+    border-color    : color.adjust( colors.$light_text, $lightness: 30% ) !important;
+    border-radius   : 0.4em;
+    text-decoration : none;
+    color           : colors.$dark_text;
+
+    &:hover {
+        background-color: #abcbf7;
+        border-color    : transparent !important;
+    }
+
+    &.colored {
+        color     : colors.$background;
+        border    : none;
+        padding   : calc( 0.7em - 1px ) calc( 1.25em + 1px );
+        background: linear-gradient(
+            45deg,
+            rgba(  50, 100, 255, 1 ) 0%,
+            rgba( 100, 150, 255, 1 ) 100%
+        );
+
+        &:hover {
+            background: linear-gradient(
+                225deg,
+                rgba(  50, 100, 255, 1 ) 0%,
+                rgba( 100, 150, 255, 1 ) 100%
+            );
+        }
+    }
+}

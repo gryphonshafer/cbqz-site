@@ -1,0 +1,60 @@
+$dark_text        : #18191f   !default;
+$light_text       : #3f434b   !default;
+$background       : white     !default;
+$lines            : lightgray !default;
+$footer_background: #0b0d17   !default;
+$article_gradient : linear-gradient(
+    90deg,
+    rgba( 218, 236, 247, 1 ) 0%,
+    rgba( 236, 246, 254, 1 ) 33%,
+    rgba( 189, 216, 236, 1 ) 100%
+) !default;
+
+$a_link   : blue !default;
+$a_visited: darkblue !default;
+$a_hover  : blue !default;
+$a_active : darkred !default;
+
+div#logo,
+nav,
+header,
+article {
+    color: $light_text;
+}
+
+div#logo,
+nav {
+    background-color: $background;
+    border-right: 1px solid $lines;
+}
+
+header,
+article {
+    background: $article_gradient;
+}
+
+footer {
+    color           : $background;
+    background-color: $footer_background;
+}
+
+a:link {
+    color: $a_link;
+}
+
+a:visited {
+    color: $a_visited
+}
+
+a:hover {
+    color: $a_hover;
+}
+
+a:active {
+    color: $a_active;
+}
+
+hr {
+    border: 0;
+    border-bottom: 1px dashed $light_text;
+}

@@ -1,0 +1,54 @@
+<div id="logo">
+    <img src="[% c.url_for('/logo/favicon-32x32.png') %]">
+    <span class="c">Christian</span>
+    <span class="bq">Bible Quizzing</span>
+    <a href="#menu" class="toggle-menu"><span class="material-icons">menu</span></a>
+</div>
+<header>
+    <a href="[% c.url_for('/international_open_championships.md') %]"
+        class="button colored">IOC Details</a>
+    <a href="https://forms.gle/HYwGESSGYmgjZpJc8" class="button">Reserve Your IOC Registration</a>
+</header>
+<article>
+    [% content %]
+</article>
+<nav id="menu">
+    <a href="#" class="toggle-menu"><span class="material-icons">menu</span></a>
+    [% BLOCK nav %]
+        <ul>
+            [% FOREACH node IN docs %]
+                <li>
+                    [% IF node.folder OR node.name %]
+                        [% IF node.href %]<a href="[% c.url_for( node.href ) %]"
+                            title="[% node.title OR node.folder OR node.name %]"
+                            [% IF c.url_for( node.href ) == c.req.url.to_abs.path %]
+                                class="current"
+                            [% END %]
+                        >[% END %][%
+                            node.folder OR node.name
+                        %][% IF node.href %]</a>[% END %]
+                    [% END %]
+                    [% IF node.nodes %]
+                        [% PROCESS nav docs = node.nodes %]
+                    [% END %]
+                </li>
+            [% END %]
+        </ul>
+    [% END %]
+    [% PROCESS nav docs = docs_nav %]
+</nav>
+<footer>
+    <span class="copy">&copy; Christian Bible Quizzing (CBQ)</span>
+
+    [% FOREACH node IN docs_nav %]
+        [% IF node.href %]
+            <a href="[% c.url_for( node.href ) %]"
+                title="[% node.title OR node.folder OR node.name %]"
+            >[%
+                node.folder OR node.name
+            %]</a>
+        [% END %]
+    [% END %]
+
+    <a href="mailto:q@cbqz.org">Contact</a>
+</footer>

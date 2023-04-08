@@ -1,0 +1,46 @@
+article {
+    div.image_text {
+        margin: 4rem 0;
+
+        h2 {
+            vertical-align: top;
+            display       : inline-block;
+            width         : 40%;
+            margin        : 0;
+        }
+        p {
+            margin     : 0;
+            display    : inline-block;
+            width      : 50%;
+            margin-left: 8%;
+            font-style : italic;
+
+            span {
+                display    : block;
+                text-align : right;
+                font-weight: 700;
+            }
+        }
+
+        @media (max-width: 670px) {
+            h2,
+            p {
+                display: block;
+                width: 100%;
+            }
+
+            h2 {
+                margin-bottom: 1rem;
+            }
+
+            p {
+                margin-left: 0;
+            }
+        }
+
+        img {
+            margin-top: 1rem;
+            width: 100%;
+        }
+    }
+}

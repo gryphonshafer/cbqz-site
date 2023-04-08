@@ -1,0 +1,126 @@
+[% page.title = title %]
+
+<div class="h1_img_side">
+    <h1>
+        International<br>
+        Open<br>
+        Championships
+    </h1>
+    <p>
+        <i>Tue-Thr, July 11-13, 2023</i><br>
+        <a href="https://spu.edu">Seattle Pacific University</a><br>
+        Seattle, Washington USA
+    </p>
+    <a href="[% c.url_for('/international_open_championships.md') %]"
+        class="button colored">Discover More About IOC</a>
+
+    <img src="[% c.url_for( photos.shift ) %]">
+    <div class="hash"></div>
+    <div class="orb"></div>
+    <div class="dots"></div>
+</div>
+
+<div class="white">
+    <h2>How Bible Quizzing Works</h2>
+
+    <div>
+        <img src="[% c.url_for('/svg/laptop.svg') %]">
+        <h3>Connect</h3>
+        <p>
+            Find and contact other quizzers and Quizzing leadership in your area.
+            <a href="mailto:q@cbqz.org">Contact us</a> for help and introductions.
+        </p>
+    </div>
+
+    <div>
+        <img src="[% c.url_for('/svg/bible.svg') %]">
+        <h3>Practice</h3>
+        <p>
+            Memorize the scheduled material and practice with your teammates.
+            Practices include study time, quoting, and quizzing.
+        </p>
+    </div>
+
+    <div>
+        <img src="[% c.url_for('/svg/board.svg') %]">
+        <h3>Participate</h3>
+        <p>
+            When it's time for the quiz meet, show up and have fun. Meet team
+            from around your area and across the world.
+        </p>
+    </div>
+</div>
+
+<div class="feature">
+    <img src="[% c.url_for( photos.shift ) %]">
+    <div class="dots"></div>
+    <div class="orb_large"></div>
+    <div class="orb_small"></div>
+
+    <h2>What is Bible Quizzing?</h2>
+    <p>
+        Bible Quizzing is a Christian sport in which teams of participants
+        compete on Bible memorization in a context that requires a combination
+        of speed, accuracy, and strategy and a culture that inspires
+        collaboration, fellowship, and mutual encouragement.
+    </p>
+    <p>
+        At its core, Quizzing has always been about writing God's Word on
+        hearts. By appealing to the transformational power of Scripture,
+        Quizzing is the catalyst that changes many lives across the world.
+        Quizzing thrives in several countries beginning with its origin in
+        the United States and Canada but has spread to the Dominican Republic,
+        Jordan, and far beyond.
+    </p>
+    <p>
+        Bible Quizzing is a powerful ministry that claims God's promise
+        that no word of God will return empty.
+    </p>
+    <!-- <button>Connect to Learn More</button> -->
+</div>
+
+<div class="counts">
+    <h2>Bible Quizzing by the Numbers</h2>
+    <p>The upcoming International Open Championships meet will be epic.</p>
+
+    <div class="hexes">
+        <div><span>72</span> Countries</div>
+        <div><span>1,138+</span> Quizzers</div>
+        <div><span>490</span> Clothes Pins</div>
+        <div><span>1,400+</span> Verses</div>
+    </div>
+</div>
+
+<div class="image_text">
+    <h2>Encourage the most people to memorize the most verses.</h2>
+    <p>
+        <sup>5</sup>Love the Lord your God with all your heart and with all your
+        soul and with all your strength. <sup>6</sup>These commandments that I
+        give you today are to be on your hearts. <sup>7</sup>Impress them on
+        your children. Talk about them when you sit at home and when you walk
+        along the road, when you lie down and when you get up.
+        <span>Deuteronomy 6:5-7</span>
+    </p>
+    [%
+        image_numbers = [ 0, 1 ];
+        image_number = image_numbers.randomize.first;
+    %]
+    <img src="[% c.url_for('/graphics/studying_' _ image_number _ '.png') %]">
+</div>
+
+<div class="closing_call">
+    <h2>Reserve Your Registration</h2>
+    <p>
+        Official registration for the International Open Championships (IOC)
+        begins Monday, May 1, 2023. Between now and then, you can reserve your
+        registration, which grants you access to travel subidies and discounts.
+    </p>
+    <p>
+        Don't wait. Be sure to reserve your registration today!
+    </p>
+    <a href="[% c.url_for('/international_open_championships.md') %]"
+        class="button colored">Discover More About IOC</a>
+    <img src="[% c.url_for( photos.shift ) %]">
+    <div class="orb_left"></div>
+    <div class="orb_right"></div>
+</div>

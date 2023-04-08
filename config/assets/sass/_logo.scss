@@ -1,0 +1,55 @@
+$logo_margin   : 1rem         !default;
+$logo_name_size: $logo_margin !default;
+
+div#logo {
+    img {
+        margin-top   : $logo_margin;
+        margin-left  : $logo_margin;
+        margin-bottom: $logo_margin / 2;
+    }
+
+    img,
+    span.c,
+    span.bq {
+        margin-left: $logo_margin;
+        display    : block;
+    }
+
+    span.c,
+    span.bq {
+        text-transform: uppercase;
+        font-size     : $logo_name_size;
+        line-height   : $logo_name_size;
+    }
+
+    span.bq {
+        font-weight: 700;
+    }
+
+    a.toggle-menu {
+        display: none;
+    }
+
+    @media (max-width: 690px) {
+        border          : none;
+        background-color: transparent;
+
+        img {
+            display     : inline;
+            margin-left : 1rem;
+            margin-right: 0.5rem;
+        }
+
+        span.c,
+        span.bq {
+            display    : inline;
+            margin-left: 0;
+        }
+
+        a.toggle-menu {
+            display: inline;
+            float  : right;
+            margin : 1rem;
+        }
+    }
+}

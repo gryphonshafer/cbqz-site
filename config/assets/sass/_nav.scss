@@ -1,0 +1,107 @@
+@use 'colors';
+@use 'sass:color';
+
+$nav_primary_size        : 0.9rem;
+$nav_secondary_size      : 0.8rem;
+$nav_line_height_multiple: 1.2;
+
+nav {
+    ul {
+        margin: 0;
+    }
+
+    li {
+        list-style   : none;
+        font-size    : $nav_secondary_size;
+        line-height  : $nav_secondary_size * $nav_line_height_multiple;
+        margin-top   : $nav_secondary_size;
+        margin-bottom: $nav_secondary_size;
+        margin-left  : 1.2em;
+        text-indent  : -1.2em;
+    }
+
+    ul li ul li::before {
+        content: "\2014";
+        color  : colors.$lines;
+    }
+
+    & > ul > li {
+        border-top : 1px solid colors.$lines;
+        padding-top: $nav_primary_size;
+        font-size  : $nav_primary_size;
+        line-height: $nav_primary_size * $nav_line_height_multiple;
+        margin-left: 0;
+        text-indent: 0;
+    }
+
+    & > ul > li:first-child {
+        margin-top: 0;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:link,
+    a:visited {
+        color: color.adjust( colors.$dark_text, $blue: 120 );
+    }
+
+    a:hover,
+    a:active {
+        text-decoration: underline;
+    }
+
+    a:hover {
+        color: colors.$a_hover;
+    }
+
+    a:active {
+        color: colors.$a_active;
+    }
+
+    a.current {
+        text-decoration: underline;
+        color          : colors.$a_active;
+    }
+
+    a.toggle-menu {
+        display: none;
+    }
+}
+
+@media (max-width: 690px) {
+    div#logo {
+        border-bottom: 1px solid colors.$lines;
+    }
+
+    nav {
+        position                 : fixed;
+        top                      : 0;
+        left                     : auto;
+        right                    : 0;
+        height                   : auto;
+        border-left              : 1px solid colors.$lines;
+        border-bottom            : 1px solid colors.$lines;
+        border-bottom-left-radius: 1rem;
+
+        a.toggle-menu {
+            display     : block;
+            margin-top  : 1rem;
+            margin-right: -1px;
+            float       : right;
+        }
+
+        ul:not(:first-child) {
+            margin-top: 3.5rem;
+        }
+    }
+
+    nav#menu {
+        display: none;
+    }
+
+    nav#menu:target {
+        display: block;
+    }
+}

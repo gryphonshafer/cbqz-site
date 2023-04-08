@@ -1,0 +1,23 @@
+@use 'colors';
+
+article {
+    div.white {
+        background-color: colors.$background;
+        padding         : 2rem;
+        border-radius   : 1rem;
+        text-align      : center;
+
+        & > div {
+            vertical-align: top;
+            display       : inline-block;
+            width         : 30%;
+            margin        : 0 1%;
+            max-width     : 30rem;
+
+            @media (max-width: 920px) {
+                display: inline;
+                margin : 0;
+            }
+        }
+    }
+}

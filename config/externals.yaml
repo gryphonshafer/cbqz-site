@@ -1,0 +1,27 @@
+---
+google_fonts:
+    dest:
+        fonts : static/fonts
+        css   : config/assets/css/fonts
+    fonts:
+        'Poppins':
+            variants:
+                - 200
+                - 200italic
+                - regular
+                - italic
+                - 700
+                - 700italic
+            subsets:
+                - latin
+                - latin-ext
+            formats:
+                - woff2
+                - woff
+    icons:
+        types:
+            - 'Material Icons'
+            - 'Material Icons Outlined'
+        formats:
+            - woff2
+            - woff

@@ -1,2 +1,19 @@
-# cbqz-site
-CBQ Web Site
+# CBQ Web Site
+
+Web site, documents, and tools in support of CBQ.
+
+## Setup
+
+To setup an instance of the web site, first install and setup the
+[Omniframe](https://github.com/gryphonshafer/omniframe) project as per its
+instructions. Then clone this project to a desired location. Typically, this is
+in parallel to the `omniframe` project root directory.
+
+Change directory to the project root directory, and run the following:
+
+    cpanm -n -f --installdeps .
+
+## Run
+
+To run the web site application, follow the instructions in the `~/app.psgi`
+file within the project's root directory.
