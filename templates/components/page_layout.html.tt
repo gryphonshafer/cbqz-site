@@ -40,15 +40,17 @@
 <footer>
     <span class="copy">&copy; Christian Bible Quizzing (CBQ)</span>
 
-    [% FOREACH node IN docs_nav %]
-        [% IF node.href %]
-            <a href="[% c.url_for( node.href ) %]"
-                title="[% node.title OR node.folder OR node.name %]"
-            >[%
-                node.folder OR node.name
-            %]</a>
+    <div class="links">
+        [% FOREACH node IN docs_nav %]
+            [% IF node.href %]
+                <a href="[% c.url_for( node.href ) %]"
+                    title="[% node.title OR node.folder OR node.name %]"
+                >[%
+                    node.folder OR node.name
+                %]</a>
+            [% END %]
         [% END %]
-    [% END %]
 
-    <a href="mailto:q@cbqz.org">Contact</a>
+        <a href="mailto:q@cbqz.org">Contact</a>
+    </div>
 </footer>

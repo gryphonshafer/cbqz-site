@@ -15,8 +15,18 @@ footer {
     span.copy {
         float: right;
 
-        @media (max-width: 500px) {
+        @media (max-width: 890px) {
             display: none;
+        }
+    }
+
+    @media (max-width: 500px) {
+        div.links {
+            display: none;
+        }
+
+        span.copy {
+            display: inline;
         }
     }
 

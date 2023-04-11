@@ -23,31 +23,33 @@
 <div class="white">
     <h2>How Bible Quizzing Works</h2>
 
-    <div>
-        <img src="[% c.url_for('/svg/laptop.svg') %]">
-        <h3>Connect</h3>
-        <p>
-            Find and contact other quizzers and Quizzing leadership in your area.
-            <a href="mailto:q@cbqz.org">Contact us</a> for help and introductions.
-        </p>
-    </div>
+    <div class="flex_container">
+        <div class="flex_item">
+            <img src="[% c.url_for('/svg/laptop.svg') %]">
+            <h3>Connect</h3>
+            <p>
+                Find and contact other quizzers and Quizzing leadership in your area.
+                <a href="mailto:q@cbqz.org">Contact us</a> for help and introductions.
+            </p>
+        </div>
 
-    <div>
-        <img src="[% c.url_for('/svg/bible.svg') %]">
-        <h3>Practice</h3>
-        <p>
-            Memorize the scheduled material and practice with your teammates.
-            Practices include study time, quoting, and quizzing.
-        </p>
-    </div>
+        <div class="flex_item">
+            <img src="[% c.url_for('/svg/bible.svg') %]">
+            <h3>Practice</h3>
+            <p>
+                Memorize the scheduled material and practice with your teammates.
+                Practices include study time, quoting, and quizzing.
+            </p>
+        </div>
 
-    <div>
-        <img src="[% c.url_for('/svg/board.svg') %]">
-        <h3>Participate</h3>
-        <p>
-            When it's time for the quiz meet, show up and have fun. Meet team
-            from around your area and across the world.
-        </p>
+        <div class="flex_item">
+            <img src="[% c.url_for('/svg/board.svg') %]">
+            <h3>Participate</h3>
+            <p>
+                When it's time for the quiz meet, show up and have fun. Meet team
+                from around your area and across the world.
+            </p>
+        </div>
     </div>
 </div>
 
