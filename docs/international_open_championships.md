@@ -53,9 +53,13 @@ There's no official age range or limit, though IOC leadership feels the meet is 
 
 Yes. We’re serious. We fully expect there to be enough registrations to support an “adult division”. This will be a separate division from the “main event” youth Bible Quizzing division.
 
+> What will be the material for the IOC meet?
+
+We expect the material label for IOC will be: "Acts 1-19 (1) Matthew 1-13; 1 Timothy; 2 Timothy; Titus (1) NASB NIV BSB". (See the [the CBQ rule book](rules/CBQ_rule_book.md) for an explaiation for what a material label is and means.) 
+
 > How much will IOC cost per quizzer?
 
-We honestly don’t know. Much of the costs of putting on IOC are based on the number of quizzers who participate and travel subsidy needs. We are doing everything we can to keep costs as low as possible.
+We honestly don’t know. We know it will cost less than the cost to host the meet at SPU, since we have a sizable grant to help bring down costs per quizzer/team. However, we're not yet sure how far down we can bring the costs, and this is why we're deploying this multi-phased approach. Much of the costs of putting on IOC are based on the number of quizzers who participate and their travel subsidy needs.
 
 > OK, should I do right now then?
 
