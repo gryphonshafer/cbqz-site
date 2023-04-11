@@ -5,7 +5,7 @@ article {
         background-color: colors.$background;
         border-radius   : 1rem;
         text-align      : center;
-        padding: 1rem;
+        padding         : 2rem 1rem 1rem 1rem;
 
         div.flex_container {
             display        : flex;
@@ -13,9 +13,9 @@ article {
             justify-content: space-evenly;
 
             div.flex_item {
-                flex: 0 1 auto;
-                width : 270px;
-                padding: 1rem;
+                flex     : 0 1 auto;
+                max-width: 220px;
+                padding  : 1rem;
             }
         }
     }
