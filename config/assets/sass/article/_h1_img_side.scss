@@ -6,6 +6,7 @@ article {
         padding-right : calc( $img_div_size * 1.3 );
         position      : relative;
         padding-bottom: 1rem;
+        text-align    : center;
 
         @media (max-width: 1060px) {
             min-height    : $img_div_size;
