@@ -39,18 +39,12 @@
 </nav>
 <footer>
     <span class="copy">&copy; Christian Bible Quizzing (CBQ)</span>
-
     <div class="links">
-        [% FOREACH node IN docs_nav %]
-            [% IF node.href %]
-                <a href="[% c.url_for( node.href ) %]"
-                    title="[% node.title OR node.folder OR node.name %]"
-                >[%
-                    node.folder OR node.name
-                %]</a>
-            [% END %]
-        [% END %]
-
-        <a href="mailto:q@cbqz.org">Contact</a>
+        <a href="mailto:q@cbqz.org"><img
+            src="[% c.url_for('/svg/mail.svg') %]"></a>
+        <a href="https://twitter.com/bible_quizzing"><img
+            src="[% c.url_for('/svg/twitter.svg') %]"></a>
+        <a href="https://www.facebook.com/Christian-Bible-Quizzing-111992838545191"><img
+            src="[% c.url_for('/svg/facebook.svg') %]"></a>
     </div>
 </footer>

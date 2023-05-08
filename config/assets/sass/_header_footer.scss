@@ -12,35 +12,34 @@ footer {
     font-size: 0.8rem;
     color: colors.$lines;
 
-    span.copy {
-        float: right;
+    div.links {
+        img {
+            height    : calc( var(--footer_height) - 1rem );
+            margin-top: -1rem;
 
-        @media (max-width: 890px) {
-            display: none;
+            &:hover {
+                filter: drop-shadow(0px 0px 1rem white);
+            }
         }
     }
 
-    @media (max-width: 500px) {
-        div.links {
-            display: none;
-        }
+    span.copy {
+        float: right;
+    }
 
+    @media (max-width: 520px) {
         span.copy {
-            display: inline;
+            display: none;
         }
     }
 
     a {
         text-decoration: none;
-        padding-right  : 1rem;
-        border-right   : 1px solid colors.$lines;
         margin-right   : 1rem;
     }
 
     a:last-child {
-        padding-right: 0;
-        border-right : 0;
-        margin-right : 0;
+        margin-right: 0;
     }
 
     a:link {
