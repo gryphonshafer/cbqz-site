@@ -82,14 +82,16 @@
 </div>
 
 <div class="counts">
-    <h2>Bible Quizzing by the Numbers</h2>
-    <p>The upcoming International Open Championships meet will be epic.</p>
+    <h2>Bible Quizzing Contact and Social Media</h2>
+    <p>You can follow, engage, and communicate with Bible Quizzing through the following:</p>
 
     <div class="hexes">
-        <div><span>72</span> Countries</div>
-        <div><span>1,138+</span> Quizzers</div>
-        <div><span>490</span> Clothes Pins</div>
-        <div><span>1,400+</span> Verses</div>
+        <div><a href="mailto:q@cbqz.org"><img
+            src="[% c.url_for('/svg/mail.svg') %]"></a></div>
+        <div><a href="https://twitter.com/bible_quizzing"><img
+            src="[% c.url_for('/svg/twitter.svg') %]"></a></div>
+        <div><a href="https://www.facebook.com/Christian-Bible-Quizzing-111992838545191"><img
+            src="[% c.url_for('/svg/facebook.svg') %]"></a></div>
     </div>
 </div>
 
@@ -108,6 +110,18 @@
         image_number = image_numbers.randomize.first;
     %]
     <img src="[% c.url_for('/graphics/studying_' _ image_number _ '.png') %]">
+</div>
+
+<div class="counts">
+    <h2>Bible Quizzing by the Numbers</h2>
+    <p>The upcoming International Open Championships meet will be epic.</p>
+
+    <div class="hexes">
+        <div><span>72</span> Countries</div>
+        <div><span>1,138+</span> Quizzers</div>
+        <div><span>490</span> Clothes Pins</div>
+        <div><span>1,400+</span> Verses</div>
+    </div>
 </div>
 
 <div class="closing_call">

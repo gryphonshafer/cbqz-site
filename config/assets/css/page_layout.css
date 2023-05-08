@@ -5,6 +5,10 @@
     --footer_height: 4.5rem;
 }
 
+::selection {
+    background-color: lightblue;
+}
+
 body {
     margin   : 0;
     min-width: 325px;
