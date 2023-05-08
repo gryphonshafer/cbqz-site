@@ -25,13 +25,13 @@ A quiz’s material also contains a thesaurus with an entry for each word dedupl
 
 A quiz is a single match between a set of teams, **typically though not always 3**. Each team consists of **between 1 to 3 quizzers**. Each quiz contains a set of *queries*. A query contains a *prompt* and ideal *reply*, both of which are derived from the material. Each quiz is governed by a *quiz magistrate (QM)* who is ultimately responsible for the fair and timely conduct of the quiz. The QM may choose to delegate a portion of their responsibilities to other officials.
 
-Quizzers sits in a row of chairs facing the audience and officials table. An officials table occupies space between the quizzers and the audience. The officials sits at the officials table facing the quizzers.
+Quizzers sit in a row of chairs facing the audience and officials’ table. An officials’ table occupies space between the quizzers and the audience. The officials sit at the officials table facing the quizzers.
 
 Teams may but are not required to designate a coach for each quiz. Designated coaches sit in the front row of the audience.
 
 ### 2.1. Query Process
 
-For each query in the quiz, the QM follows the following process.
+For each query in the quiz, the QM follows the following process:
 
 #### 2.1.1. Announcement
 
@@ -57,7 +57,7 @@ Each query in a quiz has a unique identifier consisting of a number and a letter
 
 All teams are eligible to trigger on query 1A. When a QM rules a quizzer’s response to a query incorrect, that quizzer’s team is ineligible to trigger on any following query with the same numerical component in their identifier. If all teams are ineligible, the QM will treat the next query as if the previous query was ruled correct.
 
-The quiz ends immediately prior to the query identifier’s number incrementing beyond **the product of 4 and the number of teams in the quiz** when there are no tied scores. For example, a quiz with 3 teams ends immediately prior to query “13A” should there be no tied scores.
+The quiz ends immediately prior to the query identifier’s number incrementing beyond **the product of 4 and the number of teams in the quiz**. For example, a quiz with 3 teams ends immediately prior to query “13A”.
 
 ### 2.3. Query Types
 
@@ -133,7 +133,7 @@ For example, a quizzer can fuse a phrase base subtype with either the synonymous
 
 Queries with the same numerical identifier have the same base subtype and translation. So for the purpose of query base subtype selection, consider only numerical identifiers.
 
-In every quiz, excluding any necessary breaking of ties, each numerically identified query has a base subtype based on a sequential flow through all base subtypes in order, then randomized. For example, in a 3-team quiz with 12 numerical identified queries, the pre-randomized base subtype set is: PCQFPCQFPCQF.
+In every quiz, each numerically identified query has a base subtype based on a sequential flow through all base subtypes in order, then randomized. For example, in a 3-team quiz with 12 numerical identified queries, the pre-randomized base subtype set is: PCQFPCQFPCQF.
 
 Each numerically identified query has a translation based on the randomized set of translations from a quiz’s material, then sequentially repeated. For example, if a quiz’s material contains translations “A”, “B”, and “C” in randomized order “CAB”, then in a 2-team quiz, the set of numerical identified queries have the translation sequence: CABCABCA.
 
@@ -149,7 +149,7 @@ Mispronounced words the QM unambiguously understands to be correct the QM will j
 
 #### 2.5.1. Context
 
-On all queries with base subtypes chapter reference, quote, and finish, the QM must count a quizzer immediately incorrect if they should fall out of context when responding. A quizzer is out context when the quizzer says any **2-word or longer** globally unique phrase from the material where **at least 1 word** of the phrase is outside the context of the query. Context for a chapter reference query is the chapter from which the query originates. Context for a quote and a finish query is the verse from which the query originates.
+On all queries with base subtypes chapter reference, quote, and finish, the QM must count a quizzer immediately incorrect if they should fall out of context when responding. A quizzer is out of context when the quizzer says any **2-word or longer** globally unique phrase from the material where **at least 1 word** of the phrase is outside the context of the query. Context for a chapter reference query is the chapter from which the query originates. Context for a quote and a finish query is the verse from which the query originates.
 
 If a quizzer selects the add a verse subtype, context will increase to include that verse in the case of a quote or finish base subtype query or the whole of the next chapter if the added verse is in the next chapter.
 
@@ -161,7 +161,7 @@ The QM may solicit input from any source the QM feels useful to judge the appeal
 
 The QM must then provide a ruling on the appeal, an explanation of the ruling, including answering any follow-up questions any participants may ask, and a description of how the quiz will be altered to integrate the ruling. The QM’s ruling on the appeal is limited only to correcting violations of rules from the rule book; however, it is not limited to any rationales or other input received during the appeal process.
 
-The QM then asks for consensus of the coaches. If there is not a consensus, the officials and coaches confer for no longer than **3 minutes**. The QM calls in the meet director to issue the judgement should any coach request it at any time during this period. Should no coach request the meet director and the conference period end without consensus, the QM issues the judgement. If the coaches are unanimous, that position overrides the QM.
+The QM then asks for consensus of the coaches. If there is not a consensus, the officials and coaches confer for no longer than **3 minutes**. The QM calls in the meet director to issue the judgment should any coach request it at any time during this period. Should no coach request the meet director and the conference period end without consensus, the QM issues the judgment. If the coaches are unanimous, that position overrides the QM.
 
 A team may not call for an appeal in a quiz after their second declined appeal in that quiz.
 
