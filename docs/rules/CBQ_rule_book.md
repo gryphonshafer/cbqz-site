@@ -47,6 +47,8 @@ Should there be no trigger indication by the end of the QM reading the prompt, t
 
 If a quizzer triggered prior to the QM calling the close of trigger eligibility, the QM simultaneously starts a silent **40-second** countdown timer and calls the name of the quizzer who was first to trigger an indication of their desire to respond.
 
+The called quizzer may decide to forfeit the query by sitting in their chair should they have previously stood or by voicing their decision.
+
 #### 2.1.4. Response and Ruling
 
 For the purpose of judging the *response* and rendering a ruling, the QM considers everything the quizzer says that the QM can audibly understand. During the response phase, the quizzer is either: not yet correct, correct, or incorrect. The moment the QM judges the quizzer correct or incorrect, the QM pronounces such.
