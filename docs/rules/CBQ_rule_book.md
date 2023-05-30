@@ -112,11 +112,11 @@ If the quizzer calls for an “open-book” subtype, the quizzer may then open a
 
 ##### 2.3.2.4. With Reference (R)
 
-If the quizzer calls for the “with reference” subtype (or simply “reference”), the QM requires the quizzer provide a full reference including book, chapter, and verse number to be counted correct. The QM only considers the first full reference the quizzer provides.
+If the quizzer calls for the “with reference” subtype, the QM requires the quizzer provide a full reference including book, chapter, and verse number to be counted correct. The QM only considers the first full reference the quizzer provides.
 
 ##### 2.3.2.5. Add a Verse (A)
 
-If the quizzer calls to “add a verse” (or simply “add”), the single verse source is expanded by 1 additional verse, the immediate next verse. It is invalid for a quizzer to call “add a verse” for the last verse in any book. If the quizzer additionally calls for “with reference”, the reference they provide must contain both verses.
+If the quizzer calls to “add a verse”, the single verse source is expanded by 1 additional verse, the immediate next verse. It is invalid for a quizzer to call “add a verse” for the last verse in any book. If the quizzer additionally calls for “with reference”, the reference they provide must contain both verses.
 
 #### 2.3.3. Type Matrix
 
@@ -230,7 +230,7 @@ Team positions for each quiz are determined at the end of a quiz using the follo
 1. Total team score
 2. Total bonus team points
 3. First correct response
-4. First trigger
+4. First trigger resulting in a correct or incorrect ruling
 5. Random
 
 ## 3. Meets
