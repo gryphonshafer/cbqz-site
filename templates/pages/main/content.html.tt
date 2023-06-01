@@ -4,7 +4,7 @@
 
 [% html %]
 
-<div class="gallary">
+<div class="gallery">
     <img src="[% c.url_for( photos.shift ) %]">
     <img src="[% c.url_for( photos.shift ) %]">
     <img src="[% c.url_for( photos.shift ) %]">

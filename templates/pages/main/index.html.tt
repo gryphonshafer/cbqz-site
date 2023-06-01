@@ -133,11 +133,9 @@
     <p>
         <a href="[% c.url_for('/international_open_championships.md') %]"
             class="button colored">Discover More About IOC</a>
-    </p>
-    <p>
+        <br>
         <a href="/files/ioc_registration.pdf" class="button">Adobe PDF Registration Form File</a>
-    </p>
-    <p>
+        <br>
         <a href="/files/ioc_registration.docx" class="button">Microsoft Word Registration Form File</a>
     </p>
 

@@ -37,6 +37,7 @@ a.button {
     display         : inline-block;
     font-size       : 0.9em;
     padding         : calc( 0.7em - 2px ) 1.25em;
+    margin          : 0.2em 0;
     background-color: transparent;
     border          : 1px solid;
     border-color    : color.adjust( colors.$light_text, $lightness: 30% ) !important;
