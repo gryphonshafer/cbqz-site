@@ -125,17 +125,22 @@
 </div>
 
 <div class="closing_call">
-    <h2>Reserve Your Registration</h2>
+    <h2>Register for IOC Today!</h2>
     <p>
         Official registration for the International Open Championships (IOC)
-        begins Monday, May 1, 2023. Between now and then, you can reserve your
-        registration, which grants you access to travel subidies and discounts.
+        is open now! Don't wait. Be sure to send in your registration ASAP.
     </p>
     <p>
-        Don't wait. Be sure to reserve your registration today!
+        <a href="[% c.url_for('/international_open_championships.md') %]"
+            class="button colored">Discover More About IOC</a>
     </p>
-    <a href="[% c.url_for('/international_open_championships.md') %]"
-        class="button colored">Discover More About IOC</a>
+    <p>
+        <a href="/files/ioc_registration.pdf" class="button">Adobe PDF Registration Form File</a>
+    </p>
+    <p>
+        <a href="/files/ioc_registration.docx" class="button">Microsoft Word Registration Form File</a>
+    </p>
+
     <img src="[% c.url_for( photos.shift ) %]">
     <div class="orb_left"></div>
     <div class="orb_right"></div>

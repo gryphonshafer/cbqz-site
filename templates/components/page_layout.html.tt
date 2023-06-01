@@ -7,7 +7,8 @@
 <header>
     <a href="[% c.url_for('/international_open_championships.md') %]"
         class="button colored">IOC Details</a>
-    <a href="https://forms.gle/HYwGESSGYmgjZpJc8" class="button">Reserve Your IOC Registration</a>
+    <a href="[% c.url_for('/files/ioc_registration.pdf') %]" class="button">PDF File</a>
+    <a href="[% c.url_for('/files/ioc_registration.docx') %]" class="button">Word File</a>
 </header>
 <article>
     [% content %]
