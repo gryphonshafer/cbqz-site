@@ -1,3 +1,5 @@
+[% page.rss = c.url_for('/iq.rss') %]
+
 <div id="logo">
     <img src="[% c.url_for('/logo/favicon-32x32.png') %]" width="32" height="32">
     <span class="c">Christian</span>
@@ -6,9 +8,8 @@
 </div>
 <header>
     <a href="[% c.url_for('/international_open_championships.md') %]"
-        class="button colored">IOC Details</a>
-    <a href="[% c.url_for('/files/ioc_registration.pdf') %]" class="button">PDF File</a>
-    <a href="[% c.url_for('/files/ioc_registration.docx') %]" class="button">Word File</a>
+        class="button colored">Discover More About IOC</a>
+    <a href="[% c.url_for('/slack') %]" class="button">Join Our Slack Forum</a>
 </header>
 <article>
     [% content %]
@@ -42,10 +43,17 @@
     <span class="copy">&copy; Christian Bible Quizzing (CBQ)</span>
     <div class="links">
         <a href="mailto:q@cbqz.org"><img
+            alt="q@cbqz.org"
             src="[% c.url_for('/svg/mail.svg') %]"></a>
         <a href="https://twitter.com/bible_quizzing"><img
+            alt="Twitter"
             src="[% c.url_for('/svg/twitter.svg') %]"></a>
         <a href="https://www.facebook.com/Christian-Bible-Quizzing-111992838545191"><img
+            alt="Facebook"
             src="[% c.url_for('/svg/facebook.svg') %]"></a>
+        <a href="[% c.url_for('/iq') %]"><img
+            alt="Inside Quizzing"
+            style="border-radius: 10px; height: 42px"
+            src="[% c.url_for('/svg/rss.svg') %]"></a>
     </div>
 </footer>

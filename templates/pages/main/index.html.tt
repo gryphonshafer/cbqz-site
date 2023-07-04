@@ -87,11 +87,18 @@
 
     <div class="hexes">
         <div><a href="mailto:q@cbqz.org"><img
+            alt="q@cbqz.org"
             src="[% c.url_for('/svg/mail.svg') %]"></a></div>
         <div><a href="https://twitter.com/bible_quizzing"><img
+            alt="Twitter"
             src="[% c.url_for('/svg/twitter.svg') %]"></a></div>
         <div><a href="https://www.facebook.com/Christian-Bible-Quizzing-111992838545191"><img
+            alt="Facebook"
             src="[% c.url_for('/svg/facebook.svg') %]"></a></div>
+        <div><a href="[% c.url_for('/iq') %]"><img
+            alt="Inside Quizzing"
+            style="border-radius: 20px"
+            src="[% c.url_for('/svg/rss.svg') %]"></a></div>
     </div>
 </div>
 
@@ -114,29 +121,26 @@
 
 <div class="counts">
     <h2>Bible Quizzing by the Numbers</h2>
-    <p>The upcoming International Open Championships meet will be epic.</p>
+    <p>Bible Quizzing exists in many forms throughout the world today.</p>
 
     <div class="hexes">
-        <div><span>72</span> Countries</div>
-        <div><span>1,138+</span> Quizzers</div>
-        <div><span>490</span> Clothes Pins</div>
-        <div><span>1,400+</span> Verses</div>
+        <div><span>&gt;72</span> Countries</div>
+        <div><span>&gt;10k</span> Quizzers</div>
+        <div><span>&gt;490</span> Clothes Pins</div>
+        <div><span>&gt;1M</span> Verses</div>
     </div>
 </div>
 
 <div class="closing_call">
-    <h2>Register for IOC Today!</h2>
+    <h2>IOC at SPU July 11-13</h2>
     <p>
-        Official registration for the International Open Championships (IOC)
-        is open now! Don't wait. Be sure to send in your registration ASAP.
+        The International Open Championships (IOC) at Seattle Pacific
+        University (SPU) runs Tuesday, July 11 through Thursday, July 13.
     </p>
     <p>
         <a href="[% c.url_for('/international_open_championships.md') %]"
             class="button colored">Discover More About IOC</a>
-        <br>
-        <a href="/files/ioc_registration.pdf" class="button">Adobe PDF Registration Form File</a>
-        <br>
-        <a href="/files/ioc_registration.docx" class="button">Microsoft Word Registration Form File</a>
+        <a href="[% c.url_for('/slack') %]" class="button">Join Our Slack Forum</a>
     </p>
 
     <img src="[% c.url_for( photos.shift ) %]">

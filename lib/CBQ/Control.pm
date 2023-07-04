@@ -12,15 +12,24 @@ my $photos   = Mojo::File
 sub startup ($self) {
     $self->setup;
 
+    my $docs_nav = $self->docs_nav( @{ conf->get('docs') }{ qw( dir home_type home_name home_title ) } );
+
+    push( @$docs_nav, {
+        href  => $self->url_for('/iq'),
+        name  => '"Inside Quizzing"',
+        title => 'The "Inside Quizzing" Podcast',
+    } );
+
     my $all = $self->routes->under( sub ($self) {
         $self->stash(
-            docs_nav => $self->docs_nav( @{ conf->get('docs') }{ qw( dir home_type home_name home_title ) } ),
+            docs_nav => $docs_nav,
             page     => { wrappers => ['page_layout.html.tt'] },
             photos   => $photos->shuffle,
         );
     } );
 
     $all->any('/')     ->to('main#index');
+    $all->any('/iq')   ->to('main#iq');
     $all->any('/*name')->to('main#content');
 }
 

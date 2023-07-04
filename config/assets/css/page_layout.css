@@ -80,3 +80,23 @@ footer {
         display: none;
     }
 }
+
+iframe.google_drive {
+    border   : none;
+    width    : 100%;
+    max-width: 640px;
+    height   : 660px;
+}
+
+p.tiny {
+    font-size: 80%;
+    color    : gray;
+}
+
+div.highlight {
+    border          : 1px solid lightgray;
+    background-color: white;
+    margin          : 0 0 1em 0;
+    padding         : 0 1em;
+    border-radius   : 1em;
+}

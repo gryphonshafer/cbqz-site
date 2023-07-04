@@ -16,4 +16,5 @@ default    :
         home_type  : md
         home_title : Christian Bible Quizzing
         home_name  : CBQ Home
+    iq_rss: ../iq/iq.rss
 optional_include: local/config.yaml

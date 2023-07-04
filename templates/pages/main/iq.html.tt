@@ -1,0 +1,42 @@
+[% page.title = 'The "Inside Quizzing" Podcast' %]
+
+<h1>[% page.title %]</h1>
+
+<img src="[% img_src %]" alt="[% img_title %]" width="250" height="250"
+    style="float: right; margin: 0 0 0 2em; border-radius: 1em">
+
+<p class="tiny">
+    <a href="[% c.url_for('/iq.rss') %]"><img
+        src="[% c.url_for('/graphics/rss.jpg') %]" width="16" height="16" alt="RSS Feed"></a>
+    Last updated: [% last_updated %]
+</p>
+
+<p>[% description %]</p>
+
+<h2>Popular Web-Based Podcast Listening Options</h2>
+<ul>
+    <li><a href="https://open.spotify.com/show/0nemljABLWndba2WpYqHI4">Spotify</a></li>
+    <li><a href="https://podcasts.apple.com/us/podcast/inside-quizzing/id1332077142">Apple Podcasts</a></li>
+    <li><a href="https://podcasts.google.com/feed/aHR0cHM6Ly9jYnF6Lm9yZy9pcS5yc3M">Google Podcasts</a></li>
+    <li><a href="https://www.iheart.com/podcast/256-inside-quizzing-31092673">iHeart Radio</a></li>
+    <li><a href="https://www.listennotes.com/podcasts/inside-quizzing-gryphon-shafer-and-scott-rj6YKdhJZ7e">Listen Notes</a></li>
+    <li><a href="https://player.fm/series/inside-quizzing">PlayerFM</a></li>
+    <li><a href="https://mytuner-radio.com/podcast/inside-quizzing-gryphon-shafer-and-scott-peterson-1332077142">myTuner</a></li>
+</ul>
+
+<p>Direct Link to the RSS: <a href="[% c.url_for('/iq.rss') %]">[% c.url_for('/iq.rss').to_abs %]</a></p>
+
+<h2>Episode List with Direct Audio Links</h2>
+
+[% FOR item IN items %]
+    <div class="highlight">
+        <p><a href="[% item.link %]"><b>Episode [% item.title %]</b></a></p>
+        <p>[% item.description %]</p>
+        <ul>
+            <li>Published: [% item.pub_date %]</li>
+            <li>Duration: [% item.duration %]</li>
+            <li>File: <a href="[% item.link %]">[% item.link %]</a> ([% item.type %])</li>
+            <li>Size: [% item.length %] MB</li>
+        </ul>
+    </div>
+[% END %]
