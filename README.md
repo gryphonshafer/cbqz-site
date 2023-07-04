@@ -17,3 +17,22 @@ Change directory to the project root directory, and run the following:
 
 To run the web site application, follow the instructions in the `~/app.psgi`
 file within the project's root directory.
+
+## Photo Optimization
+
+Within `~/static/photos` reside many JPG photo image files. These are
+automatically picked up and displayed at random across most rendered pages.
+Use the following procedure to optimize photos prior to add/commit:
+
+    for file in $( ls *.{jpg,png,gif} 2> /dev/null )
+    do
+        name=$(echo $file | sed 's/\.[^\.]*$//')
+        convert $file -resize 440\> $name.jpg
+    done
+    rm *.{png,gif}
+    jpegoptim -s *.jpg
+
+Requires:
+
+- `imagemagick`
+- `jpegoptim`
