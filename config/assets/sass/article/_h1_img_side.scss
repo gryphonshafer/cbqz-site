@@ -27,6 +27,12 @@ article {
             }
         }
 
+        h1 {
+            font-variant: small-caps;
+            font-size   : 300%;
+            line-height : 1em;
+        }
+
         img {
             position: absolute;
             z-index : 30;

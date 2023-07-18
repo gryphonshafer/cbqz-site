@@ -2,17 +2,15 @@
 
 <div class="h1_img_side">
     <h1>
-        International<br>
-        Open<br>
-        Championships
+        Christian<br>
+        Bible<br>
+        Quizzing
     </h1>
     <p>
-        <i>Tue-Thr, July 11-13, 2023</i><br>
-        <a href="https://spu.edu">Seattle Pacific University</a><br>
-        Seattle, Washington USA
+        Encouraging the most people to memorize the most verses of Scripture.
     </p>
-    <a href="[% c.url_for('/international_open_championships.md') %]"
-        class="button colored">Discover More About IOC</a>
+    <a href="[% c.url_for('/rules/CBQ_rule_book.md') %]"
+        class="button colored">Discover More About CBQ</a>
 
     <img src="[% c.url_for( photos.shift ) %]">
     <div class="hash"></div>
@@ -132,14 +130,13 @@
 </div>
 
 <div class="closing_call">
-    <h2>IOC at SPU July 11-13</h2>
+    <h2>Christian Bible Quizzing</h2>
     <p>
-        The International Open Championships (IOC) at Seattle Pacific
-        University (SPU) runs Tuesday, July 11 through Thursday, July 13.
+        Encouraging the most people to memorize the most verses of Scripture.
     </p>
     <p>
-        <a href="[% c.url_for('/international_open_championships.md') %]"
-            class="button colored">Discover More About IOC</a>
+        <a href="[% c.url_for('/rules/CBQ_rule_book.md') %]"
+            class="button colored">Discover More About CBQ</a>
         <a href="[% c.url_for('/slack') %]" class="button">Join Our Slack Forum</a>
     </p>
 
