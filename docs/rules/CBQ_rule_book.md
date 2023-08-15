@@ -1,7 +1,7 @@
 # Rule Book for Christian Bible Quizzing (CBQ)
 
-- Version: 1.1
-- Published: 2022-08-10 11:18:42
+- Version: 1.2
+- Published: 2022-08-15 11:54:58
 
 Bible Quizzing is a Christian sport in which teams of participants called *quizzers* compete on Scriptural recitation in matches called *quizzes*. Quizzing tournaments called *meets* consist of a set of *quizzes*. Quizzing *seasons* consist of a set of meets. *Christian Bible Quizzing (CBQ)* is the organization that oversees and supports local and regional Quizzing operations internationally with the mission to encourage the most people to memorize the most verses of Scripture. This is the official rule book for CBQ competitions.
 
@@ -227,7 +227,7 @@ The value of correct rulings depends on the query type.
 - All queries of the synonymous subtype are worth **+2 points**.
 - All queries of the verbatim subtype are worth **+4 points**.
 - All queries with the “with reference” subtype are worth **+1 additional point**.
-- All queries with the “add a verse” subtype are worth **+1 additional point** if answered synonymously or **+2 additional points** if answered verbatim.
+- All queries with the “add a verse” subtype are worth **+1 additional point** if responded to synonymously or **+2 additional points** if responded to verbatim.
 
 For example, a query of type phrase, verbatim, with reference is worth +5 points.
 
@@ -237,7 +237,7 @@ In addition, should a quizzer reach their ceiling without being counted incorrec
 
 When the second and every following quizzer on a team earn a correct ruling for the first time in the quiz, that team earns **+1 bonus team point, incrementing by the number of following quizzers**. For example, the second quizzer earns +1 bonus team points, and the third quizzer earns +2 bonus team points.
 
-In addition, a quizzer who answers a query correctly on the query immediately following a different quizzer from the same team answering correctly, that following quizzer earns their team **an additional +1 point**.
+In addition, a quizzer who responds to a query correctly following a different quizzer from the same team who responded correctly on a numerically immediately preceding query, that following quizzer earns their team **an additional +1 point**.
 
 ### 2.9. Timeouts
 
