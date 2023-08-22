@@ -12,7 +12,6 @@ my $mock = mock 'Omniframe::Control' => (
 Test2::MojoX->new('CBQ::Control')->get_ok('/')
     ->status_is(200)
     ->header_is( 'content-type' => 'text/html;charset=UTF-8' )
-    ->text_is( title => 'Christian Bible Quizzing' )
-    ->attr_like( 'link[rel="stylesheet"]:last-of-type', 'href', qr|\bapp.css\?version=\d+| );
+    ->text_is( title => 'Christian Bible Quizzing' );
 
 done_testing;

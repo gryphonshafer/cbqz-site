@@ -71,6 +71,10 @@ Handler for the home page of the web site.
 
 Handler for everything under "/docs" served via the documents feeder.
 
+=head2 iq
+
+Handler for Inside Quizzing podcast page.
+
 =head1 INHERITANCE
 
 L<Mojolicious::Controller>.
