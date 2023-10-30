@@ -55,7 +55,7 @@ The called quizzer may decide to forfeit the query by sitting in their chair sho
 
 #### 2.1.4. Response and Ruling
 
-For the purpose of judging the *response* and rendering a ruling, the QM considers everything the quizzer says that the QM can audibly understand. During the response phase, the quizzer is either: not yet correct, correct, or incorrect. The moment the QM judges the quizzer correct or incorrect, the QM pronounces such.
+The QM may not communicate to quizzers during the *response* period. For the purpose of judging the response and rendering a *ruling*, the QM considers everything the quizzer says that the QM can audibly understand. During the response phase, the quizzer is either: not yet correct, correct, or incorrect. The moment the QM judges the quizzer correct or incorrect, the QM pronounces such.
 
 ### 2.2. Query Identifiers and Quiz Flow
 
