@@ -1,7 +1,7 @@
 # Rule Book for Christian Bible Quizzing (CBQ)
 
-- Version: 1.2
-- Published: 2022-08-15 11:54:58
+- Version: 1.3
+- Published: January 4, 2024 at 3:40 PM PST
 
 Bible Quizzing is a Christian sport in which teams of participants called *quizzers* compete on Scriptural recitation in matches called *quizzes*. Quizzing tournaments called *meets* consist of a set of *quizzes*. Quizzing *seasons* consist of a set of meets. *Christian Bible Quizzing (CBQ)* is the organization that oversees and supports local and regional Quizzing operations internationally with the mission to encourage the most people to memorize the most verses of Scripture. This is the official rule book for CBQ competitions.
 
@@ -169,7 +169,7 @@ The QM renders a ruling of a quizzer’s response according to the translation o
 
 #### 2.5.1. Context
 
-On all queries with base subtypes quote, finish, and chapter reference, the QM must count a quizzer immediately incorrect if they should fall out of context when responding. A quizzer is out of context when the quizzer says any **2-word or longer** globally unique phrase from the material where **at least 1 word** of the phrase is outside the context of the query.
+On all queries with base subtypes quote, finish, and chapter reference, the QM must count a quizzer immediately incorrect if they should fall out of context when responding. A quizzer is out of context when the quizzer says any **2-word or longer** globally unique phrase from the material content of the translation on the quizzer’s registration where **at least 1 word** of the phrase is outside the context of the query.
 
 - Context for a quote and a finish query is the verse from which the query originates.
 - Context for a chapter reference query is the verse from which the query originates plus up to 5 verses prior and following in chapter.
