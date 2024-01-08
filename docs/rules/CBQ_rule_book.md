@@ -126,7 +126,7 @@ If the quizzer calls for the “with reference” subtype, the QM requires the q
 
 ##### 2.3.2.5. Add a Verse (A)
 
-If the quizzer calls to “add a verse”, the single verse source is expanded by 1 additional verse, the immediate next verse. It is invalid for a quizzer to call “add a verse” for the last verse in any book. If the quizzer additionally calls for “with reference”, the reference they provide must contain both verses.
+If the quizzer calls to “add a verse”, the single verse source is expanded by 1 additional verse, the immediate next verse from the material. It is invalid for a quizzer to call “add a verse” for the last verse in any book. If the quizzer additionally calls for “with reference”, the reference they provide must contain both verses.
 
 In the case of “phrase” or “chapter reference” base subtypes, calling for “add a verse” results in the response required expanding to include the whole verse and added verse.
 
