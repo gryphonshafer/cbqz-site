@@ -6,9 +6,9 @@ The **International Open Championships (IOC)** is Christian Bible Quizzing’s a
 
 This season’s IOC will be hosted at:
 
-- Location: [Cascade Christian Schools High School](https://www.cascadechristian.org)
-- Address: [811 21st St SE, Puyallup, WA 98372](https://www.google.com/maps/dir//811+21st+St+SE,+Puyallup,+WA+98372)
-- Dates: Friday and Saturday, July 26 and 27, 2024
+- **Location:** [Cascade Christian Schools High School](https://www.cascadechristian.org)
+- **Address:** [811 21st St SE, Puyallup, WA 98372](https://www.google.com/maps/dir//811+21st+St+SE,+Puyallup,+WA+98372)
+- **Dates:** Friday and Saturday, July 26 and 27, 2024
 
 IOC includes teams from across the United States and Canada from a variety of Quizzing traditions like Nazarene, World, CMA, other programs both pre-existing and new. We expect to run seperate youth and adult competitive divisions. And when not quizzing, there will be optional fun activities for all including a talent show and various other games.
 
@@ -46,6 +46,6 @@ Please email us: <a href="mailto:q@cbqz.org">q@cbqz.org</a>
 
 We are excited to early-announce IOC 2025:
 
-- Location: [Firmly Planted Family Home School Resource Center (FPFHSR)](https://www.firmlyplantedfamily.com)
-- Address: [14001 SE 1st St, Vancouver, WA 98684](https://www.google.com/maps/dir//14001+SE+1st+St,+Vancouver,+WA+98684)
-- Dates: *To be determined, but likely late June or mid-to-late July*
+- **Location:** [Firmly Planted Family Home School Resource Center (FPFHSR)](https://www.firmlyplantedfamily.com)
+- **Address:** [14001 SE 1st St, Vancouver, WA 98684](https://www.google.com/maps/dir//14001+SE+1st+St,+Vancouver,+WA+98684)
+- **Dates:** *To be determined, but likely late June or mid-to-late July*
