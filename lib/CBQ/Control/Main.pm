@@ -22,7 +22,7 @@ sub content ($self) {
 
 my $time = Omniframe::Class::Time->new;
 sub _format_datetime( $datetime, $format = '%A, %B %e, %Y %l:%M:%S %p %Z' ) {
-    return $time->parse( $datetime, 'America/Los_Angeles' )->strftime($format);
+    return $time->parse($datetime)->format($format);
 }
 
 sub iq ($self) {
