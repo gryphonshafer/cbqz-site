@@ -32,7 +32,7 @@ We expect the material label for IOC will be: "Galatians; Ephesians; Philippians
 
 We honestly don’t know. We know it will cost less than the cost to host the meet at SPU, since we have a sizable grant to help bring down costs per quizzer/team. However, we’re not yet sure how far down we can bring the costs, and this is why we’re deploying this multi-phased approach. Much of the costs of putting on IOC are based on the number of quizzers who participate and their travel subsidy needs.
 
-> OK, should I do right now then?
+> OK, what should I do right now then?
 
 First, evangelize IOC to other quizzers and coaches. Form some IOC-bound teams. Then:
 
