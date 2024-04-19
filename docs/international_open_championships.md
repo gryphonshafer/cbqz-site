@@ -14,6 +14,12 @@ IOC includes teams from across the United States and Canada from a variety of Qu
 
 Don’t miss out on this opportunity to fellowship with Quizzing people you might otherwise never meet and to experience what we’re working hard to make the most fun quiz meet in recent memory. This meet is an open invitational. All who are interested in participating are invited and encouraged to submit their interest. The goal of the meet is to Bible Quiz across many programs and styles, building bridges and advancing interest in Bible Quizzing.
 
+<a href="mailto:q@cbqz.org" class="button">Email Us at q@cbqz.org</a>
+
+<a href="/files/ioc_registration_2024.pdf" class="button colored">IOC 2024 Registration Form (PDF)</a>
+
+<a href="/files/ioc_registration_2024.docx" class="button colored">IOC 2024 Registration Form (DOCX)</a>
+
 ## Common Questions
 
 > What’s the age range or age limits for participating in IOC?
@@ -26,21 +32,23 @@ Yes. We’re serious. We fully expect there to be enough registrations to suppor
 
 > What will be the material for the IOC meet?
 
-We expect the material label for IOC will be: "Galatians; Ephesians; Philippians; Colossians NASB NIV BSB". (See the [the CBQ rule book](rules/CBQ_rule_book.md) for an explaiation for what a material label is and means.)
+We expect the material label for IOC will be: "Galatians; Ephesians; Philippians; Colossians BSB NIV ESV". (See the [the CBQ rule book](rules/CBQ_rule_book.md) for an explaiation for what a material label is and means.)
 
 > How much will IOC cost per quizzer?
 
-We honestly don’t know. We know it will cost less than the cost to host the meet at SPU, since we have a sizable grant to help bring down costs per quizzer/team. However, we’re not yet sure how far down we can bring the costs, and this is why we’re deploying this multi-phased approach. Much of the costs of putting on IOC are based on the number of quizzers who participate and their travel subsidy needs.
+$75, which covers the cost of food and a t-shirt.
 
 > OK, what should I do right now then?
 
-First, evangelize IOC to other quizzers and coaches. Form some IOC-bound teams. Then:
+First, fill out a registration form and send it to us:
 
-<a href="mailto:q@cbqz.org" class="button">Email Us of Your Interest in IOC</a>
+<a href="/files/ioc_registration_2024.pdf" class="button colored">IOC 2024 Registration Form (PDF)</a>
+
+<a href="/files/ioc_registration_2024.docx" class="button colored">IOC 2024 Registration Form (DOCX)</a>
 
 > I have questions you didn’t answer.
 
-Please email us: <a href="mailto:q@cbqz.org">q@cbqz.org</a>
+<a href="mailto:q@cbqz.org" class="button">Email Us at q@cbqz.org</a>
 
 ## What about IOC 2025?
 
