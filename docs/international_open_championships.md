@@ -16,9 +16,10 @@ Don’t miss out on this opportunity to fellowship with Quizzing people you migh
 
 <a href="mailto:q@cbqz.org" class="button">Email Us at q@cbqz.org</a>
 
+<!--
 <a href="/files/ioc_registration_2024.pdf" class="button colored">IOC 2024 Registration Form (PDF)</a>
-
 <a href="/files/ioc_registration_2024.docx" class="button colored">IOC 2024 Registration Form (DOCX)</a>
+-->
 
 ## Common Questions
 
@@ -32,11 +33,13 @@ Yes. We’re serious. We fully expect there to be enough registrations to suppor
 
 > What will be the material for the IOC meet?
 
-We expect the material label for IOC will be: "Galatians; Ephesians; Philippians; Colossians BSB NIV ESV". (See the [the CBQ rule book](rules/CBQ_rule_book.md) for an explaiation for what a material label is and means.)
+We expect the material label for IOC will be: "Galatians; Ephesians; Philippians; Colossians ESV NIV NIV84*". (See the [the CBQ rule book](CBQ_system/rule_book.md) for an explaiation for what a material label is and means.)
 
 > How much will IOC cost per quizzer?
 
-$75, which covers the cost of food and a t-shirt.
+$50, which covers the cost of food and a t-shirt.
+
+<!--
 
 > OK, what should I do right now then?
 
@@ -46,6 +49,8 @@ First, fill out a registration form and send it to us:
 
 <a href="/files/ioc_registration_2024.docx" class="button colored">IOC 2024 Registration Form (DOCX)</a>
 
+-->
+
 > I have questions you didn’t answer.
 
 <a href="mailto:q@cbqz.org" class="button">Email Us at q@cbqz.org</a>
@@ -54,6 +59,5 @@ First, fill out a registration form and send it to us:
 
 We are excited to early-announce IOC 2025:
 
-- **Location:** [Firmly Planted Family Home School Resource Center (FPFHSR)](https://www.firmlyplantedfamily.com)
-- **Address:** [14001 SE 1st St, Vancouver, WA 98684](https://www.google.com/maps/dir//14001+SE+1st+St,+Vancouver,+WA+98684)
-- **Dates:** *To be determined, but likely late June or mid-to-late July*
+- **Location:** *To be determined, but likely in the greater Portland, Oregon area*
+- **Dates:** *To be determined, but likely late June, 2025*

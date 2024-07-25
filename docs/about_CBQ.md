@@ -34,7 +34,7 @@ There are several things that need to happen before you can show up to a meet an
 
 Quizzing is a team sport. A team can have up to three quizzers on a team, and having the maximum number gives you a couple of advantages: besides having a better shot at knowing any particular verse that comes up in a quiz, you'll also have a better shot at certain kinds of bonus points.[^1]
 
-[^1]: To learn more about team bonuses, see the [Bonus Team Points section of the CBQ Rule Book](../rules/CBQ_rule_book.md#bonusteampoints).
+[^1]: To learn more about team bonuses, see the [Bonus Team Points section of the CBQ Rule Book](CBQ_system/rule_book.md#bonusteampoints).
 
 If you were invited to quizzing through a friend or church group, you've probably already got the team thing sorted out. If you found quizzing on your own or learned about it from your parents, you can look for quizzing programs in your area and either join a team or see if it's possible to register for an upcoming meet with some of your friends or family.
 

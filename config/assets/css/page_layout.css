@@ -50,6 +50,11 @@ article {
     padding   : 1rem 3rem;
 }
 
+article li > ul {
+    margin-top   : 0;
+    margin-bottom: 0;
+}
+
 footer {
     height : calc( var(--footer_height) - 3rem );
     padding: 1.5rem 2rem;

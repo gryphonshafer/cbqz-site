@@ -7,7 +7,7 @@
     <a href="#menu" class="toggle-menu"><span class="material-symbols-outlined">menu</span></a>
 </div>
 <header>
-    <a href="[% c.url_for('/rules/CBQ_rule_book.md') %]"
+    <a href="[% c.url_for('/about_CBQ.md') %]"
         class="button colored">Discover More About CBQ</a>
     <a href="[% c.url_for('/slack') %]" class="button">Join Our Slack Forum</a>
 </header>

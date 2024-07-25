@@ -9,7 +9,7 @@
     <p>
         Encouraging the most people to memorize the most verses of Scripture.
     </p>
-    <a href="[% c.url_for('/rules/CBQ_rule_book.md') %]"
+    <a href="[% c.url_for('/about_CBQ.md') %]"
         class="button colored">Discover More About CBQ</a>
 
     <img src="[% c.url_for( photos.shift ) %]">
@@ -135,7 +135,7 @@
         Encouraging the most people to memorize the most verses of Scripture.
     </p>
     <p>
-        <a href="[% c.url_for('/rules/CBQ_rule_book.md') %]"
+        <a href="[% c.url_for('/about_CBQ.md') %]"
             class="button colored">Discover More About CBQ</a>
         <a href="[% c.url_for('/slack') %]" class="button">Join Our Slack Forum</a>
     </p>

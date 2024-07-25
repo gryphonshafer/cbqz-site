@@ -1,6 +1,6 @@
 # Customs and Culture
 
-While not being rules, Christian Bible Quizzing promotes and sustains various customs and culture that we consider supportive of our shared mission to encourage the most people to memorize the most verses of Scripture.
+Christian Bible Quizzing promotes and sustains various customs and culture that we consider supportive of our shared mission to encourage the most people to memorize the most verses of Scripture.
 
 ## Customs
 
