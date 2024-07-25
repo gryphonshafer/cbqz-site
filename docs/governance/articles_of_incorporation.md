@@ -2,11 +2,11 @@
 
 ## Action by Written Consent of the Incorporators
 
-**ACTION BY WRITTEN CONSENT  
+**ACTION BY WRITTEN CONSENT
 OF THE INCORPORATORS
-OF  
-Christian Bible Quizzing,**  
-a Washington Non-Profit Organization,  
+OF
+Christian Bible Quizzing,**
+a Washington Non-Profit Organization,
 July 27, 2024
 
 The undersigned, acting as the sole incorporator of Christian Bible Quizzing, an independent non-profit organization (the "Organization"), hereby approves and adopts the following resolutions by this written consent without a meeting (this "Written Consent") pursuant to Section 24.03 of the Revised Code of Washington (RCW), which shall be effective upon the filing by the Secretary of State of Washington with a perpetual existence tenure:
@@ -25,10 +25,10 @@ IN WITNESS WHEREOF, the signatories of Appendix A and B execute this Written Con
 
 ## Action by Unanimous Written Consent of the Qualified Delegates and Chancellor
 
-**ACTION BY UNANIMOUS WRITTEN CONSENT IN  
-LIEU OF FIRST MEETING BY THE BOARD OF DIRECTORS  
-OF  
-Christian Bible Quizzing,**  
+**ACTION BY UNANIMOUS WRITTEN CONSENT IN
+LIEU OF FIRST MEETING BY THE BOARD OF DIRECTORS
+OF
+Christian Bible Quizzing,**
 a Washington Non-Profit Organization
 
 The undersigned, constituting all of the current qualified delegates ("Qualified Delegates") and the chancellor ("Chancellor") of Christian Bible Quizzing, a Washington non-profit organization (the "Organization"), as defined by the Organization's bylaws ("Bylaws"), in lieu of holding a meeting of the same, hereby consent to the taking of the actions set forth herein, and the approval and adoption of the following resolutions by this unanimous written consent ("Written Consent") pursuant to Section 24.03 of the Revised Code of Washington (RCW):
