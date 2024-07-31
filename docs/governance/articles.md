@@ -2,9 +2,9 @@
 
 ## Action by Written Consent of the Incorporator
 
-**ACTION BY WRITTEN CONSENT  
-OF THE INCORPORATOR OF  
-Christian Bible Quizzing,**  
+**ACTION BY WRITTEN CONSENT<br>
+OF THE INCORPORATOR OF<br>
+Christian Bible Quizzing,**<br>
 a Washington Non-Profit Organization
 
 The undersigned, acting as the sole incorporator of Christian Bible Quizzing, an independent non-profit organization (the "Organization"), hereby approves and adopts the following resolutions by this written consent without a meeting (this "Written Consent") pursuant to Section 24.03 of the Revised Code of Washington (RCW), which shall be effective upon the filing by the Secretary of State of Washington with a perpetual existence tenure:
@@ -23,14 +23,14 @@ IN WITNESS WHEREOF, the signatories of Appendix A and B execute this Written Con
 
 Date: July 27, 2024
 
-/s/ J. Gryphon Shafer  
+/s/ J. Gryphon Shafer<br>
 J. Gryphon Shafer
 
 ## Action by Unanimous Written Consent of the Qualified Delegates and Chancellor
 
-**ACTION BY UNANIMOUS WRITTEN CONSENT IN  
-LIEU OF FIRST MEETING OF THE QUALIFIED DELEGATES OF  
-Christian Bible Quizzing,**  
+**ACTION BY UNANIMOUS WRITTEN CONSENT IN<br>
+LIEU OF FIRST MEETING OF THE QUALIFIED DELEGATES OF<br>
+Christian Bible Quizzing,**<br>
 a Washington Non-Profit Organization
 
 The undersigned, constituting all of the current qualified delegates ("Qualified Delegates") and the chancellor ("Chancellor") of Christian Bible Quizzing, a Washington non-profit organization (the "Organization"), as defined by the Organization's bylaws ("Bylaws"), in lieu of holding a meeting of the same, hereby consent to the taking of the actions set forth herein, and the approval and adoption of the following resolutions by this unanimous written consent ("Written Consent") pursuant to Section 24.03 of the Revised Code of Washington (RCW):
@@ -100,37 +100,37 @@ IN WITNESS WHEREOF, the signatories of Appendix A and B, being all of the curren
 
 Date: July 27, 2024
 
-/s/ Daniel Bahr  
+/s/ Daniel Bahr<br>
 Daniel Bahr
 
-/s/ Paul Smith  
+/s/ Paul Smith<br>
 Paul Smith
 
-/s/ Jeremy Swingle  
+/s/ Jeremy Swingle<br>
 Jeremy Swingle
 
-/s/ Kristine Delamarter  
+/s/ Kristine Delamarter<br>
 Kristine Delamarter
 
-/s/ Jon Andrew Borden  
+/s/ Jon Andrew Borden<br>
 Jon Andrew Borden
 
-/s/ Jonathan Mark Redshaw  
+/s/ Jonathan Mark Redshaw<br>
 Jonathan Mark Redshaw
 
-/s/ Joshua Adams  
+/s/ Joshua Adams<br>
 Joshua Adams
 
-/s/ Christi Adams  
+/s/ Christi Adams<br>
 Christi Adams
 
-/s/ Sonya Mounts  
+/s/ Sonya Mounts<br>
 Sonya Mounts
 
-/s/ Nicole Depew  
+/s/ Nicole Depew<br>
 Nicole Depew
 
-/s/ J. Gryphon Shafer  
+/s/ J. Gryphon Shafer<br>
 J. Gryphon Shafer
 
 ## Appendix A
