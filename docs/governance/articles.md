@@ -1,13 +1,11 @@
 # Articles of Incorporation
 
-## Action by Written Consent of the Incorporators
+## Action by Written Consent of the Incorporator
 
-**ACTION BY WRITTEN CONSENT
-OF THE INCORPORATORS
-OF
-Christian Bible Quizzing,**
-a Washington Non-Profit Organization,
-July 27, 2024
+**ACTION BY WRITTEN CONSENT  
+OF THE INCORPORATOR OF  
+Christian Bible Quizzing,**  
+a Washington Non-Profit Organization
 
 The undersigned, acting as the sole incorporator of Christian Bible Quizzing, an independent non-profit organization (the "Organization"), hereby approves and adopts the following resolutions by this written consent without a meeting (this "Written Consent") pursuant to Section 24.03 of the Revised Code of Washington (RCW), which shall be effective upon the filing by the Secretary of State of Washington with a perpetual existence tenure:
 
@@ -23,12 +21,16 @@ RESOLVED FURTHER, that the undersigned, the sole incorporator of the Organizatio
 
 IN WITNESS WHEREOF, the signatories of Appendix A and B execute this Written Consent as of the date set forth above.
 
+Date: July 27, 2024
+
+/s/ J. Gryphon Shafer  
+J. Gryphon Shafer
+
 ## Action by Unanimous Written Consent of the Qualified Delegates and Chancellor
 
-**ACTION BY UNANIMOUS WRITTEN CONSENT IN
-LIEU OF FIRST MEETING BY THE BOARD OF DIRECTORS
-OF
-Christian Bible Quizzing,**
+**ACTION BY UNANIMOUS WRITTEN CONSENT IN  
+LIEU OF FIRST MEETING OF THE QUALIFIED DELEGATES OF  
+Christian Bible Quizzing,**  
 a Washington Non-Profit Organization
 
 The undersigned, constituting all of the current qualified delegates ("Qualified Delegates") and the chancellor ("Chancellor") of Christian Bible Quizzing, a Washington non-profit organization (the "Organization"), as defined by the Organization's bylaws ("Bylaws"), in lieu of holding a meeting of the same, hereby consent to the taking of the actions set forth herein, and the approval and adoption of the following resolutions by this unanimous written consent ("Written Consent") pursuant to Section 24.03 of the Revised Code of Washington (RCW):
@@ -94,6 +96,56 @@ RESOLVED, that the Chancellor of the Organization is hereby authorized and direc
 
 RESOLVED, that the Chancellor of the Organization is authorized, empowered, and directed, for and on behalf of the Organization, to execute all documents and to take all further actions they may deem necessary, appropriate, or advisable to effect the purposes of each of the foregoing resolutions.
 
-IN WITNESS WHEREOF, the signatories of Appendix A and B, being all of the current qualified delegates ("Qualified Delegates") and the chancellor ("Chancellor") of the Organization, have executed this Written Consent as of the date set forth below.
+IN WITNESS WHEREOF, the signatories of Appendix A and B, being all of the current Qualified Delegates and the Chancellor of the Organization, have executed this Written Consent as of the date set forth below.
 
 Date: July 27, 2024
+
+/s/ Daniel Bahr  
+Daniel Bahr
+
+/s/ Paul Smith  
+Paul Smith
+
+/s/ Jeremy Swingle  
+Jeremy Swingle
+
+/s/ Kristine Delamarter  
+Kristine Delamarter
+
+/s/ Jon Andrew Borden  
+Jon Andrew Borden
+
+/s/ Jonathan Mark Redshaw  
+Jonathan Mark Redshaw
+
+/s/ Joshua Adams  
+Joshua Adams
+
+/s/ Christi Adams  
+Christi Adams
+
+/s/ Sonya Mounts  
+Sonya Mounts
+
+/s/ Nicole Depew  
+Nicole Depew
+
+/s/ J. Gryphon Shafer  
+J. Gryphon Shafer
+
+## Appendix A
+
+- Daniel Bahr
+- Paul Smith
+- Jeremy Swingle
+- Kristine Delamarter
+- Jon Andrew Borden
+- Jonathan Mark Redshaw
+- Joshua Adams
+- Christi Adams
+- Sonya Mounts
+- Nicole Depew
+
+## Appendix B
+
+- J. Gryphon Shafer

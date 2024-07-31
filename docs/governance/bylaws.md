@@ -1,8 +1,8 @@
 # Bylaws
 
-The following are the bylaws of the Organization known as Christian Bible Quizzing (CBQ), a non-profit organization, hereinafter referred to as Quizzing, incorporated under the laws of the State of Washington on August 1, 2022. Quizzing may also operate as Bible Quizzing.
+The following are the bylaws of the Organization known as Christian Bible Quizzing (CBQ), a non-profit organization, hereinafter referred to as Quizzing, incorporated under the laws of the State of Washington on July 27, 2024. Quizzing may also operate as Bible Quizzing.
 
--   Bylaws Version: 2027-07-27
+-   Bylaws Version: 2024-07-27
 
 ## Article 1 - General Assembly and Qualified Delegates
 
