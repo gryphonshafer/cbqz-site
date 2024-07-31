@@ -62,19 +62,14 @@ The following are the rule changes that will go into effect for the 2024-2025 re
 
 - 2.3.2.3. Open-Book (O) — *Amended*
     - Quote base subtype queries are ineligible for the open book quizzer-selected subtype.
-    - Should the quizzer call “open book” on a Quote base subtype query, the QM will rule the quizzer in error.
 - 2.3.2.4. With Reference (R) — *Amended*
-    - Quotes shall automatically include the “with reference” quizzer-selected subtype, but the quizzer will not be required to provide the reference.
-- 2.3.3. Type Matrix — *Entire section will be removed.*
-- 2.8.2. Bonus Team Points — *Amended*
-    - 2nd and 3rd-quizzer team bonus points will not be earned when a quizzer selects the open book subtype.
-    - *Follow-on bonuses will remain unchanged.*
-- 2.6. Ceilings — *Replaced*
-    - A quizzer remains eligible to trigger for queries until they accrue correct rulings on:
-        - 4 queries should none of the first 3 of those queries be open book
-        - Or 1 open book query
+    - Quote base subtype queries automatically include the “with reference” quizzer-selected subtype, but the quizzer will not be required to provide the reference.
+- 2.3.3. Type Matrix — *Removed*
+- 2.6. Ceilings — *Amended*
+    - A team is limited to 3 open book queries per quiz.
+    - *(The preexisting open book quizzer ceiling rules remain.)*
 - 2.11. Coach Authority — *Added*
-    - Coaches may call to remove a quizzer from a quiz after “Response and Ruling” and prior to “Prompt Reading” of the next query.
+    - Coaches may call to remove a quizzer from a quiz after the “Response and Ruling” and prior to the “Prompt Reading” of the next query. The QM will support any such call.
 
 ## Reference Materials and Review Tools
 
