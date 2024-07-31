@@ -8,8 +8,11 @@
 </div>
 <header>
     <a href="[% c.url_for('/about_CBQ.md') %]"
-        class="button colored">Discover More About CBQ</a>
-    <a href="[% c.url_for('/slack') %]" class="button">Join Our Slack Forum</a>
+        class="button colored">About CBQ</a>
+    <a href="mailto:q@cbqz.org" class="button">Contact Us
+        <span class="material-symbols-outlined inline">mail</span></a>
+    <a href="[% c.url_for('/slack') %]" class="button">Join Our Slack
+        <span class="material-symbols-outlined inline">forum</span></a>
 </header>
 <article>
     [% content %]

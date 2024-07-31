@@ -6,11 +6,16 @@
         Bible<br>
         Quizzing
     </h1>
+
     <p>
         Encouraging the most people to memorize the most verses of Scripture.
     </p>
+
     <a href="[% c.url_for('/about_CBQ.md') %]"
         class="button colored">Discover More About CBQ</a>
+    <br>
+    <a href="mailto:q@cbqz.org" class="button">Contact Us
+        <span class="material-symbols-outlined inline">mail</span></a>
 
     <img src="[% c.url_for( photos.shift ) %]">
     <div class="hash"></div>
@@ -137,7 +142,12 @@
     <p>
         <a href="[% c.url_for('/about_CBQ.md') %]"
             class="button colored">Discover More About CBQ</a>
-        <a href="[% c.url_for('/slack') %]" class="button">Join Our Slack Forum</a>
+        <br>
+        <a href="mailto:q@cbqz.org" class="button">Contact Us
+            <span class="material-symbols-outlined inline">mail</span></a>
+        <br>
+        <a href="[% c.url_for('/slack') %]" class="button">Join Our Slack Forum
+            <span class="material-symbols-outlined inline">forum</span></a>
     </p>
 
     <img src="[% c.url_for( photos.shift ) %]">

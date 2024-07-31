@@ -4,6 +4,7 @@
 $nav_primary_size        : 0.9rem;
 $nav_secondary_size      : 0.8rem;
 $nav_line_height_multiple: 1.2;
+$nav_secondary_smoosh    : 2;
 
 nav {
     ul {
@@ -14,8 +15,8 @@ nav {
         list-style   : none;
         font-size    : $nav_secondary_size;
         line-height  : $nav_secondary_size * $nav_line_height_multiple;
-        margin-top   : $nav_secondary_size;
-        margin-bottom: $nav_secondary_size;
+        margin-top   : calc( $nav_secondary_size / $nav_secondary_smoosh );
+        margin-bottom: calc( $nav_secondary_size / $nav_secondary_smoosh );
         margin-left  : 1.2em;
         text-indent  : -1.2em;
     }
@@ -26,12 +27,14 @@ nav {
     }
 
     & > ul > li {
-        border-top : 1px solid colors.$lines;
-        padding-top: $nav_primary_size;
-        font-size  : $nav_primary_size;
-        line-height: $nav_primary_size * $nav_line_height_multiple;
-        margin-left: 0;
-        text-indent: 0;
+        border-top   : 1px solid colors.$lines;
+        padding-top  : $nav_primary_size;
+        font-size    : $nav_primary_size;
+        line-height  : $nav_primary_size * $nav_line_height_multiple;
+        margin-left  : 0;
+        text-indent  : 0;
+        margin-top   : $nav_secondary_size;
+        margin-bottom: $nav_secondary_size;
     }
 
     & > ul > li:first-child {
@@ -76,14 +79,12 @@ nav {
     }
 
     nav {
-        position                 : fixed;
-        top                      : 0;
-        left                     : auto;
-        right                    : 0;
-        height                   : auto;
-        border-left              : 1px solid colors.$lines;
-        border-bottom            : 1px solid colors.$lines;
-        border-bottom-left-radius: 1rem;
+        position   : fixed;
+        top        : 0;
+        left       : auto;
+        right      : 0;
+        border-left: 1px solid colors.$lines;
+        height     : 100vh;
 
         a.toggle-menu {
             display     : block;

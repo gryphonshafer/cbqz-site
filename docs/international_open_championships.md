@@ -2,13 +2,12 @@
 
 The **International Open Championships (IOC)** is Christian Bible Quizzing’s annual season-end tournament, open to all teams who’d like to participate.
 
-## IOC 2024
+## IOC 2025
 
-This season’s IOC will be hosted at:
+International Open Championships for 2025 will be hosted at:
 
-- **Location:** [Cascade Christian Schools High School](https://www.cascadechristian.org)
-- **Address:** [811 21st St SE, Puyallup, WA 98372](https://www.google.com/maps/dir//811+21st+St+SE,+Puyallup,+WA+98372)
-- **Dates:** Friday and Saturday, July 26 and 27, 2024
+- **Location:** Salem, Oregon *(or generally somewhere in the greater Salem area)*
+- **Dates:** Mid to late June or early July, 2025
 
 IOC includes teams from across the United States and Canada from a variety of Quizzing traditions like Nazarene, World, CMA, other programs both pre-existing and new. We expect to run seperate youth and adult competitive divisions. And when not quizzing, there will be optional fun activities for all including a talent show and various other games.
 
@@ -27,6 +26,8 @@ Don’t miss out on this opportunity to fellowship with Quizzing people you migh
 
 There’s no official age range or limit, though IOC leadership feels the meet is best suited for quizzers in middle school and high school. However, it’s entirely up to coaches and programs to evaluate the maturity level and readiness of their quizzers.
 
+<!--
+
 > Wait, you said “adult division”? Are you serious?
 
 Yes. We’re serious. We fully expect there to be enough registrations to support an “adult division”. This will be a separate division from the “main event” youth Bible Quizzing division.
@@ -38,8 +39,6 @@ We expect the material label for IOC will be: "Galatians; Ephesians; Philippians
 > How much will IOC cost per quizzer?
 
 $50, which covers the cost of food and a t-shirt.
-
-<!--
 
 > OK, what should I do right now then?
 
@@ -55,9 +54,13 @@ First, fill out a registration form and send it to us:
 
 <a href="mailto:q@cbqz.org" class="button">Email Us at q@cbqz.org</a>
 
+<!--
+
 ## What about IOC 2025?
 
 We are excited to early-announce IOC 2025:
 
 - **Location:** *To be determined, but likely in the greater Portland, Oregon area*
 - **Dates:** *To be determined, but likely late June, 2025*
+
+-->
