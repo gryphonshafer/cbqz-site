@@ -3,17 +3,17 @@
 - Version: 1.4
 - Published: July 31, 2024
 
-Bible Quizzing is a Christian sport in which teams of participants called *quizzers* compete on Scriptural recitation in matches called *quizzes*. Quizzing tournaments called *meets* consist of a set of *quizzes*. Quizzing *seasons* consist of a set of meets. *Christian Bible Quizzing (CBQ)* is the organization that oversees and supports local and regional Quizzing operations internationally with the mission to encourage the most people to memorize the most verses of Scripture. This is the official rule book for CBQ competitions.
+Bible Quizzing is a Christian sport in which teams of participants called _quizzers_ compete on Scriptural recitation in matches called _quizzes_. Quizzing tournaments called _meets_ consist of a set of _quizzes_. Quizzing _seasons_ consist of a set of meets. _Christian Bible Quizzing (CBQ)_ is the organization that oversees and supports local and regional Quizzing operations internationally with the mission to encourage the most people to memorize the most verses of Scripture. This is the official rule book for CBQ competitions.
 
 ## 1. Materials
 
-In addition to this rule book, Quizzing uses *material*, which is a library that contains all the content quizzers study and compete on for a quiz along with a thesaurus for evaluating synonyms.
+In addition to this rule book, Quizzing uses _material_, which is a library that contains all the content quizzers study and compete on for a quiz along with a thesaurus for evaluating synonyms.
 
 ### 1.1. Reference Ranges, Weights, and Translations
 
-A quiz’s material contains, in part, Scripture references and associated verse content from a set of Bible *translations*. Translations must be word-for-word or thought-for-thought translations; paraphrased publications are not translations. Any verse that does not exist as standard, non-footnote content across all included translations is excluded from the material.
+A quiz’s material contains, in part, Scripture references and associated verse content from a set of Bible _translations_. Translations must be word-for-word or thought-for-thought translations; paraphrased publications are not translations. Any verse that does not exist as standard, non-footnote content across all included translations is excluded from the material.
 
-Materials may separate the Scripture references and associated verse content into multiple sets, each with a reference *range*. For example, “Romans 1-4; James” is a single reference range. These reference ranges may have different weights, noted as positive integers, representing the probability of verse content selection from each range in quizzes. For example, “Romans 1-4; James (1) Romans 5-8 (3)” contains 2 ranges, the first with a 25% probability of selection and the second with a 75% probability of selection. Including all ranges, weights, and translations results in a complete material description. For example, “Romans 1-4; James (1) Romans 5-8 (3) ESV NASB NIV” is a material description.
+Materials may separate the Scripture references and associated verse content into multiple sets, each with a reference _range_. For example, “Romans 1-4; James” is a single reference range. These reference ranges may have different weights, noted as positive integers, representing the probability of verse content selection from each range in quizzes. For example, “Romans 1-4; James (1) Romans 5-8 (3)” contains 2 ranges, the first with a 25% probability of selection and the second with a 75% probability of selection. Including all ranges, weights, and translations results in a complete material description. For example, “Romans 1-4; James (1) Romans 5-8 (3) ESV NASB NIV” is a material description.
 
 Translation acronyms may be appended with an asterisk to indicate it’s an auxiliary translation. A material description must include at least 1 primary (non-auxiliary) translation. For example, “Romans 1-4; James (1) Romans 5-8 (3) NASB* NASB1995” is a material description where “NASB” is an auxiliary translation and “NASB1995” is a primary translation.
 
@@ -23,11 +23,11 @@ Each verse contains words, which are uninterrupted sequences of alphanumeric cha
 
 Sequences of words in a verse may be separated by sentence breaks, which occur only and always upon a period, an exclamation mark, or a question mark.
 
-A quiz’s material also contains a thesaurus with an entry for each word deduplicated across the whole of the verse content. Most entries contain *meanings*, but some entries, such as most proper names, may not include any meanings. Meanings consist of a description, word type, and list of synonyms, with each synonym given a verity level between 1 and 3, with 1 being the most accurate. For example, the word “about” has several meanings, 1 of which consists of the description “in an opposite direction” and the word type “adverb”. A synonym thereof with a verity of 1 is “around”, and a synonym with a verity of 3 is “back”.
+A quiz’s material also contains a thesaurus with an entry for each word deduplicated across the whole of the verse content. Most entries contain _meanings_, but some entries, such as most proper names, may not include any meanings. Meanings consist of a description, word type, and list of synonyms, with each synonym given a verity level between 1 and 3, with 1 being the most accurate. For example, the word “about” has several meanings, 1 of which consists of the description “in an opposite direction” and the word type “adverb”. A synonym thereof with a verity of 1 is “around”, and a synonym with a verity of 3 is “back”.
 
 ## 2. Quizzes
 
-A quiz is a single match between a set of teams, **typically though not always 3**. Each team consists of **between 1 to 3 quizzers**. Each quiz contains a set of *queries*. A query contains a *prompt* and ideal *reply*, both of which are derived from the material. Each quiz is governed by a *quiz magistrate (QM)* who is ultimately responsible for the fair and timely conduct of the quiz. The QM may choose to delegate a portion of their responsibilities to other officials.
+A quiz is a single match between a set of teams, **typically though not always 3**. Each team consists of **between 1 to 3 quizzers**. Each quiz contains a set of _queries_. A query contains a _prompt_ and ideal _reply_, both of which are derived from the material. Each quiz is governed by a _quiz magistrate (QM)_ who is ultimately responsible for the fair and timely conduct of the quiz. The QM may choose to delegate a portion of their responsibilities to other officials.
 
 Quizzers sit in a row of chairs facing the audience and officials’ table. An officials’ table occupies space between the quizzers and the audience. The officials sit at the officials table facing the quizzers.
 
@@ -39,7 +39,7 @@ For each query in the quiz, the QM follows the following process:
 
 #### 2.1.1. Announcement
 
-Each query begins with the QM announcement. The QM announces the query’s *identifier*, the teams eligible to *trigger* an indication of their desire to respond to the query, the query’s *base subtype*, and the translation from which the query originates. Then once the QM is satisfied the teams and the means of trigger indication are ready, the QM says, “Ready. Begin.” For example: “Query 2A for all 3 teams is a phrase from the NASB. Ready. Begin.”
+Each query begins with the QM announcement. The QM announces the query’s _identifier_, the teams eligible to _trigger_ an indication of their desire to respond to the query, the query’s _base subtype_, and the translation from which the query originates. Then once the QM is satisfied the teams and the means of trigger indication are ready, the QM says, “Ready. Begin.” For example: “Query 2A for all 3 teams is a phrase from the NASB. Ready. Begin.”
 
 #### 2.1.2. Prompt Reading
 
@@ -55,7 +55,7 @@ The called quizzer may decide to forfeit the query by sitting in their chair sho
 
 #### 2.1.4. Response and Ruling
 
-The QM may not communicate to quizzers during the *response* period. For the purpose of judging the response and rendering a *ruling*, the QM considers everything the quizzer says that the QM can audibly understand. During the response phase, the quizzer is either: not yet correct, correct, or incorrect. The moment the QM judges the quizzer correct or incorrect, the QM pronounces such.
+The QM may not communicate to quizzers during the _response_ period. For the purpose of judging the response and rendering a _ruling_, the QM considers everything the quizzer says that the QM can audibly understand. During the response phase, the quizzer is either: not yet correct, correct, or incorrect. The moment the QM judges the quizzer correct or incorrect, the QM pronounces such.
 
 ### 2.2. Query Identifiers and Quiz Flow
 
@@ -67,7 +67,7 @@ The quiz ends immediately prior to the query identifier’s number incrementing 
 
 ### 2.3. Query Types
 
-Each query has a *type*, which consists of a combination of a base subtype plus 1 or more quizzer-selected subtypes.
+Each query has a _type_, which consists of a combination of a base subtype plus 1 or more quizzer-selected subtypes.
 
 #### 2.3.1. Base Subtypes
 
@@ -194,7 +194,7 @@ A team is limited to 3 open-book queries per quiz.
 
 ### 2.7. Fouls
 
-The QM assesses a *foul* on any quizzer should that quizzer:
+The QM assesses a _foul_ on any quizzer should that quizzer:
 
 - Speak prior to the QM calling the quizzer’s name
 - Fail to close any open reference material prior to the conclusion of the announcement phase
