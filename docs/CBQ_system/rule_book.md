@@ -1,7 +1,7 @@
 # Rule Book for Christian Bible Quizzing (CBQ)
 
-- Version: 1.3
-- Published: January 4, 2024 at 3:40 PM PST
+- Version: 1.4
+- Published: July 31, 2024
 
 Bible Quizzing is a Christian sport in which teams of participants called *quizzers* compete on Scriptural recitation in matches called *quizzes*. Quizzing tournaments called *meets* consist of a set of *quizzes*. Quizzing *seasons* consist of a set of meets. *Christian Bible Quizzing (CBQ)* is the organization that oversees and supports local and regional Quizzing operations internationally with the mission to encourage the most people to memorize the most verses of Scripture. This is the official rule book for CBQ competitions.
 
@@ -110,38 +110,29 @@ Should the text identify a person of the Trinity, the quizzer must provide a nam
 
 ##### 2.3.2.2. Verbatim (V)
 
-The QM judges responses to queries of the verbatim quizzer-selected subtype correct should the responses contain all words of the reply and any words of the prompt the QM did not at least partially speak. The quizzer must provide all words required of the response verbatim in order from the text.
+The QM judges responses to queries of the verbatim quizzer-selected subtype correct should the responses contain all words of the reply and any words of the prompt the QM did not at least partially speak. The quizzer must provide all words required of the response verbatim in order from the text without any additional words.
 
-The quizzer does not necessarily need to recite the text from beginning to end. The QM counts correct a verbatim response that starts in the middle of the verse, continues through the end, then continues from the beginning of the verse until the start point. The QM also counts correct a quizzer who responds with a non-verbatim word or phrase but corrects it prior to moving on.
+The quizzer does not necessarily need to recite the text from beginning to end. The QM counts correct a verbatim response that starts in the middle of the verse, continues through the end, then continues from the beginning of the verse until the start point. The QM also counts correct a quizzer who includes a non-verbatim word or phrase but corrects it by repeating the surrounding verbatim words whilst excluding the non-verbatim content.
 
 ##### 2.3.2.3. Open-Book (O)
 
 If the quizzer calls for an “open-book” subtype, the quizzer may then open and consult any paper-based references brought with them to their chair. The QM judges responses to open-book queries as if they were synonymous, without reference.
 
-Should the quizzer open or consult any paper-based references without first calling “open-book,” the QM will rule the quizzer in error.
+Quote base subtype queries are ineligible for the open-book quizzer-selected subtype.
+
+Should the quizzer open or consult any paper-based references without first calling “open-book” or when responding to a Quote base subtype query, the QM will rule the quizzer in error.
 
 ##### 2.3.2.4. With Reference (R)
 
 If the quizzer calls for the “with reference” subtype, the QM requires the quizzer provide a full reference including book, chapter, and verse number to be counted correct. The QM only considers the first full reference the quizzer provides.
+
+Quote base subtype queries automatically include the “with reference” quizzer-selected subtype, but the quizzer will not be required to provide the reference.
 
 ##### 2.3.2.5. Add a Verse (A)
 
 If the quizzer calls to “add a verse”, the single verse source is expanded by 1 additional verse, the immediate next verse from the material. It is invalid for a quizzer to call “add a verse” for the last verse in any book. If the quizzer additionally calls for “with reference”, the reference they provide must contain both verses.
 
 In the case of “phrase” or “chapter reference” base subtypes, calling for “add a verse” results in the response required expanding to include the whole verse and added verse.
-
-#### 2.3.3. Type Matrix
-
-A quizzer cannot fuse together every base subtype and quizzer-selected subtype. This is a table of possible fusions:
-
-|                  | **Synonymous**               | **Verbatim**                 | **Open-Book** |
-| ---------------- | ---------------------------- | ---------------------------- | ------------- |
-| **Phrase**       | Fusion + With Ref. + Add Vs. | Fusion + With Ref. + Add Vs. | Fusion        |
-| **Chapter Ref.** | Fusion + With Ref. + Add Vs. | Fusion + With Ref. + Add Vs. | Fusion        |
-| **Quote**        | Fusion + Add Vs.             | Fusion + Add Vs.             | Fusion        |
-| **Finish**       | Fusion + With Ref. + Add Vs. | Fusion + With Ref. + Add Vs. | Fusion        |
-
-For example, a quizzer can fuse a phrase base subtype with either the synonymous, verbatim, or open-book subtype; and a quizzer can optionally select “with reference” if they selected either synonymous or verbatim subtypes. A quizzer cannot select “with reference” for a quote base subtype query.
 
 ### 2.4. Query Base Subtype and Translation Distribution
 
@@ -199,6 +190,8 @@ A quizzer remains eligible to trigger for queries until they accrue correct ruli
 - **3 queries** should **any 1 but only 1** of the first 2 queries be open-book
 - **2 queries** should all be open-book
 
+A team is limited to 3 open-book queries per quiz.
+
 ### 2.7. Fouls
 
 The QM assesses a *foul* on any quizzer should that quizzer:
@@ -254,6 +247,10 @@ Team positions for each quiz are determined at the end of a quiz using the follo
 3. First correct response
 4. First trigger resulting in a correct or incorrect ruling
 5. Random
+
+### 2.11. Coach Authority
+
+Coaches may call to remove a quizzer from a quiz after the “Response and Ruling” and prior to the “Prompt Reading” of the next query. The QM will support any such call.
 
 ## 3. Meets
 
