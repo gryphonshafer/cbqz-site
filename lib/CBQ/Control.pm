@@ -28,8 +28,9 @@ sub startup ($self) {
         );
     } );
 
-    $all->any('/')     ->to('main#index');
-    $all->any('/iq')   ->to('main#iq');
+    $all->any('/')->to('main#index');
+    $all->any('/iq')->to('main#iq');
+    $all->any( '/rules' => sub ($c) { $c->redirect_to('/CBQ_system/rule_book.md') } );
     $all->any('/*name')->to('main#content');
 }
 
