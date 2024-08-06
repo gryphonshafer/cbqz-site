@@ -1,7 +1,7 @@
 # Rule Book for Christian Bible Quizzing (CBQ)
 
-- Version: 1.4
-- Published: July 31, 2024
+- Version: 1.4.1
+- Published: August 5, 2024
 
 Bible Quizzing is a Christian sport in which teams of participants called _quizzers_ compete on Scriptural recitation in matches called _quizzes_. Quizzing tournaments called _meets_ consist of a set of _quizzes_. Quizzing _seasons_ consist of a set of meets. _Christian Bible Quizzing (CBQ)_ is the organization that oversees and supports local and regional Quizzing operations internationally with the mission to encourage the most people to memorize the most verses of Scripture. This is the official rule book for CBQ competitions.
 
@@ -190,7 +190,7 @@ A quizzer remains eligible to trigger for queries until they accrue correct ruli
 - **3 queries** should **any 1 but only 1** of the first 2 queries be open-book
 - **2 queries** should all be open-book
 
-A team is limited to 3 open-book queries per quiz.
+A team is limited to 3 correct open-book queries per quiz.
 
 ### 2.7. Fouls
 
