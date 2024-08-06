@@ -6,6 +6,7 @@
     <span class="bq">Bible Quizzing</span>
     <a href="#menu" class="toggle-menu"><span class="material-symbols-outlined">menu</span></a>
 </div>
+
 <header>
     <a href="[% c.url_for('/about_CBQ.md') %]"
         class="button colored">About CBQ</a>
@@ -14,9 +15,28 @@
     <a href="[% c.url_for('/slack') %]" class="button">Join Our Slack
         <span class="material-symbols-outlined inline">forum</span></a>
 </header>
+
+[% IF message OR c.session.flash.message %]
+    [% fv = (message) ? message : c.session.flash.message %]
+    <dialog id="message" open autofocus class="[% fv.type || 'error' %]">
+        [% UNLESS fv.ref %]
+            [% fv %]
+        [% ELSIF fv.ref == 'HASH' %]
+            [% IF fv.text %][% fv.text %][% END %]
+            [% IF fv.errors %]
+                There [% IF fv.errors.size > 1 %]were[% ELSE %]was[% END %]
+                [% fv.errors.size %] form error[% IF fv.errors.size > 1 %]s[% END %].
+            [% END %]
+            [% FOR message IN fv.messages %][% message.text %][% END %]
+        [% END %]
+        <form method="dialog"><button>OK</button></form>
+    </dialog>
+[% END %]
+
 <article>
     [% content %]
 </article>
+
 <nav id="menu">
     <a href="#" class="toggle-menu"><span class="material-symbols-outlined">menu</span></a>
     [% BLOCK nav %]
@@ -42,21 +62,34 @@
     [% END %]
     [% PROCESS nav docs = docs_nav %]
 </nav>
+
 <footer>
     <span class="copy">&copy; Christian Bible Quizzing (CBQ)</span>
     <div class="links">
-        <a href="mailto:q@cbqz.org"><img
-            alt="q@cbqz.org"
-            src="[% c.url_for('/svg/mail.svg') %]"></a>
-        <a href="https://twitter.com/bible_quizzing"><img
-            alt="Twitter"
-            src="[% c.url_for('/svg/twitter.svg') %]"></a>
-        <a href="https://www.facebook.com/Christian-Bible-Quizzing-111992838545191"><img
-            alt="Facebook"
-            src="[% c.url_for('/svg/facebook.svg') %]"></a>
-        <a href="[% c.url_for('/iq') %]"><img
-            alt="Inside Quizzing"
-            style="border-radius: 10px; height: 42px"
-            src="[% c.url_for('/svg/rss.svg') %]"></a>
+        <span class="icon_links">
+            <a href="mailto:q@cbqz.org"><img
+                alt="q@cbqz.org"
+                src="[% c.url_for('/svg/mail.svg') %]"></a>
+            <a href="https://twitter.com/bible_quizzing"><img
+                alt="Twitter"
+                src="[% c.url_for('/svg/twitter.svg') %]"></a>
+            <a href="https://www.facebook.com/Christian-Bible-Quizzing-111992838545191"><img
+                alt="Facebook"
+                src="[% c.url_for('/svg/facebook.svg') %]"></a>
+            <a href="[% c.url_for('/iq') %]"><img
+                alt="Inside Quizzing" class="rss"
+                src="[% c.url_for('/svg/rss.svg') %]"></a>
+        </span>
+        <span class="text_links">
+            [% UNLESS user %]
+                <a href="[% c.url_for('/user/sign_up') %]">Sign-Up</a>
+                or
+                <a href="[% c.url_for('/user/login') %]">Login</a>
+            [% ELSE %]
+                <a href="[% c.url_for('/user/tools') %]">User Tools</a>
+                or
+                <a href="[% c.url_for('/user/logout') %]">Logout</a>
+            [% END %]
+        </span>
     </div>
 </footer>

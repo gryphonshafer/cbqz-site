@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS user_meeting;
+DROP TABLE IF EXISTS meeting;
+DROP TABLE IF EXISTS user;

@@ -1,0 +1,23 @@
+[% page.title = 'User Account Login' %]
+
+<h1>[% page.title %]</h1>
+
+<form method="post" action="[% c.url_for %]">
+    <fieldset>
+        <legend>Login</legend>
+
+        <label>
+            Email:
+            <input type="email" name="email" value="" placeholder="Email">
+        </label>
+        <label>
+            Password:
+            <input type="password" name="passwd" value="" placeholder="Password">
+        </label>
+
+        <input type="hidden" name="type" value="login">
+        <button type="submit" class="colored">Login</button>
+    </fieldset>
+</form>
+
+<p><a href="[% c.url_for('/user/forgot_password') %]">Forgot Password</a></p>

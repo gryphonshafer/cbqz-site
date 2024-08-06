@@ -17,4 +17,19 @@ default    :
         home_title : Christian Bible Quizzing
         home_name  : CBQ Home
     iq_rss: ../iq/iq.rss
+    email:
+        from: Christian Bible Quizzing <q@cbqz.org>
+    captcha:
+        width      : 230
+        height     : 50
+        size       : 20
+        ttf        : static/fonts/inter-tight/inter-tight-v*-latin_latin-ext-700.ttf
+        rotation   : 8
+        x          : 20
+        y_base     : 35
+        y_rotate   : 100
+        noise      : 1000
+        background : [ 255, 255, 255 ]
+        text_color : [ 'rand(128)', 'rand(128)', 'rand(128)' ]
+        noise_color: [ 'rand(128) + 128', 'rand(128) + 128', 'rand(128) + 128' ]
 optional_include: local/config.yaml
