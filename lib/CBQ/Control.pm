@@ -49,7 +49,7 @@ sub startup ($self) {
         return 0;
     } );
 
-    $users->any('/user/tools')->to('user#tools');
+    $users->any( '/user/' . $_ )->to( 'user#' . $_ ) for ( qw( edit tools ) );
 
     $all->any('/')       ->to('main#index');
     $all->any('/iq')     ->to('main#iq');

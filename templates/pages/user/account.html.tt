@@ -1,10 +1,13 @@
-[% page.title = 'Sign-Up for a User Account' %]
+[%
+    page.title = ( ( usage == 'sign_up' ) ? 'Sign-Up for a' : 'Edit' ) _ ' User Account';
+    legend     = ( usage == 'sign_up' ) ? 'Sign-Up' : 'Save User Data';
+%]
 
 <h1>[% page.title %]</h1>
 
 <form method="post" action="[% c.url_for %]" style="float: left">
     <fieldset>
-        <legend>Sign-Up</legend>
+        <legend>[% legend %]</legend>
 
         <label>
             First Name:
@@ -32,13 +35,15 @@
                 placeholder="Phone" autocomplete="tel">
         </label>
 
-        <img src="[% c.url_for('/captcha') %]" alt="Captcha Image" class="captcha">
-        <label>
-            Captcha:
-            <input type="text" name="captcha" value="" placeholder="Captcha">
-        </label>
+        [% IF usage == 'sign_up' %]
+            <img src="[% c.url_for('/captcha') %]" alt="Captcha Image" class="captcha">
+            <label>
+                Captcha:
+                <input type="text" name="captcha" value="" placeholder="Captcha">
+            </label>
+        [% END %]
 
-        <input type="hidden" name="type" value="signup">
-        <button type="submit">Sign-Up</button>
+        <input type="hidden" name="usage" value="[% usage %]">
+        <button type="submit">[% legend %]</button>
     </fieldset>
 </form>
