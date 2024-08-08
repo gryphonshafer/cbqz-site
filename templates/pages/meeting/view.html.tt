@@ -1,0 +1,54 @@
+[% page.title = 'Meeting' %]
+
+<h1>[% page.title %]</h1>
+
+<p>
+    <b>Start:</b> [% meeting.data.start %]<br>
+    <i>Meeting is <b>[% IF meeting.is_open %]open[% ELSE %]not open[% END %]</b>.</i>
+</p>
+<p><b>Location:</b> [% meeting.data.location %]</p>
+<p><b>Agenda:</b> [% meeting.data.info.agenda %]</p>
+
+[% IF meeting.data.info.votes %]
+    <h2>Votes</h2>
+    <ul>
+        [% FOR vote IN meeting.data.info.votes %]
+            <li>
+                [% vote.motion | html %]
+                <br>
+                <i>
+                    [% IF meeting.is_open %]
+                        <b>Vote:</b>
+                        [%
+                            vote_link = c
+                                .url_for( '/meeting/' _ meeting.id _ '/vote' )
+                                .query( motion => vote.motion )
+                        %]
+                        <a href="[% vote_link.query( ballot => 'yea' ) %]">Yea</a>
+                        or
+                        <a href="[% vote_link.query( ballot => 'nay' ) %]">Nay</a>
+                    [% END %]
+                </i>
+            </li>
+        [% END %]
+    </ul>
+[% END %]
+
+<form method="post" action="[% c.url_for( '/meeting/' _ meeting.id _ '/vote/create' ) %]">
+    <fieldset>
+        <legend>Create a Vote Item</legend>
+
+        <label>
+            Motion:
+            <textarea name="motion" placeholder="Motion"></textarea>
+        </label>
+
+        <button type="submit" class="colored">Create Vote Item</button>
+    </fieldset>
+</form>
+
+[% IF meeting.is_open %]
+    <p>
+        <a href="[% c.url_for( '/meeting/' _ meeting.id _ '/close' ) %]">Close Meeting</a>
+    </p>
+[% END %]

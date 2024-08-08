@@ -2,7 +2,9 @@
 
 <h1>[% page.title %]</h1>
 
-<a class="button colored" href="[% c.url_for('/user/edit') %]">Edit My User Account Data</a>
+<p>
+    <a class="button colored" href="[% c.url_for('/user/edit') %]">Edit My User Account Data</a>
+</p>
 
 <table>
     <tr>
@@ -20,3 +22,7 @@
         </tr>
     [% END %]
 </table>
+
+<p>
+    <a href="[% c.url_for('/meeting/create') %]">Create a Meeting</a>
+</p>

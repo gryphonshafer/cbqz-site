@@ -51,6 +51,12 @@ sub startup ($self) {
 
     $users->any( '/user/' . $_ )->to( 'user#' . $_ ) for ( qw( edit tools ) );
 
+    $users->any('/meeting/create')                 ->to('meeting#create');
+    $users->any('/meeting/:meeting_id/vote/create')->to('meeting#vote_create');
+    $users->any('/meeting/:meeting_id/vote')       ->to('meeting#vote');
+    $users->any('/meeting/:meeting_id/close')      ->to('meeting#close');
+    $users->any('/meeting/:meeting_id')            ->to('meeting#view');
+
     $all->any('/')       ->to('main#index');
     $all->any('/iq')     ->to('main#iq');
     $all->any('/captcha')->to('main#captcha');

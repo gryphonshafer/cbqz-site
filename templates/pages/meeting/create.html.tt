@@ -1,0 +1,24 @@
+[% page.title = 'Create a Meeting' %]
+
+<h1>[% page.title %]</h1>
+
+<form method="post" action="[% c.url_for %]">
+    <fieldset>
+        <legend>Create Meeting</legend>
+
+        <label>
+            Start Date and Time:
+            <input type="text" name="start" value="[% start %]" placeholder="Start Date and Time">
+        </label>
+        <label>
+            Location or Virtual Invitation:
+            <textarea name="location" placeholder="Location">[% location %]</textarea>
+        </label>
+        <label>
+            Meeting Agenda:
+            <textarea name="agenda" placeholder="Agenda">[% agenda %]</textarea>
+        </label>
+
+        <button type="submit" class="colored">Create Meeting</button>
+    </fieldset>
+</form>

@@ -96,6 +96,22 @@ sub login ( $self, $email, $passwd ) {
     return $self;
 }
 
+sub is_qualified_delegate ($self) {
+    my $attendance = $self->dq->sql( q{
+        SELECT COUNT(*)
+        FROM (
+            SELECT m.meeting_id, um.user_id
+            FROM meeting AS m
+            LEFT JOIN user_meeting AS um ON m.meeting_id = um.meeting_id AND um.user_id = ?
+            ORDER BY m.start DESC
+            LIMIT ?
+        )
+        WHERE user_id
+    } )->run( $self->stash('user')->id, 4 )->value;
+
+    return ( $attendance >= 3 ) ? 1 : 0;
+}
+
 1;
 
 =head1 NAME
@@ -190,6 +206,11 @@ This method requires a username and password string inputs. It will then attempt
 to find and login the user. If successful, it will return a loaded user object.
 
     my $logged_in_user = CBQ::Model::User->new->login( 'username', 'passwd' );
+
+=head2 is_qualified_delegate
+
+Returns true if the user is a qualified delegate as defined by attendance
+(viewing) of 3 of the last 4 meetings.
 
 =head1 WITH ROLES
 
