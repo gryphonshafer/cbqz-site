@@ -10,7 +10,7 @@ can_ok( $obj, qw(
     active
     create
     freeze thaw
-    send_email verify reset_password login
+    send_email verify reset_password login is_qualified_delegate
 ) );
 
 $obj->dq->begin_work;
@@ -99,6 +99,8 @@ ok(
     $obj->login( $email, 'new_password' ),
     q/login(...) with good password/,
 );
+
+is( $obj->is_qualified_delegate, 0, 'is_qualified_delegate' );
 
 $obj->dq->rollback;
 

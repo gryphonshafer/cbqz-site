@@ -2,6 +2,7 @@ package CBQ::Control::User;
 
 use exact -conf, 'Mojolicious::Controller';
 use CBQ::Model::User;
+use CBQ::Model::Meeting;
 
 sub sign_up ($self) {
     my %params = $self->req->params->to_hash->%*;
@@ -243,12 +244,18 @@ sub logout ($self) {
 }
 
 sub tools ($self) {
-    $self->stash( users => [
-        sort {
-            $a->{first_name} cmp $b->{first_name} or
-            $a->{last_name} cmp $b->{last_name}
-        } CBQ::Model::User->new->every_data
-    ] );
+    my $meeting = CBQ::Model::Meeting->new;
+
+    $self->stash(
+        open_meetings     => $meeting->open_meetings,
+        attended_meetings => $meeting->attended_meetings( $self->stash('user') ),
+        users             => [
+            sort {
+                $a->{first_name} cmp $b->{first_name} or
+                $a->{last_name} cmp $b->{last_name}
+            } CBQ::Model::User->new->every_data
+        ],
+    );
 }
 
 {

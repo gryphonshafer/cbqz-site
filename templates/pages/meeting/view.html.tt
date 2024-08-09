@@ -4,50 +4,64 @@
 
 <p>
     <b>Start:</b> [% meeting.data.start %]<br>
-    <i>Meeting is <b>[% IF meeting.is_open %]open[% ELSE %]not open[% END %]</b>.</i>
+    <i>Meeting is <b>[% IF meeting.is_active %]active[% ELSE %]not active[% END %]</b>.</i>
 </p>
 <p><b>Location:</b> [% meeting.data.location %]</p>
 <p><b>Agenda:</b> [% meeting.data.info.agenda %]</p>
 
-[% IF meeting.data.info.votes %]
+[% IF meeting.data.info.motions %]
     <h2>Votes</h2>
     <ul>
-        [% FOR vote IN meeting.data.info.votes %]
+        [% FOR motion IN meeting.data.info.motions %]
             <li>
-                [% vote.motion | html %]
-                <br>
-                <i>
-                    [% IF meeting.is_open %]
+                [% motion | html %]
+
+                [% IF all_votes AND all_votes.$motion.keys.size %]
+                    <ul>
+                        [% FOR vote IN all_votes.$motion.keys %]
+                            <li>[% vote %]: [% all_votes.$motion.$vote %]</i>
+                        [% END %]
+                    </ul>
+                [% ELSE %]
+                    <br>
+                [% END %]
+
+                [% IF votes AND votes.$motion %]
+                    <i>You voted: [% votes.$motion %]</i>
+                [% ELSIF meeting.is_active AND user.is_qualified_delegate %]
+                    <i>
                         <b>Vote:</b>
                         [%
                             vote_link = c
                                 .url_for( '/meeting/' _ meeting.id _ '/vote' )
-                                .query( motion => vote.motion )
+                                .query( motion => motion )
                         %]
-                        <a href="[% vote_link.query( ballot => 'yea' ) %]">Yea</a>
+                        <a href="[% vote_link.query( ballot => 'Yea' ) %]">Yea</a>
                         or
-                        <a href="[% vote_link.query( ballot => 'nay' ) %]">Nay</a>
-                    [% END %]
-                </i>
+                        <a href="[% vote_link.query( ballot => 'Nay' ) %]">Nay</a>
+                    </i>
+                [% END %]
             </li>
         [% END %]
     </ul>
 [% END %]
 
-<form method="post" action="[% c.url_for( '/meeting/' _ meeting.id _ '/vote/create' ) %]">
-    <fieldset>
-        <legend>Create a Vote Item</legend>
+[% IF user.is_qualified_delegate %]
+    <form method="post" action="[% c.url_for( '/meeting/' _ meeting.id _ '/vote/create' ) %]">
+        <fieldset>
+            <legend>Create a Vote Item</legend>
 
-        <label>
-            Motion:
-            <textarea name="motion" placeholder="Motion"></textarea>
-        </label>
+            <label>
+                Motion:
+                <textarea name="motion" placeholder="Motion"></textarea>
+            </label>
 
-        <button type="submit" class="colored">Create Vote Item</button>
-    </fieldset>
-</form>
+            <button type="submit" class="colored">Create Vote Item</button>
+        </fieldset>
+    </form>
+[% END %]
 
-[% IF meeting.is_open %]
+[% IF meeting.is_open AND user.is_qualified_delegate %]
     <p>
         <a href="[% c.url_for( '/meeting/' _ meeting.id _ '/close' ) %]">Close Meeting</a>
     </p>

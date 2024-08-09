@@ -97,6 +97,15 @@ sub login ( $self, $email, $passwd ) {
 }
 
 sub is_qualified_delegate ($self) {
+    return 1 if (
+        $self->dq->sql( q{
+            SELECT COUNT(*) FROM meeting WHERE start <= DATETIME('NOW')
+        } )->run->value < 4 and
+        grep { $_ eq $self->data->{email} }
+        map { /<([^>]+)>/ }
+        ( $self->conf->get('pre_qualified_delegates') // [] )->@*
+    );
+
     my $attendance = $self->dq->sql( q{
         SELECT COUNT(*)
         FROM (
@@ -107,7 +116,7 @@ sub is_qualified_delegate ($self) {
             LIMIT ?
         )
         WHERE user_id
-    } )->run( $self->stash('user')->id, 4 )->value;
+    } )->run( $self->id, 4 )->value;
 
     return ( $attendance >= 3 ) ? 1 : 0;
 }

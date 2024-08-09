@@ -5,6 +5,8 @@ use CBQ::Model::Meeting;
 use Omniframe::Util::Text 'deat';
 
 sub create ($self) {
+    return $self->redirect_to('/user/tools') unless ( $self->stash('user')->is_qualified_delegate );
+
     my $params = $self->req->params->to_hash;
     if (%$params) {
         unless ( $params->{start} and $params->{location} and $params->{agenda} ) {
@@ -27,27 +29,36 @@ sub create ($self) {
 sub view ($self) {
     my $meeting = CBQ::Model::Meeting->new->load( $self->param('meeting_id') );
     $meeting->viewed( $self->stash('user') );
-    $self->stash( meeting => $meeting );
+    $self->stash(
+        meeting   => $meeting,
+        votes     => $meeting->votes( $self->stash('user') ),
+        all_votes => $meeting->all_votes,
+    );
 }
 
 sub vote_create ($self) {
+    return $self->redirect_to('/user/tools') unless ( $self->stash('user')->is_qualified_delegate );
+
     my $meeting = CBQ::Model::Meeting->new->load( $self->param('meeting_id') );
-    unless ( $meeting->data->{info}{closed} ) {
-        push( @{ $meeting->data->{info}{votes} }, { motion => $self->param('motion') } );
-        $meeting->save;
-    }
+    $meeting->vote_create( $self->param('motion') );
     $self->redirect_to( '/meeting/' . $self->param('meeting_id') );
 }
 
 sub vote ($self) {
-    push( @{ $self->stash('user')->data->{info}{votes} }, $self->req->params->to_hash );
+    return $self->redirect_to('/user/tools') unless ( $self->stash('user')->is_qualified_delegate );
+
+    my $meeting = CBQ::Model::Meeting->new->load( $self->param('meeting_id') );
+    $meeting->vote(
+        $self->stash('user'),
+        $self->req->params->to_hash,
+    );
     $self->redirect_to( '/meeting/' . $self->param('meeting_id') );
 }
 
 sub close ($self) {
-    my $meeting = CBQ::Model::Meeting->new->load( $self->param('meeting_id') );
-    $meeting->data->{info}{closed} = 1;
-    $meeting->save;
+    return $self->redirect_to('/user/tools') unless ( $self->stash('user')->is_qualified_delegate );
+
+    CBQ::Model::Meeting->new->load( $self->param('meeting_id') )->close;
     $self->redirect_to('/user/tools');
 }
 

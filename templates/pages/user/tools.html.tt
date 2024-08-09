@@ -23,6 +23,44 @@
     [% END %]
 </table>
 
-<p>
-    <a href="[% c.url_for('/meeting/create') %]">Create a Meeting</a>
-</p>
+[% IF open_meetings AND open_meetings.size %]
+    <h2>Open Meetings</h2>
+
+    <table>
+        <tr>
+            <th>Start</th>
+            <th>Location</th>
+            <th>State</th>
+        </tr>
+        [% FOR this_meeting IN open_meetings %]
+            <tr>
+                <td><a href="[% c.url_for( '/meeting/' _ this_meeting.data.meeting_id ) %]">[% this_meeting.data.start %]</a></td>
+                <td>[% this_meeting.data.location %]</td>
+                <td>[% ( this_meeting.is_active ) ? 'Active' : 'Scheduled' %]</td>
+            </tr>
+        [% END %]
+    </table>
+[% END %]
+
+[% IF user.is_qualified_delegate %]
+    <p>
+        <a href="[% c.url_for('/meeting/create') %]">Create a Meeting</a>
+    </p>
+[% END %]
+
+[% IF attended_meetings AND attended_meetings.size %]
+    <h2>Attended Meetings</h2>
+
+    <table>
+        <tr>
+            <th>Start</th>
+            <th>Location</th>
+        </tr>
+        [% FOR this_meeting IN attended_meetings %]
+            <tr>
+                <td>[% this_meeting.start %]</td>
+                <td>[% this_meeting.location %]</td>
+            </tr>
+        [% END %]
+    </table>
+[% END %]
