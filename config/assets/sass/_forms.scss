@@ -69,3 +69,26 @@ a.button {
         }
     }
 }
+
+fieldset {
+    border-radius   : 0.4em;
+    text-align      : right;
+    background-color: #f0f0f0;
+    vertical-align  : top;
+    margin-right    : 1em;
+
+    legend {
+        border-radius: 0.4em;
+        font-weight  : bold;
+    }
+
+    button {
+        margin-top      : 1em;
+        background-color: white;
+    }
+
+    input, textarea {
+        border-radius: 0.4em;
+        width        : 14em;
+    }
+}

@@ -1,6 +1,9 @@
 package CBQ::Model::User;
 
 use exact -class;
+use Email::Address;
+use Mojo::JSON qw( encode_json decode_json );
+use Omniframe::Class::Email;
 
 with qw( Omniframe::Role::Bcrypt Omniframe::Role::Model );
 
@@ -42,56 +45,81 @@ sub thaw ( $self, $data ) {
     return $data;
 }
 
-# sub send_email ( $self, $type, $url ) {
-#     croak('User object not data-loaded') unless ( $self->id );
+sub send_email ( $self, $type, $url ) {
+    croak('User object not data-loaded') unless ( $self->id );
 
-#     push( @{ $url->path->parts }, $self->id, substr( $self->data->{passwd}, 0, $user_hash_length ) );
+    push( @{ $url->path->parts }, $self->id, substr( $self->data->{passwd}, 0, $user_hash_length ) );
 
-#     return Omniframe::Class::Email->new( type => $type )->send({
-#         to   => sprintf( '%s %s <%s>', map { $self->data->{$_} } qw( first_name last_name email ) ),
-#         data => {
-#             user => $self->data,
-#             url  => $url->to_abs->to_string,
-#         },
-#     });
-# }
+    return Omniframe::Class::Email->new( type => $type )->send({
+        to   => sprintf( '%s %s <%s>', map { $self->data->{$_} } qw( first_name last_name email ) ),
+        data => {
+            user => $self->data,
+            url  => $url->to_abs->to_string,
+        },
+    });
+}
 
-# sub verify ( $self, $user_id, $user_hash ) {
-#     my $user_found = length $user_hash == $user_hash_length and $self->dq->sql(q{
-#         SELECT COUNT(*) FROM user WHERE user_id = ? AND passwd LIKE ?
-#     })->run( $user_id, $user_hash . '%' )->value > 0;
+sub verify ( $self, $user_id, $user_hash ) {
+    my $user_found = length $user_hash == $user_hash_length and $self->dq->sql(q{
+        SELECT COUNT(*) FROM user WHERE user_id = ? AND passwd LIKE ?
+    })->run( $user_id, $user_hash . '%' )->value > 0;
 
-#     $self->dq->sql('UPDATE user SET active = 1 WHERE user_id = ?')->run($user_id) if $user_found;
-#     return $user_found;
-# }
+    $self->dq->sql('UPDATE user SET active = 1 WHERE user_id = ?')->run($user_id) if $user_found;
+    return $user_found;
+}
 
-# sub reset_password ( $self, $user_id, $user_hash, $new_password ) {
-#     croak("Password supplied is not at least $min_passwd_length characters in length")
-#         unless ( length $new_password >= $min_passwd_length );
+sub reset_password ( $self, $user_id, $user_hash, $new_password ) {
+    croak("Password supplied is not at least $min_passwd_length characters in length")
+        unless ( length $new_password >= $min_passwd_length );
 
-#     my $user_found = length $user_hash == $user_hash_length and $self->dq->sql(q{
-#         SELECT COUNT(*) FROM user WHERE user_id = ? AND passwd LIKE ?
-#     })->run( $user_id, $user_hash . '%' )->value > 0;
+    my $user_found = length $user_hash == $user_hash_length and $self->dq->sql(q{
+        SELECT COUNT(*) FROM user WHERE user_id = ? AND passwd LIKE ?
+    })->run( $user_id, $user_hash . '%' )->value > 0;
 
-#     return 0 unless $user_found;
+    return 0 unless $user_found;
 
-#     $self->dq->sql('UPDATE user SET passwd = ? WHERE user_id = ?')
-#         ->run( $self->bcrypt($new_password), $user_id );
+    $self->dq->sql('UPDATE user SET passwd = ? WHERE user_id = ?')
+        ->run( $self->bcrypt($new_password), $user_id );
 
-#     return 1;
-# }
+    return 1;
+}
 
-# sub login ( $self, $email, $passwd ) {
-#     $self->load({
-#         email  => lc($email),
-#         passwd => $self->bcrypt($passwd),
-#         active => 1,
-#     });
+sub login ( $self, $email, $passwd ) {
+    $self->load({
+        email  => lc($email),
+        passwd => $self->bcrypt($passwd),
+        active => 1,
+    });
 
-#     $self->save({ last_login => \q/( STRFTIME( '%Y-%m-%d %H:%M:%f', 'NOW', 'LOCALTIME' ) )/ });
+    $self->save({ last_login => \q/( STRFTIME( '%Y-%m-%d %H:%M:%f', 'NOW', 'LOCALTIME' ) )/ });
 
-#     return $self;
-# }
+    return $self;
+}
+
+sub is_qualified_delegate ($self) {
+    return 1 if (
+        $self->dq->sql( q{
+            SELECT COUNT(*) FROM meeting WHERE start <= DATETIME('NOW')
+        } )->run->value < 4 and
+        grep { $_ eq $self->data->{email} }
+        map { /<([^>]+)>/ }
+        ( $self->conf->get('pre_qualified_delegates') // [] )->@*
+    );
+
+    my $attendance = $self->dq->sql( q{
+        SELECT COUNT(*)
+        FROM (
+            SELECT m.meeting_id, um.user_id
+            FROM meeting AS m
+            LEFT JOIN user_meeting AS um ON m.meeting_id = um.meeting_id AND um.user_id = ?
+            ORDER BY m.start DESC
+            LIMIT ?
+        )
+        WHERE user_id
+    } )->run( $self->id, 4 )->value;
+
+    return ( $attendance >= 3 ) ? 1 : 0;
+}
 
 1;
 
@@ -109,7 +137,7 @@ CBQ::Model::User
         first_name => 'first_name',
         last_name  => 'last_name',
         phone      => 'phone', # optional
-        settings   => {},      # optional
+        info       => {},      # optional
     })->id;
 
     my $user = CBQ::Model::User->new->login( 'username', 'passwd' );
@@ -123,9 +151,6 @@ CBQ::Model::User
 
     my $logged_in_user = CBQ::Model::User->new->login( 'username', 'passwd' );
 
-    $user->qm_auth(42);
-    $user->qm_auth( CBQ::Model::Meet->new->load(42) );
-
 =head1 DESCRIPTION
 
 This class is the model for user objects. A user is an individual person that
@@ -138,7 +163,7 @@ uses the application.
 Extended from L<Omniframe::Role::Model>, this method requires C<email>,
 C<passwd>, C<first_name>, and C<last_name> values.
 
-This method can optionally accept a C<settings> hashref.
+This method can optionally accept a C<info> hashref.
 
 =head1 OBJECT METHODS
 
@@ -152,11 +177,11 @@ Also, it will C<bcrypt> passwords before storing them in the database. It
 expects a hashref of values and will return a hashref of values with the
 C<passwd> crypted.
 
-Also, C<freeze> will JSON-encode the C<settings> hashref.
+Also, C<freeze> will JSON-encode the C<info> hashref.
 
 =head2 thaw
 
-Likely not used directly, C<thaw> will JSON-decode the C<settings> hashref.
+Likely not used directly, C<thaw> will JSON-decode the C<info> hashref.
 
 =head2 send_email
 
@@ -191,20 +216,10 @@ to find and login the user. If successful, it will return a loaded user object.
 
     my $logged_in_user = CBQ::Model::User->new->login( 'username', 'passwd' );
 
-=head2 qm_auth
+=head2 is_qualified_delegate
 
-This method verifies the user is authorized to be a quiz magistrate for a meet.
-It requires the meet ID or a meet object.
-
-    $user->qm_auth(42); # meet ID
-    $user->qm_auth( CBQ::Model::Meet->new->load(42) ); # meet object
-
-=head2 by_full_name
-
-This method requires an input string representing a case-insensetive substring
-of the first and last name of a user. The method will return an arrayref of
-hashrefs with C<user_id>, C<first_name>, C<last_name>, and C<email> that match
-active users.
+Returns true if the user is a qualified delegate as defined by attendance
+(viewing) of 3 of the last 4 meetings.
 
 =head1 WITH ROLES
 

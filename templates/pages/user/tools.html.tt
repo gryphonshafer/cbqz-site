@@ -1,0 +1,66 @@
+[% page.title = 'User Tools' %]
+
+<h1>[% page.title %]</h1>
+
+<p>
+    <a class="button colored" href="[% c.url_for('/user/edit') %]">Edit My User Account Data</a>
+</p>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Last Login</th>
+    </tr>
+    [% FOR this_user IN users %]
+        <tr>
+            <td>[% this_user.first_name %] [% this_user.last_name %]</td>
+            <td><a href="mailto:[% this_user.email %]">[% this_user.email %]</a></td>
+            <td>[% this_user.phone %]</td>
+            <td>[% this_user.last_login %]</td>
+        </tr>
+    [% END %]
+</table>
+
+[% IF open_meetings AND open_meetings.size %]
+    <h2>Open Meetings</h2>
+
+    <table>
+        <tr>
+            <th>Start</th>
+            <th>Location</th>
+            <th>State</th>
+        </tr>
+        [% FOR this_meeting IN open_meetings %]
+            <tr>
+                <td><a href="[% c.url_for( '/meeting/' _ this_meeting.data.meeting_id ) %]">[% this_meeting.data.start %]</a></td>
+                <td>[% this_meeting.data.location %]</td>
+                <td>[% ( this_meeting.is_active ) ? 'Active' : 'Scheduled' %]</td>
+            </tr>
+        [% END %]
+    </table>
+[% END %]
+
+[% IF user.is_qualified_delegate %]
+    <p>
+        <a href="[% c.url_for('/meeting/create') %]">Create a Meeting</a>
+    </p>
+[% END %]
+
+[% IF attended_meetings AND attended_meetings.size %]
+    <h2>Attended Meetings</h2>
+
+    <table>
+        <tr>
+            <th>Start</th>
+            <th>Location</th>
+        </tr>
+        [% FOR this_meeting IN attended_meetings %]
+            <tr>
+                <td>[% this_meeting.start %]</td>
+                <td>[% this_meeting.location %]</td>
+            </tr>
+        [% END %]
+    </table>
+[% END %]

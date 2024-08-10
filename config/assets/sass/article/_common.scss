@@ -33,6 +33,11 @@ article {
         margin       : 0rem -2rem 1rem 2rem;
     }
 
+    img.captcha {
+        border-radius: 0.5em;
+        border       : 1px solid silver;
+    }
+
     div.gallery {
         text-align: center;
         border-top: 1px dashed colors.$light_text;
