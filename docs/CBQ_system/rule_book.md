@@ -1,7 +1,7 @@
 # Rule Book for Christian Bible Quizzing (CBQ)
 
-- Version: 1.4.1
-- Published: August 5, 2024
+- Version: 1.4.2
+- Published: August 13, 2024
 
 Bible Quizzing is a Christian sport in which teams of participants called _quizzers_ compete on Scriptural recitation in matches called _quizzes_. Quizzing tournaments called _meets_ consist of a set of _quizzes_. Quizzing _seasons_ consist of a set of meets. _Christian Bible Quizzing (CBQ)_ is the organization that oversees and supports local and regional Quizzing operations internationally with the mission to encourage the most people to memorize the most verses of Scripture. This is the official rule book for CBQ competitions.
 
@@ -84,6 +84,8 @@ A chapter reference query’s prompt contains a chapter reference followed by a 
 ##### 2.3.1.3. Quote (Q)
 
 A quote query’s prompt is the word “quote” followed by the reference to a verse, labeling both the chapter and verse. For example: “Quote James, chapter 1, verse 2.” The reply is the verse text.
+
+The QM announcement for quote queries does not include a translation.
 
 ##### 2.3.1.4. Finish (F)
 
