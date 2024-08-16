@@ -2,6 +2,7 @@ package CBQ::Model::Meeting;
 
 use exact -class;
 use Mojo::JSON qw( encode_json decode_json );
+use Text::MultiMarkdown 'markdown';
 
 with qw( Omniframe::Role::Model Omniframe::Role::Time );
 
@@ -25,6 +26,17 @@ sub freeze ( $self, $data ) {
 
 sub thaw ( $self, $data ) {
     $data->{info} = ( defined $data->{info} ) ? decode_json( $data->{info} ) : {};
+
+    for (
+        $data->{location},
+        $data->{info}{agenda},
+        $data->{info}{motions}->@*,
+    ) {
+        s/</&lt;/g;
+        s/>/&gt;/g;
+        $_ = markdown $_;
+    }
+
     return $data;
 }
 

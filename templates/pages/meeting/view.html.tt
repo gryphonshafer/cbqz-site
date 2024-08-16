@@ -6,44 +6,42 @@
     <b>Start:</b> [% meeting.data.start %]<br>
     <i>Meeting is <b>[% IF meeting.is_active %]active[% ELSE %]not active[% END %]</b>.</i>
 </p>
-<p><b>Location:</b> [% meeting.data.location %]</p>
-<p><b>Agenda:</b> [% meeting.data.info.agenda %]</p>
+
+<p><b>Location:</b></p>
+<div>[% meeting.data.location %]</div>
+
+<p><b>Agenda:</b></p>
+<div>[% meeting.data.info.agenda %]</div>
 
 [% IF meeting.data.info.motions %]
-    <h2>Votes</h2>
-    <ul>
-        [% FOR motion IN meeting.data.info.motions %]
-            <li>
-                [% motion | html %]
+    <h2>Motions/Votes</h2>
+    [% FOR motion IN meeting.data.info.motions %]
+        <blockquote>[% motion %]</blockquote>
 
-                [% IF all_votes AND all_votes.$motion.keys.size %]
-                    <ul>
-                        [% FOR vote IN all_votes.$motion.keys %]
-                            <li>[% vote %]: [% all_votes.$motion.$vote %]</i>
-                        [% END %]
-                    </ul>
-                [% ELSE %]
-                    <br>
+        [% IF all_votes AND all_votes.$motion.keys.size %]
+            <ul>
+                [% FOR vote IN all_votes.$motion.keys %]
+                    <li>[% vote %]: [% all_votes.$motion.$vote %]</i>
                 [% END %]
-
-                [% IF votes AND votes.$motion %]
-                    <i>You voted: [% votes.$motion %]</i>
-                [% ELSIF meeting.is_active AND user.is_qualified_delegate %]
-                    <i>
-                        <b>Vote:</b>
-                        [%
-                            vote_link = c
-                                .url_for( '/meeting/' _ meeting.id _ '/vote' )
-                                .query( motion => motion )
-                        %]
-                        <a href="[% vote_link.query( ballot => 'Yea' ) %]">Yea</a>
-                        or
-                        <a href="[% vote_link.query( ballot => 'Nay' ) %]">Nay</a>
-                    </i>
-                [% END %]
-            </li>
+            </ul>
         [% END %]
-    </ul>
+
+        [% IF votes AND votes.$motion %]
+            <p><i>You voted: [% votes.$motion %]</i></p>
+        [% ELSIF meeting.is_active AND user.is_qualified_delegate %]
+            <p><i>
+                <b>Vote:</b>
+                [%
+                    vote_link = c
+                        .url_for( '/meeting/' _ meeting.id _ '/vote' )
+                        .query( motion => motion )
+                %]
+                <a href="[% vote_link.query( ballot => 'Yea' ) %]">Yea</a>
+                or
+                <a href="[% vote_link.query( ballot => 'Nay' ) %]">Nay</a>
+            </i></p>
+        [% END %]
+    [% END %]
 [% END %]
 
 [% IF user.is_qualified_delegate %]
