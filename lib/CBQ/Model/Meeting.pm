@@ -24,18 +24,20 @@ sub freeze ( $self, $data ) {
     return $data;
 }
 
+sub _markdownificate ($text) {
+    $text =~ s/</&lt;/g;
+    $text =~ s/>/&gt;/g;
+    return markdown $text;
+}
+
 sub thaw ( $self, $data ) {
     $data->{info} = ( defined $data->{info} ) ? decode_json( $data->{info} ) : {};
 
-    for (
+    $_ = _markdownificate($_) for (
         $data->{location},
         $data->{info}{agenda},
         $data->{info}{motions}->@*,
-    ) {
-        s/</&lt;/g;
-        s/>/&gt;/g;
-        $_ = markdown $_;
-    }
+    );
 
     return $data;
 }
@@ -50,8 +52,7 @@ sub is_active ($self) {
 sub open_meetings ($self) {
     return [
         sort {
-            $a->data->{start}    cmp $b->data->{start} or
-            $a->data->{location} cmp $b->data->{location}
+            $a->data->{start} cmp $b->data->{start}
         }
         $self->every({
             -or => [
@@ -64,7 +65,7 @@ sub open_meetings ($self) {
 
 sub attended_meetings ( $self, $user ) {
     return $self->dq->sql( q{
-        SELECT m.start, m.location
+        SELECT m.start
         FROM meeting AS M
         JOIN user_meeting AS um USING (meeting_id)
         WHERE um.user_id = ?

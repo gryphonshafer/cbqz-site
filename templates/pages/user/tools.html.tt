@@ -28,14 +28,12 @@
 
     <table>
         <tr>
-            <th>Start</th>
-            <th>Location</th>
+            <th>Scheduled Start</th>
             <th>State</th>
         </tr>
         [% FOR this_meeting IN open_meetings %]
             <tr>
                 <td><a href="[% c.url_for( '/meeting/' _ this_meeting.data.meeting_id ) %]">[% this_meeting.data.start %]</a></td>
-                <td>[% this_meeting.data.location %]</td>
                 <td>[% ( this_meeting.is_active ) ? 'Active' : 'Scheduled' %]</td>
             </tr>
         [% END %]
@@ -53,13 +51,11 @@
 
     <table>
         <tr>
-            <th>Start</th>
-            <th>Location</th>
+            <th>Scheduled Start</th>
         </tr>
         [% FOR this_meeting IN attended_meetings %]
             <tr>
                 <td>[% this_meeting.start %]</td>
-                <td>[% this_meeting.location %]</td>
             </tr>
         [% END %]
     </table>
