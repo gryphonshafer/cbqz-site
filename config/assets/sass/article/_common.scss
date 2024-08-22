@@ -55,4 +55,13 @@ article {
         border-left : 5px solid green;
         font-style  : italic;
     }
+
+    table {
+        text-align: left;
+
+        th.right,
+        td.right {
+            text-align: right;
+        }
+    }
 }
