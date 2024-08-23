@@ -29,13 +29,13 @@ and their weights is up to each region.
                     'Recommended',
                     `
                         The "Recommended" preset incorporates the "Traditional" preset
-                        (the original preset from the 1940s that includes 16 books)
-                        and extends it to 25 books of the New Testament,
-                        all but Mark and Revelation.
+                        (the original preset from the 1940s that includes 16 books),
+                        removes the genealogies,
+                        and adds all but Mark and Revelation from the New Testament.
                     `,
                     [  879, 'John'                                                             ],
                     [  711, 'Hebrews', '1 Peter', '2 Peter', '1 Timothy', '2 Timothy', 'Titus' ],
-                    [ 1071, 'Matthew'                                                          ],
+                    [ 1054, 'Matthew 1:18-25; 2-28'                                            ],
                     [  674, 'James', 'Romans', '1 John', '2 John', '3 John'                    ],
                     [ 1007, 'Acts'                                                             ],
                     [
@@ -45,7 +45,7 @@ and their weights is up to each region.
                         'Philemon',
                         'Jude',
                     ],
-                    [ 1151, 'Luke'                           ],
+                    [ 1136, 'Luke 1-2; 3:1-23; 4-24'         ],
                     [  694, '1 Corinthians', '2 Corinthians' ],
                 ],
                 [
@@ -86,11 +86,11 @@ and their weights is up to each region.
                         It starts with the "Minimalist" preset and adds books included in the "Recommended"
                         preset but not the "Traditional" preset.
                     `,
-                    [ 879, 'John'                                                                 ],
-                    [ 711, 'Hebrews', '1 Peter', '2 Peter', '1 Timothy', '2 Timothy', 'Titus'     ],
-                    [ 860, 'Matthew 1:18-25; 2-12; 14-22; 26-28'                                  ],
-                    [ 674, 'James', 'Romans', '1 John', '2 John', '3 John'                        ],
-                    [ 741, 'Acts 1-20'                                                            ],
+                    [ 879, 'John'                                                             ],
+                    [ 711, 'Hebrews', '1 Peter', '2 Peter', '1 Timothy', '2 Timothy', 'Titus' ],
+                    [ 860, 'Matthew 1:18-25; 2-12; 14-22; 26-28'                              ],
+                    [ 674, 'James', 'Romans', '1 John', '2 John', '3 John'                    ],
+                    [ 741, 'Acts 1-20'                                                        ],
                     [
                         689,
                         'Galatians', 'Ephesians', 'Philippians', 'Colossians',
@@ -103,67 +103,120 @@ and their weights is up to each region.
                 ],
             ],
         ],
-        // [
-        //     'Adult',
-        //     [
-        //         [
-        //             'Default',
-        //             `
-        //                 Default
-        //             `,
-        //             [ 592, 'Genesis 1-9', 'Daniel'                           ],
-        //             [ 583, 'Numbers 28-36', 'Psalm 129-150'                  ],
-        //             [ 588, '2 Chronicles 22-36', 'Ezekiel 1-11'              ],
-        //             [ 588, 'Psalm 73-89', 'Ezekiel 25-33'                    ],
-        //             [ 588, 'Numbers 10-21', '2 Chronicles 1-9'               ],
-        //             [ 449, 'Genesis 37-50'                                   ],
-        //             [ 587, 'Deuteronomy 27-34', 'Psalm 90-106'               ],
-        //             [ 606, 'Job 16-30', 'Proverbs 1-9'                       ],
-        //             [ 578, '1 Samuel 1-7', '1 Chronicles 1-10'               ],
-        //             [ 438, 'Jeremiah 1-17'                                   ],
-        //             [ 606, 'Exodus 24-31', 'Deuteronomy 12-26'               ],
-        //             [ 518, 'Judges 1-16', 'Nahum'                            ],
-        //             [ 448, 'Isaiah 25-39', 'Amos'                            ],
-        //             [ 585, '2 Kings 1-11', '1 Chronicles 20-29'              ],
-        //             [ 578, 'Lamentations', 'Ezekiel 34-48'                   ],
-        //             [ 585, 'Leviticus 17-27', 'Isaiah 40-48'                 ],
-        //             [ 571, 'Genesis 10-24', 'Judges 17-21'                   ],
-        //             [ 567, 'Deuteronomy 1-4', 'Nehemiah'                     ],
-        //             [ 403, 'Ezekiel 12-24'                                   ],
-        //             [ 538, 'Psalm 107-128', 'Micah'                          ],
-        //             [ 498, 'Joel', 'Mark 1-10'                               ],
-        //         ],
-        //         [
-        //             'Default 2',
-        //             `
-        //                 Default 2
-        //             `,
-        //             [ 600, 'Exodus 1-12', 'Psalm 1-21'                       ],
-        //             [ 598, 'Joshua 1-12', '2 Samuel 1-12'                    ],
-        //             [ 604, 'Job 31-42', 'Mark 11-16'                         ],
-        //             [ 462, '1 Samuel 15-31'                                  ],
-        //             [ 528, 'Jeremiah 18-36', 'Haggai'                        ],
-        //             [ 587, 'Exodus 32-40', 'Ezra'                            ],
-        //             [ 519, 'Ruth', '1 Kings 1-11'                            ],
-        //             [ 587, 'Numbers 22-27', '1 Kings 12-25'                  ],
-        //             [ 604, '1 Chronicles 11-19', 'Psalm 22-41'               ],
-        //             [ 513, 'Psalm 42-72', 'Jonah'                            ],
-        //             [ 595, 'Numbers 1-9', 'Zechariah'                        ],
-        //             [ 425, 'Genesis 25-36'                                   ],
-        //             [ 589, 'Deuteronomy 5-11', '2 Kings 12-25'               ],
-        //             [ 591, 'Job 1-15', 'Ecclesiastes'                        ],
-        //             [ 555, 'Esther', 'Proverbs 10-22'                        ],
-        //             [ 580, 'Isaiah 49-66', 'Jeremiah 45-52'                  ],
-        //             [ 581, 'Exodus 13-23', 'Proverbs 23-31'                  ],
-        //             [ 604, 'Joshua 13-24', '2 Chronicles 10-21'              ],
-        //             [ 517, 'Isaiah 1-24', 'Zephaniah'                        ],
-        //             [ 591, '1 Samuel 8-14', '2 Samuel 13-24'                 ],
-        //             [ 570, 'Jeremiah 37-44', 'Revelation'                    ],
-        //             [ 511, 'Leviticus 1-16', 'Obadiah'                       ],
-        //             [ 425, 'Song of Solomon', 'Hosea', 'Habakkuk', 'Malachi' ],
-        //         ],
-        //     ],
-        // ],
+        [
+            'Adult',
+            [
+                [
+                    'Essential',
+                    `
+                        The "Essential" material cycle selects a highly shortened set of books from the
+                        Old Testament. It breaks up larger books so that no single season has a significant
+                        number of verses within it.
+                    `,
+                    [ 235, 'Genesis 1-9'          ],
+                    [ 424, 'Genesis 10-24'        ],
+                    [ 425, 'Genesis 25-36'        ],
+                    [ 449, 'Genesis 37-50'        ],
+                    [ 265, 'Psalm 1-21'           ],
+                    [ 351, 'Psalm 22-41'          ],
+                    [ 465, 'Psalm 42-72'          ],
+                    [ 358, 'Psalm 73-89'          ],
+                    [ 321, 'Psalm 90-106'         ],
+                    [ 433, 'Psalm 107-128'        ],
+                    [ 268, 'Psalm 129-150'        ],
+                    [ 348, 'Deuteronomy 1-11'     ],
+                    [ 345, 'Deuteronomy 12-26'    ],
+                    [ 266, 'Deuteronomy 27-34'    ],
+                    [ 280, 'Ezra'                 ],
+                    [ 406, 'Nehemiah'             ],
+                    [ 256, 'Proverbs 1-9'         ],
+                    [ 388, 'Proverbs 10-22'       ],
+                    [ 271, 'Proverbs 23-31'       ],
+                    [ 295, 'Ecclesiastes', 'Joel' ],
+                    [ 357, 'Daniel'               ],
+                ],
+                [
+                    'Comprehensive',
+                    `
+                        The "Comprehensive" material cycle includes all Old Testament books
+                        plus the New Testament books not included in the "Recommended" youth preset.
+                    `,
+                    [ 425, 'Mark 1-10'                                      ],
+                    [ 253, 'Mark 11-16'                                     ],
+                    [ 404, 'Revelation'                                     ],
+                    [ 235, 'Genesis 1-9'                                    ],
+                    [ 424, 'Genesis 10-24'                                  ],
+                    [ 425, 'Genesis 25-36'                                  ],
+                    [ 449, 'Genesis 37-50'                                  ],
+                    [ 335, 'Exodus 1-12'                                    ],
+                    [ 310, 'Exodus 13-23'                                   ],
+                    [ 261, 'Exodus 24-31'                                   ],
+                    [ 307, 'Exodus 32-40'                                   ],
+                    [ 490, 'Leviticus 1-16'                                 ],
+                    [ 369, 'Leviticus 17-27'                                ],
+                    [ 384, 'Numbers 1-9'                                    ],
+                    [ 387, 'Numbers 10-21'                                  ],
+                    [ 202, 'Numbers 22-27'                                  ],
+                    [ 315, 'Numbers 28-36'                                  ],
+                    [ 348, 'Deuteronomy 1-11'                               ],
+                    [ 345, 'Deuteronomy 12-26'                              ],
+                    [ 266, 'Deuteronomy 27-34'                              ],
+                    [ 303, 'Joshua 1-12'                                    ],
+                    [ 355, 'Joshua 13-24'                                   ],
+                    [ 471, 'Judges 1-16'                                    ],
+                    [ 232, 'Judges 17-21; Ruth'                             ],
+                    [ 157, '1 Samuel 1-7'                                   ],
+                    [ 191, '1 Samuel 8-14'                                  ],
+                    [ 462, '1 Samuel 15-31'                                 ],
+                    [ 295, '2 Samuel 1-12'                                  ],
+                    [ 400, '2 Samuel 13-24'                                 ],
+                    [ 434, '1 Kings 1-11'                                   ],
+                    [ 385, '1 Kings 12-25'                                  ],
+                    [ 317, '2 Kings 1-11'                                   ],
+                    [ 402, '2 Kings 12-25'                                  ],
+                    [ 407, '1 Chronicles 1-9'                               ],
+                    [ 267, '1 Chronicles 10-19'                             ],
+                    [ 268, '1 Chronicles 20-29'                             ],
+                    [ 201, '2 Chronicles 1-9'                               ],
+                    [ 249, '2 Chronicles 10-21'                             ],
+                    [ 372, '2 Chronicles 22-36'                             ],
+                    [ 280, 'Ezra'                                           ],
+                    [ 406, 'Nehemiah'                                       ],
+                    [ 167, 'Esther'                                         ],
+                    [ 369, 'Job 1-15'                                       ],
+                    [ 350, 'Job 16-30'                                      ],
+                    [ 351, 'Job 31-42'                                      ],
+                    [ 265, 'Psalm 1-21'                                     ],
+                    [ 351, 'Psalm 22-41'                                    ],
+                    [ 465, 'Psalm 42-72'                                    ],
+                    [ 358, 'Psalm 73-89'                                    ],
+                    [ 321, 'Psalm 90-106'                                   ],
+                    [ 433, 'Psalm 107-128'                                  ],
+                    [ 268, 'Psalm 129-150'                                  ],
+                    [ 256, 'Proverbs 1-9'                                   ],
+                    [ 388, 'Proverbs 10-22'                                 ],
+                    [ 271, 'Proverbs 23-31'                                 ],
+                    [ 339, 'Ecclesiastes', 'Song of Solomon'                ],
+                    [ 464, 'Isaiah 1-24'                                    ],
+                    [ 302, 'Isaiah 25-39'                                   ],
+                    [ 216, 'Isaiah 40-48'                                   ],
+                    [ 310, 'Isaiah 49-66'                                   ],
+                    [ 438, 'Jeremiah 1-17'                                  ],
+                    [ 490, 'Jeremiah 18-36'                                 ],
+                    [ 166, 'Jeremiah 37-44'                                 ],
+                    [ 270, 'Jeremiah 45-52'                                 ],
+                    [ 154, 'Lamentations'                                   ],
+                    [ 216, 'Ezekiel 1-11'                                   ],
+                    [ 403, 'Ezekiel 12-24'                                  ],
+                    [ 230, 'Ezekiel 25-33'                                  ],
+                    [ 424, 'Ezekiel 34-48'                                  ],
+                    [ 357, 'Daniel'                                         ],
+                    [ 416, 'Hosea', 'Joel', 'Amos'                          ],
+                    [ 277, 'Obadiah', 'Jonah', 'Micah', 'Nahum', 'Habakkuk' ],
+                    [ 357, 'Zephaniah', 'Haggai', 'Zechariah', 'Malachi'    ],
+                ],
+            ],
+        ],
     ];
 
     window.addEventListener( 'load', () => {
@@ -199,11 +252,19 @@ and their weights is up to each region.
                 for ( let i = 0; i < year - start_year; i++ ) {
                     rows.push( rows.shift() );
                 }
+                const season_shift = 4;
+                for ( let i = 0; i < season_shift + 1; i++ ) {
+                    rows.push( rows.shift() );
+                }
+
+                highlight_year = year;
+                year -= season_shift - 1;
 
                 rows.forEach( row => {
                     const verses = row.shift();
 
                     const tr = document.createElement('tr');
+                    if ( year == highlight_year ) tr.className = 'highlight';
 
                     const season = document.createElement('td');
                     season.textContent = year + '-' + ++year;
@@ -250,4 +311,4 @@ and their weights is up to each region.
 
 <sup>*</sup>**Note:** The verse counts presented in the above tables are
 approximations, likely to be close, but possibly off by a little depending on
-the translations selected.
+the translations selected since some translations do not include all verses.

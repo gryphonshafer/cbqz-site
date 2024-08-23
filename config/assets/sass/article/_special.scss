@@ -7,6 +7,10 @@ form.rotation {
     table {
         text-align: left;
 
+        tr.highlight td {
+            background-color: #cfc;
+        }
+
         th.right,
         td.right {
             text-align: right;
