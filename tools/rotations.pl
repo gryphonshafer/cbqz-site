@@ -2,15 +2,122 @@
 use exact;
 use Bible::Reference;
 
+my $parts = [
+    [
+        [  425, 'Mark 1-10' ],
+        [  253, 'Mark 11-16' ],
+        [  404, 'Revelation' ],
+    ],
+    [
+        [  235, 'Genesis 1-9' ],
+        [  424, 'Genesis 10-24' ],
+        [  425, 'Genesis 25-36' ],
+        [  449, 'Genesis 37-50' ],
+        [  335, 'Exodus 1-12' ],
+        [  310, 'Exodus 13-23' ],
+        [  261, 'Exodus 24-31' ],
+        [  307, 'Exodus 32-40' ],
+        [  490, 'Leviticus 1-16' ],
+        [  369, 'Leviticus 17-27' ],
+        [  384, 'Numbers 1-9' ],
+        [  387, 'Numbers 10-21' ],
+        [  202, 'Numbers 22-27' ],
+        [  315, 'Numbers 28-36' ],
+        [  161, 'Deuteronomy 1-4' ],
+        [  187, 'Deuteronomy 5-11' ],
+        [  345, 'Deuteronomy 12-26' ],
+        [  266, 'Deuteronomy 27-34' ],
+    ],
+    [
+        [  303, 'Joshua 1-12' ],
+        [  355, 'Joshua 13-24' ],
+        [  471, 'Judges 1-16' ],
+        [  147, 'Judges 17-21' ],
+        [   85, 'Ruth' ],
+        [  157, '1 Samuel 1-7' ],
+        [  191, '1 Samuel 8-14' ],
+        [  462, '1 Samuel 15-31' ],
+        [  295, '2 Samuel 1-12' ],
+        [  400, '2 Samuel 13-24' ],
+        [  434, '1 Kings 1-11' ],
+        [  385, '1 Kings 12-25' ],
+        [  317, '2 Kings 1-11' ],
+        [  402, '2 Kings 12-25' ],
+        [  407, '1 Chronicles 1-9' ],
+        [  267, '1 Chronicles 10-19' ],
+        [  268, '1 Chronicles 20-29' ],
+        [  201, '2 Chronicles 1-9' ],
+        [  249, '2 Chronicles 10-21' ],
+        [  372, '2 Chronicles 22-36' ],
+    ],
+    [
+        [  280, 'Ezra' ],
+        [  406, 'Nehemiah' ],
+        [  167, 'Esther' ],
+    ],
+    [
+        [  369, 'Job 1-15' ],
+        [  350, 'Job 16-30' ],
+        [  351, 'Job 31-42' ],
+        [  265, 'Psalm 1-21' ],
+        [  351, 'Psalm 22-41' ],
+        [  465, 'Psalm 42-72' ],
+        [  358, 'Psalm 73-89' ],
+        [  321, 'Psalm 90-106' ],
+        [  433, 'Psalm 107-128' ],
+        [  268, 'Psalm 129-150' ],
+        [  256, 'Proverbs 1-9' ],
+        [  388, 'Proverbs 10-22' ],
+        [  271, 'Proverbs 23-31' ],
+        [  222, 'Ecclesiastes' ],
+        [  117, 'Song of Solomon' ],
+    ],
+    [
+        [  464, 'Isaiah 1-24' ],
+        [  302, 'Isaiah 25-39' ],
+        [  216, 'Isaiah 40-48' ],
+        [  310, 'Isaiah 49-66' ],
+        [  438, 'Jeremiah 1-17' ],
+        [  490, 'Jeremiah 18-36' ],
+        [  166, 'Jeremiah 37-44' ],
+        [  270, 'Jeremiah 45-52' ],
+        [  154, 'Lamentations' ],
+        [  216, 'Ezekiel 1-11' ],
+        [  403, 'Ezekiel 12-24' ],
+        [  230, 'Ezekiel 25-33' ],
+        [  424, 'Ezekiel 34-48' ],
+        [  357, 'Daniel' ],
+    ],
+    [
+        [  197, 'Hosea' ],
+        [   73, 'Joel' ],
+        [  146, 'Amos' ],
+        [   21, 'Obadiah' ],
+        [   48, 'Jonah' ],
+        [  105, 'Micah' ],
+        [   47, 'Nahum' ],
+        [   56, 'Habakkuk' ],
+        [   53, 'Zephaniah' ],
+    ],
+    [
+        [   38, 'Haggai' ],
+        [  211, 'Zechariah' ],
+        [   55, 'Malachi' ],
+    ],
+];
+
+exit;
+
 my $settings = {
     details   => 0,
-    stats     => 1,
-    verses_by => 1,
+    stats     => 0,
+    verses_by => 0,
+    sort      => 0,
 };
 
 my $sets = [
     [
-        '"Minimalist": Current CMA',
+        '"Minimalist"',
         [
             '1 Corinthians; 2 Corinthians',
             'John',
@@ -23,7 +130,23 @@ my $sets = [
         ],
     ],
     [
-        # 'Skipped Books',
+        '"Traditional"',
+        [
+            '1 Corinthians; 2 Corinthians',
+            'John',
+            [ 'Hebrews', '1 Peter; 2 Peter' ],
+            'Matthew',
+            [ 'James', 'Romans' ],
+            'Acts',
+            [
+                'Galatians', 'Ephesians', 'Philippians', 'Colossians',
+                'Philemon',
+            ],
+            'Luke',
+        ],
+    ],
+    [
+        'Skipped Books',
         [
             'Mark',
             '1 Thessalonians; 2 Thessalonians',
@@ -35,16 +158,15 @@ my $sets = [
         ],
     ],
     [
-        '"Recommended": All Non-CMA Quizzing + Include (Most) Skipped Books',
+        '"Recommended"',
         [
-            [
-                '1 Corinthians; 2 Corinthians',
-                '1 Thessalonians; 2 Thessalonians',
-            ],
+            '1 Corinthians; 2 Corinthians',
             'John',
             [
-                'Hebrews', '1 Peter; 2 Peter',
+                'Hebrews',
+                '1 Peter; 2 Peter',
                 '1 Timothy; 2 Timothy',
+                'Titus',
             ],
             'Matthew',
             [
@@ -56,21 +178,22 @@ my $sets = [
             [
                 'Galatians', 'Ephesians', 'Philippians', 'Colossians',
                 'Philemon',
+                '1 Thessalonians; 2 Thessalonians',
+                'Jude',
             ],
             'Luke',
         ],
     ],
     [
-        '"Reduced": Current CMA + Philemon + Include (Most) Skipped Books',
+        '"Reduced"',
         [
-            [
-                '1 Corinthians; 2 Corinthians',
-                '1 Thessalonians; 2 Thessalonians',
-            ],
+            '1 Corinthians; 2 Corinthians',
             'John',
             [
-                'Hebrews', '1 Peter; 2 Peter',
+                'Hebrews',
+                '1 Peter; 2 Peter',
                 '1 Timothy; 2 Timothy',
+                'Titus',
             ],
             'Matthew 1:18-25; 2-12; 14-22; 26-28',
             [
@@ -82,55 +205,14 @@ my $sets = [
             [
                 'Galatians', 'Ephesians', 'Philippians', 'Colossians',
                 'Philemon',
-            ],
-            [
-                'Luke 1-2; 3:1-23; 9-11; 13-19; 21-24',
-                'Luke 12',
-            ],
-        ],
-    ],
-    [
-        '"Smoothed": Current CMA + Philemon + Include (Most) Skipped Books + Backport Non-Full Books',
-        [
-            [
-                '1 Corinthians; 2 Corinthians',
                 '1 Thessalonians; 2 Thessalonians',
+                'Jude',
             ],
-            'John',
-            [
-                'Hebrews', '1 Peter; 2 Peter',
-                '1 Timothy; 2 Timothy',
-                'Matthew 1:1-17; 13; 23-25',
-            ],
-            'Matthew 1:18-25; 2-12; 14-22; 26-28',
-            [
-                'James',
-                'Romans',
-                '1 John; 2 John; 3 John',
-                'Acts 24-28',
-            ],
-            [
-                'Acts 1-20',
-                'Acts 21-23',
-            ],
-            [
-                'Galatians', 'Ephesians', 'Philippians', 'Colossians', 'Philemon',
-                'Luke 3:24-38',
-                'Luke 4',
-                'Luke 5',
-                'Luke 6',
-                'Luke 7',
-                'Luke 8',
-                'Luke 20',
-            ],
-            [
-                'Luke 1-2; 3:1-23; 9-11; 13-19; 21-24',
-                'Luke 12',
-            ],
+            'Luke 1-2; 3:1-23; 9-11; 13-19; 21-24',
         ],
     ],
     [
-        'Remnant + OT Splits',
+        'Remnant + Old Testament',
         [
             'Mark 1-10',
             'Mark 11-16',
@@ -167,8 +249,8 @@ my $sets = [
             '1 Kings 12-25',
             '2 Kings 1-11',
             '2 Kings 12-25',
-            '1 Chronicles 1-10',
-            '1 Chronicles 11-19',
+            '1 Chronicles 1-9',
+            '1 Chronicles 10-19',
             '1 Chronicles 20-29',
             '2 Chronicles 1-9',
             '2 Chronicles 10-21',
@@ -219,55 +301,6 @@ my $sets = [
             'Malachi',
         ],
     ],
-    [
-        'Remnant + OT',
-        [
-            'Genesis 1-9; Daniel',
-            'Numbers 28-36; Psalm 129-150',
-            '2 Chronicles 22-36; Ezekiel 1-11',
-            'Psalm 73-89; Ezekiel 25-33',
-            'Numbers 10-21; 2 Chronicles 1-9',
-            'Genesis 37-50',
-            'Deuteronomy 27-34; Psalm 90-106',
-            'Job 16-30; Proverbs 1-9',
-            '1 Samuel 1-7; 1 Chronicles 1-10',
-            'Jeremiah 1-17',
-            'Exodus 24-31; Deuteronomy 12-26',
-            'Judges 1-16; Nahum',
-            'Isaiah 25-39; Amos',
-            '2 Kings 1-11; 1 Chronicles 20-29',
-            'Lamentations; Ezekiel 34-48',
-            'Leviticus 17-27; Isaiah 40-48',
-            'Genesis 10-24; Judges 17-21',
-            'Deuteronomy 1-4; Nehemiah',
-            'Ezekiel 12-24',
-            'Psalm 107-128; Micah',
-            'Joel; Mark 1-10',
-            'Exodus 1-12; Psalm 1-21',
-            'Joshua 1-12; 2 Samuel 1-12',
-            'Job 31-42; Mark 11-16',
-            '1 Samuel 15-31',
-            'Jeremiah 18-36; Haggai',
-            'Exodus 32-40; Ezra',
-            'Ruth; 1 Kings 1-11',
-            'Numbers 22-27; 1 Kings 12-25',
-            '1 Chronicles 11-19; Psalm 22-41',
-            'Psalm 42-72; Jonah',
-            'Numbers 1-9; Zechariah',
-            'Genesis 25-36',
-            'Deuteronomy 5-11; 2 Kings 12-25',
-            'Job 1-15; Ecclesiastes',
-            'Esther; Proverbs 10-22',
-            'Isaiah 49-66; Jeremiah 45-52',
-            'Exodus 13-23; Proverbs 23-31',
-            'Joshua 13-24; 2 Chronicles 10-21',
-            'Isaiah 1-24; Zephaniah',
-            '1 Samuel 8-14; 2 Samuel 13-24',
-            'Jeremiah 37-44; Revelation',
-            'Leviticus 1-16; Obadiah',
-            'Song of Solomon; Hosea; Habakkuk; Malachi',
-        ],
-    ],
 ];
 
 report(@$_) for ( grep { @$_ == 2 } @$sets );
@@ -278,7 +311,7 @@ sub report ( $name, $nodes ) {
     print '>' x 50 . ' ' . $name . "\n\n";
 
     my $br = Bible::Reference->new;
-    my $process;
+    my ( $process, $data );
     $process = sub ( $level, $nodes ) {
         my @combined_nodes;
         for my $node (@$nodes) {
@@ -288,15 +321,19 @@ sub report ( $name, $nodes ) {
             my $count = $br->clear->add_detail(1)->in($node)->as_verses->@*;
 
             push( @counts, $count ) if ( $level == 0 );
-
-            printf '' . ( ' ' x ( 10 * $level ) ) . "%5s <-- %s\n", $count, $refs
-                if ( not $level or $settings->{details} );
-
+            push( @$data, { level => $level, count => $count, refs => $refs } );
             push( @combined_nodes, $node );
         }
         return join( '; ', @combined_nodes );
     };
     $process->( 0, $nodes );
+
+    $data = [ sort { $a->{count} <=> $b->{count} } @$data ] if ( $settings->{sort} );
+
+    for my $dat (@$data) {
+        printf '' . ( ' ' x ( 10 * $dat->{level} ) ) . "%5s <-- %s\n", $dat->{count}, $dat->{refs}
+            if ( not $dat->{level} or $settings->{details} );
+    }
 
     print "\n";
     stats(\@counts) if $settings->{stats};

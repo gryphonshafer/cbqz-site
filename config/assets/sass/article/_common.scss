@@ -56,12 +56,7 @@ article {
         font-style  : italic;
     }
 
-    table {
-        text-align: left;
-
-        th.right,
-        td.right {
-            text-align: right;
-        }
+    .no_display {
+        display: none;
     }
 }
