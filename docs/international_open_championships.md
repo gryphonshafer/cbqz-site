@@ -6,7 +6,7 @@ The **International Open Championships (IOC)** is Christian Bible Quizzing’s a
 
 International Open Championships for 2025 will be:
 
-- **Dates**: Fri-Sat, June 20-21, 2025
+- **Dates**: Friday-Saturday, June 20-21, 2025
 - **Location**: [Multnomah Holiness Camp](http://multnomahholiness.org)
 - **Address**: [10801 SE Holgate Blvd, Portland OR 97266](https://google.com/maps/dir/10801+SE+Holgate+Blvd,+Portland+OR+97266)
 
