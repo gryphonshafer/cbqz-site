@@ -6,8 +6,9 @@ The **International Open Championships (IOC)** is Christian Bible Quizzing’s a
 
 International Open Championships for 2025 will be:
 
-- **Dates**: To be determined, but likely sometime between mid-June and mid-July; possibly July 11-12
-- **Location**: To be determined, but likely either Portland or Salem, Oregon
+- **Dates**: Fri-Sat, June 20-21, 2025
+- **Location**: [Multnomah Holiness Camp](http://multnomahholiness.org)
+- **Address**: [10801 SE Holgate Blvd, Portland OR 97266](https://google.com/maps/dir/10801+SE+Holgate+Blvd,+Portland+OR+97266)
 
 IOC includes teams from across the United States and Canada from a variety of Quizzing traditions like Nazarene, World, CMA, other programs both pre-existing and new. We expect to run seperate youth and adult competitive divisions. And when not quizzing, there will be optional fun activities for all including a talent show and various other games.
 
