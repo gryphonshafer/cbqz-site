@@ -33,7 +33,9 @@
         </tr>
         [% FOR this_meeting IN open_meetings %]
             <tr>
-                <td><a href="[% c.url_for( '/meeting/' _ this_meeting.data.meeting_id ) %]">[% this_meeting.data.start %]</a></td>
+                <td><a href="[%
+                    c.url_for( '/meeting/' _ this_meeting.data.meeting_id )
+                %]">[% this_meeting.data.start %]</a></td>
                 <td>[% ( this_meeting.is_active ) ? 'Active' : 'Scheduled' %]</td>
             </tr>
         [% END %]
@@ -46,16 +48,20 @@
     </p>
 [% END %]
 
-[% IF attended_meetings AND attended_meetings.size %]
-    <h2>Attended Meetings</h2>
+[% IF past_meetings AND past_meetings.size %]
+    <h2>Past Meetings</h2>
 
     <table>
         <tr>
             <th>Scheduled Start</th>
+            <th>You Attended</th>
         </tr>
-        [% FOR this_meeting IN attended_meetings %]
+        [% FOR this_meeting IN past_meetings %]
             <tr>
-                <td>[% this_meeting.start %]</td>
+                <td><a href="[%
+                    c.url_for( '/meeting/' _ this_meeting.meeting_id )
+                %]">[% this_meeting.start %]</a></td>
+                <td>[% ( this_meeting.attended ) ? 'Yes' : 'No' %]</td>
             </tr>
         [% END %]
     </table>

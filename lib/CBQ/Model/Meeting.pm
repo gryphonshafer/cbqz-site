@@ -2,7 +2,6 @@ package CBQ::Model::Meeting;
 
 use exact -class;
 use Mojo::JSON qw( encode_json decode_json );
-use Text::MultiMarkdown 'markdown';
 
 with qw( Omniframe::Role::Model Omniframe::Role::Time );
 
@@ -24,21 +23,8 @@ sub freeze ( $self, $data ) {
     return $data;
 }
 
-sub _markdownificate ($text) {
-    $text =~ s/</&lt;/g;
-    $text =~ s/>/&gt;/g;
-    return markdown $text;
-}
-
 sub thaw ( $self, $data ) {
     $data->{info} = ( defined $data->{info} ) ? decode_json( $data->{info} ) : {};
-
-    $_ = _markdownificate($_) for (
-        $data->{location},
-        $data->{info}{agenda},
-        $data->{info}{motions}->@*,
-    );
-
     return $data;
 }
 
@@ -49,11 +35,13 @@ sub is_active ($self) {
     ) ? 1 : 0;
 }
 
+sub is_closed ($self) {
+    return $self->data->{info}{closed};
+}
+
 sub open_meetings ($self) {
     return [
-        sort {
-            $a->data->{start} cmp $b->data->{start}
-        }
+        sort { $a->data->{start} cmp $b->data->{start} }
         $self->every({
             -or => [
                 \q{ JSON_EXTRACT( info, '$.closed' ) IS NULL },
@@ -63,12 +51,16 @@ sub open_meetings ($self) {
     ];
 }
 
-sub attended_meetings ( $self, $user ) {
+sub past_meetings ( $self, $user ) {
     return $self->dq->sql( q{
-        SELECT m.start
-        FROM meeting AS M
+        SELECT
+            m.meeting_id,
+            m.start,
+            SUM( CASE WHEN um.user_id = ? THEN 1 ELSE 0 END ) AS attended
+        FROM meeting AS m
         JOIN user_meeting AS um USING (meeting_id)
-        WHERE um.user_id = ?
+        WHERE JSON_EXTRACT( m.info, '$.closed' ) = 1
+        GROUP BY 1
     } )->run( $user->id )->all({});
 }
 
@@ -76,6 +68,19 @@ sub viewed ( $self, $user ) {
     $self->dq->sql( q{
         INSERT OR IGNORE INTO user_meeting ( user_id, meeting_id ) VALUES ( ?, ? )
     } )->run( $user->id, $self->id ) if ( $self->is_active );
+}
+
+sub attendees ($self) {
+    return $self->dq->sql( q{
+        SELECT
+            u.first_name,
+            u.last_name,
+            u.email,
+            u.phone
+        FROM user AS u
+        JOIN user_meeting AS um USING (user_id)
+        WHERE um.meeting_id = ?
+    } )->run( $self->id )->all({});
 }
 
 sub vote_create ( $self, $motion ) {
@@ -88,6 +93,8 @@ sub vote_create ( $self, $motion ) {
 }
 
 sub vote ( $self, $user, $params ) {
+    return unless ( $self->is_active );
+
     my $info = decode_json( $self->dq->sql( q{
         SELECT info FROM user_meeting WHERE user_id = ? AND meeting_id = ?
     } )->run( $user->id, $self->id )->value // '{}' );
@@ -110,7 +117,7 @@ sub all_votes ($self) {
 
     for my $votes (
         grep { $_ }
-        map { decode_json( $_ // {} )->{votes} }
+        map { decode_json( $_ // '{}' )->{votes} }
         $self->dq->sql( q{
             SELECT info FROM user_meeting WHERE meeting_id = ?
         } )->run( $self->id )->column->@*
@@ -158,17 +165,25 @@ Likely not used directly, C<thaw> will JSON-decode the C<info> hashref.
 Returns boolean for if the loaded meeting is "active" (meaning the meeting isn't
 closed and the start was now or in the past).
 
+=head2 is_closed
+
+Returns boolean for if the loaded meeting is closed.
+
 =head2 open_meetings
 
 Sorted list of meeting objects where the meeting isn't closed.
 
-=head2 attended_meetings
+=head2 past_meetings
 
-Data list of meetings that the user has attended.
+Data list of past meetings.
 
 =head2 viewed
 
 Mark the current meeting as viewed (i.e. attended) by the user.
+
+=head2 attendees
+
+List of users who attended the meeting.
 
 =head2 vote_create
 

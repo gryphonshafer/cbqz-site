@@ -8,16 +8,17 @@
 </p>
 
 <p><b>Location:</b></p>
-<div>[% meeting.data.location %]</div>
+<div>[% meeting.data.location | markdownificate %]</div>
 
 <p><b>Agenda:</b></p>
-<div>[% meeting.data.info.agenda %]</div>
+<div>[% meeting.data.info.agenda | markdownificate %]</div>
 
 [% IF meeting.data.info.motions %]
-    <h2>Motions/Votes</h2>
+    <h2>Motions/Votes: [% meeting.data.info.motions.size %]</h2>
     [% FOR motion IN meeting.data.info.motions %]
-        <blockquote>[% motion %]</blockquote>
+        <blockquote>[% motion | markdownificate %]</blockquote>
 
+        [% all_votes = meeting.all_votes %]
         [% IF all_votes AND all_votes.$motion.keys.size %]
             <ul>
                 [% FOR vote IN all_votes.$motion.keys %]
@@ -44,7 +45,7 @@
     [% END %]
 [% END %]
 
-[% IF user.is_qualified_delegate %]
+[% IF NOT meeting.is_closed AND user.is_qualified_delegate %]
     <form method="post" action="[% c.url_for( '/meeting/' _ meeting.id _ '/vote/create' ) %]">
         <fieldset>
             <legend>Create a Vote Item</legend>
@@ -59,7 +60,27 @@
     </form>
 [% END %]
 
-[% IF meeting.is_open AND user.is_qualified_delegate %]
+[% attendees = meeting.attendees %]
+[% IF attendees AND attendees.size %]
+    <h2>Attendees: [% attendees.size %]</h2>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+        </tr>
+        [% FOR this_user IN attendees %]
+            <tr>
+                <td>[% this_user.first_name %] [% this_user.last_name %]</td>
+                <td><a href="mailto:[% this_user.email %]">[% this_user.email %]</a></td>
+                <td>[% this_user.phone %]</td>
+            </tr>
+        [% END %]
+    </table>
+[% END %]
+
+[% IF meeting.is_active AND user.is_qualified_delegate %]
     <p>
         <a href="[% c.url_for( '/meeting/' _ meeting.id _ '/close' ) %]">Close Meeting</a>
     </p>

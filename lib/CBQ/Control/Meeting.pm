@@ -30,9 +30,8 @@ sub view ($self) {
     my $meeting = CBQ::Model::Meeting->new->load( $self->param('meeting_id') );
     $meeting->viewed( $self->stash('user') );
     $self->stash(
-        meeting   => $meeting,
-        votes     => $meeting->votes( $self->stash('user') ),
-        all_votes => $meeting->all_votes,
+        meeting => $meeting,
+        votes   => $meeting->votes( $self->stash('user') ),
     );
 }
 

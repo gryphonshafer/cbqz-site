@@ -2,6 +2,7 @@ package CBQ::Control;
 
 use exact -conf, 'Omniframe::Control';
 use CBQ::Model::User;
+use Text::MultiMarkdown 'markdown';
 
 my $root_dir = conf->get( qw( config_app root_dir ) );
 my $photos   = Mojo::File
@@ -74,6 +75,18 @@ sub startup ($self) {
     $all->any('/*name')->to('main#content');
 }
 
+around 'tt_settings' => sub ( $orig, $self, @input ) {
+    my $tt_settings = $orig->( $self, @input );
+
+    $tt_settings->{config}{FILTERS}{markdownificate} = sub ($text) {
+        $text =~ s/</&lt;/g;
+        $text =~ s/>/&gt;/g;
+        return markdown $text;
+    };
+
+    return $tt_settings;
+};
+
 1;
 
 =head1 NAME
@@ -99,6 +112,11 @@ required C<mojo_app_lib> configuration key) is sufficient to startup a basic
 
 This is a basic, thin startup method for L<Mojolicious>. This method calls
 C<setup> and sets a universal route that renders a basic text message.
+
+=head2 tt_settings
+
+This method wraps L<Omniframe::Role::Template>'s C<tt_settings> to inject a
+C<markdownificate> L<Template::Plugin::Filter>.
 
 =head1 INHERITANCE
 

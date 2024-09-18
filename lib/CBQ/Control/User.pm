@@ -247,9 +247,9 @@ sub tools ($self) {
     my $meeting = CBQ::Model::Meeting->new;
 
     $self->stash(
-        open_meetings     => $meeting->open_meetings,
-        attended_meetings => $meeting->attended_meetings( $self->stash('user') ),
-        users             => [
+        open_meetings => $meeting->open_meetings,
+        past_meetings => $meeting->past_meetings( $self->stash('user') ),
+        users         => [
             sort {
                 $a->{first_name} cmp $b->{first_name} or
                 $a->{last_name} cmp $b->{last_name}
