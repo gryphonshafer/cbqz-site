@@ -70,7 +70,13 @@ sub startup ($self) {
         logout
     ) );
 
-    $all->any( '/rules' => sub ($c) { $c->redirect_to('/CBQ_system/rule_book.md') } );
+    for my $redirect (
+        [ '/rules'   => '/CBQ_system/rule_book.md' ],
+        [ '/ioc'     => '/international_open_championships.md' ],
+        [ '/ioc2025' => '/international_open_championships.md' ],
+    ) {
+        $all->any( $redirect->[0] => sub ($c) { $c->redirect_to( $redirect->[1] ) } );
+    }
 
     $all->any('/*name')->to('main#content');
 }
