@@ -320,7 +320,3 @@ All meet statistics should be made public, published at the same time, fairly to
 Seasons consist of a set of meets, typically though not necessarily beginning in the autumn and concluding the following spring or summer. Each season has a season director who oversees the construction, organization, and operation of a season.
 
 Season directors should publicly publish any seasonal weighting of quizzer and/or teams scores by meet as early as possible and fairly to all.
-
-## 5. License
-
-This document’s is content licensed under the following CBQ usage license: It is permissible to use the content for any purpose not prohibited by the license and to copy, share, or redistribute the content in any medium or format provided attribution is included. It is prohibited, without the express written permission of CBQ, to remix, transform, override, or build upon the content, in whole or in part, embed any part of this content in other works, or use the content for any commercial purposes.

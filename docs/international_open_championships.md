@@ -10,11 +10,11 @@ International Open Championships for 2025 will be:
 - **Location**: [Multnomah Holiness Camp](http://multnomahholiness.org)
 - **Address**: [10801 SE Holgate Blvd, Portland OR 97266](https://google.com/maps/dir/10801+SE+Holgate+Blvd,+Portland+OR+97266)
 
-IOC includes teams from across the United States and Canada from a variety of Quizzing traditions like Nazarene, World, CMA, other programs both pre-existing and new. We expect to run seperate youth and adult competitive divisions. And when not quizzing, there will be optional fun activities for all including a talent show and various other games.
+IOC includes teams from across the United States and Canada from a variety of Quizzing traditions like Nazarene, World, CMA, other programs both pre-existing and new. We expect to run both youth and adult competitive divisions. And when not quizzing, there will be optional fun activities for all including a talent show and various other games.
 
 Don’t miss out on this opportunity to fellowship with Quizzing people you might otherwise never meet and to experience what we’re working hard to make the most fun quiz meet in recent memory. This meet is an open invitational. All who are interested in participating are invited and encouraged to submit their interest. The goal of the meet is to Bible Quiz across many programs and styles, building bridges and advancing interest in Bible Quizzing.
 
-<a href="mailto:q@cbqz.org" class="button">Email Us at q@cbqz.org</a>
+<a href="mailto:q@cbqz.org" class="button colored">Email Us at q@cbqz.org</a>
 
 <!--
 <a href="/files/ioc_registration_2024.pdf" class="button colored">IOC 2024 Registration Form (PDF)</a>
@@ -27,15 +27,15 @@ Don’t miss out on this opportunity to fellowship with Quizzing people you migh
 
 There’s no official age range or limit, though IOC leadership feels the meet is best suited for quizzers in middle school and high school. However, it’s entirely up to coaches and programs to evaluate the maturity level and readiness of their quizzers.
 
+> What will be the material for the IOC 2025 meet?
+
+We expect the material label for IOC 2025 will be: “Luke 1-2; 3:1-23; 4-24 ESV NIV NIV84*”. (See the [the CBQ rule book](CBQ_system/rule_book.md) for an explaiation for what a material label is and means.)
+
 <!--
 
 > Wait, you said “adult division”? Are you serious?
 
 Yes. We’re serious. We fully expect there to be enough registrations to support an “adult division”. This will be a separate division from the “main event” youth Bible Quizzing division.
-
-> What will be the material for the IOC meet?
-
-We expect the material label for IOC will be: "Galatians; Ephesians; Philippians; Colossians ESV NIV NIV84*". (See the [the CBQ rule book](CBQ_system/rule_book.md) for an explaiation for what a material label is and means.)
 
 > How much will IOC cost per quizzer?
 
@@ -53,7 +53,7 @@ First, fill out a registration form and send it to us:
 
 > I have questions you didn’t answer.
 
-<a href="mailto:q@cbqz.org" class="button">Email Us at q@cbqz.org</a>
+<a href="mailto:q@cbqz.org" class="button colored">Email Us at q@cbqz.org</a>
 
 <!--
 
