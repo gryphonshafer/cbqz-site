@@ -2,7 +2,6 @@ package CBQ::Control::Meeting;
 
 use exact -conf, 'Mojolicious::Controller';
 use CBQ::Model::Meeting;
-use Omniframe::Util::Text 'deat';
 
 sub create ($self) {
     return $self->redirect_to('/user/tools') unless ( $self->stash('user')->is_qualified_delegate );
@@ -17,9 +16,12 @@ sub create ($self) {
                 $self->redirect_to( '/meeting/' . CBQ::Model::Meeting->new->create($params)->id );
             }
             catch ($e) {
+                $e = deat $e;
+                chomp $e;
+
                 $self->stash(
                     %$params,
-                    message => deat($e) . '.',
+                    message => $e . '.',
                 );
             }
         }
