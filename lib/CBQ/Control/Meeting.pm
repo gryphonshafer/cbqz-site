@@ -16,12 +16,9 @@ sub create ($self) {
                 $self->redirect_to( '/meeting/' . CBQ::Model::Meeting->new->create($params)->id );
             }
             catch ($e) {
-                $e = deat $e;
-                chomp $e;
-
                 $self->stash(
                     %$params,
-                    message => $e . '.',
+                    message => deat($e) . '.',
                 );
             }
         }
