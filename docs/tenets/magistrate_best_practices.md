@@ -58,7 +58,7 @@ Magistrates must manage the phases of quiz operations with consistency, fairness
 
 ### Startup and Management
 
-Immediately prior to every quiz, QMs should retest trigger light operations. This can be done in a couple of seconds if the QM holds their reset switch on and asks quizzers to trigger. A more time consuming approach can be to ask quizzers to individually trigger and say their name. Both options are acceptable if time is not a factor; however, QMs should use fastest means unless they’re ahead of schedule.
+Immediately prior to every quiz, QMs should retest trigger light operations. This can be done in a couple of seconds if the QM holds their reset switch on and asks quizzers to trigger. A more time consuming approach can be to ask quizzers to individually trigger and say their name. Both options are acceptable if time is not a factor; however, QMs should use the fastest means unless they’re ahead of schedule.
 
 The QM may elect to perform a set of “practice triggers,” the purpose of which is to help quizzers learn the QM’s cadence and style. QMs should only perform “practice triggers” when ahead of schedule. Since the purpose is to help quizzers adjust to the specific QM, “practice triggers” should ideally demonstrate the QM’s cadence and style. They should match real queries as much as possible without being real queries; which is to say, QMs shouldn’t use real queries but should use mocks that resemble the cadence and style of real queries.
 
@@ -119,4 +119,4 @@ All magistrates should be persistently looking for magistrate candidates. QMs sh
 
 All magistrates should be persistently evaluating if any in their ranks should step back from QMing for a time. Ideally, a magistrate should be self-aware of slips in quality (for any reason or no discernable reason) and recuse themselves from QMing temporarily if practically possible. However, often it’s difficult to self-assess; so the magistrate community has a responsibility to hold each of its members accountable to excellence, which will unfortunately require at times asking a QM to step back from officiating for a while.
 
-The goal is not a magistrate community that is merely competent but one that is optimizes for missional outcomes.
+The goal is not a magistrate community that is merely competent but one that is optimized for missional outcomes.
