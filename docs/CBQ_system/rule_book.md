@@ -1,7 +1,7 @@
 # Rule Book for Christian Bible Quizzing (CBQ)
 
-- Version: 1.4.2
-- Published: August 13, 2024
+- Version: 1.4.3
+- Published: November 14, 2024
 
 Bible Quizzing is a Christian sport in which teams of participants called _quizzers_ compete on Scriptural recitation in matches called _quizzes_. Quizzing tournaments called _meets_ consist of a set of _quizzes_. Quizzing _seasons_ consist of a set of meets. _Christian Bible Quizzing (CBQ)_ is the organization that oversees and supports local and regional Quizzing operations internationally with the mission to encourage the most people to memorize the most verses of Scripture. This is the official rule book for CBQ competitions.
 
@@ -93,11 +93,11 @@ A finish query’s prompt are the first **5 or more words** of a verse. The prom
 
 #### 2.3.2. Quizzer-Selected Subtypes
 
-The following are query quizzer-selected subtypes. The responding quizzer may set 1 or more quizzer-selected subtypes on a per-query basis by calling their names at any time prior to providing a complete response. Unless otherwise altered by the responding quizzer, the QM assumes queries have the synonymous subtype.
+The following are query quizzer-selected subtypes. The responding quizzer may set 1 or more quizzer-selected subtypes on a per-query basis by calling their names, acronyms, or synonyms at any time prior to providing a complete response. Unless otherwise altered by the responding quizzer, the QM assumes queries have the synonymous subtype.
 
-The responding quizzer may not remove or change any previously selected quizzer-selected subtypes; however, if the quizzer calls for an “open-book” subtype and has not previously called for a “synonymous” or “verbatim” subtype, the QM will accept the “open-book” call and unset any other previously called subtypes.
+The responding quizzer may not remove or change any previously selected quizzer-selected subtypes; however, if the quizzer calls for an “open book” subtype and has not previously called for a “synonymous” or “verbatim” subtype, the QM will accept the “open book” call and unset any other previously called subtypes.
 
-Should the responding quizzer call for a valid quizzer-selected subtype, the QM ignores any response from the quizzer given prior to the call. The QM ignores calls for invalid quizzer-selected subtypes.
+Should the responding quizzer call for a valid quizzer-selected subtype, the QM ignores any response (excluding quizzer-selected subtype declarations) from the quizzer given prior to the call. The QM ignores calls for invalid quizzer-selected subtypes.
 
 ##### 2.3.2.1. Synonymous (S)
 
@@ -112,21 +112,21 @@ Should the text identify a person of the Trinity, the quizzer must provide a nam
 
 ##### 2.3.2.2. Verbatim (V)
 
-The QM judges responses to queries of the verbatim quizzer-selected subtype correct should the responses contain all words of the reply and any words of the prompt the QM did not at least partially speak. The quizzer must provide all words required of the response verbatim in order from the text without any additional words.
+If the quizzer calls for the “verbatim” or “word perfect” subtype, the QM judges responses correct should the responses contain all words of the reply and any words of the prompt the QM did not at least partially speak. The quizzer must provide all words required of the response verbatim in order from the text without any additional words.
 
-The quizzer does not necessarily need to recite the text from beginning to end. The QM counts correct a verbatim response that starts in the middle of the verse, continues through the end, then continues from the beginning of the verse until the start point. The QM also counts correct a quizzer who includes a non-verbatim word or phrase but corrects it by repeating the surrounding verbatim words whilst excluding the non-verbatim content.
+The quizzer does not necessarily need to recite the text from beginning to end. The QM counts correct a verbatim response that starts in the middle of the verse, continues through the end, then continues from the beginning of the verse until the start point. The QM also counts correct a quizzer who includes a non-verbatim word or phrase but corrects it by repeating the surrounding verbatim words whilst excluding the non-verbatim content. The QM also counts correct a quizzer who corrects an incorrect single word or phrase without surrounding words. Any incorrect recitation of a previously correct recitation must be corrected prior to being counted correct.
 
-##### 2.3.2.3. Open-Book (O)
+##### 2.3.2.3. Open Book (O)
 
-If the quizzer calls for an “open-book” subtype, the quizzer may then open and consult any paper-based references brought with them to their chair. The QM judges responses to open-book queries as if they were synonymous, without reference.
+If the quizzer calls for an “open book” subtype, the quizzer may then open and consult any paper-based references brought with them to their chair. The QM judges responses to open book queries as if they were synonymous, without reference.
 
-Quote base subtype queries are ineligible for the open-book quizzer-selected subtype.
+Quote base subtype queries are ineligible for the open book quizzer-selected subtype.
 
-Should the quizzer open or consult any paper-based references without first calling “open-book” or when responding to a Quote base subtype query, the QM will rule the quizzer in error.
+Should the quizzer open or consult any paper-based references without first calling “open book” or when responding to a Quote base subtype query, the QM will rule the quizzer in error.
 
 ##### 2.3.2.4. With Reference (R)
 
-If the quizzer calls for the “with reference” subtype, the QM requires the quizzer provide a full reference including book, chapter, and verse number to be counted correct. The QM only considers the first full reference the quizzer provides.
+If the quizzer calls for the “with reference” or “add a reference” subtype, the QM requires the quizzer provide a full reference including book, chapter, and verse number to be counted correct. The QM only considers the first full reference the quizzer provides.
 
 Quote base subtype queries automatically include the “with reference” quizzer-selected subtype, but the quizzer will not be required to provide the reference.
 
@@ -188,11 +188,11 @@ A team may not call for an appeal in a quiz after their second declined appeal i
 
 A quizzer remains eligible to trigger for queries until they accrue correct rulings on:
 
-- **4 queries** should none of the first 3 of those queries be open-book
-- **3 queries** should **any 1 but only 1** of the first 2 queries be open-book
-- **2 queries** should all be open-book
+- **4 queries** should none of the first 3 of those queries be open book
+- **3 queries** should **any 1 but only 1** of the first 2 queries be open book
+- **2 queries** should all be open book
 
-A team is limited to 3 correct open-book queries per quiz.
+A team is limited to 3 correct open book queries per quiz.
 
 ### 2.7. Fouls
 
@@ -208,7 +208,7 @@ If the QM assesses a foul, the QM will replace the query and restart the query p
 
 #### 2.7.1. Paper-Based Documents
 
-Quizzers may bring with them to their chairs any paper-based documents or notes for reference intended for use with open-book responses, but these must have a means to be set in a state where their content is hidden and remain in such state until the quizzer calls for open-book, then returned to that state after each query.
+Quizzers may bring with them to their chairs any paper-based documents or notes for reference intended for use with open book responses, but these must have a means to be set in a state where their content is hidden and remain in such state until the quizzer calls for open book, then returned to that state after each query.
 
 ### 2.8. Scoring
 
@@ -218,7 +218,7 @@ Quizzers earn points when the QM counts them correct. Quizzer points accrue to b
 
 The value of correct rulings depends on the query type.
 
-- All queries of the open-book subtype are worth **a maximum of +1 point**.
+- All queries of the open book subtype are worth **a maximum of +1 point**.
 - All queries of the synonymous subtype are worth **+2 points**.
 - All queries of the verbatim subtype are worth **+4 points**.
 - All queries with the “with reference” subtype are worth **+1 additional point**.
@@ -226,7 +226,7 @@ The value of correct rulings depends on the query type.
 
 For example, a query of type phrase, verbatim, with reference is worth +5 points.
 
-In addition, should a quizzer reach their ceiling without being counted incorrect and not selecting open-book for any query, they receive **an additional +3 points**.
+In addition, should a quizzer reach their ceiling without being counted incorrect and not selecting open book for any query, they receive **an additional +3 points**.
 
 #### 2.8.2. Bonus Team Points
 
