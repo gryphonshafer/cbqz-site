@@ -40,7 +40,7 @@ Note QMs should not use a foul or any other rule book statute as a means to corr
 
 Magistrates should arrive to the meet fully prepared to execute their duties with excellence. Prior to each meet, every QM should:
 
-- Reread [the CBQ Rule Book](CBQ_system/rule_book.md) in full.
+- Reread [the CBQ Rule Book](../CBQ_system/rule_book.md) in full.
 - Reread this document in full.
 - Exercise with all Quizzing tools (such as [QuizSage](https://quizsage.org) and trigger sets).
 - Seek clarification from the magistrate community and other leadership on all ambiguities and other questions.
