@@ -1,8 +1,11 @@
 # Next General Assembly Meeting
 
 - Date: **Thursday, February 6, 2025**
-- Start Time: **6 PM PST**
-- Zoom Link: [https://us02web.zoom.us/j/89432299918?pwd=9Lv59PTM6JrfmeesHKe4PgEAPGMDkQ.1](https://us02web.zoom.us/j/89432299918?pwd=9Lv59PTM6JrfmeesHKe4PgEAPGMDkQ.1)
+- Start: **6 PM PST**
+- Location:
+    - [Zoom Meeting Link](https://us02web.zoom.us/j/89432299918?pwd=9Lv59PTM6JrfmeesHKe4PgEAPGMDkQ.1)
+    - Meeting ID: 894 3229 9918
+    - Passcode: 587265
 
 [Section 1.2 of the CBQ Bylaws version 2024-07-27](bylaws.md#article1-generalassemblyandqualifieddelegates) requires
 a General Assembly meeting be held semiannually, the first between January and March, and the second will be held between July and September.

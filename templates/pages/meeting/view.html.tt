@@ -1,9 +1,13 @@
-[% page.title = 'Meeting' %]
+[%
+    USE date;
+    page.title = 'CBQ Meeting: ' _ date.format( meeting.data.start, '%b %-d, %Y' );
+%]
 
 <h1>[% page.title %]</h1>
 
 <p>
-    <b>Start:</b> [% meeting.data.start %]<br>
+    <b>Start:</b> <time datetime="[% meeting.data.start %]">[%
+        date.format( meeting.data.start, '%a, %b %-d, %Y at %-I:%M %p %Z' ) %]</time><br>
     <i>Meeting is <b>[% IF meeting.is_active %]active[% ELSE %]not active[% END %]</b>.</i>
 </p>
 
