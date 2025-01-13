@@ -1,7 +1,7 @@
 # Rule Book for Christian Bible Quizzing (CBQ)
 
-- Version: 1.4.3
-- Published: November 14, 2024
+- Version: 1.4.4
+- Published: January 13, 2025
 
 Bible Quizzing is a Christian sport in which teams of participants called _quizzers_ compete on Scriptural recitation in matches called _quizzes_. Quizzing tournaments called _meets_ consist of a set of _quizzes_. Quizzing _seasons_ consist of a set of meets. _Christian Bible Quizzing (CBQ)_ is the organization that oversees and supports local and regional Quizzing operations internationally with the mission to encourage the most people to memorize the most verses of Scripture. This is the official rule book for CBQ competitions.
 
@@ -114,7 +114,7 @@ Should the text identify a person of the Trinity, the quizzer must provide a nam
 
 If the quizzer calls for the “verbatim” or “word perfect” subtype, the QM judges responses correct should the responses contain all words of the reply and any words of the prompt the QM did not at least partially speak. The quizzer must provide all words required of the response verbatim in order from the text without any additional words.
 
-The quizzer does not necessarily need to recite the text from beginning to end. The QM counts correct a verbatim response that starts in the middle of the verse, continues through the end, then continues from the beginning of the verse until the start point. The QM also counts correct a quizzer who includes a non-verbatim word or phrase but corrects it by repeating the surrounding verbatim words whilst excluding the non-verbatim content. The QM also counts correct a quizzer who corrects an incorrect single word or phrase without surrounding words. Any incorrect recitation of a previously correct recitation must be corrected prior to being counted correct.
+The quizzer does not necessarily need to recite the response from beginning to end. The QM counts correct a verbatim response that starts in the middle of the required content, continues through the end, then continues from the beginning of the required content until the initial recitation point. The QM also counts correct a quizzer who includes a non-verbatim word or phrase but corrects it by repeating the surrounding verbatim words whilst excluding the non-verbatim content. The QM also counts correct a quizzer who corrects an incorrect single word or phrase without surrounding words. Any incorrect recitation of a previously correct recitation must be corrected prior to being counted correct.
 
 ##### 2.3.2.3. Open Book (O)
 
