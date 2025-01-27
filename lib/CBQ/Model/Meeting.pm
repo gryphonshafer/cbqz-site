@@ -2,12 +2,15 @@ package CBQ::Model::Meeting;
 
 use exact -class;
 use Mojo::JSON qw( encode_json decode_json );
+use Omniframe::Class::Time;
 
-with qw( Omniframe::Role::Model Omniframe::Role::Time );
+with 'Omniframe::Role::Model';
+
+my $time = Omniframe::Class::Time->new;
 
 around 'create' => sub ( $orig, $self, $params ) {
     try {
-        $params->{start} = $self->time->parse( $params->{start} )->format('ansi');
+        $params->{start} = $time->parse( $params->{start} )->format('ansi');
     }
     catch ($e) {
         die 'Unable to parse start date/time';
@@ -31,7 +34,7 @@ sub thaw ( $self, $data ) {
 sub is_active ($self) {
     return (
         not $self->data->{info}{closed} and
-        $self->time->parse( $self->data->{start} )->datetime->epoch <= time
+        $time->parse( $self->data->{start} )->datetime->epoch <= time
     ) ? 1 : 0;
 }
 
@@ -205,6 +208,6 @@ Return summary data of all votes made by all users at the meeting.
 
 Close the meeting.
 
-=head1 WITH ROLES
+=head1 WITH ROLE
 
-L<Omniframe::Role::Model>, L<Omniframe::Role::Time>.
+L<Omniframe::Role::Model>.
