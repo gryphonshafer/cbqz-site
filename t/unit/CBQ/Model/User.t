@@ -1,7 +1,7 @@
 use Test2::V0;
+use Mojo::URL;
 use exact -conf;
 use CBQ::Model::User;
-use Mojo::URL;
 
 my $obj;
 ok( lives { $obj = CBQ::Model::User->new }, 'new' ) or note $@;
