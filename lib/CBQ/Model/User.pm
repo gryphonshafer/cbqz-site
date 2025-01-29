@@ -1,6 +1,6 @@
 package CBQ::Model::User;
 
-use exact -class;
+use exact -class, -conf;
 use Email::Address;
 use Mojo::JSON qw( encode_json decode_json );
 use Omniframe::Class::Email;
@@ -103,7 +103,7 @@ sub is_qualified_delegate ($self) {
         } )->run->value < 4 and
         grep { $_ eq $self->data->{email} }
         map { /<([^>]+)>/ }
-        ( $self->conf->get('pre_qualified_delegates') // [] )->@*
+        ( conf->get('pre_qualified_delegates') // [] )->@*
     );
 
     my $attendance = $self->dq->sql( q{
