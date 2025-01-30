@@ -4,8 +4,9 @@ use exact -class, -conf;
 use Email::Address;
 use Mojo::JSON qw( encode_json decode_json );
 use Omniframe::Class::Email;
+use Omniframe::Util::Bcrypt 'bcrypt';
 
-with qw( Omniframe::Role::Bcrypt Omniframe::Role::Model );
+with 'Omniframe::Role::Model';
 
 class_has active => 1;
 
@@ -26,7 +27,7 @@ sub freeze ( $self, $data ) {
     if ( $self->is_dirty( 'passwd', $data ) ) {
         croak("Password supplied is not at least $min_passwd_length characters in length")
             unless ( length $data->{passwd} >= $min_passwd_length );
-        $data->{passwd} = $self->bcrypt( $data->{passwd} );
+        $data->{passwd} = bcrypt( $data->{passwd} );
     }
 
     if ( $self->is_dirty( 'phone', $data ) ) {
@@ -79,7 +80,7 @@ sub reset_password ( $self, $user_id, $user_hash, $new_password ) {
     return 0 unless $user_found;
 
     $self->dq->sql('UPDATE user SET passwd = ? WHERE user_id = ?')
-        ->run( $self->bcrypt($new_password), $user_id );
+        ->run( bcrypt($new_password), $user_id );
 
     return 1;
 }
@@ -87,7 +88,7 @@ sub reset_password ( $self, $user_id, $user_hash, $new_password ) {
 sub login ( $self, $email, $passwd ) {
     $self->load({
         email  => lc($email),
-        passwd => $self->bcrypt($passwd),
+        passwd => bcrypt($passwd),
         active => 1,
     });
 
@@ -221,6 +222,6 @@ to find and login the user. If successful, it will return a loaded user object.
 Returns true if the user is a qualified delegate as defined by attendance
 (viewing) of 3 of the last 4 meetings.
 
-=head1 WITH ROLES
+=head1 WITH ROLE
 
-L<Omniframe::Role::Bcrypt>, L<Omniframe::Role::Model>.
+L<Omniframe::Role::Model>.
