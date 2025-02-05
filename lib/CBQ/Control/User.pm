@@ -15,7 +15,7 @@ sub sign_up ($self) {
             die 'Email, password, first and last name, and phone fields must be filled in'
                 if ( grep { length $params{$_} == 0 } @fields );
 
-            $self->_captcha;
+            $self->_captcha_check;
 
             my $user = CBQ::Model::User->new->create({ map { $_ => $params{$_} } @fields });
 
@@ -126,7 +126,7 @@ sub verify ($self) {
 sub forgot_password ($self) {
     if ( my $email = $self->param('email') ) {
         try {
-            $self->_captcha;
+            $self->_captcha_check;
 
             my $user = CBQ::Model::User->new->load( { email => $email }, 1 );
             if ( $user->data->{active} ) {
@@ -262,7 +262,7 @@ sub tools ($self) {
     ( my $contact_email = conf->get( qw( email from ) ) )
         =~ s/(<|>)/ ( $1 eq '<' ) ? '&lt;' : '&gt;' /eg;
 
-    sub _captcha ($self) {
+    sub _captcha_check ($self) {
         my $captcha = $self->param('captcha') // '';
         $captcha =~ s/\D//g;
 
@@ -270,9 +270,8 @@ sub tools ($self) {
             'The captcha sequence provided does not match the captcha sequence in the captcha image.',
             'Please try again.',
             'If the problem persists, email <b>' . $contact_email . '</b> for help.',
-        ) unless ( $captcha and $self->session('captcha') and $captcha eq $self->session('captcha') );
+        ) unless ( $self->check_captcha_value($captcha) );
 
-        delete $self->session->{captcha};
         return;
     }
 }

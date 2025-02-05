@@ -18,12 +18,6 @@ google_fonts:
             formats:
                 - woff2
                 - woff
-        'Inter Tight':
-            variants:
-                - 700
-            subsets:
-                - latin-ext
-            formats:
                 - ttf
     icons:
         types:

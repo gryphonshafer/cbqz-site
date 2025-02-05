@@ -20,18 +20,8 @@ default    :
     email:
         from: Christian Bible Quizzing <q@cbqz.org>
     captcha:
-        width      : 230
-        height     : 50
-        size       : 20
-        ttf        : static/externals/google_fonts/fonts/inter-tight/inter-tight-v*-latin_latin-ext-700.ttf
-        rotation   : 8
-        x          : 20
-        y_base     : 35
-        y_rotate   : 100
-        noise      : 1000
-        background : [ 255, 255, 255 ]
-        text_color : [ 'rand(128)', 'rand(128)', 'rand(128)' ]
-        noise_color: [ 'rand(128) + 128', 'rand(128) + 128', 'rand(128) + 128' ]
+        ttf: static/externals/google_fonts/fonts/poppins/poppins-v*-latin_latin-ext-700.ttf
+        x: 15
 tauntaun:
     database:
         log:
