@@ -50,7 +50,10 @@ sub startup ($self) {
     my $users = $all->under( sub ($c) {
         return 1 if ( $c->stash('user') );
         $c->info('Login required but not yet met');
-        $c->flash( message => 'Login required for the previously requested resource.' );
+        $c->flash( memo => {
+            class   => 'error',
+            message => 'Login required for the previously requested resource.',
+        } );
         $c->redirect_to('/user/login');
         return 0;
     } );

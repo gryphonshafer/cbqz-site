@@ -16,8 +16,6 @@
         <span class="material-symbols-outlined inline">forum</span></a>
 </header>
 
-[% PROCESS message.html.tt %]
-
 <article>
     [% content %]
 </article>

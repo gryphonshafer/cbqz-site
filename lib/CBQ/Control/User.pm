@@ -30,9 +30,9 @@ sub sign_up ($self) {
 
                 $self->info( 'User create success: ' . $user->id );
                 $self->flash(
-                    message => {
-                        type => 'success',
-                        text => join( ' ',
+                    memo => {
+                        class   => 'success',
+                        message => join( ' ',
                             'Successfully created user with email address: ' .
                                 '<b>' . $email->{to} . '</b>.',
                             'Check your email for reception of the verification email.',
@@ -48,7 +48,7 @@ sub sign_up ($self) {
         catch ($e) {
             if ( $e =~ /\bcaptcha\b/i ) {
                 $e =~ s/\s+at\s+(?:(?!\s+at\s+).)*[\r\n]*$//;
-                $self->stash( message => $e );
+                $self->stash( memo => { class => 'error', message => $e } );
             }
             else {
                 $e =~ s/\s+at\s+(?:(?!\s+at\s+).)*[\r\n]*$//;
@@ -60,7 +60,7 @@ sub sign_up ($self) {
                     if ( $e =~ /UNIQUE constraint failed/ );
 
                 $self->info("User create failure: $e");
-                $self->stash( message => $e, %params );
+                $self->stash( memo => { class => 'error', message => $e }, %params );
             }
         }
     }
@@ -80,9 +80,9 @@ sub edit ($self) {
             $self->stash('user')->save;
 
             $self->flash(
-                message => {
-                    type => 'success',
-                    text => 'Successfully saved user data.',
+                memo => {
+                    class   => 'success',
+                    message => 'Successfully saved user data.',
                 }
             );
 
@@ -98,7 +98,7 @@ sub edit ($self) {
                 if ( $e =~ /UNIQUE constraint failed/ );
 
             $self->info("User create failure: $e");
-            $self->stash( message => $e, %params );
+            $self->stash( memo => { class => 'error', message => $e }, %params );
         }
     }
 
@@ -109,15 +109,16 @@ sub edit ($self) {
 sub verify ($self) {
     if ( CBQ::Model::User->new->verify( $self->stash('user_id'), $self->stash('user_hash') ) ) {
         $self->info( 'User verified: ' . $self->stash('user_id') );
-        $self->flash(
-            message => {
-                type => 'success',
-                text => 'Successfully verified this user account. You may now login with your credentials.',
-            }
-        );
+        $self->flash( memo => {
+            class   => 'success',
+            message => 'Successfully verified this user account. You may now login with your credentials.',
+        } );
     }
     else {
-        $self->flash( message => 'Unable to verify user account using the link provided.' );
+        $self->flash( memo => {
+            class   => 'error',
+            message => 'Unable to verify user account using the link provided.',
+        } );
     }
 
     $self->redirect_to('/user/login');
@@ -143,9 +144,9 @@ sub forgot_password ($self) {
             $email->{$_} =~ s/(<|>)/ ( $1 eq '<' ) ? '&lt;' : '&gt;' /eg for ( qw( to from ) );
 
             $self->flash(
-                message => {
-                    type => 'success',
-                    text => join( ' ',
+                memo => {
+                    class   => 'success',
+                    message => join( ' ',
                         'Sent email to: ' .
                             '<b>' . $email->{to} . '</b>.',
                         'Check your email for reception of the email.',
@@ -160,7 +161,7 @@ sub forgot_password ($self) {
         }
         catch ($e) {
             $e =~ s/\s+at\s+(?:(?!\s+at\s+).)*[\r\n]*$//;
-            $self->stash( message => $e );
+            $self->stash( memo => { class => 'error', message => $e } );
         }
     }
 }
@@ -177,16 +178,16 @@ sub reset_password ($self) {
             ) {
                 $self->info( 'Password reset for: ' . $self->stash('user_id') );
                 $self->flash(
-                    message => {
-                        type => 'success',
-                        text => 'Successfully reset password. Login with your new password.',
+                    memo => {
+                        class   => 'success',
+                        message => 'Successfully reset password. Login with your new password.',
                     }
                 );
 
                 $self->redirect_to('/user/login');
             }
             else {
-                $self->stash( message => 'Failed to reset password.' );
+                $self->stash( memo => { class => 'error', message => 'Failed to reset password.' } );
             }
         }
         catch ($e) {
@@ -195,7 +196,7 @@ sub reset_password ($self) {
             $e =~ s/DBD::\w+::st execute failed:\s*//;
             $e .= '. Please try again.';
 
-            $self->stash( message => $e );
+            $self->stash( memo => { class => 'error', message => $e } );
         }
     }
 }
@@ -214,14 +215,15 @@ sub login ($self) {
         catch ($e) {
             if ( $e =~ /\bcaptcha\b/i ) {
                 $e =~ s/\s+at\s+(?:(?!\s+at\s+).)*[\r\n]*$//;
-                $self->stash( message => $e );
+            $self->stash( memo => { class => 'error', message => $e } );
             }
             else {
                 $self->info( 'Login failure for ' . $self->param('email') );
-                $self->stash( message =>
-                    'Login failed. Please try again, or try the ' .
-                    '<a href="' . $self->url_for('/user/forgot_password') . '">Forgot Password</a> page.'
-                );
+                $self->stash( memo => {
+                    class   => 'error',
+                    message => 'Login failed. Please try again, or try the ' .
+                        '<a href="' . $self->url_for('/user/forgot_password') . '">Forgot Password</a> page.'
+                } );
             }
         }
     }
@@ -235,9 +237,9 @@ sub logout ($self) {
 
     $self->session( user_id => undef );
 
-    $self->flash( message => {
-        type => 'notice',
-        text => 'You have been logged out.',
+    $self->flash( memo => {
+        class   => 'notice',
+        message => 'You have been logged out.',
     } );
 
     $self->redirect_to('/');
