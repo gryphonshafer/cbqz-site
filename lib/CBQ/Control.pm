@@ -69,7 +69,7 @@ sub startup ($self) {
     $all->any('/')  ->to('main#index');
     $all->any('/iq')->to('main#iq');
 
-    $all->any("/user/$_/:user_id/:user_hash")->to("user#$_") for ( qw( verify reset_password ) );
+    $all->any("/user/$_/:token")->to("user#$_") for ( qw( verify reset_password ) );
     $all->any( '/user/' . $_ )->to( 'user#' . $_ ) for ( qw(
         sign_up
         login

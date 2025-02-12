@@ -107,8 +107,8 @@ sub edit ($self) {
 }
 
 sub verify ($self) {
-    if ( CBQ::Model::User->new->verify( $self->stash('user_id'), $self->stash('user_hash') ) ) {
-        $self->info( 'User verified: ' . $self->stash('user_id') );
+    if ( my $user_id = CBQ::Model::User->new->verify( $self->stash('token') ) ) {
+        $self->info( 'User verified: ' . $user_id );
         $self->flash( memo => {
             class   => 'success',
             message => 'Successfully verified this user account. You may now login with your credentials.',
@@ -169,14 +169,8 @@ sub forgot_password ($self) {
 sub reset_password ($self) {
     if ( my $passwd = $self->param('passwd') ) {
         try {
-            if (
-                CBQ::Model::User->new->reset_password(
-                    $self->stash('user_id'),
-                    $self->stash('user_hash'),
-                    $passwd,
-                )
-            ) {
-                $self->info( 'Password reset for: ' . $self->stash('user_id') );
+            if ( my $user_id = CBQ::Model::User->new->reset_password( $self->stash('token'), $passwd ) ) {
+                $self->info( 'Password reset for: ' . $user_id );
                 $self->flash(
                     memo => {
                         class   => 'success',

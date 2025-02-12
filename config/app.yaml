@@ -11,6 +11,9 @@ default    :
             cookie_name: cbq_site_session
     bcrypt:
         salt: 54XYZdnG4FjvcTJD
+    crypt:
+        pass: 4FjvcTJD54XYZdnG
+        salt: 56789a01234
     docs:
         dir        : docs
         home_type  : md
@@ -22,6 +25,8 @@ default    :
     captcha:
         ttf: static/externals/google_fonts/fonts/poppins/poppins-v*-latin_latin-ext-700.ttf
         x: 15
+    min_passwd_length: 8
+    token_expiration : 86400 # 1 day
 tauntaun:
     database:
         log:
