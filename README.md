@@ -1,6 +1,9 @@
 # CBQ Web Site
 
-Web site, documents, and tools in support of CBQ.
+[![test](https://github.com/gryphonshafer/cbqz-site/workflows/test/badge.svg)](https://github.com/gryphonshafer/cbqz-site/actions?query=workflow%3Atest)
+[![codecov](https://codecov.io/gh/gryphonshafer/cbqz-site/graph/badge.svg)](https://codecov.io/gh/gryphonshafer/cbqz-site)
+
+This is the software and content for the [CBQ](https://cbqz.org) web site.
 
 ## Installation and Setup
 

@@ -1,10 +1,10 @@
 ---
-preinclude : ../../omniframe/config/app.yaml
-default    :
-    omniframe    : ../../omniframe
-    libs         : ../../omniframe/lib
-    mojo_app_lib : CBQ::Control
-    mojolicious  :
+preinclude: ../../omniframe/config/app.yaml
+default:
+    omniframe: ../../omniframe
+    libs     : ../../omniframe/lib
+    mojo_app_lib: CBQ::Control
+    mojolicious:
         secrets:
             - gd824qfOpPOF6qUWya0QT0nU9U82JKVu
         session:
@@ -15,10 +15,10 @@ default    :
         pass: 4FjvcTJD54XYZdnG
         salt: 56789a01234
     docs:
-        dir        : docs
-        home_type  : md
-        home_title : Christian Bible Quizzing
-        home_name  : CBQ Home
+        dir       : docs
+        home_type : md
+        home_title: Christian Bible Quizzing
+        home_name : CBQ Home
     iq_rss: ../iq/iq.rss
     email:
         from: Christian Bible Quizzing <q@cbqz.org>
@@ -26,7 +26,7 @@ default    :
         ttf: static/externals/google_fonts/fonts/poppins/poppins-v*-latin_latin-ext-700.ttf
         x: 15
     min_passwd_length: 8
-    token_expiration : 86400 # 1 day
+    token_expiration: 86400 # 1 day
 tauntaun:
     database:
         log:

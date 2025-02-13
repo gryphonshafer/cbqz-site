@@ -1,0 +1,63 @@
+name: test
+on: [ push, pull_request, workflow_dispatch ]
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                perl-version: [ devel, 40, 38, 36, 34, 32, 30, 28, 26, 24 ]
+        container:
+            image: |-
+                perldocker/perl-tester:${{
+                    contains( matrix.perl-version, 'd' )
+                        && matrix.perl-version
+                        || format( '5.{0}', matrix.perl-version )
+                }}
+        env:
+            PERL_CPANM_OPT: |-
+                --from https://cpan.metacpan.org
+                --notest
+                --force
+                --skip-satisfied
+                --with-develop
+                --with-all-features
+                --installdeps
+            HARNESS_PERL_SWITCHES: -MDevel::Cover
+            CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        steps:
+            - run: apt-get update && apt-get install -y libgd3 libgd-dev
+            - run: |-
+                remotes=$(
+                    git ls-remote --heads https://github.com/gryphonshafer/omniframe.git | \
+                    sed 's/^.*\srefs\/heads\///'
+                )
+                if echo "$remotes" | grep -q "${GITHUB_REF#refs/heads/}"
+                then
+                    branch="${GITHUB_REF#refs/heads/}"
+                else
+                    branch=$( echo "$remotes" | head -n 1 )
+                fi
+                git clone -b $branch --single-branch --depth 1 \
+                https://github.com/gryphonshafer/omniframe.git $GITHUB_WORKSPACE/../omniframe
+            - uses: actions/checkout@v4
+              with:
+                path: site
+            - uses: perl-actions/install-with-cpanm@v1
+              with: { sudo: false, args: ../omniframe/. }
+            - uses: perl-actions/install-with-cpanm@v1
+              with: { sudo: false, cpanfile: site/cpanfile }
+            - run: ../../omniframe/tools/install_externals.pl
+              working-directory: ${{ github.workspace }}/site
+            - run: dest init
+              working-directory: ${{ github.workspace }}/site
+            - run: dest update
+              working-directory: ${{ github.workspace }}/site
+            - run: >-
+                PATH="$PATH:."
+                HARNESS_PERL_SWITCHES=-MDevel::Cover=+ignore,'/lib/Omniframe\\b'
+                prove --recurse --lib --failures --jobs 4 --timer t
+              working-directory: ${{ github.workspace }}/site
+            - run: cover -report codecov
+              working-directory: ${{ github.workspace }}/site
+              if: env.CODECOV_TOKEN != null && ( matrix.perl-version == 'devel' || matrix.perl-version >= 26 )
