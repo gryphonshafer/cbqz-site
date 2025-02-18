@@ -1,5 +1,5 @@
 [%
-    USE date;
+    PROCESS macros;
     page.title = 'User Tools';
 %]
 
@@ -25,8 +25,7 @@
                 this_user.phone.substr( 3, 3 ) _ '-' _
                 this_user.phone.substr( 6, 4 )
             %]</td>
-            <td><time datetime="[% this_user.last_login %]">[%
-                date.format( this_user.last_login, '%a, %b %-d, %Y at %-I:%M %p %Z' ) %]</time></td>
+            <td>[% time( this_user.last_login, '%a, %b %-d, %Y at %-I:%M %p %Z' ) %]</td>
         </tr>
     [% END %]
 </table>
@@ -43,9 +42,7 @@
             <tr>
                 <td><a href="[%
                     c.url_for( '/meeting/' _ this_meeting.data.meeting_id )
-                %]"><time datetime="[% this_meeting.data.start %]">[%
-                    date.format( this_meeting.data.start, '%a, %b %-d, %Y at %-I:%M %p %Z' )
-                %]</time></a></td>
+                %]">[% time( this_meeting.data.start, '%a, %b %-d, %Y at %-I:%M %p %Z' ) %]</a></td>
                 <td>[% ( this_meeting.is_active ) ? 'Active' : 'Scheduled' %]</td>
             </tr>
         [% END %]
@@ -70,9 +67,7 @@
             <tr>
                 <td><a href="[%
                     c.url_for( '/meeting/' _ this_meeting.meeting_id )
-                %]"><time datetime="[% this_meeting.start %]">[%
-                    date.format( this_meeting.start, '%a, %b %-d, %Y at %-I:%M %p %Z' )
-                %]</time></a></td>
+                %]">[% time( this_meeting.start, '%a, %b %-d, %Y at %-I:%M %p %Z' ) %]</a></td>
                 <td>[% ( this_meeting.attended ) ? 'Yes' : 'No' %]</td>
             </tr>
         [% END %]

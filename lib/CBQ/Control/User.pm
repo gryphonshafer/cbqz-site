@@ -15,7 +15,7 @@ sub sign_up ($self) {
             die 'Email, password, first and last name, and phone fields must be filled in'
                 if ( grep { length $params{$_} == 0 } @fields );
 
-            $self->_captcha;
+            $self->_captcha_check;
 
             my $user = CBQ::Model::User->new->create({ map { $_ => $params{$_} } @fields });
 
@@ -24,15 +24,15 @@ sub sign_up ($self) {
 
                 my $email = {
                     to   => $user->data->{email},
-                    from => $user->conf->get( qw( email from ) ),
+                    from => conf->get( qw( email from ) ),
                 };
                 $email->{$_} =~ s/(<|>)/ ( $1 eq '<' ) ? '&lt;' : '&gt;' /eg for ( qw( to from ) );
 
                 $self->info( 'User create success: ' . $user->id );
                 $self->flash(
-                    message => {
-                        type => 'success',
-                        text => join( ' ',
+                    memo => {
+                        class   => 'success',
+                        message => join( ' ',
                             'Successfully created user with email address: ' .
                                 '<b>' . $email->{to} . '</b>.',
                             'Check your email for reception of the verification email.',
@@ -48,7 +48,7 @@ sub sign_up ($self) {
         catch ($e) {
             if ( $e =~ /\bcaptcha\b/i ) {
                 $e =~ s/\s+at\s+(?:(?!\s+at\s+).)*[\r\n]*$//;
-                $self->stash( message => $e );
+                $self->stash( memo => { class => 'error', message => $e } );
             }
             else {
                 $e =~ s/\s+at\s+(?:(?!\s+at\s+).)*[\r\n]*$//;
@@ -60,7 +60,7 @@ sub sign_up ($self) {
                     if ( $e =~ /UNIQUE constraint failed/ );
 
                 $self->info("User create failure: $e");
-                $self->stash( message => $e, %params );
+                $self->stash( memo => { class => 'error', message => $e }, %params );
             }
         }
     }
@@ -80,9 +80,9 @@ sub edit ($self) {
             $self->stash('user')->save;
 
             $self->flash(
-                message => {
-                    type => 'success',
-                    text => 'Successfully saved user data.',
+                memo => {
+                    class   => 'success',
+                    message => 'Successfully saved user data.',
                 }
             );
 
@@ -98,7 +98,7 @@ sub edit ($self) {
                 if ( $e =~ /UNIQUE constraint failed/ );
 
             $self->info("User create failure: $e");
-            $self->stash( message => $e, %params );
+            $self->stash( memo => { class => 'error', message => $e }, %params );
         }
     }
 
@@ -107,17 +107,18 @@ sub edit ($self) {
 }
 
 sub verify ($self) {
-    if ( CBQ::Model::User->new->verify( $self->stash('user_id'), $self->stash('user_hash') ) ) {
-        $self->info( 'User verified: ' . $self->stash('user_id') );
-        $self->flash(
-            message => {
-                type => 'success',
-                text => 'Successfully verified this user account. You may now login with your credentials.',
-            }
-        );
+    if ( my $user_id = CBQ::Model::User->new->verify( $self->stash('token') ) ) {
+        $self->info( 'User verified: ' . $user_id );
+        $self->flash( memo => {
+            class   => 'success',
+            message => 'Successfully verified this user account. You may now login with your credentials.',
+        } );
     }
     else {
-        $self->flash( message => 'Unable to verify user account using the link provided.' );
+        $self->flash( memo => {
+            class   => 'error',
+            message => 'Unable to verify user account using the link provided.',
+        } );
     }
 
     $self->redirect_to('/user/login');
@@ -126,7 +127,7 @@ sub verify ($self) {
 sub forgot_password ($self) {
     if ( my $email = $self->param('email') ) {
         try {
-            $self->_captcha;
+            $self->_captcha_check;
 
             my $user = CBQ::Model::User->new->load( { email => $email }, 1 );
             if ( $user->data->{active} ) {
@@ -138,14 +139,14 @@ sub forgot_password ($self) {
 
             my $email = {
                 to   => $user->data->{email},
-                from => $user->conf->get( qw( email from ) ),
+                from => conf->get( qw( email from ) ),
             };
             $email->{$_} =~ s/(<|>)/ ( $1 eq '<' ) ? '&lt;' : '&gt;' /eg for ( qw( to from ) );
 
             $self->flash(
-                message => {
-                    type => 'success',
-                    text => join( ' ',
+                memo => {
+                    class   => 'success',
+                    message => join( ' ',
                         'Sent email to: ' .
                             '<b>' . $email->{to} . '</b>.',
                         'Check your email for reception of the email.',
@@ -160,7 +161,7 @@ sub forgot_password ($self) {
         }
         catch ($e) {
             $e =~ s/\s+at\s+(?:(?!\s+at\s+).)*[\r\n]*$//;
-            $self->stash( message => $e );
+            $self->stash( memo => { class => 'error', message => $e } );
         }
     }
 }
@@ -168,25 +169,19 @@ sub forgot_password ($self) {
 sub reset_password ($self) {
     if ( my $passwd = $self->param('passwd') ) {
         try {
-            if (
-                CBQ::Model::User->new->reset_password(
-                    $self->stash('user_id'),
-                    $self->stash('user_hash'),
-                    $passwd,
-                )
-            ) {
-                $self->info( 'Password reset for: ' . $self->stash('user_id') );
+            if ( my $user_id = CBQ::Model::User->new->reset_password( $self->stash('token'), $passwd ) ) {
+                $self->info( 'Password reset for: ' . $user_id );
                 $self->flash(
-                    message => {
-                        type => 'success',
-                        text => 'Successfully reset password. Login with your new password.',
+                    memo => {
+                        class   => 'success',
+                        message => 'Successfully reset password. Login with your new password.',
                     }
                 );
 
                 $self->redirect_to('/user/login');
             }
             else {
-                $self->stash( message => 'Failed to reset password.' );
+                $self->stash( memo => { class => 'error', message => 'Failed to reset password.' } );
             }
         }
         catch ($e) {
@@ -195,7 +190,7 @@ sub reset_password ($self) {
             $e =~ s/DBD::\w+::st execute failed:\s*//;
             $e .= '. Please try again.';
 
-            $self->stash( message => $e );
+            $self->stash( memo => { class => 'error', message => $e } );
         }
     }
 }
@@ -214,14 +209,15 @@ sub login ($self) {
         catch ($e) {
             if ( $e =~ /\bcaptcha\b/i ) {
                 $e =~ s/\s+at\s+(?:(?!\s+at\s+).)*[\r\n]*$//;
-                $self->stash( message => $e );
+            $self->stash( memo => { class => 'error', message => $e } );
             }
             else {
                 $self->info( 'Login failure for ' . $self->param('email') );
-                $self->stash( message =>
-                    'Login failed. Please try again, or try the ' .
-                    '<a href="' . $self->url_for('/user/forgot_password') . '">Forgot Password</a> page.'
-                );
+                $self->stash( memo => {
+                    class   => 'error',
+                    message => 'Login failed. Please try again, or try the ' .
+                        '<a href="' . $self->url_for('/user/forgot_password') . '">Forgot Password</a> page.'
+                } );
             }
         }
     }
@@ -235,9 +231,9 @@ sub logout ($self) {
 
     $self->session( user_id => undef );
 
-    $self->flash( message => {
-        type => 'notice',
-        text => 'You have been logged out.',
+    $self->flash( memo => {
+        class   => 'notice',
+        message => 'You have been logged out.',
     } );
 
     $self->redirect_to('/');
@@ -262,7 +258,7 @@ sub tools ($self) {
     ( my $contact_email = conf->get( qw( email from ) ) )
         =~ s/(<|>)/ ( $1 eq '<' ) ? '&lt;' : '&gt;' /eg;
 
-    sub _captcha ($self) {
+    sub _captcha_check ($self) {
         my $captcha = $self->param('captcha') // '';
         $captcha =~ s/\D//g;
 
@@ -270,9 +266,8 @@ sub tools ($self) {
             'The captcha sequence provided does not match the captcha sequence in the captcha image.',
             'Please try again.',
             'If the problem persists, email <b>' . $contact_email . '</b> for help.',
-        ) unless ( $captcha and $self->session('captcha') and $captcha eq $self->session('captcha') );
+        ) unless ( $self->check_captcha_value($captcha) );
 
-        delete $self->session->{captcha};
         return;
     }
 }

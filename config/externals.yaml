@@ -1,8 +1,8 @@
 ---
+dart_sass:
+    dest: local/externals/dart_sass
 google_fonts:
-    dest:
-        fonts : static/fonts
-        css   : config/assets/css/fonts
+    dest: static/externals/google_fonts
     fonts:
         'Poppins':
             variants:
@@ -18,12 +18,6 @@ google_fonts:
             formats:
                 - woff2
                 - woff
-        'Inter Tight':
-            variants:
-                - 700
-            subsets:
-                - latin-ext
-            formats:
                 - ttf
     icons:
         types:

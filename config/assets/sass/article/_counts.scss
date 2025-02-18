@@ -24,7 +24,7 @@ article {
                 display         : inline-block;
                 width           : $hex_size;
                 height          : calc( $hex_size * 1.1 );
-                background-image: url( svg/hex.svg );
+                background-image: url( ../svg/hex.svg );
                 background-size : $hex_size;
                 color           : colors.$dark_text;
 

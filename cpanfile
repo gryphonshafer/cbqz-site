@@ -1,2 +1,2 @@
 requires 'Email::Address', '1.913';
-requires 'GD', '2.83';
+requires 'Mojolicious::Plugin::CaptchaPNG', '1.03';

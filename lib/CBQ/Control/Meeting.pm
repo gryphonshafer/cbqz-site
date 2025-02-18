@@ -18,7 +18,7 @@ sub create ($self) {
             catch ($e) {
                 $self->stash(
                     %$params,
-                    message => deat($e) . '.',
+                    memo => { class => 'error', message => deat($e) },
                 );
             }
         }

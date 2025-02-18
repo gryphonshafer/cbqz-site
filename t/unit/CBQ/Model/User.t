@@ -1,11 +1,11 @@
 use Test2::V0;
+use Mojo::URL;
 use exact -conf;
 use CBQ::Model::User;
-use Mojo::URL;
 
 my $obj;
 ok( lives { $obj = CBQ::Model::User->new }, 'new' ) or note $@;
-DOES_ok( $obj, "Omniframe::Role::$_" ) for ( qw( Bcrypt Model ) );
+DOES_ok( $obj, 'Omniframe::Role::Model' );
 can_ok( $obj, qw(
     active
     create
@@ -77,13 +77,15 @@ ok(
     q/send_email(...)/,
 ) or note $@;
 
+my $token = CBQ::Model::User::_encode_token( $obj->id );
+
 ok(
-    $obj->verify( $obj->id, substr( $obj->data->{passwd}, 0, 12 ) ),
+    $obj->verify($token),
     q/verify(...)/,
 );
 
 ok(
-    $obj->reset_password( $obj->id, substr( $obj->data->{passwd}, 0, 12 ), 'new_password' ),
+    $obj->reset_password( $token, 'new_password' ),
     q/reset_password(...)/,
 );
 

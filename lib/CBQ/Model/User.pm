@@ -1,16 +1,16 @@
 package CBQ::Model::User;
 
-use exact -class;
+use exact -class, -conf;
 use Email::Address;
 use Mojo::JSON qw( encode_json decode_json );
+use Mojo::Util qw( b64_encode b64_decode );
 use Omniframe::Class::Email;
+use Omniframe::Util::Bcrypt 'bcrypt';
+use Omniframe::Util::Crypt qw( encrypt decrypt );
 
-with qw( Omniframe::Role::Bcrypt Omniframe::Role::Model );
+with 'Omniframe::Role::Model';
 
 class_has active => 1;
-
-my $min_passwd_length = 8;
-my $user_hash_length  = 12;
 
 before 'create' => sub ( $self, $params ) {
     $params->{active} //= 0;
@@ -23,10 +23,11 @@ sub freeze ( $self, $data ) {
         $data->{email} = lc $address->address;
     }
 
+    my $min_passwd_length = conf->get('min_passwd_length');
     if ( $self->is_dirty( 'passwd', $data ) ) {
         croak("Password supplied is not at least $min_passwd_length characters in length")
             unless ( length $data->{passwd} >= $min_passwd_length );
-        $data->{passwd} = $self->bcrypt( $data->{passwd} );
+        $data->{passwd} = bcrypt( $data->{passwd} );
     }
 
     if ( $self->is_dirty( 'phone', $data ) ) {
@@ -45,10 +46,26 @@ sub thaw ( $self, $data ) {
     return $data;
 }
 
+sub _encode_token ($user_id) {
+    return b64_encode( encrypt( encode_json( [ $user_id, time ] ) ) );
+}
+
+sub _decode_token ($token) {
+    my $data;
+    try {
+        $data = decode_json( decrypt( b64_decode($token) ) );
+    }
+    catch ($e) {}
+
+    return (
+        $data and $data->[0] and $data->[1] and
+        $data->[1] < time + conf->get('token_expiration')
+    ) ? $data->[0] : undef;
+}
+
 sub send_email ( $self, $type, $url ) {
     croak('User object not data-loaded') unless ( $self->id );
-
-    push( @{ $url->path->parts }, $self->id, substr( $self->data->{passwd}, 0, $user_hash_length ) );
+    push( @{ $url->path->parts }, _encode_token( $self->id ) );
 
     return Omniframe::Class::Email->new( type => $type )->send({
         to   => sprintf( '%s %s <%s>', map { $self->data->{$_} } qw( first_name last_name email ) ),
@@ -59,35 +76,30 @@ sub send_email ( $self, $type, $url ) {
     });
 }
 
-sub verify ( $self, $user_id, $user_hash ) {
-    my $user_found = length $user_hash == $user_hash_length and $self->dq->sql(q{
-        SELECT COUNT(*) FROM user WHERE user_id = ? AND passwd LIKE ?
-    })->run( $user_id, $user_hash . '%' )->value > 0;
+sub verify ( $self, $token ) {
+    my $user_id = _decode_token($token);
+    return unless ($user_id);
 
-    $self->dq->sql('UPDATE user SET active = 1 WHERE user_id = ?')->run($user_id) if $user_found;
-    return $user_found;
+    $self->dq->sql('UPDATE user SET active = 1 WHERE user_id = ?')->run($user_id);
+    return $user_id;
 }
 
-sub reset_password ( $self, $user_id, $user_hash, $new_password ) {
+sub reset_password ( $self, $token, $new_password ) {
+    my $min_passwd_length = conf->get('min_passwd_length');
     croak("Password supplied is not at least $min_passwd_length characters in length")
         unless ( length $new_password >= $min_passwd_length );
 
-    my $user_found = length $user_hash == $user_hash_length and $self->dq->sql(q{
-        SELECT COUNT(*) FROM user WHERE user_id = ? AND passwd LIKE ?
-    })->run( $user_id, $user_hash . '%' )->value > 0;
+    my $user_id = _decode_token($token);
+    return unless ($user_id);
 
-    return 0 unless $user_found;
-
-    $self->dq->sql('UPDATE user SET passwd = ? WHERE user_id = ?')
-        ->run( $self->bcrypt($new_password), $user_id );
-
-    return 1;
+    $self->dq->sql('UPDATE user SET passwd = ? WHERE user_id = ?')->run( bcrypt($new_password), $user_id );
+    return $user_id;
 }
 
 sub login ( $self, $email, $passwd ) {
     $self->load({
         email  => lc($email),
-        passwd => $self->bcrypt($passwd),
+        passwd => bcrypt($passwd),
         active => 1,
     });
 
@@ -103,7 +115,7 @@ sub is_qualified_delegate ($self) {
         } )->run->value < 4 and
         grep { $_ eq $self->data->{email} }
         map { /<([^>]+)>/ }
-        ( $self->conf->get('pre_qualified_delegates') // [] )->@*
+        ( conf->get('pre_qualified_delegates') // [] )->@*
     );
 
     my $attendance = $self->dq->sql( q{
@@ -221,6 +233,6 @@ to find and login the user. If successful, it will return a loaded user object.
 Returns true if the user is a qualified delegate as defined by attendance
 (viewing) of 3 of the last 4 meetings.
 
-=head1 WITH ROLES
+=head1 WITH ROLE
 
-L<Omniframe::Role::Bcrypt>, L<Omniframe::Role::Model>.
+L<Omniframe::Role::Model>.

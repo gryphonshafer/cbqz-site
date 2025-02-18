@@ -2,17 +2,22 @@ package CBQ::Control;
 
 use exact -conf, 'Omniframe::Control';
 use CBQ::Model::User;
+use Mojo::File 'path';
+use Omniframe::Util::File 'opath';
 use Text::MultiMarkdown 'markdown';
 
 my $root_dir = conf->get( qw( config_app root_dir ) );
-my $photos   = Mojo::File
-    ->new( $root_dir . '/static/photos' )
+my $photos   = path( $root_dir . '/static/photos' )
     ->list_tree
     ->map( sub { substr( $_->to_string, length( $root_dir . '/static' ) ) } )
     ->grep(qr/\.(?:jpg|png)$/);
 
 sub startup ($self) {
     $self->setup( skip => ['sockets'] );
+
+    my $captcha_conf = conf->get('captcha');
+    $captcha_conf->{ttf} = opath( $captcha_conf->{ttf} );
+    $self->plugin( CaptchaPNG => $captcha_conf );
 
     my $docs_nav = $self->docs_nav( @{ conf->get('docs') }{ qw( dir home_type home_name home_title ) } );
 
@@ -45,7 +50,10 @@ sub startup ($self) {
     my $users = $all->under( sub ($c) {
         return 1 if ( $c->stash('user') );
         $c->info('Login required but not yet met');
-        $c->flash( message => 'Login required for the previously requested resource.' );
+        $c->flash( memo => {
+            class   => 'error',
+            message => 'Login required for the previously requested resource.',
+        } );
         $c->redirect_to('/user/login');
         return 0;
     } );
@@ -58,11 +66,10 @@ sub startup ($self) {
     $users->any('/meeting/:meeting_id/close')      ->to('meeting#close');
     $users->any('/meeting/:meeting_id')            ->to('meeting#view');
 
-    $all->any('/')       ->to('main#index');
-    $all->any('/iq')     ->to('main#iq');
-    $all->any('/captcha')->to('main#captcha');
+    $all->any('/')  ->to('main#index');
+    $all->any('/iq')->to('main#iq');
 
-    $all->any("/user/$_/:user_id/:user_hash")->to("user#$_") for ( qw( verify reset_password ) );
+    $all->any("/user/$_/:token")->to("user#$_") for ( qw( verify reset_password ) );
     $all->any( '/user/' . $_ )->to( 'user#' . $_ ) for ( qw(
         sign_up
         login

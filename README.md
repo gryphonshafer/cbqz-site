@@ -1,22 +1,20 @@
 # CBQ Web Site
 
-Web site, documents, and tools in support of CBQ.
+[![test](https://github.com/gryphonshafer/cbqz-site/workflows/test/badge.svg)](https://github.com/gryphonshafer/cbqz-site/actions?query=workflow%3Atest)
+[![codecov](https://codecov.io/gh/gryphonshafer/cbqz-site/graph/badge.svg)](https://codecov.io/gh/gryphonshafer/cbqz-site)
 
-## Setup
+This is the software and content for the [CBQ](https://cbqz.org) web site.
 
-To setup an instance of the web site, first install and setup the
-[Omniframe](https://github.com/gryphonshafer/omniframe) project as per its
-instructions. Then clone this project to a desired location. Typically, this is
-in parallel to the `omniframe` project root directory.
+## Installation and Setup
 
-Change directory to the project root directory, and run the following:
+This project requires the [Omniframe](https://github.com/gryphonshafer/omniframe)
+project, which is expected to be deployed in a parallel directory. Follow the
+instructions in the Omniframe README "Installation" and "Project Setup" sections.
 
-    cpanm -n -f --installdeps .
+## Run Application
 
-## Run
-
-To run the web site application, follow the instructions in the `~/app.psgi`
-file within the project's root directory.
+To run the project application, follow the instructions in the `~/app.psgi`
+file within this project's root directory.
 
 ## Photo Optimization
 

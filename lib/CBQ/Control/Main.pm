@@ -1,13 +1,9 @@
 package CBQ::Control::Main;
 
 use exact -conf, 'Mojolicious::Controller';
-use GD::Image;
-use Mojo::Asset::File;
 use Mojo::DOM;
 use Mojo::File 'path';
-use Mojo::Util 'decode';
 use Omniframe::Class::Time;
-use Text::MultiMarkdown 'markdown';
 
 sub index ($self) {
     $self->stash( title => conf->get( qw( docs home_title ) ) );
@@ -53,48 +49,6 @@ sub iq ($self) {
     );
 }
 
-{
-    my $captcha  = conf->get('captcha');
-    my $root_dir = conf->get( qw( config_app root_dir ) );
-    my $base     = path($root_dir);
-    my ($ttf)    = glob( $base->to_string . '/' . $captcha->{ttf} );
-    ($ttf)       = glob( $base->child( conf->get('omniframe') )->to_string . '/' . $captcha->{ttf} )
-        unless ($ttf);
-
-    sub captcha ($self) {
-        srand;
-
-        my $sequence = int( rand( 10_000_000 - 1_000_000 ) ) + 1_000_000;
-        my $display  = $sequence;
-
-        $display =~ s/^(\d{2})(\d{3})/$1-$2-/;
-        $display =~ s/(.)/ $1/g;
-
-        my $image  = GD::Image->new( $captcha->{width}, $captcha->{height} );
-        my $rotate = rand() / $captcha->{rotation} * ( ( rand() > 0.5 ) ? 1 : -1 );
-
-        $image->fill( 0, 0, $image->colorAllocate( map { eval $_ } $captcha->{background}->@* ) );
-        $image->stringFT(
-            $image->colorAllocate( map { eval $_ } $captcha->{text_color}->@* ),
-            $ttf,
-            $captcha->{size},
-            $rotate,
-            $captcha->{x},
-            $captcha->{y_base} + $rotate * $captcha->{y_rotate},
-            $display,
-        );
-
-        for ( 1 .. 10 ) {
-            my $index = $image->colorAllocate( map { eval $_ } $captcha->{noise_color}->@* );
-            $image->setPixel( rand( $captcha->{width} ), rand( $captcha->{width} ), $index )
-                for ( 1 .. $captcha->{noise} );
-        }
-
-        $self->session( captcha => $sequence );
-        return $self->render( data => $image->png(9), format => 'png' );
-    }
-}
-
 1;
 
 =head1 NAME
@@ -119,12 +73,6 @@ Handler for everything under "/docs" served via the documents feeder.
 =head2 iq
 
 Handler for Inside Quizzing podcast page.
-
-=head2 captcha
-
-This handler will automatically generate and return a captcha image consisting
-of a text sequence. That text sequence will also be added to the session under
-the name C<captcha>.
 
 =head1 INHERITANCE
 
