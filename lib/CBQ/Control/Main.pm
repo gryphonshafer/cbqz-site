@@ -15,6 +15,15 @@ sub content ($self) {
         undef,
         conf->get( qw( docs dir ) ) . '/',
     );
+
+    if ( $self->res->code and $self->res->code == 404 ) {
+        $self->stash( 'mojo.finished' => 0 );
+        $self->flash( memo => {
+            class   => 'error',
+            message => 'Unable to find the resource previously requested. Redirected to home page.',
+        } );
+        $self->redirect_to('/');
+    }
 }
 
 {
