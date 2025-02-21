@@ -23,7 +23,7 @@ Each verse contains words, which are uninterrupted sequences of alphanumeric cha
 
 Sequences of words in a verse may be separated by sentence breaks, which occur only and always upon a period, an exclamation mark, or a question mark.
 
-A quiz’s material also contains a thesaurus with an entry for each word deduplicated across the whole of the verse content. Most entries contain _meanings_, but some entries, such as most proper names, may not include any meanings. Meanings consist of a description, word type, and list of synonyms, with each synonym given a verity level between 1 and 3, with 1 being the most accurate. For example, the word “about” has several meanings, 1 of which consists of the description “in an opposite direction” and the word type “adverb”. A synonym thereof with a verity of 1 is “around”, and a synonym with a verity of 3 is “back”.
+A quiz’s material also contains a thesaurus with an entry for each word deduplicated across the whole of the verse content. Most entries contain _meanings_, but some entries, such as most proper names, may not include any meanings. Meanings consist of a description, word type, and list of synonyms, with each synonym given a verity level between 1 and 3, with 3 being the highest or strongest verity. For example, the word “open” has multiple meanings, 1 of which is as a verb meaning to “begin” and another as an adjective meaning to be “honest, objective”. A synonym of the verbs’s meaning with a verity of 3 is “commence”, and a synonym with of the adjective’s meaning with a verity of 1 is “unbiased”.
 
 ## 2. Quizzes
 
@@ -103,7 +103,7 @@ Should the responding quizzer call for a valid quizzer-selected subtype, the QM 
 
 The QM judges responses to queries of the synonymous quizzer-selected subtype correct should the responses contain all words of the reply and any words of the prompt the QM did not at least partially speak. The QM accepts as equivalent to the original word from the text:
 
-- Any synonym of that word from the material’s thesaurus with accuracy of **at least verity level 3** or any associated antecedent of a pronoun, but not any other pronoun
+- Any synonym of that word from the material’s thesaurus with a verity level **of at least 1** or any associated antecedent of a pronoun, but not any other pronoun
 - Any word that is a conjugation, alternate tense, or alternate singular versus plural word of an otherwise acceptable word
 
 The QM ignores articles and prepositions.
