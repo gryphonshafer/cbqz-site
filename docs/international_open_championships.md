@@ -14,12 +14,9 @@ IOC includes teams from across the United States and Canada from a variety of Qu
 
 Don’t miss out on this opportunity to fellowship with Quizzing people you might otherwise never meet and to experience what we’re working hard to make the most fun quiz meet in recent memory. This meet is an open invitational. All who are interested in participating are invited and encouraged to submit their interest. The goal of the meet is to Bible Quiz across many programs and styles, building bridges and advancing interest in Bible Quizzing.
 
-<a href="mailto:q@cbqz.org" class="button colored">Email Us at q@cbqz.org</a>
-
-<!--
-<a href="/files/ioc_registration_2024.pdf" class="button colored">IOC 2024 Registration Form (PDF)</a>
-<a href="/files/ioc_registration_2024.docx" class="button colored">IOC 2024 Registration Form (DOCX)</a>
--->
+<a href="/files/ioc_registration_2025.pdf" class="button colored">IOC 2025 Registration Form (PDF)</a>
+<a href="/files/ioc_registration_2025.docx" class="button colored">IOC 2025 Registration Form (DOCX)</a>
+<a href="mailto:q@cbqz.org" class="button">Email Us at q@cbqz.org</a>
 
 ## Common Questions
 
@@ -29,9 +26,7 @@ There’s no official age range or limit, though IOC leadership feels the meet i
 
 > What will be the material for the IOC 2025 meet?
 
-We expect the material label for IOC 2025 will be: “Luke 1-2; 3:1-23; 4-24 ESV NIV NIV84*”. (See the [the CBQ rule book](CBQ_system/rule_book.md) for an explaiation for what a material label is and means.)
-
-<!--
+We expect the material label for IOC 2025 will be: “Luke 1-2; 3:1-23; 4-24 BSB ESV NIV NIV84*”. (See the [the CBQ rule book](CBQ_system/rule_book.md) for an explaiation for what a material label is and means.)
 
 > Wait, you said “adult division”? Are you serious?
 
@@ -39,21 +34,19 @@ Yes. We’re serious. We fully expect there to be enough registrations to suppor
 
 > How much will IOC cost per quizzer?
 
-$50, which covers the cost of food and a t-shirt.
+$75 per person for registered participants, which covers the cost of food and a t-shirt.
 
 > OK, what should I do right now then?
 
 First, fill out a registration form and send it to us:
 
-<a href="/files/ioc_registration_2024.pdf" class="button colored">IOC 2024 Registration Form (PDF)</a>
+<a href="/files/ioc_registration_2025.pdf" class="button colored">IOC 2025 Registration Form (PDF)</a>
 
-<a href="/files/ioc_registration_2024.docx" class="button colored">IOC 2024 Registration Form (DOCX)</a>
-
--->
+<a href="/files/ioc_registration_2025.docx" class="button colored">IOC 2025 Registration Form (DOCX)</a>
 
 > I have questions you didn’t answer.
 
-<a href="mailto:q@cbqz.org" class="button colored">Email Us at q@cbqz.org</a>
+<a href="mailto:q@cbqz.org" class="button">Email Us at q@cbqz.org</a>
 
 <!--
 
