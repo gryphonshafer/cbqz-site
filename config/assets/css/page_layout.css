@@ -105,3 +105,26 @@ div.highlight {
     padding         : 0 1em;
     border-radius   : 1em;
 }
+
+details {
+    margin-top      : 1em;
+    margin-bottom   : 1em;
+    padding         : 0.5em 0.5em 0.5em 2em;
+    border-radius   : 1em;
+    background-color: white;
+    border          : 1px solid lightgray;
+    width           : fit-content;
+
+    &:open {
+        width: auto;
+    }
+
+    summary {
+        margin-left: -1.25em;
+        cursor     : pointer;
+    }
+
+    &:open summary {
+        font-weight: bold;
+    }
+}

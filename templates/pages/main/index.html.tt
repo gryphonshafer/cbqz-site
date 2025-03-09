@@ -148,6 +148,8 @@
         <br>
         <a href="[% c.url_for('/slack') %]" class="button">Join Our Slack Forum
             <span class="material-symbols-outlined inline">forum</span></a>
+        <br>
+        <a href="[% c.url_for('/FAQs.md') %]" class="button colored">Frequently Asked Questions</a>
     </p>
 
     <img src="[% c.url_for( photos.shift ) %]">
