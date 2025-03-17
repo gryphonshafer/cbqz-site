@@ -21,11 +21,11 @@ sub startup ($self) {
 
     my $docs_nav = $self->docs_nav( @{ conf->get('docs') }{ qw( dir home_type home_name home_title ) } );
 
-    push( @$docs_nav, {
-        href  => $self->url_for('/iq'),
-        name  => '"Inside Quizzing"',
-        title => 'The "Inside Quizzing" Podcast',
-    } );
+    # push( @$docs_nav, {
+    #     href  => $self->url_for('/iq'),
+    #     name  => '"Inside Quizzing"',
+    #     title => 'The "Inside Quizzing" Podcast',
+    # } );
 
     my $all = $self->routes->under( sub ($c) {
         $c->stash(
