@@ -1,7 +1,7 @@
 # Rule Book for Christian Bible Quizzing (CBQ)
 
-- Version: 1.4.4
-- Published: January 13, 2025
+- Version: 1.5
+- Published: March 17, 2025
 
 Bible Quizzing is a Christian sport in which teams of participants called _quizzers_ compete on Scriptural recitation in matches called _quizzes_. Quizzing tournaments called _meets_ consist of a set of _quizzes_. Quizzing _seasons_ consist of a set of meets. _Christian Bible Quizzing (CBQ)_ is the organization that oversees and supports local and regional Quizzing operations internationally with the mission to encourage the most people to memorize the most verses of Scripture. This is the official rule book for CBQ competitions.
 
@@ -142,7 +142,7 @@ Queries with the same numerical identifier have the same base subtype and transl
 
 In every quiz, each numerically identified query has a base subtype based on a sequential flow through all base subtypes in order, then randomized. For example, in a 3-team quiz with 12 numerical identified queries, the pre-randomized base subtype set is: PCQFPCQFPCQF.
 
-Each numerically identified query has a translation based on the randomized set of primary translations from a quiz’s material, then sequentially repeated. For example, if a quiz’s material contains translations “A”, “B”, and “C” in randomized order “CAB”, then in a 2-team quiz, the set of numerical identified queries have the translation sequence: CABCABCA.
+Each numerically identified query (except queries with the quote base subtype) has a translation based on the set of primary translations from a quiz’s material, filtered by the translations quizzers in each quiz use, then randomized, then sequentially repeated, skipping queries with the quote base subtype. For example, if a quiz’s material contains translations “A”, “B”, and “C” with quizzers in a particular quiz having memorized either “A” or “B” (but no quizzer in the particular having memorized “C”), the translations “A” and “B” are then randomized resulting in the sequence “BA”, which is then repeated for every query that doesn’t have the quote base subtype. In a 2-team quiz, the set of numerical identified queries may the translation sequence “BA\_BAB\_A” (where “\_” indicates no translation due to the query having the quote base subtype).
 
 The meet director or QM publishes query base subtypes and translation distribution for a quiz prior to the quiz.
 
@@ -305,7 +305,9 @@ The “finals” bracket consists of quizzes to determine the position of the to
 
 ### 3.4. Score Weighting
 
-The meet director predefines weighting of quizzer and/or teams scores based on bracket. For example, finals may be ignored for quizzer per quiz average score.
+The meet director predefines weighting of quizzer and/or team scores based on bracket. For example, finals may be ignored for quizzer per quiz average score.
+
+In addition, should there be multiple primary translations at a meet where there are quizzes with only a single translation source for queries and other quizzes with multiple translation sources for queries, individual and team points scores used in meet statistics originating from quizzes with multiple translation sources for queries will be adjusted by a factor calculated as follows: For all quizzers in all quizzes at the meet who compete in both single and multiple translation sourced quizzes, the raw individual points earned by these quizzers will be averaged in groups by sourcing type (i.e. single or multiple). Then across all such quizzers, the 2 resulting type average sets will be each averaged, then the resulting 2 averages ratioed to a resultant factor.
 
 ### 3.5. Meet Details Publication
 
