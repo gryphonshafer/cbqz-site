@@ -25,7 +25,7 @@ If a region elects to operate as a subsidiary of CBQ:
 
 - It must agree to conform to all applicable provisions of applicable CBQ [articles](articles.md), [bylaws](bylaws.md), and [SOPs](SOPs.md).
 
-Christian Bible Quizzing (CBQ) grants regions once self-instantiated [license to use the CBQ system](license.md).
+Christian Bible Quizzing (CBQ) grants regions (once self-instantiated) [license to use the CBQ system](license.md). CBQ obliges regions to remain accountable to their commitments to the terms of the license via annual leadership interviews.
 
 If you have any questions about operating a CBQ region, please email us:
 
