@@ -219,7 +219,7 @@ and their weights is up to each region.
         ],
     ];
 
-    window.addEventListener( 'load', () => {
+    window.addEventListener( 'DOMContentLoaded', () => {
         const source = document.querySelector('form.rotation');
         rotations.reverse().forEach( rotation => {
             const target = source.cloneNode(true);
