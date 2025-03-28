@@ -2,7 +2,7 @@ package CBQ::Model::User;
 
 use exact -class, -conf;
 use Email::Address;
-use Mojo::JSON qw( encode_json decode_json );
+use Mojo::JSON qw( to_json from_json );
 use Mojo::Util qw( b64_encode b64_decode );
 use Omniframe::Class::Email;
 use Omniframe::Util::Bcrypt 'bcrypt';
@@ -35,25 +35,25 @@ sub freeze ( $self, $data ) {
         croak('Phone supplied is not at least 10 digits in length') unless ( length $data->{phone} >= 10 );
     }
 
-    $data->{info} = encode_json( $data->{info} );
+    $data->{info} = to_json( $data->{info} );
     undef $data->{info} if ( $data->{info} eq '{}' or $data->{info} eq 'null' );
 
     return $data;
 }
 
 sub thaw ( $self, $data ) {
-    $data->{info} = ( defined $data->{info} ) ? decode_json( $data->{info} ) : {};
+    $data->{info} = ( defined $data->{info} ) ? from_json( $data->{info} ) : {};
     return $data;
 }
 
 sub _encode_token ($user_id) {
-    return b64_encode( encrypt( encode_json( [ $user_id, time ] ) ) );
+    return b64_encode( encrypt( to_json( [ $user_id, time ] ) ) );
 }
 
 sub _decode_token ($token) {
     my $data;
     try {
-        $data = decode_json( decrypt( b64_decode($token) ) );
+        $data = from_json( decrypt( b64_decode($token) ) );
     }
     catch ($e) {}
 

@@ -1,7 +1,7 @@
 package CBQ::Model::Meeting;
 
 use exact -class;
-use Mojo::JSON qw( encode_json decode_json );
+use Mojo::JSON qw( to_json from_json );
 use Omniframe::Class::Time;
 
 with 'Omniframe::Role::Model';
@@ -20,14 +20,14 @@ around 'create' => sub ( $orig, $self, $params ) {
 };
 
 sub freeze ( $self, $data ) {
-    $data->{info} = encode_json( $data->{info} );
+    $data->{info} = to_json( $data->{info} );
     undef $data->{info} if ( $data->{info} eq '{}' or $data->{info} eq 'null' );
 
     return $data;
 }
 
 sub thaw ( $self, $data ) {
-    $data->{info} = ( defined $data->{info} ) ? decode_json( $data->{info} ) : {};
+    $data->{info} = ( defined $data->{info} ) ? from_json( $data->{info} ) : {};
     return $data;
 }
 
@@ -98,7 +98,7 @@ sub vote_create ( $self, $motion ) {
 sub vote ( $self, $user, $params ) {
     return unless ( $self->is_active );
 
-    my $info = decode_json( $self->dq->sql( q{
+    my $info = from_json( $self->dq->sql( q{
         SELECT info FROM user_meeting WHERE user_id = ? AND meeting_id = ?
     } )->run( $user->id, $self->id )->value // '{}' );
 
@@ -106,11 +106,11 @@ sub vote ( $self, $user, $params ) {
 
     $self->dq->sql( q{
         UPDATE user_meeting SET info = ? WHERE user_id = ? AND meeting_id = ?
-    } )->run( encode_json($info), $user->id, $self->id );
+    } )->run( to_json($info), $user->id, $self->id );
 }
 
 sub votes ( $self, $user ) {
-    return decode_json( $self->dq->sql( q{
+    return from_json( $self->dq->sql( q{
         SELECT info FROM user_meeting WHERE user_id = ? AND meeting_id = ?
     } )->run( $user->id, $self->id )->value // '{}' )->{votes};
 }
@@ -120,7 +120,7 @@ sub all_votes ($self) {
 
     for my $votes (
         grep { $_ }
-        map { decode_json( $_ // '{}' )->{votes} }
+        map { from_json( $_ // '{}' )->{votes} }
         $self->dq->sql( q{
             SELECT info FROM user_meeting WHERE meeting_id = ?
         } )->run( $self->id )->column->@*

@@ -35,7 +35,7 @@ sub content ($self) {
 
 sub iq ($self) {
     my $rss = Mojo::DOM->new(
-        path( conf->get( qw( config_app root_dir ) ) )->child( conf->get('iq_rss') )->slurp
+        path( conf->get( qw( config_app root_dir ) ) )->child( conf->get('iq_rss') )->slurp('UTF-8')
     );
 
     $self->stash(
