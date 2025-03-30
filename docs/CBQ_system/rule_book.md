@@ -1,7 +1,7 @@
 # Rule Book for Christian Bible Quizzing (CBQ)
 
-- Version: 1.5
-- Published: March 17, 2025
+- Version: 1.5.1
+- Published: March 30, 2025
 
 Bible Quizzing is a Christian sport in which teams of participants called _quizzers_ compete on Scriptural recitation in matches called _quizzes_. Quizzing tournaments called _meets_ consist of a set of _quizzes_. Quizzing _seasons_ consist of a set of meets. _Christian Bible Quizzing (CBQ)_ is the organization that oversees and supports local and regional Quizzing operations internationally with the mission to encourage the most people to memorize the most verses of Scripture. This is the official rule book for CBQ competitions.
 
@@ -21,9 +21,9 @@ Translation acronyms may be appended with an asterisk to indicate it’s an auxi
 
 Each verse contains words, which are uninterrupted sequences of alphanumeric characters and connector punctuation of a single hyphen, en dash, or possessive apostrophe. Numbers containing commas and colons, such as “1,234” and “3:00”, are single words. With regard to deduplication of words from material, words are case-insensitive, with homonyms and homographs merged, but with homophones not merged.
 
-Sequences of words in a verse may be separated by sentence breaks, which occur only and always upon a period, an exclamation mark, or a question mark.
+Sequences of words in a verse may be separated by sentence breaks, which occur only and always upon a period, an exclamation mark, or a question mark. A phrase is a sequences of 2 or more sequential words within a sentence.
 
-A quiz’s material also contains a thesaurus with an entry for each word deduplicated across the whole of the verse content. Most entries contain _meanings_, but some entries, such as most proper names, may not include any meanings. Meanings consist of a description, word type, and list of synonyms, with each synonym given a verity level between 1 and 3, with 3 being the highest or strongest verity. For example, the word “open” has multiple meanings, 1 of which is as a verb meaning to “begin” and another as an adjective meaning to be “honest, objective”. A synonym of the verbs’s meaning with a verity of 3 is “commence”, and a synonym with of the adjective’s meaning with a verity of 1 is “unbiased”.
+A quiz’s material also contains a thesaurus with an entry for at minimums each word deduplicated across the whole of the verse content. A thesaurus may also contain entries for phrases. Most entries contain _meanings_, but some entries, such as most proper names, may not include any meanings. Meanings consist of a description, word type, and list of synonyms (which can be words or phrases), with each synonym given a verity level between 1 and 3, with 3 being the highest or strongest verity. For example, the word “open” has multiple meanings, 1 of which is as a verb meaning to “begin” and another as an adjective meaning to be “honest, objective”. A synonym of the verb’s meaning with a verity of 3 is “commence”, and a synonym with of the adjective’s meaning with a verity of 1 is “unbiased”.
 
 ## 2. Quizzes
 
@@ -103,7 +103,8 @@ Should the responding quizzer call for a valid quizzer-selected subtype, the QM 
 
 The QM judges responses to queries of the synonymous quizzer-selected subtype correct should the responses contain all words of the reply and any words of the prompt the QM did not at least partially speak. The QM accepts as equivalent to the original word from the text:
 
-- Any synonym of that word from the material’s thesaurus with a verity level **of at least 1** or any associated antecedent of a pronoun, but not any other pronoun
+- Any synonym of that word or phrase from the material’s thesaurus with a verity level **of at least 1**
+- Any associated antecedent of a pronoun, but not any other pronoun
 - Any word that is a conjugation, alternate tense, or alternate singular versus plural word of an otherwise acceptable word
 
 The QM ignores articles and prepositions.
