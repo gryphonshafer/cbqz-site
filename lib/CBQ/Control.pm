@@ -79,8 +79,11 @@ sub startup ($self) {
 
     for my $redirect (
         [ '/rules'   => '/CBQ_system/rule_book.md' ],
-        [ '/ioc'     => '/international_open_championships.md' ],
-        [ '/ioc2025' => '/international_open_championships.md' ],
+        # [ '/ioc'     => '/international_open_championships.md' ],
+        # [ '/ioc2025' => '/international_open_championships.md' ],
+        [ '/ioc'     => '/_ioc_2025.md' ],
+        [ '/ioc2025' => '/_ioc_2025.md' ],
+        [ '/international_open_championships.md' => '/_ioc_2025.md' ],
     ) {
         $all->any( $redirect->[0] => sub ($c) { $c->redirect_to( $redirect->[1] ) } );
     }

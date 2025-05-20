@@ -1,11 +1,18 @@
-[% page.title = title %]
+[% 
+    page.title  = title;
+    hide_photos = html.match('docs:hide_photos');
+%]
 
-<img class="page_photo" src="[% c.url_for( photos.shift ) %]">
+[% UNLESS hide_photos %]
+    <img class="page_photo" src="[% c.url_for( photos.shift ) %]">
+[% END %]
 
 [% html %]
 
-<div class="gallery">
-    <img src="[% c.url_for( photos.shift ) %]">
-    <img src="[% c.url_for( photos.shift ) %]">
-    <img src="[% c.url_for( photos.shift ) %]">
-</div>
+[% UNLESS hide_photos %]
+    <div class="gallery">
+        <img src="[% c.url_for( photos.shift ) %]">
+        <img src="[% c.url_for( photos.shift ) %]">
+        <img src="[% c.url_for( photos.shift ) %]">
+    </div>
+[% END %]
