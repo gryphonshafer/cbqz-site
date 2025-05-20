@@ -1,4 +1,4 @@
-[% 
+[%
     page.title  = title;
     hide_photos = html.match('docs:hide_photos');
 %]
