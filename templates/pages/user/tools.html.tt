@@ -25,7 +25,11 @@
                 this_user.phone.substr( 3, 3 ) _ '-' _
                 this_user.phone.substr( 6, 4 )
             %]</td>
-            <td>[% time( this_user.last_login, '%a, %b %-d, %Y at %-I:%M %p %Z' ) %]</td>
+            <td>[%
+                ( this_user.last_login )
+                    ? time( this_user.last_login, '%a, %b %-d, %Y at %-I:%M %p %Z' )
+                    : ''
+            %]</td>
         </tr>
     [% END %]
 </table>
