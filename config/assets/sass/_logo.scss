@@ -1,7 +1,25 @@
+@use 'colors';
+@use 'sass:color';
+
 $logo_margin   : 1rem         !default;
 $logo_name_size: $logo_margin !default;
 
 div#logo {
+    a {
+        text-decoration: none;
+        color          : colors.$dark_text;
+
+        &:hover {
+            img  {
+                filter: invert(1);
+            }
+
+            span {
+                text-decoration: underline;
+            }
+        }
+    }
+
     img {
         margin-top   : $logo_margin;
         margin-left  : $logo_margin;

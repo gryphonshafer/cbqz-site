@@ -5,6 +5,7 @@ use CBQ::Model::User;
 use Mojo::File 'path';
 use Omniframe::Util::File 'opath';
 use Text::MultiMarkdown 'markdown';
+use YAML::XS 'Load';
 
 my $root_dir = conf->get( qw( config_app root_dir ) );
 my $photos   = path( $root_dir . '/static/photos' )
@@ -19,19 +20,94 @@ sub startup ($self) {
     $captcha_conf->{ttf} = opath( $captcha_conf->{ttf} );
     $self->plugin( CaptchaPNG => $captcha_conf );
 
-    my $docs_nav = $self->docs_nav( @{ conf->get('docs') }{ qw( dir home_type home_name home_title ) } );
+    my $static_paths = [ @{ $self->static->paths } ];
+    my $regional_cms = conf->get('regional_cms');
+    my $regions      = [
+        map {
+            $_->{acronym}  = lc $_->{acronym};
+            $_->{path}     = path( join( '/', $root_dir, $regional_cms->{path_suffix}, $_->{acronym} ) );
+            $_->{path_rel} = path( join( '/', $regional_cms->{path_suffix}, $_->{acronym} ) );
+            $_->{settings} =
+                ( -r $_->{path}->child( $regional_cms->{settings} ) )
+                    ? Load( $_->{path}->child( $regional_cms->{settings} )->slurp )
+                    : {};
+            $_;
+        } @{ CBQ::Model::User->dq->get(
+            'region',
+            [ qw( name acronym ) ],
+            { active => 1 },
+        )->run->all({})
+    } ];
 
-    # push( @$docs_nav, {
+    my $redirects = {
+        www => conf->get('redirects'),
+        grep { defined } map {
+            ( $_->{settings}{redirects} ) ? ( $_->{acronym} => $_->{settings}{redirects} ) : undef
+        } @$regions,
+    };
+
+    my $docs_navs = {
+        www => $self->docs_nav( @{ conf->get('docs') }{ qw( dir home_type home_name home_title ) } ),
+        grep { defined } map {
+            $_->{acronym} => $self->docs_nav(
+                $_->{path_rel}->child('docs'),
+                'md',
+                uc( $_->{acronym} ) . ' Home',
+                uc( $_->{acronym} ) . ' Christian Bible Quizzing Region',
+            );
+        } @$regions,
+    };
+    # push( @{ $docs_navs->{www} }, {
     #     href  => $self->url_for('/iq'),
     #     name  => '"Inside Quizzing"',
     #     title => 'The "Inside Quizzing" Podcast',
     # } );
 
+    $self->hook( before_dispatch => sub ($c) {
+        $c->app->sessions->cookie_domain(
+            ( lc( $c->req->url->to_abs->host ) =~ /([^\.]+\.[^\.]+)$/ ) ? '.' . $1 : undef
+        );
+
+        my $subdomain = lc( ( split( /\./, $c->req->url->to_abs->host, 2 ) )[0] );
+        my $pre_path  = lc( $c->req->url->path->parts->[0] // '' );
+        my ($region)  = grep { $_->{acronym} eq $subdomain or $_->{acronym} eq $pre_path } @$regions;
+
+        if (
+            my $redirect = (
+                $redirects->{ ($region) ? $region->{acronym} : 'www' } // {}
+            )->{ $c->req->url->path }
+        ) {
+            $c->redirect_to($redirect);
+        }
+        elsif ($region) {
+            unshift(
+                @{ $c->app->static->paths },
+                $region->{path}->child('static'),
+            );
+            if ( $region->{acronym} ne $subdomain and $region->{acronym} eq $pre_path ) {
+                shift $c->req->url->path->parts->@*;
+                $region->{pre_path} = 1;
+            }
+            $c->stash( region => $region );
+        }
+    } );
+    $self->hook( before_routes => sub { $self->static->paths([@$static_paths]) } );
+
+    $self->routes->add_condition( region => sub ( $route, $c, $captures, $value ) {
+        return (
+            $value and defined $c->stash->{region} or
+            not $value and not defined $c->stash->{region}
+        );
+    });
+
     my $all = $self->routes->under( sub ($c) {
         $c->stash(
-            docs_nav => $docs_nav,
             page     => { wrappers => ['page_layout.html.tt'] },
             photos   => $photos->shuffle,
+            docs_nav => $docs_navs->{ ( $c->stash('region') ) ? $c->stash('region')->{acronym} : 'www' },
+            domain   => ( lc( $c->req->url->to_abs->host ) =~ /([^\.]+\.[^\.]+)$/ )
+                ? $1
+                : $c->req->url->to_abs->host_port,
         );
 
         if ( my $user_id = $c->session('user_id') ) {
@@ -59,15 +135,13 @@ sub startup ($self) {
     } );
 
     $users->any( '/user/' . $_ )->to( 'user#' . $_ ) for ( qw( edit tools ) );
-
-    $users->any('/meeting/create')                 ->to('meeting#create');
-    $users->any('/meeting/:meeting_id/vote/create')->to('meeting#vote_create');
-    $users->any('/meeting/:meeting_id/vote')       ->to('meeting#vote');
-    $users->any('/meeting/:meeting_id/close')      ->to('meeting#close');
-    $users->any('/meeting/:meeting_id')            ->to('meeting#view');
-
-    $all->any('/')  ->to('main#index');
-    $all->any('/iq')->to('main#iq');
+    $users->any( '/meeting/' . $_->[1] )->requires( region => 0 )->to( 'meeting#' . $_->[0] ) for (
+        [ create      => 'create'                  ],
+        [ vote_create => ':meeting_id/vote/create' ],
+        [ vote        => ':meeting_id/vote'        ],
+        [ close       => ':meeting_id/close'       ],
+        [ view        => ':meeting_id'             ],
+    );
 
     $all->any("/user/$_/:token")->to("user#$_") for ( qw( verify reset_password ) );
     $all->any( '/user/' . $_ )->to( 'user#' . $_ ) for ( qw(
@@ -76,19 +150,9 @@ sub startup ($self) {
         forgot_password
         logout
     ) );
-
-    for my $redirect (
-        [ '/rules'   => '/CBQ_system/rule_book.md' ],
-        # [ '/ioc'     => '/international_open_championships.md' ],
-        # [ '/ioc2025' => '/international_open_championships.md' ],
-        [ '/ioc'     => '/_ioc_2025.md' ],
-        [ '/ioc2025' => '/_ioc_2025.md' ],
-        [ '/international_open_championships.md' => '/_ioc_2025.md' ],
-    ) {
-        $all->any( $redirect->[0] => sub ($c) { $c->redirect_to( $redirect->[1] ) } );
-    }
-
-    $all->any('/*name')->to('main#content');
+    $all->any('/')->requires( region => 0 )->to('main#index');
+    # $all->any('/iq')->requires( region => 1 )->to('main#iq');
+    $all->any( '/*name', { name => 'index.md' } )->to('main#content');
 }
 
 around 'tt_settings' => sub ( $orig, $self, @input ) {

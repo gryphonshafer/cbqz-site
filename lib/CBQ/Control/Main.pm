@@ -9,20 +9,29 @@ sub index ($self) {
     $self->stash( title => conf->get( qw( docs home_title ) ) );
 }
 
-sub content ($self) {
-    $self->document(
-        conf->get( qw( docs dir ) ) . '/' . $self->stash('name'),
-        undef,
-        conf->get( qw( docs dir ) ) . '/',
-    );
+{
+    my $docs_dir = conf->get( qw( docs dir ) );
+    sub content ($self) {
+        my $docs_path = (
+            ( $self->stash('region') )
+                ? $self->stash('region')->{path_rel} . '/'
+                : ''
+        ) . $docs_dir . '/';
 
-    if ( $self->res->code and $self->res->code == 404 ) {
-        $self->stash( 'mojo.finished' => 0 );
-        $self->flash( memo => {
-            class   => 'error',
-            message => 'Unable to find the resource previously requested. Redirected to home page.',
-        } );
-        $self->redirect_to('/');
+        $self->document(
+            $docs_path . $self->stash('name'),
+            undef,
+            $docs_path,
+        );
+
+        if ( $self->res->code and $self->res->code == 404 ) {
+            $self->stash( 'mojo.finished' => 0 );
+            $self->flash( memo => {
+                class   => 'error',
+                message => 'Unable to find the resource previously requested. Redirected to home page.',
+            } );
+            $self->redirect_to('/');
+        }
     }
 }
 

@@ -1,9 +1,13 @@
 [% page.rss = c.url_for('/iq.rss') %]
 
 <div id="logo">
-    <img src="[% c.url_for('/logo/source.svg') %]" width="32" height="32">
-    <span class="c">Christian</span>
-    <span class="bq">Bible Quizzing</span>
+    <a href="[% c.url_for( '//' _ domain ) %]">
+        <img src="[% c.url_for('/logo/source.svg') %]" width="32" height="32">
+    </a>
+    <a href="[% c.url_for( '//' _ domain ) %]">
+        <span class="c">Christian</span>
+        <span class="bq">Bible Quizzing</span>
+    </a>
     <a href="#menu" class="toggle-menu"><span class="material-symbols-outlined">menu</span></a>
 </div>
 
@@ -29,7 +33,9 @@
             [% FOREACH node IN docs %]
                 <li>
                     [% IF node.folder OR node.name %]
-                        [% IF node.href %]<a href="[% c.url_for( node.href ) %]"
+                        [% IF node.href %]<a href="[% c.url_for(
+                            ( ( region.pre_path ) ? '../../' _ region.acronym : '' ) _ node.href
+                        ) %]"
                             title="[% node.title OR node.folder OR node.name %]"
                             [% IF c.url_for( node.href ) == c.req.url.to_abs.path %]
                                 class="current"

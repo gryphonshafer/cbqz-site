@@ -24,9 +24,16 @@ default:
         from: Christian Bible Quizzing <q@cbqz.org>
     captcha:
         ttf: static/externals/google_fonts/fonts/poppins/poppins-v*-latin_latin-ext-700.ttf
-        x: 15
+        x  : 15
     min_passwd_length: 8
-    token_expiration: 86400 # 1 day
+    token_expiration : 86400 # 1 day
+    regional_cms:
+        path_suffix: ../regions
+        settings   : settings.yaml
+    redirects:
+        /rules  : /CBQ_system/rule_book.md
+        /ioc    : /
+        /ioc2025: /
 tauntaun:
     database:
         log:
