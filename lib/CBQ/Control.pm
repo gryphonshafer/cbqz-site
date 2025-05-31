@@ -1,11 +1,10 @@
 package CBQ::Control;
 
 use exact -conf, 'Omniframe::Control';
+use CBQ::Model::Region;
 use CBQ::Model::User;
 use Mojo::File 'path';
 use Omniframe::Util::File 'opath';
-use Text::MultiMarkdown 'markdown';
-use YAML::XS 'Load';
 
 my $root_dir = conf->get( qw( config_app root_dir ) );
 my $photos   = path( $root_dir . '/static/photos' )
@@ -21,41 +20,31 @@ sub startup ($self) {
     $self->plugin( CaptchaPNG => $captcha_conf );
 
     my $static_paths = [ @{ $self->static->paths } ];
-    my $regional_cms = conf->get('regional_cms');
-    my $regions      = [
-        map {
-            $_->{acronym}  = lc $_->{acronym};
-            $_->{path}     = path( join( '/', $root_dir, $regional_cms->{path_suffix}, $_->{acronym} ) );
-            $_->{path_rel} = path( join( '/', $regional_cms->{path_suffix}, $_->{acronym} ) );
-            $_->{settings} =
-                ( -r $_->{path}->child( $regional_cms->{settings} ) )
-                    ? Load( $_->{path}->child( $regional_cms->{settings} )->slurp )
-                    : {};
-            $_;
-        } @{ CBQ::Model::User->dq->get(
-            'region',
-            [ qw( name acronym ) ],
-            { active => 1 },
-        )->run->all({})
-    } ];
-
-    my $redirects = {
+    my $regions      = CBQ::Model::Region->new->all_settings_processed;
+    my $redirects    = {
         www => conf->get('redirects'),
-        grep { defined } map {
-            ( $_->{settings}{redirects} ) ? ( $_->{acronym} => $_->{settings}{redirects} ) : undef
-        } @$regions,
+        grep { defined }
+        map {
+            ( $regions->{$_}{settings} and $regions->{$_}{settings}{redirects} )
+                ? ( $_ => $regions->{$_}{settings}{redirects} )
+                : undef
+        }
+        keys %$regions,
     };
 
     my $docs_navs = {
         www => $self->docs_nav( @{ conf->get('docs') }{ qw( dir home_type home_name home_title ) } ),
-        grep { defined } map {
-            $_->{acronym} => $self->docs_nav(
-                $_->{path_rel}->child('docs'),
+        grep { defined }
+        map {
+            $_ => $self->docs_nav(
+                $regions->{$_}{path}->child('docs'),
                 'md',
-                uc( $_->{acronym} ) . ' Home',
-                uc( $_->{acronym} ) . ' Christian Bible Quizzing Region',
+                uc( $_ ) . ' Home',
+                uc( $_ ) . ' Christian Bible Quizzing Region',
             );
-        } @$regions,
+        }
+        grep { $regions->{$_}{path} }
+        keys %$regions,
     };
     # push( @{ $docs_navs->{www} }, {
     #     href  => $self->url_for('/iq'),
@@ -70,12 +59,15 @@ sub startup ($self) {
 
         my $subdomain = lc( ( split( /\./, $c->req->url->to_abs->host, 2 ) )[0] );
         my $pre_path  = lc( $c->req->url->path->parts->[0] // '' );
-        my ($region)  = grep { $_->{acronym} eq $subdomain or $_->{acronym} eq $pre_path } @$regions;
+        my $region    = $regions->{$subdomain} // $regions->{$pre_path};
+
+        my $url_path = $c->req->url->path->trailing_slash(0);
+        shift @{ $url_path->parts } if ( $region and $pre_path );
 
         if (
             my $redirect = (
-                $redirects->{ ($region) ? $region->{acronym} : 'www' } // {}
-            )->{ $c->req->url->path }
+                $redirects->{ ($region) ? $region->{key} : 'www' } // {}
+            )->{$url_path}
         ) {
             $c->redirect_to($redirect);
         }
@@ -84,10 +76,12 @@ sub startup ($self) {
                 @{ $c->app->static->paths },
                 $region->{path}->child('static'),
             );
-            if ( $region->{acronym} ne $subdomain and $region->{acronym} eq $pre_path ) {
+
+            if ( $region->{key} ne $subdomain and $region->{key} eq $pre_path ) {
                 shift $c->req->url->path->parts->@*;
                 $region->{pre_path} = 1;
             }
+
             $c->stash( region => $region );
         }
     } );
@@ -104,7 +98,7 @@ sub startup ($self) {
         $c->stash(
             page     => { wrappers => ['page_layout.html.tt'] },
             photos   => $photos->shuffle,
-            docs_nav => $docs_navs->{ ( $c->stash('region') ) ? $c->stash('region')->{acronym} : 'www' },
+            docs_nav => $docs_navs->{ ( $c->stash('region') ) ? $c->stash('region')->{key} : 'www' },
             domain   => ( lc( $c->req->url->to_abs->host ) =~ /([^\.]+\.[^\.]+)$/ )
                 ? $1
                 : $c->req->url->to_abs->host_port,

@@ -29,7 +29,7 @@ default:
     token_expiration : 86400 # 1 day
     regional_cms:
         path_suffix: ../regions
-        settings   : settings.yaml
+        settings   : config
     redirects:
         /rules  : /CBQ_system/rule_book.md
         /ioc    : /

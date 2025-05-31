@@ -14,7 +14,7 @@ sub index ($self) {
     sub content ($self) {
         my $docs_path = (
             ( $self->stash('region') )
-                ? $self->stash('region')->{path_rel} . '/'
+                ? $self->stash('region')->{path} . '/'
                 : ''
         ) . $docs_dir . '/';
 

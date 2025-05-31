@@ -34,7 +34,7 @@
                 <li>
                     [% IF node.folder OR node.name %]
                         [% IF node.href %]<a href="[% c.url_for(
-                            ( ( region.pre_path ) ? '../../' _ region.acronym : '' ) _ node.href
+                            ( ( region.pre_path ) ? '../../' _ region.key : '' ) _ node.href
                         ) %]"
                             title="[% node.title OR node.folder OR node.name %]"
                             [% IF c.url_for( node.href ) == c.req.url.to_abs.path %]
