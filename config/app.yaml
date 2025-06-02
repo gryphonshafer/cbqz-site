@@ -31,9 +31,10 @@ default:
         path_suffix: ../regions
         settings   : config
     redirects:
+        /slack  : https://join.slack.com/t/biblequizzing/shared_invite/zt-dkkz0wlh-x3~NlagTgtdvT3m2jh~dig
         /rules  : /CBQ_system/rule_book.md
-        /ioc    : /
-        /ioc2025: /
+        /ioc    : /_ioc_2025.md
+        /ioc2025: /_ioc_2025.md
 tauntaun:
     database:
         log:
