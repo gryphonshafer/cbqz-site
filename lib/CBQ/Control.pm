@@ -32,12 +32,13 @@ sub startup ($self) {
         keys %$regions,
     };
 
+    my $iq_rss = conf->get('iq_rss');
     my $www_docs_nav = $self->docs_nav( @{ conf->get('docs') }{ qw( dir home_type home_name home_title ) } );
     push( @$www_docs_nav, {
         href  => $self->url_for('/iq'),
         name  => '"Inside Quizzing"',
         title => 'The "Inside Quizzing" Podcast',
-    } );
+    } ) if ($iq_rss);
 
     my $docs_navs = {
         www => $www_docs_nav,
@@ -101,6 +102,7 @@ sub startup ($self) {
             page     => { wrappers => ['page_layout.html.tt'] },
             photos   => $photos->shuffle,
             docs_nav => $docs_navs->{ ( $c->stash('region') ) ? $c->stash('region')->{key} : 'www' },
+            iq_rss   => $iq_rss,
             domain   => ( lc( $c->req->url->to_abs->host ) =~ /([^\.]+\.[^\.]+)$/ )
                 ? $1
                 : $c->req->url->to_abs->host_port,
@@ -147,8 +149,12 @@ sub startup ($self) {
         logout
     ) );
     $all->any('/')->requires( region => 0 )->to('main#index');
-    $all->any('/iq')->requires( region => 0 )->to('main#iq');
-    $all->any('/iq.rss')->requires( region => 0 )->to('main#iq_rss');
+
+    if ($iq_rss) {
+        $all->any('/iq')->requires( region => 0 )->to('main#iq');
+        $all->any('/iq.rss')->requires( region => 0 )->to('main#iq_rss');
+    }
+
     $all->any( '/*name', { name => 'index.md' } )->to('main#content');
 }
 

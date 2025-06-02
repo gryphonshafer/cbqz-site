@@ -1,4 +1,8 @@
-[% page.rss = c.url_for('/iq.rss') %]
+[%
+    IF iq_rss;
+        page.rss = c.url_for('/iq.rss');
+    END;
+%]
 
 <div id="logo">
     <a href="[% c.url_for( '//' _ domain ) %]">
@@ -67,11 +71,11 @@
             <a href="https://www.facebook.com/Christian-Bible-Quizzing-111992838545191"><img
                 alt="Facebook"
                 src="[% c.url_for('/svg/facebook.svg') %]"></a>
-            <!--
-            <a href="[% c.url_for('/iq') %]"><img
-                alt="Inside Quizzing" class="rss"
-                src="[% c.url_for('/svg/rss.svg') %]"></a>
-            -->
+            [% IF iq_rss %]
+                <a href="[% c.url_for('/iq') %]"><img
+                    alt="Inside Quizzing" class="rss"
+                    src="[% c.url_for('/svg/rss.svg') %]"></a>
+            [% END %]
         </span>
         <span class="text_links">
             [% UNLESS user %]
