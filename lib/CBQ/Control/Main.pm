@@ -67,6 +67,13 @@ sub iq ($self) {
     );
 }
 
+sub iq_rss ($self) {
+    $self->res->headers->content_type('application/rss+xml; charset=UTF-8');
+    $self->render(
+        data => path( conf->get( qw( config_app root_dir ) ) )->child( conf->get('iq_rss') )->slurp('UTF-8'),
+    );
+}
+
 1;
 
 =head1 NAME
@@ -91,6 +98,10 @@ Handler for everything under "/docs" served via the documents feeder.
 =head2 iq
 
 Handler for Inside Quizzing podcast page.
+
+=head2 iq_rss
+
+Handler for Inside Quizzing RSS feed.
 
 =head1 INHERITANCE
 

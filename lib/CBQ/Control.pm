@@ -32,8 +32,15 @@ sub startup ($self) {
         keys %$regions,
     };
 
+    my $www_docs_nav = $self->docs_nav( @{ conf->get('docs') }{ qw( dir home_type home_name home_title ) } );
+    push( @$www_docs_nav, {
+        href  => $self->url_for('/iq'),
+        name  => '"Inside Quizzing"',
+        title => 'The "Inside Quizzing" Podcast',
+    } );
+
     my $docs_navs = {
-        www => $self->docs_nav( @{ conf->get('docs') }{ qw( dir home_type home_name home_title ) } ),
+        www => $www_docs_nav,
         grep { defined }
         map {
             $_ => $self->docs_nav(
@@ -46,11 +53,6 @@ sub startup ($self) {
         grep { $regions->{$_}{path} }
         keys %$regions,
     };
-    # push( @{ $docs_navs->{www} }, {
-    #     href  => $self->url_for('/iq'),
-    #     name  => '"Inside Quizzing"',
-    #     title => 'The "Inside Quizzing" Podcast',
-    # } );
 
     $self->hook( before_dispatch => sub ($c) {
         $c->app->sessions->cookie_domain(
@@ -145,7 +147,8 @@ sub startup ($self) {
         logout
     ) );
     $all->any('/')->requires( region => 0 )->to('main#index');
-    # $all->any('/iq')->requires( region => 1 )->to('main#iq');
+    $all->any('/iq')->requires( region => 0 )->to('main#iq');
+    $all->any('/iq.rss')->requires( region => 0 )->to('main#iq_rss');
     $all->any( '/*name', { name => 'index.md' } )->to('main#content');
 }
 

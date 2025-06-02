@@ -16,7 +16,7 @@
         class="button colored">About CBQ</a>
     <a href="mailto:q@cbqz.org" class="button">Contact
         <span class="material-symbols-outlined inline">mail</span></a>
-    <a href="[% c.url_for('/slack') %]" class="button">Join Slack
+    <a href="[% c.url_for('/slack') %]" class="button">Slack
         <span class="material-symbols-outlined inline">forum</span></a>
     <a href="[% c.url_for('/FAQs.md') %]"
         class="button colored">FAQs</a>
