@@ -87,13 +87,13 @@ sub startup ($self) {
 
         $c->app->sessions->cookie_domain( ( $req_info->{domain} ) ? '.' . $req_info->{domain} : undef );
 
-        my $url_path = $c->req->url->path->trailing_slash(0);
+        my $url_path = $c->req->url->path;
         shift @{ $url_path->parts } if ( $req_info->{region} and $req_info->{path_part} );
 
         if (
             my $redirect = (
-                $redirects->{ ( $req_info->{region} ) ? $req_info->{region}->{key} : 'www' } // {}
-            )->{$url_path}
+                $redirects->{ ( $req_info->{region} ) ? $req_info->{region}{key} : 'www' } // {}
+            )->{ $url_path->clone->trailing_slash(0) }
         ) {
             $c->redirect_to($redirect);
         }
@@ -103,6 +103,7 @@ sub startup ($self) {
                 $req_info->{region}{path}->child('static'),
             );
         }
+
         $c->stash( req_info => $req_info );
     } );
     $self->hook( before_routes => sub { $self->static->paths([@$static_paths]) } );

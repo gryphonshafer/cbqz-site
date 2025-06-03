@@ -18,11 +18,37 @@ sub index ($self) {
                 : ''
         ) . $docs_dir . '/';
 
+        my $key = ( $self->stash->{req_info}{region} )
+            ? $self->stash->{req_info}{region}{key}
+            : undef;
+        my $trailing_slash = $self->req->url->path->trailing_slash;
+        my $hrefify        = sub ($href) {
+            return unless ($href);
+            return
+                ( $href =~ m|^/|      ) ? '/' . $key . $href :
+                ( not $trailing_slash ) ? $key . '/' . $href : undef;
+        };
+
         $self->document(
             $docs_path . $self->stash('name'),
             sub ( $payload, $type ) {
-                if ( $type eq 'md' ) {
-                    # TODO: rewrite links as necessary for regional CMS
+                if (
+                    ( $type eq 'md' or $type eq 'html' )
+                    and $self->stash->{req_info}{region}
+                    and not $self->stash->{req_info}{subdomain}
+                ) {
+                    $payload =~ s|(\[[^\]]*\]\s*\()([^\)]*)(\))| $1 . ( $hrefify->($2) // $2 ) . $3 |ge
+                        if ( $type eq 'md' );
+
+                    if ( $payload =~ /</ ) {
+                        my $dom = Mojo::DOM->new($payload);
+                        $dom->find('a')->each( sub {
+                            if ( my $href = $hrefify->( $_->attr('href') ) ) {
+                                $_->attr( href => $href );
+                            }
+                        } );
+                        $payload = $dom->to_string;
+                    }
                 }
                 return $payload;
             },
