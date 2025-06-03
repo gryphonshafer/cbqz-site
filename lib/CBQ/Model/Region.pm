@@ -11,6 +11,7 @@ use YAML::XS;
 with 'Omniframe::Role::Model';
 
 class_has regional_cms => conf->get('regional_cms');
+class_has docs_dir     => conf->get( qw( docs dir ) );
 
 my $time = Omniframe::Class::Time->new;
 my $bref = Bible::Reference->new( simplify => 1 );
@@ -43,15 +44,19 @@ sub settings ($self) {
             }
         } );
 
-    return (%$settings) ? $settings : undef;
+    return ( $settings and %$settings ) ? $settings : {};
 }
 
 sub all_settings ($self) {
     return {
         map { $_->{key} => $_ }
-        grep { $_->{path} }
+        grep {
+            -d $_->{path} and
+            -f $_->{path}->child( $self->docs_dir . '/index.md' )
+        }
         map { +{
             key            => lc $_->data->{acronym},
+            name           => $_->data->{name},
             path           => $_->path,
             maybe settings => $_->settings,
         } }

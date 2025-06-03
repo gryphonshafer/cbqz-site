@@ -43,8 +43,9 @@ sub startup ($self) {
                 +{
                     href      => '/' . $_,
                     subdomain => $_,
-                    name      => ( $regions->{$_}{settings}{name} // uc($_) ),
-                    title     => uc($_) . ' - ' . $regions->{$_}{settings}{name},
+                    name      => ( $regions->{$_}{name} // uc($_) ),
+                    title     => uc($_) .
+                        ( ( $regions->{$_}{name} ) ? ' - ' . $regions->{$_}{name} : '' ),
                 };
             }
             sort keys %$regions,
@@ -59,16 +60,18 @@ sub startup ($self) {
 
     my $docs_navs = {
         www => $www_docs_nav,
-        grep { defined }
         map {
             $_ => $self->docs_nav(
                 $regions->{$_}{path}->child('docs'),
                 'md',
-                $regions->{$_}{settings}{name} . ' CBQ Region',
-                $regions->{$_}{settings}{name} . ' (' . uc($_) . ') Christian Bible Quizzing (CBQ) Region',
+                ( $regions->{$_}{name} // uc($_) ) . ' CBQ Region',
+                (
+                    ( $regions->{$_}{name} )
+                        ? $regions->{$_}{name} . ' (' . uc($_) . ')'
+                        : uc($_)
+                ) . ' Christian Bible Quizzing (CBQ) Region',
             );
         }
-        grep { $regions->{$_}{path} }
         keys %$regions,
     };
 
