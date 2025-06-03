@@ -6,22 +6,17 @@ use CBQ::Model::User;
 use Mojo::File 'path';
 use Omniframe::Util::File 'opath';
 
-my $root_dir = conf->get( qw( config_app root_dir ) );
-my $photos   = path( $root_dir . '/static/photos' )
-    ->list_tree
-    ->map( sub { substr( $_->to_string, length( $root_dir . '/static' ) ) } )
-    ->grep(qr/\.(?:jpg|png)$/);
-
 sub startup ($self) {
-    $self->setup( skip => ['sockets'] );
+    my $root_dir = conf->get( qw( config_app root_dir ) );
+    my $photos   = path( $root_dir . '/static/photos' )
+        ->list_tree
+        ->map( sub { substr( $_->to_string, length( $root_dir . '/static' ) ) } )
+        ->grep(qr/\.(?:jpg|png)$/);
 
-    my $captcha_conf = conf->get('captcha');
-    $captcha_conf->{ttf} = opath( $captcha_conf->{ttf} );
-    $self->plugin( CaptchaPNG => $captcha_conf );
-
-    my $static_paths = [ @{ $self->static->paths } ];
-    my $regions      = CBQ::Model::Region->new->all_settings_processed;
-    my $redirects    = {
+    my $iq_rss               = conf->get('iq_rss');
+    my $regions_nav_position = conf->get( qw( regional_cms nav_position ) );
+    my $regions              = CBQ::Model::Region->new->all_settings_processed;
+    my $redirects            = {
         www => conf->get('redirects'),
         grep { defined }
         map {
@@ -32,10 +27,32 @@ sub startup ($self) {
         keys %$regions,
     };
 
-    my $iq_rss = conf->get('iq_rss');
+    $self->setup( skip => ['sockets'] );
+
+    my $captcha_conf = conf->get('captcha');
+    $captcha_conf->{ttf} = opath( $captcha_conf->{ttf} );
+    $self->plugin( CaptchaPNG => $captcha_conf );
+
+    my $static_paths = [ @{ $self->static->paths } ];
     my $www_docs_nav = $self->docs_nav( @{ conf->get('docs') }{ qw( dir home_type home_name home_title ) } );
+
+    splice( @$www_docs_nav, $regions_nav_position, 0, {
+        folder => 'Regions',
+        nodes  => [
+            map {
+                +{
+                    href      => '/' . $_,
+                    subdomain => $_,
+                    name      => ( $regions->{$_}{settings}{name} // uc($_) ),
+                    title     => uc($_) . ' - ' . $regions->{$_}{settings}{name},
+                };
+            }
+            sort keys %$regions,
+        ],
+    } ) if ( defined $regions_nav_position );
+
     push( @$www_docs_nav, {
-        href  => $self->url_for('/iq'),
+        href  => '/iq',
         name  => '"Inside Quizzing"',
         title => 'The "Inside Quizzing" Podcast',
     } ) if ($iq_rss);
@@ -47,8 +64,8 @@ sub startup ($self) {
             $_ => $self->docs_nav(
                 $regions->{$_}{path}->child('docs'),
                 'md',
-                uc( $_ ) . ' Home',
-                uc( $_ ) . ' Christian Bible Quizzing Region',
+                $regions->{$_}{settings}{name} . ' CBQ Region',
+                $regions->{$_}{settings}{name} . ' (' . uc($_) . ') Christian Bible Quizzing (CBQ) Region',
             );
         }
         grep { $regions->{$_}{path} }
@@ -56,44 +73,44 @@ sub startup ($self) {
     };
 
     $self->hook( before_dispatch => sub ($c) {
-        $c->app->sessions->cookie_domain(
-            ( lc( $c->req->url->to_abs->host ) =~ /([^\.]+\.[^\.]+)$/ ) ? '.' . $1 : undef
-        );
+        lc( $c->req->url->to_abs->host ) =~ /(?:(?<subdomain>[^\.]+)\.)?(?<domain>[^\.]+\.[^\.]+)$/;
+        my $req_info = {%+};
 
-        my $subdomain = lc( ( split( /\./, $c->req->url->to_abs->host, 2 ) )[0] );
-        my $pre_path  = lc( $c->req->url->path->parts->[0] // '' );
-        my $region    = $regions->{$subdomain} // $regions->{$pre_path};
+        $req_info->{region} =
+            $regions->{ $req_info->{subdomain} // '' } //
+            $regions->{ lc( $c->req->url->path->parts->[0] // '' ) };
+
+        $req_info->{path_part} = (
+            $req_info->{region} and
+            not $regions->{ $req_info->{subdomain} // '' }
+        ) ? 1 : 0;
+
+        $c->app->sessions->cookie_domain( ( $req_info->{domain} ) ? '.' . $req_info->{domain} : undef );
 
         my $url_path = $c->req->url->path->trailing_slash(0);
-        shift @{ $url_path->parts } if ( $region and $pre_path );
+        shift @{ $url_path->parts } if ( $req_info->{region} and $req_info->{path_part} );
 
         if (
             my $redirect = (
-                $redirects->{ ($region) ? $region->{key} : 'www' } // {}
+                $redirects->{ ( $req_info->{region} ) ? $req_info->{region}->{key} : 'www' } // {}
             )->{$url_path}
         ) {
             $c->redirect_to($redirect);
         }
-        elsif ($region) {
+        elsif ( $req_info->{region} ) {
             unshift(
                 @{ $c->app->static->paths },
-                $region->{path}->child('static'),
+                $req_info->{region}{path}->child('static'),
             );
-
-            if ( $region->{key} ne $subdomain and $region->{key} eq $pre_path ) {
-                shift $c->req->url->path->parts->@*;
-                $region->{pre_path} = 1;
-            }
-
-            $c->stash( region => $region );
         }
+        $c->stash( req_info => $req_info );
     } );
     $self->hook( before_routes => sub { $self->static->paths([@$static_paths]) } );
 
     $self->routes->add_condition( region => sub ( $route, $c, $captures, $value ) {
         return (
-            $value and defined $c->stash->{region} or
-            not $value and not defined $c->stash->{region}
+            $value and defined $c->stash->{req_info}{region} or
+            not $value and not defined $c->stash->{req_info}{region}
         );
     });
 
@@ -101,11 +118,12 @@ sub startup ($self) {
         $c->stash(
             page     => { wrappers => ['page_layout.html.tt'] },
             photos   => $photos->shuffle,
-            docs_nav => $docs_navs->{ ( $c->stash('region') ) ? $c->stash('region')->{key} : 'www' },
             iq_rss   => $iq_rss,
-            domain   => ( lc( $c->req->url->to_abs->host ) =~ /([^\.]+\.[^\.]+)$/ )
-                ? $1
-                : $c->req->url->to_abs->host_port,
+            docs_nav => $docs_navs->{
+                ( $c->stash->{req_info}{region} )
+                    ? $c->stash->{req_info}{region}{key}
+                    : 'www'
+            },
         );
 
         if ( my $user_id = $c->session('user_id') ) {

@@ -13,14 +13,19 @@ sub index ($self) {
     my $docs_dir = conf->get( qw( docs dir ) );
     sub content ($self) {
         my $docs_path = (
-            ( $self->stash('region') )
-                ? $self->stash('region')->{path} . '/'
+            ( $self->stash->{req_info}{region} )
+                ? $self->stash->{req_info}{region}{path} . '/'
                 : ''
         ) . $docs_dir . '/';
 
         $self->document(
             $docs_path . $self->stash('name'),
-            undef,
+            sub ( $payload, $type ) {
+                if ( $type eq 'md' ) {
+                    # TODO: rewrite links as necessary for regional CMS
+                }
+                return $payload;
+            },
             $docs_path,
         );
 

@@ -5,10 +5,10 @@
 %]
 
 <div id="logo">
-    <a href="[% c.url_for( '//' _ domain ) %]">
+    <a href="[% c.url_for( req_info.domain ? '//' _ req_info.domain : '/' ) %]">
         <img src="[% c.url_for('/logo/source.svg') %]" width="32" height="32">
     </a>
-    <a href="[% c.url_for( '//' _ domain ) %]">
+    <a href="[% c.url_for( req_info.domain ? '//' _ req_info.domain : '/' ) %]">
         <span class="c">Christian</span>
         <span class="bq">Bible Quizzing</span>
     </a>
@@ -38,7 +38,13 @@
                 <li>
                     [% IF node.folder OR node.name %]
                         [% IF node.href %]<a href="[% c.url_for(
-                            ( ( region.pre_path ) ? '../../' _ region.key : '' ) _ node.href
+                            ( node.subdomain AND req_info.domain )
+                                ? '//' _ node.subdomain _ '.' _ req_info.domain
+                                : (
+                                    ( req_info.region AND req_info.path_part )
+                                        ? '../../' _ req_info.region.key
+                                        : ''
+                                ) _ node.href
                         ) %]"
                             title="[% node.title OR node.folder OR node.name %]"
                             [% IF c.url_for( node.href ) == c.req.url.to_abs.path %]
