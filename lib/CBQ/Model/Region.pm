@@ -32,6 +32,10 @@ sub settings ($self) {
         ->path
         ->child( $self->regional_cms->{settings} )
         ->list_tree
+        ->grep( sub {
+            ( lc( $_->extname ) eq 'yaml' or lc( $_->extname ) eq 'yml' )
+            and substr( $_->basename, 0, 1 ) ne '_'
+        } )
         ->each( sub {
             my $data = {};
             try {
@@ -68,9 +72,14 @@ sub _node_start_stop ( $node, $days = 1 ) {
     if ( $node->{start} ) {
         $node->{days} //= $days;
 
-        my $start      = $time->parse( $node->{start} );
-        $node->{start} = $start->datetime->rfc3339;
-        $node->{stop}  = $start->datetime->clone->add( days => $node->{days} - 1 )->rfc3339;
+        my $start = $time->parse( $node->{start} )->datetime;
+        my $stop  = $start->clone->add( days => $node->{days} - 1 );
+
+        $node->{start_time} = $start->epoch;
+        $node->{stop_time}  = $stop ->epoch;
+
+        $node->{start} = $start->rfc3339;
+        $node->{stop}  = $stop ->rfc3339;
     }
 
     return;

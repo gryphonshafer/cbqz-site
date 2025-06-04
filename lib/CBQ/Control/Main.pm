@@ -105,6 +105,25 @@ sub iq_rss ($self) {
     );
 }
 
+sub season_schedule ($self) {
+    my $now = time;
+
+    my ($current_season) =
+        sort { $a->{stop_time} <=> $b->{stop_time} }
+        grep { $_->{start_time} <= $now and $_->{stop_time} >= $now }
+        $self->stash->{req_info}{region}{settings}{seasons}->@*;
+
+    ($current_season) =
+        sort { $b->{start_time} <=> $b->{startp_time} }
+        $self->stash->{req_info}{region}{settings}{seasons}->@*
+            unless ($current_season);
+
+    $self->stash(
+        current_season => $current_season,
+        now            => $now,
+    );
+}
+
 1;
 
 =head1 NAME
@@ -133,6 +152,10 @@ Handler for Inside Quizzing podcast page.
 =head2 iq_rss
 
 Handler for Inside Quizzing RSS feed.
+
+=head2 season_schedule
+
+Regional season schedule page.
 
 =head1 INHERITANCE
 

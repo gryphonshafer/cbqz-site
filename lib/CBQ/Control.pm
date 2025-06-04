@@ -5,6 +5,7 @@ use CBQ::Model::Region;
 use CBQ::Model::User;
 use Mojo::File 'path';
 use Omniframe::Util::File 'opath';
+use Text::MultiMarkdown 'markdown';
 
 sub startup ($self) {
     my $root_dir = conf->get( qw( config_app root_dir ) );
@@ -61,7 +62,7 @@ sub startup ($self) {
     my $docs_navs = {
         www => $www_docs_nav,
         map {
-            $_ => $self->docs_nav(
+            my $docs_nav = $self->docs_nav(
                 $regions->{$_}{path}->child('docs'),
                 'md',
                 ( $regions->{$_}{name} // uc($_) ) . ' CBQ Region',
@@ -71,6 +72,19 @@ sub startup ($self) {
                         : uc($_)
                 ) . ' Christian Bible Quizzing (CBQ) Region',
             );
+
+            splice( @$docs_nav, 1, 0, {
+                folder => 'Current Season',
+                nodes  => [
+                    {
+                        href  => '/season_schedule',
+                        name  => 'Season Schedule',
+                        title => q{Current Season's Meet Schedule},
+                    },
+                ],
+            } );
+
+            $_ => $docs_nav;
         }
         keys %$regions,
     };
@@ -170,13 +184,15 @@ sub startup ($self) {
         forgot_password
         logout
     ) );
-    $all->any('/')->requires( region => 0 )->to('main#index');
 
     if ($iq_rss) {
         $all->any('/iq')->requires( region => 0 )->to('main#iq');
         $all->any('/iq.rss')->requires( region => 0 )->to('main#iq_rss');
     }
 
+    $all->any('/season_schedule')->requires( region => 1 )->to('main#season_schedule');
+
+    $all->any('/')->requires( region => 0 )->to('main#index');
     $all->any( '/*name', { name => 'index.md' } )->to('main#content');
 }
 

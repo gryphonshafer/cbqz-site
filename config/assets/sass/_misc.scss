@@ -1,0 +1,9 @@
+@use 'colors';
+
+div.current_next_meet {
+    background-color: colors.$background;
+    border          : 1px solid colors.$lines;
+    padding         : 0 1.25em;
+    border-radius   : 0.4em;
+    width           : fit-content;
+}
