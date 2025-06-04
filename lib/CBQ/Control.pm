@@ -173,8 +173,9 @@ sub startup ($self) {
         return 0;
     } );
 
-    $users->any( '/user/' . $_ )->to( 'user#' . $_ ) for ( qw( edit tools ) );
+    $users->any( '/user/' . $_ )->to( 'user#' . $_ ) for ( qw( edit tools list ) );
     $users->any( '/meeting/' . $_->[1] )->requires( region => 0 )->to( 'meeting#' . $_->[0] ) for (
+        [ list        => 'list'                    ],
         [ create      => 'create'                  ],
         [ vote_create => ':meeting_id/vote/create' ],
         [ vote        => ':meeting_id/vote'        ],

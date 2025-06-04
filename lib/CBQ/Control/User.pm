@@ -253,13 +253,9 @@ sub logout ($self) {
     $self->redirect_to('/');
 }
 
-sub tools ($self) {
-    my $meeting = CBQ::Model::Meeting->new;
-
+sub list ($self) {
     $self->stash(
-        open_meetings => $meeting->open_meetings,
-        past_meetings => $meeting->past_meetings( $self->stash('user') ),
-        users         => [
+        users => [
             sort {
                 $a->{first_name} cmp $b->{first_name} or
                 $a->{last_name} cmp $b->{last_name}
@@ -327,9 +323,9 @@ Handler for login.
 
 Handler for logout.
 
-=head2 tools
+=head2 list
 
-Handler for user tools.
+Handler for users list.
 
 =head1 INHERITANCE
 

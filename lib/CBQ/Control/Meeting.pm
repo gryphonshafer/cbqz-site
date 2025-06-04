@@ -3,6 +3,15 @@ package CBQ::Control::Meeting;
 use exact -conf, 'Mojolicious::Controller';
 use CBQ::Model::Meeting;
 
+sub list ($self) {
+    my $meeting = CBQ::Model::Meeting->new;
+
+    $self->stash(
+        open_meetings => $meeting->open_meetings,
+        past_meetings => $meeting->past_meetings( $self->stash('user') ),
+    );
+}
+
 sub create ($self) {
     return $self->redirect_to('/user/tools') unless ( $self->stash('user')->is_qualified_delegate );
 
@@ -76,6 +85,10 @@ This class is a subclass of L<Mojolicious::Controller> and provides handlers
 for "user" actions.
 
 =head1 METHODS
+
+=head2 list
+
+Handler for meeting list (or index page).
 
 =head2 create
 

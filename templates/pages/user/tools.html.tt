@@ -10,71 +10,12 @@
         >Edit My User Account Data</a>
 </p>
 
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Last Login</th>
-    </tr>
-    [% FOR this_user IN users %]
-        <tr>
-            <td>[% this_user.first_name %] [% this_user.last_name %]</td>
-            <td><a href="mailto:[% this_user.email %]">[% this_user.email %]</a></td>
-            <td>[%
-                this_user.phone.substr( 0, 3 ) _ '-' _
-                this_user.phone.substr( 3, 3 ) _ '-' _
-                this_user.phone.substr( 6, 4 )
-            %]</td>
-            <td>[%
-                ( this_user.last_login )
-                    ? time( this_user.last_login, '%a, %b %-d, %Y at %-I:%M %p %Z' )
-                    : ''
-            %]</td>
-        </tr>
-    [% END %]
-</table>
-
-[% IF open_meetings AND open_meetings.size %]
-    <h2>Open Meetings</h2>
-
-    <table>
-        <tr>
-            <th>Scheduled Start</th>
-            <th>State</th>
-        </tr>
-        [% FOR this_meeting IN open_meetings %]
-            <tr>
-                <td><a href="[%
-                    c.url_for( '/meeting/' _ this_meeting.data.meeting_id )
-                %]">[% time( this_meeting.data.start, '%a, %b %-d, %Y at %-I:%M %p %Z' ) %]</a></td>
-                <td>[% ( this_meeting.is_active ) ? 'Active' : 'Scheduled' %]</td>
-            </tr>
-        [% END %]
-    </table>
-[% END %]
-
-[% IF user.is_qualified_delegate %]
+[% UNLESS req_info.region %]
     <p>
-        <a href="[% c.url_for('/meeting/create') %]">Create a Meeting</a>
+        <a href="[% c.url_for('/meeting/list') %]">Meetings List</a>
     </p>
 [% END %]
 
-[% IF past_meetings AND past_meetings.size %]
-    <h2>Past Meetings</h2>
-
-    <table>
-        <tr>
-            <th>Scheduled Start</th>
-            <th>You Attended</th>
-        </tr>
-        [% FOR this_meeting IN past_meetings %]
-            <tr>
-                <td><a href="[%
-                    c.url_for( '/meeting/' _ this_meeting.meeting_id )
-                %]">[% time( this_meeting.start, '%a, %b %-d, %Y at %-I:%M %p %Z' ) %]</a></td>
-                <td>[% ( this_meeting.attended ) ? 'Yes' : 'No' %]</td>
-            </tr>
-        [% END %]
-    </table>
-[% END %]
+<p>
+    <a href="[% c.url_for( path_part_prefix _ '/user/list' ) %]">Users List</a>
+</p>

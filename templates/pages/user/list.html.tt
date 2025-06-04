@@ -1,0 +1,31 @@
+[%
+    PROCESS macros;
+    page.title = 'Users List';
+%]
+
+<h1>[% page.title %]</h1>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Last Login</th>
+    </tr>
+    [% FOR this_user IN users %]
+        <tr>
+            <td>[% this_user.first_name %] [% this_user.last_name %]</td>
+            <td><a href="mailto:[% this_user.email %]">[% this_user.email %]</a></td>
+            <td>[%
+                this_user.phone.substr( 0, 3 ) _ '-' _
+                this_user.phone.substr( 3, 3 ) _ '-' _
+                this_user.phone.substr( 6, 4 )
+            %]</td>
+            <td>[%
+                ( this_user.last_login )
+                    ? time( this_user.last_login, '%a, %b %-d, %Y at %-I:%M %p %Z' )
+                    : ''
+            %]</td>
+        </tr>
+    [% END %]
+</table>
