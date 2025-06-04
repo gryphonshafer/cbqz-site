@@ -18,7 +18,7 @@ my $bref = Bible::Reference->new( simplify => 1 );
 
 sub path ($self) {
     return unless ( $self->id );
-    my $path = Mojo::File::path( $self->regional_cms->{path_suffix} )->child( $self->data->{acronym} );
+    my $path = Mojo::File::path( $self->regional_cms->{path_suffix} )->child( lc $self->data->{acronym} );
     return ( -r $path ) ? $path : undef;
 }
 
@@ -59,6 +59,7 @@ sub all_settings ($self) {
             -f $_->{path}->child( $self->docs_dir . '/index.md' )
         }
         map { +{
+            id             => $_->id,
             key            => lc $_->data->{acronym},
             name           => $_->data->{name},
             path           => $_->path,

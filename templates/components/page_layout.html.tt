@@ -85,13 +85,13 @@
         </span>
         <span class="text_links">
             [% UNLESS user %]
-                <a href="[% c.url_for('/user/sign_up') %]">Sign-Up</a>
+                <a href="[% c.url_for( path_part_prefix _ '/user/sign_up' ) %]">Sign-Up</a>
                 or
                 <a href="[% c.url_for('/user/login') %]">Login</a>
             [% ELSE %]
-                <a href="[% c.url_for('/user/tools') %]">User Tools</a>
+                <a href="[% c.url_for( path_part_prefix _ '/user/tools' ) %]">User Tools</a>
                 or
-                <a href="[% c.url_for('/user/logout') %]">Logout</a>
+                <a href="[% c.url_for( path_part_prefix _ '/user/logout' ) %]">Logout</a>
             [% END %]
         </span>
     </div>

@@ -121,7 +121,12 @@ sub startup ($self) {
             );
         }
 
-        $c->stash( req_info => $req_info );
+        $c->stash(
+            req_info         => $req_info,
+            path_part_prefix => ( $req_info->{region} and $req_info->{path_part} )
+                ? '../../' . $req_info->{region}{key}
+                : '',
+        );
     } );
     $self->hook( before_routes => sub { $self->static->paths([@$static_paths]) } );
 

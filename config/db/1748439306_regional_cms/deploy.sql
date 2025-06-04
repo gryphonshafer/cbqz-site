@@ -2,8 +2,8 @@
 
 CREATE TABLE IF NOT EXISTS org (
     org_id        INTEGER PRIMARY KEY,
-    name          TEXT    NOT NULL UNIQUE CHECK( LENGTH(name)    > 0 ),
-    acronym       TEXT    NOT NULL UNIQUE CHECK( LENGTH(acronym) > 0 ),
+    name          TEXT    NOT NULL CHECK( LENGTH(name)    > 0 ) UNIQUE,
+    acronym       TEXT    NOT NULL CHECK( LENGTH(acronym) > 0 ) UNIQUE,
     address       TEXT    NOT NULL CHECK( LENGTH(address) > 0 ),
     last_modified TEXT    NOT NULL DEFAULT ( STRFTIME( '%Y-%m-%d %H:%M:%f', 'NOW', 'LOCALTIME' ) ),
     created       TEXT    NOT NULL DEFAULT ( STRFTIME( '%Y-%m-%d %H:%M:%f', 'NOW', 'LOCALTIME' ) ),
@@ -25,9 +25,10 @@ CREATE TRIGGER IF NOT EXISTS org_last_modified
 
 CREATE TABLE IF NOT EXISTS region (
     region_id     INTEGER PRIMARY KEY,
-    name          TEXT    NOT NULL UNIQUE CHECK( LENGTH(name)    > 0 ),
-    acronym       TEXT    NOT NULL UNIQUE CHECK( LENGTH(acronym) > 0 ),
-    secret        TEXT    NOT NULL UNIQUE CHECK( LENGTH(secret)  > 0 ),
+    name          TEXT    NOT NULL CHECK( LENGTH(name)    > 0 ) UNIQUE,
+    acronym       TEXT    NOT NULL CHECK( LENGTH(acronym) > 0 ) UNIQUE,
+    secret        TEXT    NOT NULL CHECK( LENGTH(secret)  > 0 )
+        DEFAULT ( HEX( ABS( RANDOM() ) + ABS( RANDOM() ) ) ) ,
     last_modified TEXT    NOT NULL DEFAULT ( STRFTIME( '%Y-%m-%d %H:%M:%f', 'NOW', 'LOCALTIME' ) ),
     created       TEXT    NOT NULL DEFAULT ( STRFTIME( '%Y-%m-%d %H:%M:%f', 'NOW', 'LOCALTIME' ) ),
     active        INTEGER NOT NULL CHECK( active = 1 OR active = 0 ) DEFAULT 1

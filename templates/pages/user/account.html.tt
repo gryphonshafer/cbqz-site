@@ -5,9 +5,23 @@
 
 <h1>[% page.title %]</h1>
 
-<form method="post" action="[% c.url_for %]" style="float: left">
+<p>
+    Ensure the following form field sets are complete and accurate:
+    <ol>
+        <li>Ensure your user information is complete and accurate.</li>
+        <li>Select all the roles you currently actively perform (or will in the near future).</li>
+        [% IF NOT c.stash.req_info.region AND regions.size %]
+            <li>Select all the regions to which you belong (if any).</li>
+        [% END %]
+        [% IF orgs.size %]
+            <li>Select all the team organizations to which you belong (if any).</li>
+        [% END %]
+    </ol>
+</p>
+
+<form method="post" action="[% c.url_for %]">
     <fieldset>
-        <legend>[% legend %]</legend>
+        <legend>User Information</legend>
 
         <label>
             First Name:
@@ -41,9 +55,71 @@
                 Captcha:
                 <input type="text" name="captcha" value="" placeholder="Captcha">
             </label>
+        [% ELSE %]
+            <label>
+                <input type="checkbox"
+                    [% IF user.data.info.dormant %]checked[% END %]
+                    name="dormant" value="on">
+                Set account to "dormant" status
+            </label>
         [% END %]
 
         <input type="hidden" name="usage" value="[% usage %]">
-        <button type="submit">[% legend %]</button>
     </fieldset>
+
+    <fieldset class="left">
+        <legend>Roles</legend>
+        [% FOR role IN roles %]
+            <label>
+                <input type="checkbox"
+                    [% IF user.data.info.roles.grep(role).size %]checked[% END %]
+                    name="roles" value="[% role %]">
+                [% role %]
+            </label>
+        [% END %]
+    </fieldset>
+
+    [% UNLESS c.stash.req_info.region %]
+        [% IF regions.size %]
+            <fieldset class="left">
+                <legend>Regions</legend>
+                [% FOR region IN regions %]
+                    <label>
+                        <input type="checkbox"
+                            [% IF org_and_region_ids.regions.grep( region.region_id ).size %]checked[% END %]
+                            name="regions" value="[% region.region_id %]">
+                        [% region.name %]
+                        ([% region.acronym %])
+                    </label>
+                [% END %]
+            </fieldset>
+        [% END %]
+    [% ELSE %]
+        <input type="hidden" name="regions" value="[% c.stash.req_info.region.id %]">
+    [% END %]
+
+    [% IF orgs.size %]
+        <fieldset class="left">
+            <legend>Team Organizations</legend>
+            [% last_seen_region_acronym = '' %]
+            [% FOR org IN orgs %]
+                [% UNLESS c.stash.req_info.region %]
+                    [% IF last_seen_region_acronym != org.region_acronym %]
+                        <b>[% org.region_name %] ([% org.region_acronym %])</b>
+                        [% last_seen_region_acronym = org.region_acronym %]
+                    [% END %]
+                [% END %]
+                <label>
+                    <input type="checkbox"
+                        [% IF org_and_region_ids.orgs.grep( org.org_id ).size %]checked[% END %]
+                        name="orgs" value="[% org.org_id %]">
+                    [% org.org_name %]
+                    ([% org.org_acronym %])
+                </label>
+            [% END %]
+        </fieldset>
+    [% END %]
+
+    <br>
+    <button type="submit" class="colored">[% legend %]</button>
 </form>

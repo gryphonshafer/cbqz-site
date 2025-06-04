@@ -6,7 +6,8 @@
 <h1>[% page.title %]</h1>
 
 <p>
-    <a class="button colored" href="[% c.url_for('/user/edit') %]">Edit My User Account Data</a>
+    <a class="button colored" href="[% c.url_for( path_part_prefix _ '/user/edit' ) %]"
+        >Edit My User Account Data</a>
 </p>
 
 <table>

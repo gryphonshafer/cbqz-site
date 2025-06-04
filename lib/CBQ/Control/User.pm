@@ -3,6 +3,21 @@ package CBQ::Control::User;
 use exact -conf, 'Mojolicious::Controller';
 use CBQ::Model::User;
 use CBQ::Model::Meeting;
+use CBQ::Model::Org;
+use CBQ::Model::Region;
+
+sub _account_common ( $self, $usage = 'sign_up' ) {
+    $self->stash(
+        usage   => $usage,
+        roles   => conf->get('roles'),
+        regions => [ sort { $a->{name} cmp $b->{name} } CBQ::Model::Region->every_data ],
+        orgs    => CBQ::Model::Org->orgs(
+            ( $self->stash->{req_info}{region} ) ? $self->stash->{req_info}{region}{key}: undef
+        ),
+        ( ( $self->stash('user') ) ? ( org_and_region_ids => $self->stash('user')->org_and_region_ids ) : () ),
+    );
+    $self->render( template => 'user/account' );
+}
 
 sub sign_up ($self) {
     my %params = $self->req->params->to_hash->%*;
@@ -20,6 +35,7 @@ sub sign_up ($self) {
             my $user = CBQ::Model::User->new->create({ map { $_ => $params{$_} } @fields });
 
             if ( $user and $user->data ) {
+                $user->profile(\%params);
                 $user->send_email( 'verify_email', $self->url_for('/user/verify') );
 
                 my $email = {
@@ -42,7 +58,7 @@ sub sign_up ($self) {
                         ),
                     }
                 );
-                $self->redirect_to('/');
+                $self->redirect_to( $self->stash('path_part_prefix') . '/' );
             }
         }
         catch ($e) {
@@ -65,8 +81,7 @@ sub sign_up ($self) {
         }
     }
 
-    $self->stash( usage => 'sign_up' );
-    $self->render( template => 'user/account' );
+    $self->_account_common('sign_up');
 }
 
 sub edit ($self) {
@@ -77,7 +92,7 @@ sub edit ($self) {
     if ( $params{usage} and $params{usage} eq 'edit' ) {
         try {
             $self->stash('user')->data->{$_} = $params{$_} for ( grep { $params{$_} } @fields );
-            $self->stash('user')->save;
+            $self->stash('user')->profile(\%params);
 
             $self->flash(
                 memo => {
@@ -86,7 +101,7 @@ sub edit ($self) {
                 }
             );
 
-            $self->redirect_to('/user/tools');
+            $self->redirect_to( $self->stash('path_part_prefix') . '/' );
         }
         catch ($e) {
             $e =~ s/\s+at\s+(?:(?!\s+at\s+).)*[\r\n]*$//;
@@ -102,8 +117,7 @@ sub edit ($self) {
         }
     }
 
-    $self->stash( usage => 'edit' );
-    $self->render( template => 'user/account' );
+    $self->_account_common('edit');
 }
 
 sub verify ($self) {

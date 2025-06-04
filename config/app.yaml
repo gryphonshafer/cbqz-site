@@ -36,6 +36,15 @@ default:
         /rules  : /CBQ_system/rule_book.md
         /ioc    : /_ioc_2025.md
         /ioc2025: /_ioc_2025.md
+    roles:
+        - Quizzer
+        - Coach
+        - Parent
+        - Officials
+        - Regional Board
+        - Pastor
+        - Volunteer
+        - Spectator
 tauntaun:
     database:
         log:
