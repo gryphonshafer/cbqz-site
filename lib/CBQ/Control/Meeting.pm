@@ -7,6 +7,8 @@ sub create ($self) {
     return $self->redirect_to('/user/tools') unless ( $self->stash('user')->is_qualified_delegate );
 
     my $params = $self->req->params->to_hash;
+    delete $params->{ $self->csrf->token_name  };
+
     if (%$params) {
         unless ( $params->{start} and $params->{location} and $params->{agenda} ) {
             $self->stash(%$params);
@@ -45,11 +47,13 @@ sub vote_create ($self) {
 sub vote ($self) {
     return $self->redirect_to('/user/tools') unless ( $self->stash('user')->is_qualified_delegate );
 
-    my $meeting = CBQ::Model::Meeting->new->load( $self->param('meeting_id') );
-    $meeting->vote(
-        $self->stash('user'),
-        $self->req->params->to_hash,
-    );
+    my $params = $self->req->params->to_hash;
+    delete $params->{ $self->csrf->token_name  };
+
+    CBQ::Model::Meeting->new
+        ->load( $self->param('meeting_id') )
+        ->vote( $self->stash('user'), $params );
+
     $self->redirect_to( '/meeting/' . $self->param('meeting_id') );
 }
 
