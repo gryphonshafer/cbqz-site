@@ -124,7 +124,7 @@ sub startup ($self) {
         $c->stash(
             req_info         => $req_info,
             path_part_prefix => ( $req_info->{region} and $req_info->{path_part} )
-                ? '../../' . $req_info->{region}{key}
+                ? ( '../' x scalar( $c->req->url->path->parts->@* ) ) . $req_info->{region}{key}
                 : '',
         );
     } );
@@ -190,6 +190,10 @@ sub startup ($self) {
         forgot_password
         logout
     ) );
+
+    $users->any('/org/list')->to('org#list');
+    $users->any('/org/view/:org_id')->to('org#view');
+    $users->any( '/org/' . $_ )->requires( region => 1 )->to('org#crud') for ( qw( create edit/:org_id ) );
 
     if ($iq_rss) {
         $all->any('/iq')->requires( region => 0 )->to('main#iq');

@@ -19,7 +19,7 @@
     </ol>
 </p>
 
-<form method="post" action="[% c.url_for %]">
+<form method="post">
     <fieldset>
         <legend>User Information</legend>
 

@@ -1,0 +1,44 @@
+[%
+    usage = (org) ? 'Edit' : 'Create';
+    page.title = usage _ ' Organization';
+%]
+
+<h1>[% page.title %]</h1>
+
+<form method="post">
+    <fieldset>
+        <legend>Team Organization Information</legend>
+
+        <label>
+            Name:
+            <input type="text" name="name" value="[% name %]" placeholder="Name">
+        </label>
+        <label>
+            Acronym:
+            <input type="text" name="acronym" value="[% acronym %]" placeholder="Acronym">
+        </label>
+        <label>
+            Address:
+            <input type="text" name="address" value="[% address %]" placeholder="Address">
+        </label>
+    </fieldset>
+
+    [% IF regions.size %]
+        <fieldset class="left">
+            <legend>Regions</legend>
+            [% FOR region IN regions %]
+                <label>
+                    <input type="checkbox"
+                        [% IF region.org_is_in %]checked[% END %]
+                        name="regions" value="[% region.region_id %]">
+                    [% region.name %]
+                    ([% region.acronym %])
+                </label>
+            [% END %]
+        </fieldset>
+    [% END %]
+
+    <br>
+    <input type="hidden" name="usage" value="[% usage %]">
+    <button type="submit" class="colored">[% page.title %]</button>
+</form>

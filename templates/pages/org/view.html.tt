@@ -1,0 +1,67 @@
+[%
+    PROCESS macros;
+    page.title = 'Organization: ' _ org.data.acronym;
+%]
+
+<h1>Organization: [% org.data.acronym %]</h1>
+
+<ul>
+    <li><b>Name:</b> [% org.data.name %]</li>
+    <li><b>Acronym:</b> [% org.data.acronym %]</li>
+    <li>
+        <b>Address:</b>
+        <a href="https://google.com/maps/dir//[% org.org_address | url %]"
+            >[% org.data.address %]</a>
+    </li>
+
+    [% IF regions AND regions.size %]
+        [% IF regions.size == 1 %]
+            <li><b>Region:</b> [% regions.0.name %] ([% regions.0.acronym %])</li>
+        [% ELSE %]
+            <li><b>Regions:</b>
+                <ul>
+                    [% FOR region IN regions %]
+                        <li>[% region.name %] ([% region.acronym %])</li>
+                    [% END %]
+                </ul>
+            </li>
+        [% END %]
+    [% ELSE %]
+        <li><b>Region:</b> [% org.data.acronym %] not associated with any region</li>
+    [% END %]
+</ul>
+
+[% IF users AND users.size %]
+    <h2>Users Associated with [% org.data.acronym %]</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Last Login</th>
+        </tr>
+        [% FOR this_user IN users %]
+            <tr>
+                <td>[% this_user.first_name %] [% this_user.last_name %]</td>
+                <td><a href="mailto:[% this_user.email %]">[% this_user.email %]</a></td>
+                <td>[%
+                    this_user.phone.substr( 0, 3 ) _ '-' _
+                    this_user.phone.substr( 3, 3 ) _ '-' _
+                    this_user.phone.substr( 6, 4 )
+                %]</td>
+                <td>[%
+                    ( this_user.last_login )
+                        ? time( this_user.last_login, '%a, %b %-d, %Y at %-I:%M %p %Z' )
+                        : ''
+                %]</td>
+            </tr>
+        [% END %]
+    </table>
+
+    [% IF user.org_and_region_ids.orgs.grep( org.org_id ).size %]
+        <p><a class="button colored" href="[% c.url_for( path_part_prefix _ '/org/edit/' _ org.org_id ) %]"
+            >Edit Team Organization</a></p>
+    [% END %]
+[% ELSE %]
+    <p>No users are associated with this organization.
+[% END %]

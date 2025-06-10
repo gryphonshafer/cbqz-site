@@ -1,0 +1,34 @@
+[% page.title = 'Team Organizations List' %]
+
+<h1>[% page.title %]</h1>
+
+[% FOR region IN regions_orgs %]
+    <h2>[% region.0.region_name %] ([% region.0.region_acronym %])</h2>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Acronym</th>
+            <th>Address</th>
+        </tr>
+
+        [% FOR org IN region %]
+            <tr>
+                <td>
+                    <a href="[% c.url_for( path_part_prefix _ '/org/view/' _ org.org_id ) %]"
+                        >[% org.org_name %]</a>
+                </td>
+                <td>[% org.org_acronym %]</td>
+                <td>
+                    <a href="https://google.com/maps/dir//[% org.org_address | url %]"
+                        >[% org.org_address %]</a>
+                </td>
+            </tr>
+        [% END %]
+    </table>
+[% END %]
+
+[% IF req_info.region %]
+    <p><a class="button colored" href="[% c.url_for( path_part_prefix _ '/org/create' ) %]"
+        >Create New Team Organization</a></p>
+[% END %]

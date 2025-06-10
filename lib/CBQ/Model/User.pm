@@ -191,6 +191,12 @@ sub is_qualified_delegate ($self) {
     return ( $attendance >= 3 ) ? 1 : 0;
 }
 
+sub add_org ( $self, $org_id )  {
+    return unless ( $self->id );
+    $self->dq->add( 'user_org', { user_id => $self->id, org_id => $org_id } );
+    return;
+}
+
 1;
 
 =head1 NAME
@@ -301,6 +307,10 @@ of IDs of these that the user is associated with.
 
 Returns true if the user is a qualified delegate as defined by attendance
 (viewing) of 3 of the last 4 meetings.
+
+=head2 add_org
+
+Given an organization ID, will subscribe/add the user to that organization.
 
 =head1 WITH ROLE
 

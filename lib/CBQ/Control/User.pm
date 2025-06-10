@@ -254,12 +254,21 @@ sub logout ($self) {
 }
 
 sub list ($self) {
+    my $users  = CBQ::Model::User->new->every;
+    my $region = $self->stash->{req_info}{region};
+
+    $users = [ grep {
+        grep { $_ == $region->{id} } $_->org_and_region_ids->{regions}->@*
+    } @$users ] if ($region);
+
     $self->stash(
         users => [
             sort {
                 $a->{first_name} cmp $b->{first_name} or
-                $a->{last_name} cmp $b->{last_name}
-            } CBQ::Model::User->new->every_data
+                $a->{last_name}  cmp $b->{last_name}
+            }
+            map { $_->data }
+            @$users
         ],
     );
 }

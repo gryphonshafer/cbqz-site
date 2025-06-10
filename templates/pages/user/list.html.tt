@@ -1,6 +1,10 @@
 [%
     PROCESS macros;
-    page.title = 'Users List';
+
+    region_acronym = ( req_info.region ) ? req_info.region.key : 'CBQ';
+    region_acronym = region_acronym | upper;
+
+    page.title = region_acronym _ ' Users List';
 %]
 
 <h1>[% page.title %]</h1>
