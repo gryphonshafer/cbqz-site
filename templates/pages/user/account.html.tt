@@ -1,6 +1,6 @@
 [%
-    page.title = ( ( usage == 'sign_up' ) ? 'Sign-Up for a' : 'Edit' ) _ ' User Account';
-    legend     = ( usage == 'sign_up' ) ? 'Sign-Up' : 'Save User Data';
+    page.title = ( ( usage == 'sign_up' ) ? 'Sign-Up for an' : 'Edit' ) _ ' Account';
+    legend     = ( usage == 'sign_up' ) ? 'Sign-Up' : 'Save Account Data';
 %]
 
 <h1>[% page.title %]</h1>
@@ -8,7 +8,7 @@
 <p>
     Ensure the following form field sets are complete and accurate:
     <ol>
-        <li>Ensure your user information is complete and accurate.</li>
+        <li>Ensure your account information is complete and accurate.</li>
         <li>Select all the roles you currently actively perform (or will in the near future).</li>
         [% IF NOT c.stash.req_info.region AND regions.size %]
             <li>Select all the regions to which you belong (if any).</li>
@@ -21,7 +21,7 @@
 
 <form method="post">
     <fieldset>
-        <legend>User Information</legend>
+        <legend>Account Information</legend>
 
         <label>
             First Name:

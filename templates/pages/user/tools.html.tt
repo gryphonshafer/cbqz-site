@@ -1,14 +1,14 @@
 [%
     PROCESS macros;
-    page.title = 'User Tools';
+    page.title = 'Tools';
 %]
 
 <h1>[% page.title %]</h1>
 
 <ul>
     [% UNLESS req_info.region %]<li><a href="[% c.url_for('/meeting/list') %]">Meetings List</a></li>[% END %]
-    <li><a href="[% c.url_for( path_part_prefix _ '/user/list' ) %]">Users List</a></li>
+    <li><a href="[% c.url_for( path_part_prefix _ '/user/list' ) %]">People List</a></li>
     <li><a href="[% c.url_for( path_part_prefix _ '/org/list' ) %]">Team Organizations List</a></li>
 </ul>
 
-<p><a class="button colored" href="[% c.url_for( path_part_prefix _ '/user/edit' ) %]">Edit My User Account Data</a></p>
+<p><a class="button colored" href="[% c.url_for( path_part_prefix _ '/user/edit' ) %]">Edit My Account Data</a></p>

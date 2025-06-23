@@ -89,7 +89,7 @@
                 or
                 <a href="[% c.url_for('/user/login') %]">Login</a>
             [% ELSE %]
-                <a href="[% c.url_for( path_part_prefix _ '/user/tools' ) %]">User Tools</a>
+                <a href="[% c.url_for( path_part_prefix _ '/user/tools' ) %]">Tools</a>
                 or
                 <a href="[% c.url_for( path_part_prefix _ '/user/logout' ) %]">Logout</a>
             [% END %]

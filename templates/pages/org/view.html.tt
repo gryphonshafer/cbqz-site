@@ -32,7 +32,7 @@
 </ul>
 
 [% IF users AND users.size %]
-    <h2>Users Associated with [% org.data.acronym %]</h2>
+    <h2>People Associated with [% org.data.acronym %]</h2>
     <table>
         <tr>
             <th>Name</th>
@@ -63,5 +63,5 @@
             >Edit Team Organization</a></p>
     [% END %]
 [% ELSE %]
-    <p>No users are associated with this organization.
+    <p>No people are associated with this organization.
 [% END %]
