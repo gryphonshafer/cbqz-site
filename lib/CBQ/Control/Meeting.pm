@@ -66,6 +66,19 @@ sub vote ($self) {
     $self->redirect_to( '/meeting/' . $self->param('meeting_id') );
 }
 
+sub unvote ($self) {
+    return $self->redirect_to('/user/tools') unless ( $self->stash('user')->is_qualified_delegate );
+
+    my $params = $self->req->params->to_hash;
+    delete $params->{ $self->csrf->token_name  };
+
+    CBQ::Model::Meeting->new
+        ->load( $self->param('meeting_id') )
+        ->unvote( $self->stash('user'), $params );
+
+    $self->redirect_to( '/meeting/' . $self->param('meeting_id') );
+}
+
 sub close ($self) {
     return $self->redirect_to('/user/tools') unless ( $self->stash('user')->is_qualified_delegate );
 
@@ -105,6 +118,10 @@ Handler for creating a vote item (something to be voted on) in a meeting.
 =head2 vote
 
 Handler for viewing and casting a vote.
+
+=head2 unvote
+
+Handler for removing a vote.
 
 =head2 close
 

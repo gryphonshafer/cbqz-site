@@ -109,6 +109,20 @@ sub vote ( $self, $user, $params ) {
     } )->run( to_json($info), $user->id, $self->id );
 }
 
+sub unvote ( $self, $user, $params ) {
+    return unless ( $self->is_active );
+
+    my $info = from_json( $self->dq->sql( q{
+        SELECT info FROM user_meeting WHERE user_id = ? AND meeting_id = ?
+    } )->run( $user->id, $self->id )->value // '{}' );
+
+    delete $info->{votes}{ $params->{motion} };
+
+    $self->dq->sql( q{
+        UPDATE user_meeting SET info = ? WHERE user_id = ? AND meeting_id = ?
+    } )->run( to_json($info), $user->id, $self->id );
+}
+
 sub votes ( $self, $user ) {
     return from_json( $self->dq->sql( q{
         SELECT info FROM user_meeting WHERE user_id = ? AND meeting_id = ?
@@ -195,6 +209,10 @@ Create a motion for the meeting.
 =head2 vote
 
 Vote on a motion of the meeting.
+
+=head2 unvote
+
+Remove vote on a motion of the meeting.
 
 =head2 votes
 
