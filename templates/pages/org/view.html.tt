@@ -1,7 +1,4 @@
-[%
-    PROCESS macros;
-    page.title = 'Organization: ' _ org.data.acronym;
-%]
+[% page.title = 'Organization: ' _ org.data.acronym %]
 
 <h1>Organization: [% org.data.acronym %]</h1>
 
@@ -33,30 +30,8 @@
 
 [% IF users AND users.size %]
     <h2>People Associated with [% org.data.acronym %]</h2>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Last Login</th>
-        </tr>
-        [% FOR this_user IN users %]
-            <tr>
-                <td>[% this_user.first_name %] [% this_user.last_name %]</td>
-                <td><a href="mailto:[% this_user.email %]">[% this_user.email %]</a></td>
-                <td>[%
-                    this_user.phone.substr( 0, 3 ) _ '-' _
-                    this_user.phone.substr( 3, 3 ) _ '-' _
-                    this_user.phone.substr( 6, 4 )
-                %]</td>
-                <td>[%
-                    ( this_user.last_login )
-                        ? time( this_user.last_login, '%a, %b %-d, %Y at %-I:%M %p %Z' )
-                        : ''
-                %]</td>
-            </tr>
-        [% END %]
-    </table>
+
+    [% PROCESS user_list.html.tt, users %]
 
     [% IF user.org_and_region_ids.orgs.grep( org.org_id ).size %]
         <p><a class="button colored" href="[% c.url_for( path_part_prefix _ '/org/edit/' _ org.org_id ) %]"

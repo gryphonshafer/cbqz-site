@@ -30,6 +30,7 @@ sub view ($self) {
         org     => $org,
         regions => $org->regions,
         users   => $org->users,
+        roles   => conf->get('roles'),
     );
 }
 

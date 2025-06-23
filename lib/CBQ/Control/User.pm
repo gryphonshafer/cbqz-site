@@ -262,6 +262,7 @@ sub list ($self) {
     } @$users ] if ($region);
 
     $self->stash(
+        roles => conf->get('roles'),
         users => [
             sort {
                 $a->{first_name} cmp $b->{first_name} or

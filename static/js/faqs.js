@@ -23,7 +23,7 @@ window.addEventListener( 'DOMContentLoaded', () => {
 
             heading.parentNode.replaceChild( details, heading );
             details.appendChild(summary);
-            content.forEach (node => details.appendChild(node) );
+            content.forEach( node => details.appendChild(node) );
         }
 
     } );
