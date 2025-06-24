@@ -1,14 +1,16 @@
 [%
     PROCESS macros;
-    page.title = 'Tools';
+    page.title = 'Web Site Account Tools';
+    acronym    = ( NOT req_info.region.key ) ? 'CBQ' : req_info.region.key | upper;
 %]
 
 <h1>[% page.title %]</h1>
 
 <ul>
-    [% UNLESS req_info.region %]<li><a href="[% c.url_for('/meeting/list') %]">Meetings List</a></li>[% END %]
-    <li><a href="[% c.url_for( path_part_prefix _ '/user/list' ) %]">People List</a></li>
-    <li><a href="[% c.url_for( path_part_prefix _ '/org/list' ) %]">Team Organizations List</a></li>
+    [% UNLESS req_info.region %]<li><a href="[% c.url_for('/meeting/list') %]">CBQ Meetings List</a></li>[% END %]
+    <li><a href="[% c.url_for( path_part_prefix _ '/user/list' ) %]">[% acronym %] People List</a></li>
+    <li><a href="[% c.url_for( path_part_prefix _ '/org/list' ) %]">[% acronym %] Team Organizations List</a></li>
 </ul>
 
 <p><a class="button colored" href="[% c.url_for( path_part_prefix _ '/user/edit' ) %]">Edit My Account Data</a></p>
+<p><a href="[% c.url_for( path_part_prefix _ '/meet/register' ) %]" class="button">Quiz Meet Registration Data</a></p>

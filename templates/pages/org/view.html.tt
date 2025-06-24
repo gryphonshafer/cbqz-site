@@ -33,8 +33,8 @@
 
     [% PROCESS user_list.html.tt, users %]
 
-    [% IF user.org_and_region_ids.orgs.grep( org.org_id ).size %]
-        <p><a class="button colored" href="[% c.url_for( path_part_prefix _ '/org/edit/' _ org.org_id ) %]"
+    [% IF user.org_and_region_ids.orgs.grep( org.id ).size %]
+        <p><a class="button colored" href="[% c.url_for( path_part_prefix _ '/org/edit/' _ org.id ) %]"
             >Edit Team Organization</a></p>
     [% END %]
 [% ELSE %]

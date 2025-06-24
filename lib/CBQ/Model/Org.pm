@@ -1,6 +1,6 @@
 package CBQ::Model::Org;
 
-use exact -class, -conf;
+use exact -class;
 use CBQ::Model::Region;
 use CBQ::Model::User;
 

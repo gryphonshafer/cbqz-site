@@ -40,5 +40,5 @@
 
     <br>
     <input type="hidden" name="usage" value="[% usage %]">
-    <button type="submit" class="colored">[% page.title %]</button>
+    <button type="submit" class="colored">Save Organization</button>
 </form>

@@ -45,6 +45,15 @@ default:
         - Pastor
         - Volunteer
         - Spectator
+    registration:
+        deadline: 14
+        reminder: 7
+        roles:
+            - Coach
+            - Parent
+            - Official
+            - Volunteer
+            - Spectator
 tauntaun:
     database:
         log:

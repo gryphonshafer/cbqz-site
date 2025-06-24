@@ -1,6 +1,6 @@
 package CBQ::Control::Meeting;
 
-use exact -conf, 'Mojolicious::Controller';
+use exact 'Mojolicious::Controller';
 use CBQ::Model::Meeting;
 
 sub list ($self) {

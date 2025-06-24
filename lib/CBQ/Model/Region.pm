@@ -70,11 +70,13 @@ sub all_settings ($self) {
 }
 
 sub _node_start_stop ( $node, $days = 1 ) {
+    my $start;
+
     if ( $node->{start} ) {
         $node->{days} //= $days;
 
-        my $start = $time->parse( $node->{start} )->datetime;
-        my $stop  = $start->clone->add( days => $node->{days} - 1 );
+        $start   = $time->parse( $node->{start} )->datetime;
+        my $stop = $start->clone->add( days => $node->{days} - 1 );
 
         $node->{start_time} = $start->epoch;
         $node->{stop_time}  = $stop ->epoch;
@@ -83,30 +85,39 @@ sub _node_start_stop ( $node, $days = 1 ) {
         $node->{stop}  = $stop ->rfc3339;
     }
 
-    return;
+    return $start;
 }
 
-sub _process_times ( $self, $settings = undef ) {
-    $settings //= $self->settings;
-
-    for my $season ( $settings->{seasons}->@* ) {
-        _node_start_stop( $season, 365 );
-        _node_start_stop( $_, 1 ) for ( $season->{meets}->@* );
-    }
-
-    return;
-}
-
-sub _process_not_times ( $self, $settings = undef ) {
+sub _process ( $self, $settings = undef ) {
     $settings //= $self->settings;
 
     my $material = '';
     for my $season ( $settings->{seasons}->@* ) {
+        _node_start_stop( $season, 365 );
+
         $season->{name} = markdown( $season->{name} ) if ( $season->{name} );
 
         for my $meet ( $season->{meets}->@* ) {
-            $meet->{name} = markdown( $meet->{name} ) if ( $meet->{name} );
-            $meet->{notes} = markdown( $meet->{notes} ) if ( $meet->{notes} );
+            my $meet_start = _node_start_stop( $meet, 1 );
+
+            for my $type ( qw( deadline reminder ) ) {
+                next if ( defined $meet->{$type} and not $meet->{$type} );
+
+                $meet->{ $type . '_days' } //=
+                    $meet->{$type} // $season->{$type} // conf->get( 'registration', $type );
+
+                my $type_datetime = $meet_start->add( days => $meet->{ $type . '_days' } )->set(
+                    hour   => 23,
+                    minute => 59,
+                    second => 59,
+                );
+
+                $meet->{ $type . '_time' } = $type_datetime->epoch;
+                $meet->{ $type           } = $type_datetime->rfc3339;
+            }
+
+            $meet->{name}       = markdown( $meet->{name}  ) if ( $meet->{name}  );
+            $meet->{notes}      = markdown( $meet->{notes} ) if ( $meet->{notes} );
             $meet->{host}{name} = markdown( $meet->{host}{name} )
                 if ( $meet->{host} and $meet->{host}{name} );
 
@@ -154,8 +165,7 @@ sub _process_not_times ( $self, $settings = undef ) {
 
 sub settings_processed ( $self, $settings = undef ) {
     $settings //= $self->settings;
-    $self->_process_times($settings);
-    $self->_process_not_times($settings);
+    $self->_process($settings);
     return $settings;
 }
 
@@ -185,16 +195,40 @@ sub all_settings_processed ( $self, $all_settings = undef ) {
         }
     }
 
-    for (
+    $self->_process($_) for (
         map { $all_settings->{$_}{settings} }
         grep { $all_settings->{$_}{settings} }
         keys %$all_settings
-    ) {
-        $self->_process_times($_);
-        $self->_process_not_times($_);
-    }
+    );
 
     return $all_settings;
+}
+
+sub current_season ( $self, $seasons_or_region ) {
+    my $seasons = ( ref $seasons_or_region )
+        ? $seasons_or_region
+        : $self->all_settings_processed->{ lc $seasons_or_region }{settings}{seasons};
+
+    my $now = time;
+    my ($current_season) =
+        sort { $a->{stop_time} <=> $b->{stop_time} }
+        grep { $_->{start_time} <= $now and $_->{stop_time} >= $now }
+        $seasons->@*;
+
+    ($current_season) = sort { $b->{start_time} <=> $b->{start_time} } $seasons->@* unless ($current_season);
+
+    my $seen_current_next_meet;
+    for my $meet ( $current_season->{meets}->@* ) {
+        delete $meet->{$_} for ( qw( is_current_next_meet registration_closed ) );
+
+        if ( $meet->{stop_time} > $now and not $seen_current_next_meet ) {
+            $seen_current_next_meet       = 1;
+            $meet->{is_current_next_meet} = 1;
+            $meet->{registration_closed}  = 1 if ( $meet->{deadline_time} < $now );
+        }
+    }
+
+    return $current_season;
 }
 
 1;
@@ -238,19 +272,23 @@ can be separated into separate files to be merged under a C<settings> call.
     redirects:
         /url/path: /some/other/destination
     seasons:
-    - name: Corinthians
+      - name: Corinthians
         start: Aug 1, 2025
         days: 280 # defaults to 365
+        deadline: 14
+        reminder: 7
         meets:
-        - name: Scramble
+          - name: Scramble
             start: Sep 13 2025 8 AM PDT
             special_material: 1 Cor 1-4
+            deadline: 0
+            reminder: 7
             host:
                 name: Lighthouse Christian Center
                 url: https://lighthousehome.org
                 address: 3409 23rd St SW, Puyallup WA 98373
                 lunch: true # defaults to false
-        - name: Meet 1
+          - name: Meet 1
             start: Oct 11 2025 8 AM PDT
             days: 2 # defaults to 1
             new_material: 1 Cor 1-6
@@ -263,7 +301,7 @@ can be separated into separate files to be merged under a C<settings> call.
             notes: |
                 - Arrive Friday for dinner.
                 - Quizzing on Saturday.
-        - name: Meet 2
+          - name: Meet 2
             region: INW # inherit "Meet 2" from the INW region's settings
 
 =head2 all_settings
@@ -293,6 +331,11 @@ cumulative season material.
 This method is like calling C<all_settings> that for each region calls
 C<settings_processed>, but then in addition will process inherited meets across
 regions.
+
+=head2 current_season
+
+Requires either an arrayref of seasons or the key/acronym for a region. Will
+return the current season with the current or next meet marked as such.
 
 =head1 CONFIGURATION
 

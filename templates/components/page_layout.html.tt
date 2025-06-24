@@ -26,15 +26,13 @@
         <a href="[% c.url_for('/FAQs.md') %]"
             class="button colored">FAQs</a>
     [% ELSE %]
-        <!--
-            [% IF req_info.region %]
-                <a href="[% c.url_for( path_part_prefix _ '/register' ) %]"
-                    class="button colored">Register</a>
-            [% END %]
-        -->
+        [% IF req_info.region %]
+            <a href="[% c.url_for( path_part_prefix _ '/meet/register' ) %]"
+                class="button colored">Register</a>
+        [% END %]
 
         [% UNLESS req_info.region %]
-            <a href="[% c.url_for( '/meetings') %]" class="button colored">Meetings</a>
+            <a href="[% c.url_for( '/meeting/list') %]" class="button colored">Meetings</a>
         [% END %]
 
         <a href="[% c.url_for( path_part_prefix _ '/user/list' ) %]" class="button">People

@@ -1,0 +1,77 @@
+[% USE date %]
+
+<ul>
+    [% IF meet.days > 1 %]
+        <li>
+            <b>Dates:</b>
+            [% date.format( meet.start, '%a, %b %-d, %Y' ) %]
+            to
+            [% date.format( meet.stop, '%a, %b %-d, %Y' ) %]
+        </li>
+    [% ELSE %]
+        <li><b>Date:</b> [% date.format( meet.start, '%a, %b %-d, %Y' ) %]</li>
+    [% END %]
+
+    [% IF
+        meet.material OR
+        meet.old_material OR
+        meet.new_material
+    %]
+        <li>
+            <b>Material:</b>
+            [% IF
+                ( meet.old_material OR meet.new_material ) AND
+                ( meet.material != meet.new_material AND meet.material != meet.old_material )
+            %]
+                <ul>
+                    [% IF meet.material     %]<li><b>Full:</b> [% meet.material     %][% END %]
+                    [% IF meet.old_material %]<li><b>Old:</b>  [% meet.old_material %][% END %]
+                    [% IF meet.new_material %]<li><b>New:</b>  [% meet.new_material %][% END %]
+                </ul>
+            [% ELSE %]
+                [% meet.material %]
+            [% END %]
+        </li>
+    [% END %]
+
+    <li>
+        <b>Host Location:</b>
+        [% IF meet.host %]
+            <ul>
+                [% IF meet.host.name %]
+                    <li>
+                        [% IF meet.host.url %]<a href="[% meet.host.url %]">[% END %][%
+                            meet.host.name.replace( '</?p>', '' )
+                        %][% IF meet.host.url %]</a>[% END %]
+                    </li>
+                [% END %]
+                [% IF meet.host.address %]
+                    <li>
+                        <a href="https://google.com/maps/dir//[% meet.host.address | url %]"
+                            >[% meet.host.address %]</a>
+                    </li>
+                [% END %]
+            </ul>
+        [% ELSE %]
+            <i>Host location to be determined.</i>
+        [% END %]
+    </li>
+
+    [% IF meet.host.housing.defined %]
+        <li><b>Housing Available:</b> [% meet.host.housing ? 'Yes' : 'No' %]</li>
+    [% END %]
+
+    [% IF meet.host.lunch.defined %]
+        <li><b>Lunch Offered:</b> [% meet.host.lunch ? 'Yes' : 'No' %]</li>
+    [% END %]
+
+    [% IF meet.deadline %]
+        <li>
+            <b>Registration Deadline:</b>
+            [% date.format( meet.deadline, '%a, %b %-d, %Y' ) %]
+            <i>([% meet.deadline_days %] days prior)</i>
+        </li>
+    [% END %]
+
+    [% IF meet.notes %]<li><b>Notes:</b> [% meet.notes %]</li>[% END %]
+</ul>

@@ -77,7 +77,7 @@ sub startup ($self) {
                 folder => 'Current Season',
                 nodes  => [
                     {
-                        href  => '/season_schedule',
+                        href  => '/meet/schedule',
                         name  => 'Season Schedule',
                         title => q{Current Season's Meet Schedule},
                     },
@@ -104,13 +104,12 @@ sub startup ($self) {
 
         $c->app->sessions->cookie_domain( ( $req_info->{domain} ) ? '.' . $req_info->{domain} : undef );
 
-        my $url_path = $c->req->url->path;
-        shift @{ $url_path->parts } if ( $req_info->{region} and $req_info->{path_part} );
+        shift @{ $c->req->url->path->parts } if ( $req_info->{region} and $req_info->{path_part} );
 
         if (
             my $redirect = (
                 $redirects->{ ( $req_info->{region} ) ? $req_info->{region}{key} : 'www' } // {}
-            )->{ $url_path->clone->trailing_slash(0) }
+            )->{ $c->req->url->path->clone->trailing_slash(0) }
         ) {
             $c->redirect_to($redirect);
         }
@@ -124,7 +123,12 @@ sub startup ($self) {
         $c->stash(
             req_info         => $req_info,
             path_part_prefix => ( $req_info->{region} and $req_info->{path_part} )
-                ? ( '../' x scalar( $c->req->url->path->parts->@* ) ) . $req_info->{region}{key}
+                ? (
+                    '../' x (
+                        scalar( $c->req->url->path->parts->@* ) +
+                        ( ( $c->req->url->path->trailing_slash ) ? 1 : 0 )
+                    )
+                ) . $req_info->{region}{key}
                 : '',
         );
     } );
@@ -194,14 +198,24 @@ sub startup ($self) {
 
     $users->any('/org/list')->to('org#list');
     $users->any('/org/view/:org_id')->to('org#view');
-    $users->any( '/org/' . $_ )->requires( region => 1 )->to('org#crud') for ( qw( create edit/:org_id ) );
+    $users->any('/org/create')->requires( region => 1 )->to('org#crud');
+    $users->any('/org/edit/:org_id')->to('org#crud');
+
+    $all->any('/meet/schedule')->requires( region => 1 )->to('meet#schedule');
+
+    $users
+        ->any( '/meet/register' => [ format => ['json'] ] )
+        ->requires( region => 1 )
+        ->to( 'meet#register', format => undef );
+
+    # TODO: meet data : html/css
+    # $users->any('/meet/data')->requires( region => 1 )->to('meet#data');
+    # $users->any( '/meet/data' => [ format => 'csv' ] )->requires( region => 1 )->to('meet#data');
 
     if ($iq_rss) {
         $all->any('/iq')->requires( region => 0 )->to('main#iq');
         $all->any('/iq.rss')->requires( region => 0 )->to('main#iq_rss');
     }
-
-    $all->any('/season_schedule')->requires( region => 1 )->to('main#season_schedule');
 
     $all->any('/')->requires( region => 0 )->to('main#index');
     $all->any( '/*name', { name => 'index.md' } )->to('main#content');
