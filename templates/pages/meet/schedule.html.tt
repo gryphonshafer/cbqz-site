@@ -33,10 +33,9 @@
                     [% UNLESS meet.registration_closed %]
                         <a href="[% c.url_for( path_part_prefix _ '/meet/register' ) %]"
                             class="button colored">Submit Registration</a>
-                    [% ELSE %]
-                        <a href="[% c.url_for( path_part_prefix _ '/meet/data' ) %]"
-                            class="button">View Meet Data</a>
                     [% END %]
+                    <a href="[% c.url_for( path_part_prefix _ '/meet/data' ) %]"
+                        class="button">View Meet Data</a>
                 </p>
             [% END %]
         </div>

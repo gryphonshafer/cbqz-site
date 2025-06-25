@@ -81,6 +81,11 @@ sub startup ($self) {
                         name  => 'Season Schedule',
                         title => q{Current Season's Meet Schedule},
                     },
+                    {
+                        href  => '*/rules',
+                        name  => 'Rule Book',
+                        title => 'Rule Book for Christian Bible Quizzing (CBQ)',
+                    },
                 ],
             } );
 
@@ -92,6 +97,8 @@ sub startup ($self) {
     $self->hook( before_dispatch => sub ($c) {
         lc( $c->req->url->to_abs->host ) =~ /(?:(?<subdomain>[^\.]+)\.)?(?<domain>[^\.]+\.[^\.]+)$/;
         my $req_info = {%+};
+
+        $req_info->{regions} = $regions;
 
         $req_info->{region} =
             $regions->{ $req_info->{subdomain} // '' } //

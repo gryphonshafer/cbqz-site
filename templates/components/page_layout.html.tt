@@ -26,13 +26,11 @@
         <a href="[% c.url_for('/FAQs.md') %]"
             class="button colored">FAQs</a>
     [% ELSE %]
-        [% IF req_info.region %]
-            <a href="[% c.url_for( path_part_prefix _ '/meet/register' ) %]"
-                class="button colored">Register</a>
-        [% END %]
-
         [% UNLESS req_info.region %]
-            <a href="[% c.url_for( '/meeting/list') %]" class="button colored">Meetings</a>
+            <a href="[% c.url_for( '/user/tools') %]" class="button colored">Tools</a>
+        [% ELSE %]
+            <a href="[% c.url_for( path_part_prefix _ '/meet/schedule' ) %]"
+                class="button colored">Meets</a>
         [% END %]
 
         <a href="[% c.url_for( path_part_prefix _ '/user/list' ) %]" class="button">People
@@ -57,15 +55,27 @@
             [% FOREACH node IN docs %]
                 <li>
                     [% IF node.folder OR node.name %]
-                        [% IF node.href %]<a href="[% c.url_for(
-                            ( node.subdomain AND req_info.domain )
-                                ? '//' _ node.subdomain _ '.' _ req_info.domain
-                                : (
-                                    ( req_info.region AND req_info.path_part )
-                                        ? '../../' _ req_info.region.key
-                                        : ''
-                                ) _ node.href
-                        ) %]"
+                        [%
+                            home_domain = 0;
+                            this_href   = '';
+
+                            IF node.href.substr( 0, 1 ) == '*';
+                                home_domain = 1;
+                                this_href   =
+                                    '//' _
+                                    ( req_info.domain || c.req.url.to_abs.host_port ) _
+                                    node.href.substr(1);
+                            ELSIF node.href;
+                                this_href = ( node.subdomain AND req_info.domain )
+                                    ? '//' _ node.subdomain _ '.' _ req_info.domain
+                                    : (
+                                        ( req_info.region AND req_info.path_part )
+                                            ? '../../' _ req_info.region.key
+                                            : ''
+                                    ) _ node.href;
+                            END;
+                        %]
+                        [% IF this_href %]<a href="[% c.url_for(this_href) %]"
                             title="[% node.title OR node.folder OR node.name %]"
                             [% IF c.url_for( node.href ) == c.req.url.to_abs.path %]
                                 class="current"
@@ -73,6 +83,9 @@
                         >[% END %][%
                             node.folder OR node.name
                         %][% IF node.href %]</a>[% END %]
+                        [% IF home_domain %]
+                            <span class="material-symbols-outlined inline size margin">reply</span>
+                        [% END %]
                     [% END %]
                     [% IF node.nodes %]
                         [% PROCESS nav docs = node.nodes %]

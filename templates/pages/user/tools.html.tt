@@ -1,16 +1,83 @@
 [%
     PROCESS macros;
-    page.title = 'Web Site Account Tools';
+    page.title = 'Tools, Data, and Services';
     acronym    = ( NOT req_info.region.key ) ? 'CBQ' : req_info.region.key | upper;
 %]
 
 <h1>[% page.title %]</h1>
 
+<h4>
+    [% UNLESS req_info.region %]
+        CBQ Web Site
+    [% ELSE %]
+        [% req_info.region.name %] Regional Web Site
+    [% END %]
+</h4>
+
 <ul>
-    [% UNLESS req_info.region %]<li><a href="[% c.url_for('/meeting/list') %]">CBQ Meetings List</a></li>[% END %]
+    [% UNLESS req_info.region %]
+        <li><a href="[% c.url_for('/meeting/list') %]">CBQ Meetings List</a></li>
+    [% ELSE %]
+        <li>
+            <a href="[% c.url_for( path_part_prefix _ '/meet/schedule' ) %]"
+                >[% acronym %] Quiz Meet Season Schedule</a>
+        </li>
+    [% END %]
     <li><a href="[% c.url_for( path_part_prefix _ '/user/list' ) %]">[% acronym %] People List</a></li>
-    <li><a href="[% c.url_for( path_part_prefix _ '/org/list' ) %]">[% acronym %] Team Organizations List</a></li>
+    <li>
+        <a href="[% c.url_for( path_part_prefix _ '/org/list' ) %]"
+            >[% acronym %] Team Organizations List</a>
+    </li>
 </ul>
 
-<p><a class="button colored" href="[% c.url_for( path_part_prefix _ '/user/edit' ) %]">Edit My Account Data</a></p>
-<p><a href="[% c.url_for( path_part_prefix _ '/meet/register' ) %]" class="button">Quiz Meet Registration Data</a></p>
+<p><a class="button colored" href="[% c.url_for( path_part_prefix _ '/user/edit' ) %]"
+    >Edit My Account Data</a></p>
+
+[% IF req_info.region %]
+    <ul>
+        <li>
+            <a href="[% c.url_for( req_info.domain ? '//' _ req_info.domain : '/' ) %]">CBQ Web Site</a>
+            <span class="material-symbols-outlined size middle">reply</span>
+        </li>
+    </ul>
+[% END %]
+
+<h4>CBQ Regions</h4>
+
+<ul>
+    [% FOR key IN req_info.regions.keys.sort %]
+        <li>
+            <a href="[% c.url_for(
+                req_info.domain ? '//' _ key _ '.' _ req_info.domain : '/' _ key
+            ) %]">[% req_info.regions.$key.name %] ([% key | upper %])</a>
+        </li>
+    [% END %]
+</ul>
+
+<h2>External Resources</h2>
+
+<h4>CBQ-Sponsored Tools/Systems</h4>
+
+<ul>
+    <li>
+        <a href="https://quizsage.org">QuizSage</a>
+        <span class="material-symbols-outlined size middle">arrow_outward</span>
+    </li>
+</ul>
+
+<h4>CBQ Web Site Operations</h4>
+
+<ul>
+    <li>
+        <a href="https://github.com/gryphonshafer/cbqz-site">GitHub</a>
+        <span class="material-symbols-outlined size middle">arrow_outward</span>
+    </li>
+    <li>
+        <a href="https://github.com/gryphonshafer/cbqz-site/commits/master">Revision History</a>
+        <span class="material-symbols-outlined size middle">arrow_outward</span>
+    </li>
+    <li>
+        <a href="https://github.com/gryphonshafer/cbqz-site/issues">Report Issue</a>
+        <span class="material-symbols-outlined size middle">arrow_outward</span>
+    </li>
+</ul>
