@@ -20,28 +20,30 @@
 
                 <p>
                     Are you personally attending this meet?
-                    [% UNLESS no_edit %]
-                        <label><input type="radio" value="1" v-model="attend"> Yes</label>
-                        <label><input type="radio" value="0" v-model="attend"> No</label>
-                    [% ELSE %]
-                        <b>{{ ( attend == 1 ) ? 'Yes' : 'No' }}</b>
-                    [% END %]
+                    <template v-if="! meet.registration_closed">
+                        <label><input type="radio" value="1" v-model="registration.personal.attend"> Yes</label>
+                        <label><input type="radio" value="0" v-model="registration.personal.attend"> No</label>
+                    </template>
+                    <template v-else>
+                        <b>{{ ( registration.personal.attend == 1 ) ? 'Yes' : 'No' }}</b>
+                    </template>
                 </p>
             </fieldset>
 
-            <div v-if="attend == 1">
+            <template v-if="registration.personal.attend == 1">
                 <fieldset class="left">
                     <legend>Your Meet Roles</legend>
-                    [% UNLESS no_edit %]
+                    <template v-if="! meet.registration_closed">
                         <label v-for="role in roles">
-                            <input type="checkbox" v-bind:value="role" v-model="roles">
+                            <input type="checkbox" v-bind:value="role" v-model="registration.personal.roles">
                             {{ role }}
                         </label>
-                    [% ELSE %]
+                    </template>
+                    <template v-else>
                         <ul><li v-for="role in roles">{{ role }}</li></ul>
-                    [% END %]
+                    </template>
                 </fieldset>
-            </div>
+            </template>
         </form>
     </div>
 

@@ -15,6 +15,7 @@ sub schedule ($self) {
     $self->stash( current_season => $self->_current_season );
 }
 
+my $registration_roles = conf->get( qw( registration roles ) );
 sub register ($self) {
     my ($current_next_meet) = grep { $_->{is_current_next_meet} } $self->_current_season->{meets}->@*;
     unless ( ( $self->stash('format') // '' ) eq 'json' ) {
@@ -24,9 +25,14 @@ sub register ($self) {
     }
     else {
         $self->render( json => {
-            attend => 0,
-            meet   => $current_next_meet,
-            roles  => conf->get( qw( registration roles ) ),
+            registration => {
+                personal => {
+                    attend => 0,
+                    roles  => [],
+                },
+            },
+            meet  => $current_next_meet,
+            roles => $registration_roles,
         } );
     }
 }
