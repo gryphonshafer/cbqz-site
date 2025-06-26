@@ -15,25 +15,46 @@ sub schedule ($self) {
     $self->stash( current_season => $self->_current_season );
 }
 
-my $registration_roles = conf->get( qw( registration roles ) );
-sub register ($self) {
-    my ($current_next_meet) = grep { $_->{is_current_next_meet} } $self->_current_season->{meets}->@*;
-    unless ( ( $self->stash('format') // '' ) eq 'json' ) {
-        $self->stash(
-            meet => $current_next_meet,
-        );
-    }
-    else {
-        $self->render( json => {
-            registration => {
-                personal => {
-                    attend => 0,
-                    roles  => [],
+{
+    my $reg_conf = conf->get('registration');
+    sub register ($self) {
+        my ($current_next_meet) = grep { $_->{is_current_next_meet} } $self->_current_season->{meets}->@*;
+        unless ( ( $self->stash('format') // '' ) eq 'json' ) {
+            $self->stash(
+                meet => $current_next_meet,
+            );
+        }
+        else {
+            $self->render( json => {
+                reg => {
+                    user => {
+                        attend  => 0,
+                        roles   => [],
+                        drive   => 0,
+                        housing => 1,
+                        lunch   => 1,
+                    },
+                    notes => '',
+                    orgs  => [
+                        {
+                            name    => 'Kitsap Bible Quizzing',
+                            acronym => 'KIT',
+                            teams   => [],
+                        },
+                        {
+                            name    => 'Other Quizzing',
+                            acronym => 'OQT',
+                            teams   => [],
+                        },
+                    ],
                 },
-            },
-            meet  => $current_next_meet,
-            roles => $registration_roles,
-        } );
+                meet      => $current_next_meet,
+                roles     => $reg_conf->{roles},
+                bibles    => $reg_conf->{bibles},
+                user      => $self->stash('user')->data,
+                user_edit => $self->url_for( $self->stash('path_part_prefix') . '/user/edit' ),
+            } );
+        }
     }
 }
 

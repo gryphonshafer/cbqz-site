@@ -7,35 +7,87 @@ fetch( new URL( url.pathname + '.json', url ) )
                 data() {
                     return json_data;
                 },
-                // TODO
-                // computed: {
-                //     can_register_teams() {
-                //         return this.org && ( this.profile_coach == 1 || this.roles.indexOf('Coach') != -1 );
-                //     },
-                // },
-                // watch: {
-                //     $data: {
-                //         handler: function () {
-                //             if ( ! this.changed ) this.nav_content_align();
-                //             this.changed = 1;
-                //         },
-                //         deep: true
-                //     }
-                // },
-                // methods : {
-                //     add_team : function () {
-                //         var team = [];
-                //         this.teams.push(team);
-                //         this.add_quizzer(team);
-                //         this.nav_content_align();
-                //     },
 
-                //     add_quizzer : function (team) {
-                //         var quizzer = { attend : true, house : true, lunch : true };
-                //         team.push(quizzer);
-                //         this.add_watch(quizzer);
-                //         this.nav_content_align();
-                //     },
+                computed: {
+                    can_register_teams() {
+                        return (
+                            this.reg.orgs.length &&
+                            (
+                                this.user.info.roles.includes('Coach') ||
+                                this.reg.user.roles.includes('Coach')
+                            )
+                        ) ? true : false;
+                    },
+                },
+
+                methods : {
+                    add_team : function (org) {
+                        var team = [];
+                        org.teams.push(team);
+                        this.add_quizzer(team);
+                        // this.nav_content_align();
+                    },
+
+                    add_quizzer : function (team) {
+                        var quizzer = {
+                            bible : 'NIV',
+                            rookie: false,
+                            attend: true,
+                            house : false,
+                            lunch : true,
+                        };
+                        team.push(quizzer);
+                        // this.add_watch(quizzer);
+                        // this.nav_content_align();
+                    },
+
+                    reorder : function ( direction, org_index, team_index, person_index ) {
+                        const teams   = this.reg.orgs[org_index].teams;
+                        const element = teams[team_index].splice( person_index, 1 )[0];
+
+                        if ( direction == -1 ) {
+                            if ( person_index != 0 ) {
+                                teams[team_index].splice( person_index - 1, 0, element );
+                            }
+                            else {
+                                var target = team_index - 1;
+                                if ( target < 0 ) target = teams.length - 1;
+                                teams[target].push(element);
+                            }
+                        }
+                        else if ( direction == 1 ) {
+                            if ( person_index != teams[team_index].length ) {
+                                teams[team_index].splice( person_index + 1, 0, element );
+                            }
+                            else {
+                                var target = team_index + 1;
+                                if ( target > teams.length - 1 ) target = 0;
+                                teams[target].unshift(element);
+                            }
+                        }
+
+                        if ( teams[team_index].length == 0 ) teams.splice( team_index, 1 );
+                    },
+
+                    delete_quizzer : function ( org_index, team_index, person_index ) {
+                        const teams = this.reg.orgs[org_index].teams;
+                        teams[team_index].splice( person_index, 1 );
+                        if ( teams[team_index].length == 0 ) teams.splice( team_index, 1 );
+                        // this.nav_content_align();
+                    },
+                },
+
+                // TODO
+                    // delete_nonquizzer : function (person_index) {
+                    //     this.nonquizzers.splice( person_index, 1 );
+                    //     this.nav_content_align();
+                    // },
+
+                    // save_registration : function () {
+                    //     var register = document.getElementById("register_save");
+                    //     register.elements[0].value = JSON.stringify(register_data);
+                    //     register.submit();
+                    // }
 
                 //     add_nonquizzer : function (team) {
                 //         var nonquizzer = { house : true, lunch : true };
@@ -67,52 +119,13 @@ fetch( new URL( url.pathname + '.json', url ) )
                 //         } );
                 //     },
 
-                //     reorder : function ( direction, person_index, team_index ) {
-                //         var element = this.teams[team_index].splice( person_index, 1 )[0];
-
-                //         if ( direction == -1 ) {
-                //             if ( person_index != 0 ) {
-                //                 this.teams[team_index].splice( person_index - 1, 0, element );
-                //             }
-                //             else {
-                //                 var target = team_index - 1;
-                //                 if ( target < 0 ) target = this.teams.length - 1;
-                //                 this.teams[target].push(element);
-                //             }
-                //         }
-                //         else if ( direction == 1 ) {
-                //             if ( person_index != this.teams[team_index].length ) {
-                //                 this.teams[team_index].splice( person_index + 1, 0, element );
-                //             }
-                //             else {
-                //                 var target = team_index + 1;
-                //                 if ( target > this.teams.length - 1 ) target = 0;
-                //                 this.teams[target].unshift(element);
-                //             }
-                //         }
-
-                //         if ( this.teams[team_index].length == 0 ) this.teams.splice( team_index, 1 );
-                //     },
-
-                //     delete_quizzer : function ( person_index, team_index ) {
-                //         var registration_id = this.teams[team_index][person_index].registration_id || 0;
-                //         if (registration_id) this.deleted_persons.push(registration_id);
-
-                //         this.teams[team_index].splice( person_index, 1 );
-                //         if ( this.teams[team_index].length == 0 ) this.teams.splice( team_index, 1 );
-
-                //         this.nav_content_align();
-                //     },
-
-                //     delete_nonquizzer : function (person_index) {
-                //         this.nonquizzers.splice( person_index, 1 );
-                //         this.nav_content_align();
-                //     },
-
-                //     save_registration : function () {
-                //         var register = document.getElementById("register_save");
-                //         register.elements[0].value = JSON.stringify(register_data);
-                //         register.submit();
+                // watch: {
+                //     $data: {
+                //         handler: function () {
+                //             if ( ! this.changed ) this.nav_content_align();
+                //             this.changed = 1;
+                //         },
+                //         deep: true
                 //     }
                 // },
 

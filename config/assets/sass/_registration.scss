@@ -1,0 +1,85 @@
+@use 'colors';
+
+div#register {
+    form fieldset {
+        p:first-of-type {
+            margin-top: 0;
+        }
+
+        p:last-of-type {
+            margin-bottom: 0;
+        }
+
+        &.notes {
+            width: calc( 100% - 2em );
+
+            textarea {
+                width: calc( 100% - 0.75em );
+            }
+        }
+    }
+
+    .show_if_small {
+        display: none;
+    }
+
+    @media (max-width: 890px) {
+        .show_if_small {
+            display: inherit;
+        }
+        .hide_if_small {
+            display: none;
+        }
+    }
+
+    table {
+        tbody tr {
+            td {
+                padding: 0;
+
+                input[type="text"] {
+                    width : 10em;
+                }
+
+                select {
+                    padding         : 0.2em;
+                    background-color: colors.$background;
+                }
+
+                input[type="text"], select {
+                    &:not(:hover) {
+                        border-color: transparent;
+                    }
+                }
+
+                span.material-symbols-outlined:hover {
+                    cursor: pointer;
+                }
+
+                span.material-symbols-outlined:not(:last-of-type) {
+                    letter-spacing: -0.125em;
+                }
+            }
+
+            &.inactive td {
+                background-color: colors.$shaded;
+                input[type="text"], select {
+                    background-color: colors.$shaded;
+                }
+            }
+        }
+
+        caption {
+            margin-top: 0.5em;
+            text-align: right;
+            font-style: normal;
+        }
+    }
+
+    @media (max-width: 760px) { table { zoom: 0.9 } }
+    @media (max-width: 720px) { table { zoom: 0.8 } }
+    @media (max-width: 490px) { table { zoom: 0.7 } }
+    @media (max-width: 475px) { table { zoom: 0.6 } }
+    @media (max-width: 395px) { table { zoom: 0.5 } }
+    @media (max-width: 360px) { table { zoom: 0.4 } }
+}

@@ -6,13 +6,13 @@
 
 <h1>[% page.title %]</h1>
 
-<h4>
+<h2>
     [% UNLESS req_info.region %]
         CBQ Web Site
     [% ELSE %]
         [% req_info.region.name %] Regional Web Site
     [% END %]
-</h4>
+</h2>
 
 <ul>
     [% UNLESS req_info.region %]
@@ -42,7 +42,7 @@
     </ul>
 [% END %]
 
-<h4>CBQ Regions</h4>
+<h2>CBQ Regions</h2>
 
 <ul>
     [% FOR key IN req_info.regions.keys.sort %]
@@ -56,7 +56,7 @@
 
 <h2>External Resources</h2>
 
-<h4>CBQ-Sponsored Tools/Systems</h4>
+<h3>CBQ-Sponsored Tools/Systems</h3>
 
 <ul>
     <li>
@@ -65,7 +65,7 @@
     </li>
 </ul>
 
-<h4>CBQ Web Site Operations</h4>
+<h3>CBQ Web Site Operations</h3>
 
 <ul>
     <li>
