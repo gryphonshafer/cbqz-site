@@ -1,34 +1,46 @@
 const url = new URL( window.location.href );
 fetch( new URL( url.pathname + '.json', url ) )
     .then( reply => reply.json() )
-    .then( json_data =>
+    .then( data =>
         Vue
             .createApp({
                 data() {
-                    return json_data;
+                    data.reg            ||= {};
+                    data.reg.orgs       ||= [];
+                    data.reg.user       ||= {};
+                    data.reg.user.roles ||= [];
+
+                    if ( data.reg.user.attend  == undefined ) data.reg.user.attend  = 0;
+                    if ( data.reg.user.drive   == undefined ) data.reg.user.drive   = 0;
+                    if ( data.reg.user.housing == undefined ) data.reg.user.housing = 0;
+                    if ( data.reg.user.lunch   == undefined ) data.reg.user.lunch   = 1;
+
+                    data.changed = false;
+
+                    return data;
                 },
 
                 computed: {
-                    can_register_teams() {
+                    cant_register_teams() {
                         return (
                             this.reg.orgs.length &&
-                            (
-                                this.user.info.roles.includes('Coach') ||
-                                this.reg.user.roles.includes('Coach')
-                            )
-                        ) ? true : false;
+                            this.reg.user.roles.includes('Coach')
+                        ) ? false : true;
+                    },
+
+                    can_edit() {
+                        return ! this.meet.registration_closed;
                     },
                 },
 
-                methods : {
-                    add_team : function (org) {
+                methods: {
+                    add_team(org) {
                         var team = [];
                         org.teams.push(team);
                         this.add_quizzer(team);
-                        // this.nav_content_align();
                     },
 
-                    add_quizzer : function (team) {
+                    add_quizzer(team) {
                         var quizzer = {
                             bible : 'NIV',
                             rookie: false,
@@ -37,11 +49,9 @@ fetch( new URL( url.pathname + '.json', url ) )
                             lunch : true,
                         };
                         team.push(quizzer);
-                        // this.add_watch(quizzer);
-                        // this.nav_content_align();
                     },
 
-                    reorder : function ( direction, org_index, team_index, person_index ) {
+                    reorder( direction, org_index, team_index, person_index ) {
                         const teams   = this.reg.orgs[org_index].teams;
                         const element = teams[team_index].splice( person_index, 1 )[0];
 
@@ -69,75 +79,37 @@ fetch( new URL( url.pathname + '.json', url ) )
                         if ( teams[team_index].length == 0 ) teams.splice( team_index, 1 );
                     },
 
-                    delete_quizzer : function ( org_index, team_index, person_index ) {
+                    delete_quizzer( org_index, team_index, person_index ) {
                         const teams = this.reg.orgs[org_index].teams;
                         teams[team_index].splice( person_index, 1 );
                         if ( teams[team_index].length == 0 ) teams.splice( team_index, 1 );
-                        // this.nav_content_align();
+                    },
+
+                    add_nonquizzer(org_index) {
+                        this.reg.orgs[org_index].nonquizzers.push({
+                            attend: true,
+                            house : false,
+                            lunch : true,
+                        });
+                    },
+
+                    delete_nonquizzer( org_index, person_index ) {
+                        this.reg.orgs[org_index].nonquizzers.splice( person_index, 1 );
+                    },
+
+                    save_registration() {
+                        // TODO: save registration data
                     },
                 },
 
-                // TODO
-                    // delete_nonquizzer : function (person_index) {
-                    //     this.nonquizzers.splice( person_index, 1 );
-                    //     this.nav_content_align();
-                    // },
-
-                    // save_registration : function () {
-                    //     var register = document.getElementById("register_save");
-                    //     register.elements[0].value = JSON.stringify(register_data);
-                    //     register.submit();
-                    // }
-
-                //     add_nonquizzer : function (team) {
-                //         var nonquizzer = { house : true, lunch : true };
-                //         this.nonquizzers.push(nonquizzer);
-                //         this.nav_content_align();
-                //     },
-
-                //     add_watch : function (record) {
-                //         this.$watch(
-                //             function () {
-                //                 return record.attend;
-                //             },
-                //             ( function () {
-                //                 var _record = record;
-
-                //                 return function (attend) {
-                //                     if ( attend == null ) return;
-                //                     _record.house  = attend;
-                //                     _record.lunch  = attend;
-                //                     _record.driver = null;
-                //                 }
-                //             } )()
-                //         );
-                //     },
-
-                //     nav_content_align : function () {
-                //         this.$nextTick( function () {
-                //             nav_content_align.align();
-                //         } );
-                //     },
-
-                // watch: {
-                //     $data: {
-                //         handler: function () {
-                //             if ( ! this.changed ) this.nav_content_align();
-                //             this.changed = 1;
-                //         },
-                //         deep: true
-                //     }
-                // },
-
-                // mounted : function () {
-                //     for ( var t = 0; t < this.teams.length; t++ ) {
-                //         for ( var q = 0; q < this.teams[t].length; q++ ) {
-                //             this.add_watch( this.teams[t][q] );
-                //         }
-                //     }
-
-                //     this.nav_content_align();
-                // }
+                watch: {
+                    $data: {
+                        handler: function () {
+                            this.changed = true;
+                        },
+                        deep: true
+                    }
+                },
             })
             .mount('#register')
     );

@@ -2,6 +2,10 @@
 
 div#register {
     form fieldset {
+        fieldset:nth-of-type(2) {
+            max-width: 22em;
+        }
+
         p:first-of-type {
             margin-top: 0;
         }
@@ -14,7 +18,8 @@ div#register {
             width: calc( 100% - 2em );
 
             textarea {
-                width: calc( 100% - 0.75em );
+                width : calc( 100% - 0.75em );
+                height: 5em;
             }
         }
     }

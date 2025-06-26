@@ -4,6 +4,7 @@ use exact -conf, 'Mojolicious::Controller';
 
 use CBQ::Model::Region;
 use CBQ::Model::Registration;
+use CBQ::Model::Org;
 
 sub _current_season ($self) {
     return CBQ::Model::Region->new->current_season(
@@ -25,34 +26,37 @@ sub schedule ($self) {
             );
         }
         else {
-            $self->render( json => {
-                reg => {
-                    user => {
-                        attend  => 0,
-                        roles   => [],
-                        drive   => 0,
-                        housing => 1,
-                        lunch   => 1,
-                    },
-                    notes => '',
-                    orgs  => [
-                        {
-                            name    => 'Kitsap Bible Quizzing',
-                            acronym => 'KIT',
-                            teams   => [],
-                        },
-                        {
-                            name    => 'Other Quizzing',
-                            acronym => 'OQT',
-                            teams   => [],
-                        },
-                    ],
+            my $url_prefix = $self->url_for( $self->stash('path_part_prefix') );
+
+            # TODO: load any previously saved registration data and merge it with orgs
+
+            my $reg = {
+                user => {
+                    roles => $self->stash('user')->data->{info}{roles} // [],
                 },
-                meet      => $current_next_meet,
-                roles     => $reg_conf->{roles},
-                bibles    => $reg_conf->{bibles},
-                user      => $self->stash('user')->data,
-                user_edit => $self->url_for( $self->stash('path_part_prefix') . '/user/edit' ),
+                orgs => [
+                    map { +{
+                        org_id      => $_->{org_id},
+                        name        => $_->{name},
+                        acronym     => $_->{acronym},
+                        teams       => [],
+                        nonquizzers => [],
+                    } }
+                    CBQ::Model::Org->new->every_data({
+                        org_id => $self->stash('user')->org_and_region_ids->{orgs},
+                    })->@*
+                ],
+            };
+
+            $self->render( json => {
+                reg    => $reg,
+                meet   => $current_next_meet,
+                roles  => $reg_conf->{roles},
+                bibles => $reg_conf->{bibles},
+                urls   => {
+                    user_edit => $url_prefix . '/user/edit',
+                    meet_data => $url_prefix . '/meet/data',
+                },
             } );
         }
     }
