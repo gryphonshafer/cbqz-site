@@ -164,8 +164,6 @@ CBQ::Model::Meeting
 
 This class is the model for meeting objects.
 
-=head1 EXTENDED METHOD
-
 =head1 OBJECT METHODS
 
 =head2 freeze

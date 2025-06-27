@@ -6,6 +6,7 @@ SELECT CASE WHEN
     ( SELECT 1 FROM sqlite_master WHERE type = 'table'   AND name = 'user_org'             ) +
     ( SELECT 1 FROM sqlite_master WHERE type = 'table'   AND name = 'user_region'          ) +
     ( SELECT 1 FROM sqlite_master WHERE type = 'table'   AND name = 'org_region'           ) +
-    ( SELECT 1 FROM sqlite_master WHERE type = 'table'   AND name = 'registration'         )
-    = 8
+    ( SELECT 1 FROM sqlite_master WHERE type = 'table'   AND name = 'registration'         ) +
+    ( SELECT 1 FROM sqlite_master WHERE type = 'table'   AND name = 'registration_org'     )
+    = 9
 THEN 1 ELSE 0 END;

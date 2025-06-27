@@ -104,26 +104,31 @@ fetch( new URL( url.pathname + '.json', url ) )
 
                     save_registration() {
                         this.changed = false;
-                        fetch( url, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-Token': csrf,
+
+                        const generic_error = {
+                            message: 'Meet registration data not saved.',
+                            class  : 'error',
+                        };
+
+                        fetch(
+                            url,
+                            {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-Token': csrf,
+                                },
+                                body: JSON.stringify( this.reg ),
                             },
-                            body: JSON.stringify( this.reg ),
-                        } ).then( result => {
-                            omniframe.memo(
-                                (result.ok)
-                                    ? {
-                                        message: 'Meet registration data saved.',
-                                        class  : 'success',
-                                    }
-                                    : {
-                                        message: 'Meet registration data not saved.',
-                                        class  : 'error',
-                                    }
-                            );
-                        } );
+                        )
+                            .then( result => {
+                                if ( ! result.ok ) throw generic_error;
+                                return result.json();
+                            } )
+                            .then( memo => {
+                                throw memo || generic_error;
+                            } )
+                            .catch( memo => omniframe.memo(memo) );
                     },
                 },
 

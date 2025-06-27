@@ -31,6 +31,8 @@ sub schedule ($self) {
 
             # TODO: load any previously saved registration data and merge it with orgs
 
+            my $authorized_org_ids = $self->stash('user')->org_and_region_ids->{orgs};
+
             my $reg = {
                 user => {
                     roles => $self->stash('user')->data->{info}{roles} // [],
@@ -60,8 +62,29 @@ sub schedule ($self) {
                 },
             } );
         }
-        elsif ( $method eq 'POST' and my $json = $self->req->json ) {
-            # TODO: save registration data
+        elsif ( $method eq 'POST' and my $reg = $self->req->json ) {
+            my $authorized_org_ids   = $self->stash('user')->org_and_region_ids->{orgs};
+            my $submitted_orgs_count = $reg->{orgs}->@*;
+            $reg->{orgs}             = [
+                grep {
+                    my $org = $_;
+                    grep { $org->{org_id} == $_ } @$authorized_org_ids;
+                } $reg->{orgs}->@*
+            ];
+
+            CBQ::Model::Registration->new->create( {
+                user_id => $self->stash('user')->id,
+                info    => $reg,
+            } );
+
+            $self->render( json => {
+                class   => 'success',
+                message => 'Meet registration data saved.' . (
+                    ( $submitted_orgs_count != $reg->{orgs}->@* )
+                        ? '.. but not all team organizations were authorized.'
+                        : ''
+                ),
+            } );
         }
         else {
             $self->stash( memo => {
