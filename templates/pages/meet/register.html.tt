@@ -3,6 +3,7 @@
     IF meet;
         page.vue = 1;
         page.js.module.push('register');
+        page.js.defer.push('util/memo');
     END;
 %]
 

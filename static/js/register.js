@@ -1,7 +1,12 @@
 const url = new URL( window.location.href );
 fetch( new URL( url.pathname + '.json', url ) )
-    .then( reply => reply.json() )
-    .then( data =>
+    .then(
+        reply => reply.json().then( data => ( {
+            data: data,
+            csrf: reply.headers.get('X-CSRF-Token'),
+        } ) )
+    )
+    .then( ( { data, csrf } ) =>
         Vue
             .createApp({
                 data() {
@@ -98,17 +103,37 @@ fetch( new URL( url.pathname + '.json', url ) )
                     },
 
                     save_registration() {
-                        // TODO: save registration data
+                        this.changed = false;
+                        fetch( url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-Token': csrf,
+                            },
+                            body: JSON.stringify( this.reg ),
+                        } ).then( result => {
+                            omniframe.memo(
+                                (result.ok)
+                                    ? {
+                                        message: 'Meet registration data saved.',
+                                        class  : 'success',
+                                    }
+                                    : {
+                                        message: 'Meet registration data not saved.',
+                                        class  : 'error',
+                                    }
+                            );
+                        } );
                     },
                 },
 
                 watch: {
-                    $data: {
-                        handler: function () {
+                    reg: {
+                        handler() {
                             this.changed = true;
                         },
-                        deep: true
-                    }
+                        deep: true,
+                    },
                 },
             })
             .mount('#register')

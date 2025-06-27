@@ -19,13 +19,14 @@ sub schedule ($self) {
 {
     my $reg_conf = conf->get('registration');
     sub register ($self) {
-        my ($current_next_meet) = grep { $_->{is_current_next_meet} } $self->_current_season->{meets}->@*;
-        unless ( ( $self->stash('format') // '' ) eq 'json' ) {
-            $self->stash(
-                meet => $current_next_meet,
-            );
+        my ( $method, $format ) = ( $self->req->method, $self->stash('format') );
+        my ($current_next_meet) = grep { $_->{is_current_next_meet} } $self->_current_season->{meets}->@*
+            if ($method eq 'GET');
+
+        if ( $method eq 'GET' and not $format ) {
+            $self->stash( meet => $current_next_meet );
         }
-        else {
+        elsif ( $method eq 'GET' and $format eq 'json' ) {
             my $url_prefix = $self->url_for( $self->stash('path_part_prefix') );
 
             # TODO: load any previously saved registration data and merge it with orgs
@@ -57,6 +58,15 @@ sub schedule ($self) {
                     user_edit => $url_prefix . '/user/edit',
                     meet_data => $url_prefix . '/meet/data',
                 },
+            } );
+        }
+        elsif ( $method eq 'POST' and my $json = $self->req->json ) {
+            # TODO: save registration data
+        }
+        else {
+            $self->stash( memo => {
+                class   => 'error',
+                message => 'Unexpected condition in rendering the registration page.',
             } );
         }
     }
