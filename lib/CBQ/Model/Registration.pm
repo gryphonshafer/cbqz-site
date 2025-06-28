@@ -23,6 +23,66 @@ sub thaw ( $self, $data ) {
     return $data;
 }
 
+sub get_reg ( $self, $user ) {
+    my $grouped_reg_rows = $self->dq->sql(q{
+        WITH reg_rows AS (
+            SELECT
+                r.user_id,
+                r.info,
+                r.created,
+                ro.org_id
+            FROM registration AS r
+            LEFT JOIN registration_org AS ro USING (registration_id)
+            WHERE
+                ro.org_id IN ( } . join( ',',
+                    map { $self->dq->quote($_) } $user->org_and_region_ids->{orgs}->@*
+                ) . q{ ) OR
+                ( ro.registration_id IS NULL AND user_id = ? )
+            ORDER BY created DESC
+        )
+        SELECT *
+        FROM reg_rows
+        GROUP BY org_id
+    })->run( $user->id )->all({});
+
+    my ($reg) = map { $self->thaw($_)->{info} } grep { not defined $_->{org_id} } @$grouped_reg_rows;
+
+    $reg //= {
+        user => {
+            roles => $user->data->{info}{roles} // [],
+        },
+    };
+
+    $reg->{orgs} //= [
+        map { +{
+            org_id      => $_->{org_id},
+            name        => $_->{name},
+            acronym     => $_->{acronym},
+            teams       => [],
+            nonquizzers => [],
+        } }
+        CBQ::Model::Org->new->every_data({
+            org_id => $user->org_and_region_ids->{orgs},
+        })->@*
+    ];
+
+    for my $reg_row (
+        map { +{
+            org_id => $_->{org_id},
+            info   => $self->thaw($_)->{info},
+        } }
+        grep { defined $_->{org_id} } @$grouped_reg_rows
+    ) {
+        my ($org_block) = grep { $reg_row->{org_id} == $_->{org_id} } $reg_row->{info}{orgs}->@*;
+        if ($org_block) {
+            $reg->{orgs} = [ grep { $reg_row->{org_id} != $_->{org_id} } $reg->{orgs}->@* ];
+            push( @{ $reg->{orgs} }, $org_block );
+        }
+    }
+
+    return $reg;
+}
+
 1;
 
 =head1 NAME
@@ -53,6 +113,12 @@ Likely not used directly, this method will JSON-encode the C<info> hashref.
 =head2 thaw
 
 Likely not used directly, C<thaw> will JSON-decode the C<info> hashref.
+
+=head2 get_reg
+
+Requires a user object. Will return a single unified registration data block
+for all the team organizations the user is associated with (and that have
+registration data).
 
 =head1 WITH ROLE
 

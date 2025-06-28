@@ -4,7 +4,6 @@ use exact -conf, 'Mojolicious::Controller';
 
 use CBQ::Model::Region;
 use CBQ::Model::Registration;
-use CBQ::Model::Org;
 
 sub _current_season ($self) {
     return CBQ::Model::Region->new->current_season(
@@ -29,30 +28,8 @@ sub schedule ($self) {
         elsif ( $method eq 'GET' and $format eq 'json' ) {
             my $url_prefix = $self->url_for( $self->stash('path_part_prefix') );
 
-            # TODO: load any previously saved registration data and merge it with orgs
-
-            my $authorized_org_ids = $self->stash('user')->org_and_region_ids->{orgs};
-
-            my $reg = {
-                user => {
-                    roles => $self->stash('user')->data->{info}{roles} // [],
-                },
-                orgs => [
-                    map { +{
-                        org_id      => $_->{org_id},
-                        name        => $_->{name},
-                        acronym     => $_->{acronym},
-                        teams       => [],
-                        nonquizzers => [],
-                    } }
-                    CBQ::Model::Org->new->every_data({
-                        org_id => $self->stash('user')->org_and_region_ids->{orgs},
-                    })->@*
-                ],
-            };
-
             $self->render( json => {
-                reg    => $reg,
+                reg    => CBQ::Model::Registration->new->get_reg( $self->stash('user') ),
                 meet   => $current_next_meet,
                 roles  => $reg_conf->{roles},
                 bibles => $reg_conf->{bibles},
