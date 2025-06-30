@@ -10,6 +10,7 @@ use YAML::XS;
 
 with 'Omniframe::Role::Model';
 
+class_has active       => 1;
 class_has regional_cms => conf->get('regional_cms');
 class_has docs_dir     => conf->get( qw( docs dir ) );
 
@@ -122,7 +123,7 @@ sub _process ( $self, $settings = undef ) {
                 if ( $meet->{host} and $meet->{host}{name} );
 
             if ( $meet->{host} ) {
-                for my $type ( qw( house lunch ) ) {
+                for my $type ( qw( housing lunch ) ) {
                     $meet->{host}{$type} = (
                         not $meet->{host}{$type} or
                         lc( substr( $meet->{host}{$type}, 0, 1 ) ) eq 'f'
@@ -296,7 +297,7 @@ can be separated into separate files to be merged under a C<settings> call.
                 name: Juniper Community Church
                 url: https://junipercc.com
                 address: 976 S Adams Dr, Madras OR 97741
-                house: true # defaults to false
+                housing: true # defaults to false
                 lunch: true # defaults to false
             notes: |
                 - Arrive Friday for dinner.
@@ -318,7 +319,7 @@ exist.
 This method internally calls C<settings> and then post-processes the data. It
 will set default C<days> values if any aren't set. It'll also process C<name>
 and C<notes> fields as Markdown. It will convert "true" or "false" values for
-C<house> and C<lunch> into 1 or 0 respectively. And where C<start> and C<days>
+C<housing> and C<lunch> into 1 or 0 respectively. And where C<start> and C<days>
 values exist, it'll convert these into C<start> and C<stop> fields with
 RFC 3339 date/time values. Lastly, it'll interpret the material range from
 C<new_material>, combining it with any previous material, and output a combined

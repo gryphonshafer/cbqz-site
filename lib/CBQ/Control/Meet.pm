@@ -11,6 +11,11 @@ sub _current_season ($self) {
     );
 }
 
+sub _current_next_meet ($self) {
+    my ($current_next_meet) = grep { $_->{is_current_next_meet} } $self->_current_season->{meets}->@*;
+    return $current_next_meet;
+}
+
 sub schedule ($self) {
     $self->stash( current_season => $self->_current_season );
 }
@@ -19,8 +24,7 @@ sub schedule ($self) {
     my $reg_conf = conf->get('registration');
     sub register ($self) {
         my ( $method, $format ) = ( $self->req->method, $self->stash('format') );
-        my ($current_next_meet) = grep { $_->{is_current_next_meet} } $self->_current_season->{meets}->@*
-            if ($method eq 'GET');
+        my $current_next_meet = $self->_current_next_meet if ($method eq 'GET');
 
         if ( $method eq 'GET' and not $format ) {
             $self->stash( meet => $current_next_meet );
@@ -29,7 +33,10 @@ sub schedule ($self) {
             my $url_prefix = $self->url_for( $self->stash('path_part_prefix') );
 
             $self->render( json => {
-                reg    => CBQ::Model::Registration->new->get_reg( $self->stash('user') ),
+                reg => CBQ::Model::Registration->new->get_reg(
+                    $self->stash('req_info')->{region}{id},
+                    $self->stash('user'),
+                ),
                 meet   => $current_next_meet,
                 roles  => $reg_conf->{roles},
                 bibles => $reg_conf->{bibles},
@@ -50,8 +57,9 @@ sub schedule ($self) {
             ];
 
             CBQ::Model::Registration->new->create( {
-                user_id => $self->stash('user')->id,
-                info    => $reg,
+                user_id   => $self->stash('user')->id,
+                region_id => $self->stash('req_info')->{region}{id},
+                info      => $reg,
             } );
 
             $self->render( json => {
@@ -70,6 +78,13 @@ sub schedule ($self) {
             } );
         }
     }
+}
+
+sub data ($self) {
+    $self->stash(
+        meet     => $self->_current_next_meet,
+        reg_data => CBQ::Model::Registration->new->get_data( $self->stash('req_info')->{region}{id} ),
+    );
 }
 
 1;
@@ -92,6 +107,10 @@ Regional season schedule page.
 =head2 register
 
 Handler for meet registration.
+
+=head2 data
+
+Handler for meet data.
 
 =head1 INHERITANCE
 

@@ -6,6 +6,8 @@ use CBQ::Model::User;
 
 with 'Omniframe::Role::Model';
 
+class_has active => 1;
+
 sub orgs ( $self, $region = undef ) {
     return $self->dq->get(
         [

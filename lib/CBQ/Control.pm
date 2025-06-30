@@ -51,7 +51,7 @@ sub startup ($self) {
             }
             sort keys %$regions,
         ],
-    } ) if ( defined $regions_nav_position );
+    } ) if ( defined $regions_nav_position and $regions and %$regions );
 
     push( @$www_docs_nav, {
         href  => '/iq',
@@ -215,9 +215,10 @@ sub startup ($self) {
         ->requires( region => 1 )
         ->to( 'meet#register', format => undef );
 
-    # TODO: meet data : html/css
-    # $users->any('/meet/data')->requires( region => 1 )->to('meet#data');
-    # $users->any( '/meet/data' => [ format => 'csv' ] )->requires( region => 1 )->to('meet#data');
+    $users
+        ->any( '/meet/data' => [ format => ['csv'] ] )
+        ->requires( region => 1 )
+        ->to( 'meet#data', format => undef );
 
     if ($iq_rss) {
         $all->any('/iq')->requires( region => 0 )->to('main#iq');

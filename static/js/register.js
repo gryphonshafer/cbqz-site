@@ -47,11 +47,11 @@ fetch( new URL( url.pathname + '.json', url ) )
 
                     add_quizzer(team) {
                         var quizzer = {
-                            bible : 'NIV',
-                            rookie: false,
-                            attend: true,
-                            house : false,
-                            lunch : true,
+                            bible  : 'NIV',
+                            rookie : false,
+                            attend : true,
+                            housing: false,
+                            lunch  : true,
                         };
                         team.push(quizzer);
                     },
@@ -92,9 +92,9 @@ fetch( new URL( url.pathname + '.json', url ) )
 
                     add_nonquizzer(org_index) {
                         this.reg.orgs[org_index].nonquizzers.push({
-                            attend: true,
-                            house : false,
-                            lunch : true,
+                            attend :  true,
+                            housing: false,
+                            lunch  :  true,
                         });
                     },
 

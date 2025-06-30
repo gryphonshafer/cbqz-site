@@ -65,11 +65,11 @@
                         <p v-if="meet.host.housing">
                             Do you need overnight housing?
                             <template v-if="can_edit">
-                                <label><input type="radio" value="1" v-model="reg.user.house"> Yes</label>
-                                <label><input type="radio" value="0" v-model="reg.user.house"> No</label>
+                                <label><input type="radio" value="1" v-model="reg.user.housing"> Yes</label>
+                                <label><input type="radio" value="0" v-model="reg.user.housing"> No</label>
                             </template>
                             <template v-else>
-                                <b>{{ ( reg.user.house == 1 ) ? 'Yes' : 'No' }}</b>
+                                <b>{{ ( reg.user.housing == 1 ) ? 'Yes' : 'No' }}</b>
                             </template>
                         </p>
 
@@ -96,7 +96,9 @@
             </p>
         </div>
         <div v-else v-for="( org, org_index ) in reg.orgs">
-            <h2>Quizzers from {{ org.name }} ({{ org.acronym }})</h2>
+            <h2>{{ org.name }} ({{ org.acronym }})</h2>
+
+            <h3>Quizzers from {{ org.name }}</h3>
 
             <p>
                 Use this section to provide quizzer and team registration
@@ -120,7 +122,7 @@
             </ul>
 
             <div v-for="( team, team_index ) in org.teams">
-                <h3>{{ org.acronym }} {{ team_index + 1 }}</h3>
+                <h4>{{ org.acronym }} {{ team_index + 1 }}</h4>
 
                 <table>
                     <thead>
@@ -208,11 +210,11 @@
                             </td>
                             <td v-if="meet.host.housing" class="center">
                                 <template v-if="can_edit">
-                                    <input type="checkbox" v-model="quizzer.house"
+                                    <input type="checkbox" v-model="quizzer.housing"
                                         v-bind:disabled="! quizzer.attend">
                                 </template>
                                 <template v-else>
-                                    {{ ( quizzer.house ) ? "Yes" : "No" }}
+                                    {{ ( quizzer.housing ) ? "Yes" : "No" }}
                                 </template>
                             </td>
                             <td v-if="meet.host.lunch" class="center">
@@ -240,7 +242,7 @@
                 <button v-on:click="add_team(org)">Add a Team</button>
             </p>
 
-            <h2>Non-Quizzers from {{ org.name }} ({{ org.acronym }})</h2>
+            <h3>Other Non-Quizzers from {{ org.acronym }}</h3>
 
             <p>
                 Use this section to provide registration information for any
@@ -299,10 +301,10 @@
                         </td>
                         <td class="center" v-if="meet.host.housing">
                             <template v-if="can_edit">
-                                <input type="checkbox" v-model="nonquizzer.house">
+                                <input type="checkbox" v-model="nonquizzer.housing">
                             </template>
                             <template v-else>
-                                {{ ( nonquizzer.house ) ? "Yes" : "No" }}
+                                {{ ( nonquizzer.housing ) ? "Yes" : "No" }}
                             </template>
                         </td>
                         <td class="center" v-if="meet.host.lunch">
@@ -329,7 +331,7 @@
 
         <form>
             <fieldset class="notes">
-                <legend>Notes and/or Requests</legend>
+                <legend>Registration Notes and/or Requests</legend>
 
                 <template v-if="can_edit">
                     <textarea v-model="reg.notes"></textarea>

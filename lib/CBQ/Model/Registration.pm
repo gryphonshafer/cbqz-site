@@ -23,7 +23,7 @@ sub thaw ( $self, $data ) {
     return $data;
 }
 
-sub get_reg ( $self, $user ) {
+sub get_reg ( $self, $region_id, $user ) {
     my $grouped_reg_rows = $self->dq->sql(q{
         WITH reg_rows AS (
             SELECT
@@ -34,16 +34,21 @@ sub get_reg ( $self, $user ) {
             FROM registration AS r
             LEFT JOIN registration_org AS ro USING (registration_id)
             WHERE
-                ro.org_id IN ( } . join( ',',
-                    map { $self->dq->quote($_) } $user->org_and_region_ids->{orgs}->@*
-                ) . q{ ) OR
-                ( ro.registration_id IS NULL AND user_id = ? )
+                r.region_id = ? AND (
+                    ro.org_id IN ( } . join( ',',
+                        map { $self->dq->quote($_) } $user->org_and_region_ids->{orgs}->@*
+                    ) . q{ ) OR
+                    ( ro.registration_id IS NULL AND user_id = ? )
+                )
             ORDER BY created DESC
         )
         SELECT *
         FROM reg_rows
         GROUP BY org_id
-    })->run( $user->id )->all({});
+    })->run(
+        $region_id,
+        $user->id,
+    )->all({});
 
     my ($reg) = map { $self->thaw($_)->{info} } grep { not defined $_->{org_id} } @$grouped_reg_rows;
 
@@ -83,6 +88,63 @@ sub get_reg ( $self, $user ) {
     return $reg;
 }
 
+sub get_data ( $self, $region_id ) {
+    my $reg_data = [
+        map {
+            $_->{info} = $self->thaw($_)->{info};
+            $_;
+        }
+        $self->dq->sql(q{
+            WITH reg_rows AS (
+                SELECT
+                    u.user_id,
+                    u.email,
+                    u.first_name || ' ' || u.last_name AS name,
+                    u.phone,
+                    r.info,
+                    r.created,
+                    ro.org_id
+                FROM registration AS r
+                JOIN user AS u USING (user_id)
+                LEFT JOIN registration_org AS ro USING (registration_id)
+                WHERE r.region_id = ?
+                ORDER BY r.created DESC
+            )
+            SELECT *
+            FROM reg_rows
+            GROUP BY org_id
+        })->run($region_id)->all({})->@*
+    ];
+
+    my $registrants = { map { $_->{user_id} => $_ } grep { $_->{info}{user}{attend} } @$reg_data };
+
+    return {
+        orgs => [
+            sort { $a->{acronym} cmp $b->{acronym} }
+            map {
+                my $org_id = $_->{org_id};
+                my ($org) = grep { $org_id == $_->{org_id} } $_->{info}{orgs}->@*;
+
+                $org->{teams} = [
+                    grep { @$_ }
+                    map { [ grep { $_->{attend} } @$_ ] }
+                    $org->{teams}->@*
+                ];
+
+                $org->{nonquizzers} = [
+                    grep { $_->{attend} }
+                    $org->{nonquizzers}->@*
+                ];
+
+                $org;
+            }
+            grep { $_->{org_id} }
+            @$reg_data
+        ],
+        registrants => [ sort { $a->{name} cmp $b->{name} } values %$registrants ],
+    };
+}
+
 1;
 
 =head1 NAME
@@ -119,6 +181,10 @@ Likely not used directly, C<thaw> will JSON-decode the C<info> hashref.
 Requires a user object. Will return a single unified registration data block
 for all the team organizations the user is associated with (and that have
 registration data).
+
+=head2 get_data
+
+Returns registration data for a given region.
 
 =head1 WITH ROLE
 

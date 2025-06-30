@@ -70,7 +70,8 @@ CREATE TABLE IF NOT EXISTS org_region (
 
 CREATE TABLE IF NOT EXISTS registration (
     registration_id INTEGER PRIMARY KEY,
-    user_id         INTEGER NOT NULL REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    user_id         INTEGER NOT NULL REFERENCES user(user_id)     ON UPDATE CASCADE ON DELETE CASCADE,
+    region_id       INTEGER NOT NULL REFERENCES region(region_id) ON UPDATE CASCADE ON DELETE CASCADE,
     info            TEXT    NOT NULL,
     created         TEXT    NOT NULL DEFAULT ( STRFTIME( '%Y-%m-%d %H:%M:%f', 'NOW', 'LOCALTIME' ) )
 );
