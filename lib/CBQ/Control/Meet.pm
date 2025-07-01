@@ -95,7 +95,12 @@ sub data ($self) {
     }
     elsif ( $self->stash('format') eq 'csv' ) {
         csv( out => \my $csv, in => [
-            [ qw( Organization Acronym Team Name Bible M/F Rookie Housing Lunch ) ],
+            [
+                qw( Organization Acronym Team Name Bible M/F Rookie ),
+                ( $data->{meet}{host}{housing} ? 'Housing' : undef ),
+                ( $data->{meet}{host}{lunch} ? 'Lunch' : undef ),
+                'Notes',
+            ],
 
             (
                 map {
@@ -106,7 +111,7 @@ sub data ($self) {
                     map {
                         my $team = $acronym . ' ' . ++$team_count;
                         map {
-                            [
+                            [ grep { defined }
                                 $org_name,
                                 $acronym,
                                 $team,
@@ -114,22 +119,40 @@ sub data ($self) {
                                 $_->{bible},
                                 $_->{m_f},
                                 $_->{rookie},
-                                $_->{housing},
-                                $_->{lunch},
+                                ( $data->{meet}{host}{housing} ? $_->{housing} : undef ),
+                                ( $data->{meet}{host}{lunch} ? $_->{lunch} : undef ),
+                                '',
                             ];
                         } @$_;
-                    } $_->{teams}->@*;
-                } $data->{reg_data}{orgs}->@*
+                    }
+                    $_->{teams}->@*;
+                }
+                $data->{reg_data}{orgs}->@*
             ),
 
-            # TODO: include registrants
+            (
+                map {
+                    [ grep { defined }
+                        join( ', ', map { $_->{name} } $_->{info}{orgs}->@* ),
+                        join( ', ', map { $_->{acronym} } $_->{info}{orgs}->@* ),
+                        '',
+                        $_->{name},
+                        '',
+                        '',
+                        '',
+                        ( $data->{meet}{host}{housing} ? $_->{info}{user}{housing} : undef ),
+                        ( $data->{meet}{host}{lunch} ? $_->{info}{user}{lunch} : undef ),
+                        ( $_->{info}{notes} // '' ),
+                    ];
+                } $data->{reg_data}{registrants}->@*
+            ),
 
             (
                 map {
                     my $org_name = $_->{name};
                     my $acronym  = $_->{acronym};
                     map {
-                        [
+                        [ grep { defined }
                             $org_name,
                             $acronym,
                             '',
@@ -137,11 +160,14 @@ sub data ($self) {
                             '',
                             '',
                             '',
-                            $_->{housing},
-                            $_->{lunch},
+                            ( $data->{meet}{host}{housing} ? $_->{housing} : undef ),
+                            ( $data->{meet}{host}{lunch} ? $_->{lunch} : undef ),
+                            '',
                         ];
-                    } $_->{nonquizzers}->@*;
-                } $data->{reg_data}{orgs}->@*
+                    }
+                    $_->{nonquizzers}->@*;
+                }
+                $data->{reg_data}{orgs}->@*
             ),
         ] );
 

@@ -88,3 +88,27 @@ div#register {
     @media (max-width: 395px) { table { zoom: 0.5 } }
     @media (max-width: 360px) { table { zoom: 0.4 } }
 }
+
+div#meet_data {
+    p.display_as label {
+        margin-left: 0.75em;
+    }
+
+    .show_if_small {
+        display: none;
+    }
+
+    @media (max-width: 725px) {
+        p.display_as label {
+            margin-left: 2em;
+            display    : block;
+        }
+
+        .show_if_small {
+            display: inherit;
+        }
+        .hide_if_small {
+            display: none;
+        }
+    }
+}

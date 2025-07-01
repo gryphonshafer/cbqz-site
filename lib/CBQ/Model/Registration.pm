@@ -1,6 +1,6 @@
 package CBQ::Model::Registration;
 
-use exact -class;
+use exact -class, -conf;
 use Mojo::JSON qw( to_json from_json );
 
 with 'Omniframe::Role::Model';
@@ -54,10 +54,17 @@ sub get_reg ( $self, $region_id, $user ) {
     ];
 
     my ($reg) = grep { $_->{user_id} == $user->id } @$grouped_reg_rows;
+    $reg = $reg->{info} if ($reg);
 
     $reg //= {
         user => {
-            roles => $user->data->{info}{roles} // [], # TODO: ensure we are storing separate roles from user roles
+            roles => [
+                grep {
+                    my $this_role = $_;
+                    grep { $this_role eq $_ } $user->data->{info}{roles}->@*;
+                }
+                conf->get( qw{ registration roles } )->@*
+            ],
         },
     };
 

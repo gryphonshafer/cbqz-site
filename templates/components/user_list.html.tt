@@ -75,7 +75,7 @@
         </tbody>
     </table>
 
-    <div class="box hidden">
+    <div class="hidden">
         [% FOR this_user IN users %]
             <span data-roles="[% this_user.roles.join('|') %]">
                 [% this_user.first_name %]
