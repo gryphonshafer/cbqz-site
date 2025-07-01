@@ -10,154 +10,241 @@
 [% ELSE %]
     [% PROCESS meet_info.html.tt %]
 
-    <h2>Quizzers</h2>
-    <p>
-        <b>Display as:</b>
-        &nbsp;&nbsp;
-        <label><input type="radio" name="quizzer_display" value="table"> Full Data Table</label>
-        &nbsp;&nbsp;
-        <label><input type="radio" name="quizzer_display" value="roster"> Roster</label>
-        &nbsp;&nbsp;
-        <label><input type="radio" name="quizzer_display" value="teams"> Teams List</label>
-    </p>
-    <table id="quizzers_table" class="quizzer_display hidden">
-        <thead>
-            <tr>
-                <th>Team</th>
-                <th>Name</th>
-                <th>Bible</th>
-                <th>M/F</th>
-                <th>Rookie</th>
-                <th>House</th>
-                <th>Lunch</th>
-            </tr>
-        </thead>
-        <tbody>
-            [% FOR org IN reg_data.orgs %]
-                [% FOR team IN org.teams %]
-                    [% team_number = loop.count %]
-                    [% FOR quizzer IN team %]
-                        <tr>
-                            <td>[% org.acronym %] [% team_number %]</td>
-                            <td>[% quizzer.name  %]</td>
-                            <td>[% quizzer.bible %]</td>
-                            <td>[% quizzer.m_f   %]</td>
-                            <td>[% quizzer.rookie  ? 'Yes' : 'No' %]</td>
-                            <td>[% quizzer.housing ? 'Yes' : 'No' %]</td>
-                            <td>[% quizzer.lunch   ? 'Yes' : 'No' %]</td>
-                        </tr>
+    [% UNLESS reg_data.orgs %]
+        <p>There doesn't appear to be any meet registration data to display yet.</p>
+    [% ELSE %]
+        [%
+            totals.quizzers    = 0;
+            totals.teams       = 0;
+            totals.orgs        = 0;
+            totals.rookies     = 0;
+            totals.nonquizzers = 0;
+            totals.housing     = 0;
+            totals.lunch       = 0;
+
+            FOR org IN reg_data.orgs;
+                IF org.teams.size;
+                    totals.orgs = totals.orgs + 1;
+                END;
+                FOR team IN org.teams;
+                    totals.teams = totals.teams + 1;
+                    FOR quizzer IN team;
+                        totals.quizzers = totals.quizzers + 1;
+                        IF quizzer.rookie;
+                            totals.rookies = totals.rookies + 1;
+                        END;
+                        IF quizzer.housing;
+                            totals.housing = totals.housing + 1;
+                        END;
+                        IF quizzer.lunch;
+                            totals.lunch = totals.lunch + 1;
+                        END;
+                    END;
+                END;
+
+                FOR nonquizzer IN org.nonquizzers;
+                    totals.nonquizzers = totals.nonquizzers + 1;
+                    IF nonquizzer.housing;
+                        totals.housing = totals.housing + 1;
+                    END;
+                    IF nonquizzer.lunch;
+                        totals.lunch = totals.lunch + 1;
+                    END;
+                END;
+            END;
+
+            totals.other_nonquizzers = totals.nonquizzers;
+
+            FOR registrant IN reg_data.registrants;
+                totals.nonquizzers = totals.nonquizzers + 1;
+                IF registrant.info.user.housing;
+                    totals.housing = totals.housing + 1;
+                END;
+                IF registrant.info.user.lunch;
+                    totals.lunch = totals.lunch + 1;
+                END;
+            END;
+        %]
+
+        [% IF totals.quizzers %]
+            <h2>Quizzers</h2>
+            <p>
+                <b>Display as:</b>
+                &nbsp;&nbsp;
+                <label><input type="radio" name="quizzer_display" value="table"> Full Data Table</label>
+                &nbsp;&nbsp;
+                <label><input type="radio" name="quizzer_display" value="roster"> Roster</label>
+                &nbsp;&nbsp;
+                <label><input type="radio" name="quizzer_display" value="teams"> Teams List</label>
+            </p>
+            <table id="quizzers_table" class="quizzer_display hidden">
+                <thead>
+                    <tr>
+                        <th>Team</th>
+                        <th>Name</th>
+                        <th>Bible</th>
+                        <th>M/F</th>
+                        <th>Rookie</th>
+                        <th>House</th>
+                        <th>Lunch</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    [% FOR org IN reg_data.orgs %]
+                        [% FOR team IN org.teams %]
+                            [% team_number = loop.count %]
+                            [% FOR quizzer IN team %]
+                                <tr>
+                                    <td>
+                                        <abbr title="[% org.name %]">[% org.acronym %]</abbr> [% team_number %]
+                                    </td>
+                                    <td>[% quizzer.name  %]</td>
+                                    <td>[% quizzer.bible %]</td>
+                                    <td>[% quizzer.m_f   %]</td>
+                                    <td>[% quizzer.rookie  ? 'Yes' : 'No' %]</td>
+                                    <td>[% quizzer.housing ? 'Yes' : 'No' %]</td>
+                                    <td>[% quizzer.lunch   ? 'Yes' : 'No' %]</td>
+                                </tr>
+                            [% END %]
+                        [% END %]
+                    [% END %]
+                </tbody>
+            </table>
+            <div id="quizzers_roster" class="quizzer_display hidden">
+                [% FOR org IN reg_data.orgs %]
+                    [% FOR team IN org.teams %]
+                        [% team_number = loop.count %]
+                        <p>
+                            <b><abbr title="[% org.name %]">[% org.acronym %]</abbr> [% team_number %]</b>
+                            <br>
+                            [% FOR quizzer IN team %]
+                                [% quizzer.name  %]
+                                [% quizzer.bible %]
+                                [% quizzer.rookie ? '(Rookie)' : '' %]
+                                [% UNLESS loop.last %]<br>[% END %]
+                            [% END %]
+                        </p>
                     [% END %]
                 [% END %]
-            [% END %]
-        </tbody>
-    </table>
-    <div id="quizzers_roster" class="quizzer_display hidden">
-        [% FOR org IN reg_data.orgs %]
-            [% FOR team IN org.teams %]
-                [% team_number = loop.count %]
-                <p>
-                    <b>[% org.acronym _ team_number %]</b>
-                    <br>
-                    [% FOR quizzer IN team %]
-                        [% quizzer.name  %]
-                        [% quizzer.bible %]
-                        [% quizzer.rookie ? '(Rookie)' : '' %]
+            </div>
+            <div id="quizzers_teams" class="quizzer_display hidden">
+                [% FOR org IN reg_data.orgs %]
+                    [% FOR team IN org.teams %]
+                        [% team_number = loop.count %]
+                        <abbr title="[% org.name %]">[% org.acronym %]</abbr> [% team_number %]
                         [% UNLESS loop.last %]<br>[% END %]
                     [% END %]
-                </p>
-            [% END %]
-        [% END %]
-    </div>
-    <div id="quizzers_teams" class="quizzer_display hidden">
-        [% FOR org IN reg_data.orgs %]
-            [% FOR team IN org.teams %]
-                [% team_number = loop.count %]
-                [% org.acronym _ team_number %]
-                [% UNLESS loop.last %]<br>[% END %]
-            [% END %]
-        [% END %]
-    </div>
-
-    <h2>Registrants</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Drive</th>
-                <th>House</th>
-                <th>Lunch</th>
-            </tr>
-        </thead>
-        <tbody>
-            [% FOR registrant IN reg_data.registrants %]
-                <tr>
-                    <td>[% registrant.name %]</td>
-                    <td><a href="mailto:[% registrant.email %]">[% registrant.email %]</a></td>
-                    <td>
-                        [%
-                            registrant.phone.substr( 0, 3 ) _ '-' _
-                            registrant.phone.substr( 3, 3 ) _ '-' _
-                            registrant.phone.substr( 6, 4 )
-                        %]
-                    </td>
-                    <td>[% registrant.info.user.drive   ? 'Yes' : 'No' %]</td>
-                    <td>[% registrant.info.user.housing ? 'Yes' : 'No' %]</td>
-                    <td>[% registrant.info.user.lunch   ? 'Yes' : 'No' %]</td>
-                </tr>
-            [% END %]
-        </tbody>
-    </table>
-    [% FOR registrant IN reg_data.registrants %]
-        <p>
-            <b>[% registrant.name %]</b>
-            <ul>
-                [% FOR org IN registrant.info.orgs %]
-                    <li>[% org.name %] ([% org.acronym %])</li>
                 [% END %]
-                <li>
-                    <b>Contact:</b>
-                    <a href="mailto:[% registrant.email %]">[% registrant.email %]</a>
-                    [%
-                        registrant.phone.substr( 0, 3 ) _ '-' _
-                        registrant.phone.substr( 3, 3 ) _ '-' _
-                        registrant.phone.substr( 6, 4 )
-                    %]
-                </li>
-                <li>[% registrant.info.user.roles.join(', ') %]</li>
-                <li>
-                    <b>Stuff:</b>
-                    [% registrant.info.user.drive   ? 'Drive'   : '' %]
-                    [% registrant.info.user.housing ? 'Housing' : '' %]
-                    [% registrant.info.user.lunch   ? 'Lunch'   : '' %]
-                </li>
-                <li><b>Notes:</b> [% registrant.info.notes %]</li>
-            </ul>
-        </p>
-    [% END %]
+            </div>
+        [% END %]
 
-    <h2>Other Non-Quizzers</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Org.</th>
-                <th>Name</th>
-                <th>House</th>
-                <th>Lunch</th>
-            </tr>
-        </thead>
-        <tbody>
-            [% FOR org IN reg_data.orgs %]
-                [% FOR nonquizzer IN org.nonquizzers %]
+        [% IF reg_data.registrants.size %]
+            <h2>Registrants</h2>
+            <table>
+                <thead>
                     <tr>
-                        <td>[% org.acronym %]</td>
-                        <td>[% nonquizzer.name  %]</td>
-                        <td>[% nonquizzer.housing ? 'Yes' : 'No' %]</td>
-                        <td>[% nonquizzer.lunch   ? 'Yes' : 'No' %]</td>
+                        <th>Name</th>
+                        <th>Org(s).</th>
+                        <th>Drive</th>
+                        <th>House</th>
+                        <th>Lunch</th>
                     </tr>
-                [% END %]
+                </thead>
+                <tbody>
+                    [% FOR registrant IN reg_data.registrants %]
+                        <tr>
+                            <td>
+                                [% mailto = registrant.name _ ' ' _ '<' _ registrant.email _ '>' %]
+                                <a href="mailto:[% mailto %]">[% registrant.name %]</a></td>
+                            <td>
+                                [% FOR org IN registrant.info.orgs %]
+                                    <abbr title="[% org.name %]">[% org.acronym %]</abbr>[% UNLESS
+                                        loop.last %], [% END %]
+                                [% END %]
+                            </td>
+                            <td>[% registrant.info.user.drive   ? 'Yes' : 'No' %]</td>
+                            <td>[% registrant.info.user.housing ? 'Yes' : 'No' %]</td>
+                            <td>[% registrant.info.user.lunch   ? 'Yes' : 'No' %]</td>
+                        </tr>
+                    [% END %]
+                </tbody>
+            </table>
+
+            <h3>Registrant Details</h3>
+            [% FOR registrant IN reg_data.registrants %]
+                <ul>
+                    <li>
+                        <b>[% registrant.name %]</b>
+                        <ul>
+                            <li>
+                                [% FOR org IN registrant.info.orgs %]
+                                    [% org.name %] ([% org.acronym %])[% UNLESS
+                                        loop.last %], [% END %]
+                                [% END %]
+                            </li>
+                            <li>
+                                [% mailto = registrant.name _ ' ' _ '<' _ registrant.email _ '>' %]
+                                <a href="mailto:[% mailto %]">[% registrant.email %]</a>;
+                                <a href="tel:[% registrant.phone %]">[%
+                                    registrant.phone.substr( 0, 3 ) _ '-' _
+                                    registrant.phone.substr( 3, 3 ) _ '-' _
+                                    registrant.phone.substr( 6, 4 )
+                                %]</a>
+                            </li>
+                            [% IF registrant.info.user.roles.size %]
+                                <li>
+                                    <i>Roles:</i>
+                                    [% registrant.info.user.roles.sort.join(', ') %]
+                                </li>
+                            [% END %]
+                            [% IF registrant.info.notes %]
+                                <li><i>Notes:</i> [% registrant.info.notes %]</li>
+                            [% END %]
+                        </ul>
+                    </li>
+                </ul>
             [% END %]
-        </tbody>
-    </table>
+        [% END %]
+
+        [% IF totals.other_nonquizzers %]
+            <h2>Other Non-Quizzers</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Org.</th>
+                        <th>Name</th>
+                        <th>House</th>
+                        <th>Lunch</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    [% FOR org IN reg_data.orgs %]
+                        [% FOR nonquizzer IN org.nonquizzers %]
+                            <tr>
+                                <td><abbr title="[% org.name %]">[% org.acronym %]</abbr></td>
+                                <td>[% nonquizzer.name  %]</td>
+                                <td>[% nonquizzer.housing ? 'Yes' : 'No' %]</td>
+                                <td>[% nonquizzer.lunch   ? 'Yes' : 'No' %]</td>
+                            </tr>
+                        [% END %]
+                    [% END %]
+                </tbody>
+            </table>
+        [% END %]
+
+        <h2>Registration Totals</h2>
+        <ul>
+            <li>Attending:    <b>[% ( totals.quizzers ) + ( totals.nonquizzers ) %]</b></li>
+            <li>Quizzers:     <b>[% totals.quizzers    %]</b></li>
+            <li>Teams:        <b>[% totals.teams       %]</b></li>
+            <li>Orgs.:        <b>[% totals.orgs        %]</b> <i>(based on quizzers)</i></li>
+            <li>Rookies:      <b>[% totals.rookies     %]</b></li>
+            <li>Non-Quizzers: <b>[% totals.nonquizzers %]</b></li>
+            <li>House:        <b>[% totals.housing     %]</b></li>
+            <li>Lunch:        <b>[% totals.lunch       %]</b></li>
+        </ul>
+
+        <a href="[% c.url_for( path_part_prefix _ c.url_for _ '.csv' ) %]"
+            class="button colored">Download CSV Data</a>
+    [% END %]
 [% END %]

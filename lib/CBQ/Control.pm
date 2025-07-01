@@ -216,7 +216,7 @@ sub startup ($self) {
         ->to( 'meet#register', format => undef );
 
     $users
-        ->any( '/meet/data' => [ format => ['csv'] ] )
+        ->any( '/meet/data' => [ format => [ qw( csv json ) ] ] )
         ->requires( region => 1 )
         ->to( 'meet#data', format => undef );
 

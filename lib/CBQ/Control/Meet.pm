@@ -1,9 +1,10 @@
 package CBQ::Control::Meet;
 
 use exact -conf, 'Mojolicious::Controller';
-
 use CBQ::Model::Region;
 use CBQ::Model::Registration;
+use Text::CSV_XS 'csv';
+use Mojo::Util 'slugify';
 
 sub _current_season ($self) {
     return CBQ::Model::Region->new->current_season(
@@ -81,10 +82,81 @@ sub schedule ($self) {
 }
 
 sub data ($self) {
-    $self->stash(
-        meet     => $self->_current_next_meet,
+    my $data = {
         reg_data => CBQ::Model::Registration->new->get_data( $self->stash('req_info')->{region}{id} ),
-    );
+        meet     => $self->_current_next_meet,
+    };
+
+    unless ( $self->stash('format') ) {
+        $self->stash(%$data);
+    }
+    elsif ( $self->stash('format') eq 'json' ) {
+        $self->render( json => $data );
+    }
+    elsif ( $self->stash('format') eq 'csv' ) {
+        csv( out => \my $csv, in => [
+            [ qw( Organization Acronym Team Name Bible M/F Rookie Housing Lunch ) ],
+
+            (
+                map {
+                    my $org_name   = $_->{name};
+                    my $acronym    = $_->{acronym};
+                    my $team_count = 0;
+
+                    map {
+                        my $team = $acronym . ' ' . ++$team_count;
+                        map {
+                            [
+                                $org_name,
+                                $acronym,
+                                $team,
+                                $_->{name},
+                                $_->{bible},
+                                $_->{m_f},
+                                $_->{rookie},
+                                $_->{housing},
+                                $_->{lunch},
+                            ];
+                        } @$_;
+                    } $_->{teams}->@*;
+                } $data->{reg_data}{orgs}->@*
+            ),
+
+            # TODO: include registrants
+
+            (
+                map {
+                    my $org_name = $_->{name};
+                    my $acronym  = $_->{acronym};
+                    map {
+                        [
+                            $org_name,
+                            $acronym,
+                            '',
+                            $_->{name},
+                            '',
+                            '',
+                            '',
+                            $_->{housing},
+                            $_->{lunch},
+                        ];
+                    } $_->{nonquizzers}->@*;
+                } $data->{reg_data}{orgs}->@*
+            ),
+        ] );
+
+        ( my $filename = lc $data->{meet}{name} ) =~ s/<[^>]*>//g;
+        chomp $filename;
+        $filename = join( '_',
+            substr( $data->{meet}{start}, 0, 10 ),
+            slugify($filename),
+            'meet_registration_data.csv',
+        );
+
+        $self->res->headers->content_type('text/csv; charset=utf-8');
+        $self->res->headers->content_disposition(qq{attachment; filename="$filename"});
+        $self->render( data => $csv );
+    }
 }
 
 1;

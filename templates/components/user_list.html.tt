@@ -54,11 +54,11 @@
                             >[% this_user.first_name %] [% this_user.last_name %]</a>
                     </td>
                     <td>
-                        [%
+                        <a href="tel:[% this_user.phone %]">[%
                             this_user.phone.substr( 0, 3 ) _ '-' _
                             this_user.phone.substr( 3, 3 ) _ '-' _
                             this_user.phone.substr( 6, 4 )
-                        %]
+                        %]</a>
                     </td>
                     <td>
                         [% this_user.info.roles.join(', ') %]

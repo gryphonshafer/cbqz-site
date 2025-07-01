@@ -24,37 +24,40 @@ sub thaw ( $self, $data ) {
 }
 
 sub get_reg ( $self, $region_id, $user ) {
-    my $grouped_reg_rows = $self->dq->sql(q{
-        WITH reg_rows AS (
-            SELECT
-                r.user_id,
-                r.info,
-                r.created,
-                ro.org_id
-            FROM registration AS r
-            LEFT JOIN registration_org AS ro USING (registration_id)
-            WHERE
-                r.region_id = ? AND (
-                    ro.org_id IN ( } . join( ',',
-                        map { $self->dq->quote($_) } $user->org_and_region_ids->{orgs}->@*
-                    ) . q{ ) OR
-                    ( ro.registration_id IS NULL AND user_id = ? )
-                )
-            ORDER BY created DESC
-        )
-        SELECT *
-        FROM reg_rows
-        GROUP BY org_id
-    })->run(
-        $region_id,
-        $user->id,
-    )->all({});
+    my $grouped_reg_rows = [
+        map { $self->thaw($_) }
+        $self->dq->sql(q{
+            WITH reg_rows AS (
+                SELECT
+                    r.user_id,
+                    r.info,
+                    r.created,
+                    ro.org_id
+                FROM registration AS r
+                LEFT JOIN registration_org AS ro USING (registration_id)
+                WHERE
+                    r.region_id = ? AND (
+                        ro.org_id IN ( } . join( ',',
+                            map { $self->dq->quote($_) } $user->org_and_region_ids->{orgs}->@*
+                        ) . q{ ) OR
+                        ( ro.registration_id IS NULL AND user_id = ? )
+                    )
+                ORDER BY created DESC
+            )
+            SELECT *
+            FROM reg_rows
+            GROUP BY org_id
+        })->run(
+            $region_id,
+            $user->id,
+        )->all({})->@*
+    ];
 
-    my ($reg) = map { $self->thaw($_)->{info} } grep { not defined $_->{org_id} } @$grouped_reg_rows;
+    my ($reg) = grep { $_->{user_id} == $user->id } @$grouped_reg_rows;
 
     $reg //= {
         user => {
-            roles => $user->data->{info}{roles} // [],
+            roles => $user->data->{info}{roles} // [], # TODO: ensure we are storing separate roles from user roles
         },
     };
 
@@ -71,13 +74,7 @@ sub get_reg ( $self, $region_id, $user ) {
         })->@*
     ];
 
-    for my $reg_row (
-        map { +{
-            org_id => $_->{org_id},
-            info   => $self->thaw($_)->{info},
-        } }
-        grep { defined $_->{org_id} } @$grouped_reg_rows
-    ) {
+    for my $reg_row ( grep { defined $_->{org_id} } @$grouped_reg_rows ) {
         my ($org_block) = grep { $reg_row->{org_id} == $_->{org_id} } $reg_row->{info}{orgs}->@*;
         if ($org_block) {
             $reg->{orgs} = [ grep { $reg_row->{org_id} != $_->{org_id} } $reg->{orgs}->@* ];
