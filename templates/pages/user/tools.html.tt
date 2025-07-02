@@ -71,6 +71,12 @@
     <li>
         <a href="https://quizsage.org">QuizSage</a>
         <span class="material-symbols-outlined size middle">arrow_outward</span>
+        <i>(Bible Quizzing SaaS)</i>
+    </li>
+    <li>
+        <a href="/CBQ_system/trigger_sets.md">Lesser Magistrate (LM)</a>
+        <span class="material-symbols-outlined size middle">reply</span>
+        <i>(Trigger Sets)</i>
     </li>
 </ul>
 
