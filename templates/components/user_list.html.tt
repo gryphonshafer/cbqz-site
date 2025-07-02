@@ -35,6 +35,7 @@
         <thead>
             <tr>
                 <th>Name</th>
+                <th>Email</th>
                 <th>Phone</th>
                 <th>Roles</th>
                 <th>Last Login</th>
@@ -43,6 +44,7 @@
         <tbody>
             [% FOR this_user IN users %]
                 <tr data-roles="[% this_user.roles.join('|') %]">
+                    <td>[% this_user.first_name %] [% this_user.last_name %]</td>
                     <td>
                         [%
                             mailto =
@@ -50,8 +52,7 @@
                                 this_user.last_name _ ' ' _
                                 '<' _ this_user.email _ '>'
                         %]
-                        <a href="mailto:[% mailto %]"
-                            >[% this_user.first_name %] [% this_user.last_name %]</a>
+                        <a href="mailto:[% mailto %]">[% this_user.email %]</a>
                     </td>
                     <td>
                         <a href="tel:[% this_user.phone %]">[%
@@ -75,7 +76,7 @@
         </tbody>
     </table>
 
-    <div class="hidden">
+    <div class="hidden box">
         [% FOR this_user IN users %]
             <span data-roles="[% this_user.roles.join('|') %]">
                 [% this_user.first_name %]
