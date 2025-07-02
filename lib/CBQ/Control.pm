@@ -185,6 +185,7 @@ sub startup ($self) {
     } );
 
     $users->any( '/user/' . $_ )->to( 'user#' . $_ ) for ( qw( edit tools list ) );
+    $users->any( '/user/' . $_ )->requires( region => 0 )->to( 'user#' . $_ ) for ( qw( become unbecome ) );
     $users->any( '/meeting/' . $_->[1] )->requires( region => 0 )->to( 'meeting#' . $_->[0] ) for (
         [ list        => 'list'                    ],
         [ create      => 'create'                  ],

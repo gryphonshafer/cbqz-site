@@ -30,8 +30,17 @@
     </li>
 </ul>
 
-<p><a class="button colored" href="[% c.url_for( path_part_prefix _ '/user/edit' ) %]"
-    >Edit My Account Data</a></p>
+<p>
+    <a class="button colored" href="[% c.url_for( path_part_prefix _ '/user/edit' ) %]"
+        >Edit My Account Data</a>
+    <a class="button" href="[% c.url_for('/user/logout') %]">Logout</a>
+    [% IF user.is_admin %]
+        <a class="button" href="[% c.url_for('/user/become') %]">Become User</a>
+    [% END %]
+    [% IF c.session.was_user_id %]
+        <a class="button" href="[% c.url_for('/user/unbecome') %]">Unbecome User</a>
+    [% END %]
+</p>
 
 [% IF req_info.region %]
     <ul>

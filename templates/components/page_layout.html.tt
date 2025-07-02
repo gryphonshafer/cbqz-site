@@ -25,6 +25,12 @@
             <span class="material-symbols-outlined inline">forum</span></a>
         <a href="[% c.url_for('/FAQs.md') %]"
             class="button colored">FAQs</a>
+
+        <div class="login">
+            <a href="[% c.url_for( path_part_prefix _ '/user/sign_up' ) %]">Sign-Up</a>
+            or
+            <a href="[% c.url_for('/user/login') %]">Login</a>
+        </div>
     [% ELSE %]
         [% UNLESS req_info.region %]
             <a href="[% c.url_for( '/user/tools') %]" class="button colored">Tools</a>
@@ -41,6 +47,8 @@
 
         <a href="[% c.url_for('/slack') %]" class="button">Slack
             <span class="material-symbols-outlined inline">forum</span></a>
+
+        <div class="login">Logged in as: [% user.data.email %]</div>
     [% END %]
 </header>
 

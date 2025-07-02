@@ -292,6 +292,30 @@ sub list ($self) {
     }
 }
 
+sub become ($self) {
+    my $is_admin = $self->stash('user')->is_admin;
+    my $user_id  = $self->param('user');
+
+    unless ($user_id) {
+        $self->flash( become => 1 ) if ($is_admin);
+        $self->redirect_to('/user/list');
+    }
+    else {
+        $self->session(
+            user_id     => $user_id,
+            was_user_id => $self->stash('user')->id,
+        ) if ($is_admin);
+        $self->redirect_to('/');
+    }
+}
+
+sub unbecome ($self) {
+    if ( my $was_user_id = delete $self->session->{was_user_id} ) {
+        $self->session( user_id => $was_user_id );
+    }
+    $self->redirect_to('/');
+}
+
 1;
 
 =head1 NAME
@@ -336,6 +360,14 @@ Handler for logout.
 =head2 list
 
 Handler for users list.
+
+=head2 become
+
+Become a user (if you are an administrator).
+
+=head2 unbecome
+
+Return to your original user if you are an administrator and became someone else.
 
 =head1 INHERITANCE
 

@@ -197,6 +197,12 @@ sub add_org ( $self, $org_id )  {
     return;
 }
 
+sub is_admin ( $self, $email = undef ) {
+    return unless ( $email or $self->id );
+    $email //= $self->data->{email};
+    return ( grep { $_ eq $email } ( conf->get('administrators') // [] )->@* ) ? 1 : 0;
+}
+
 1;
 
 =head1 NAME
@@ -311,6 +317,12 @@ Returns true if the user is a qualified delegate as defined by attendance
 =head2 add_org
 
 Given an organization ID, will subscribe/add the user to that organization.
+
+=head2 is_admin
+
+Will return a boolean if the loaded user's email is listed as one of the
+C<administrators> in the configuration. Alternatively, you can pass in an
+explicit email address to check.
 
 =head1 WITH ROLE
 

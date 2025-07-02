@@ -44,7 +44,13 @@
         <tbody>
             [% FOR this_user IN users %]
                 <tr data-roles="[% this_user.roles.join('|') %]">
-                    <td>[% this_user.first_name %] [% this_user.last_name %]</td>
+                    <td>
+                        [% IF user.is_admin AND c.session.flash.become %]
+                            <a href="[% c.url_for('/user/become').query( user => this_user.user_id ) %]"><span
+                                class="material-symbols-outlined inline">manage_accounts</span></a>
+                        [% END %]
+                        [% this_user.first_name %] [% this_user.last_name %]
+                    </td>
                     <td>
                         [%
                             mailto =
