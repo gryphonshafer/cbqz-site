@@ -77,7 +77,7 @@ sub _node_start_stop ( $node, $days = 1 ) {
         $node->{days} //= $days;
 
         $start   = $time->parse( $node->{start} )->datetime;
-        my $stop = $start->clone->add( days => $node->{days} - 1 );
+        my $stop = $start->clone->add( days => $node->{days} - 1, hours => 4 );
 
         $node->{start_time} = $start->epoch;
         $node->{stop_time}  = $stop ->epoch;
@@ -107,7 +107,7 @@ sub _process ( $self, $settings = undef ) {
                 $meet->{ $type . '_days' } //=
                     $meet->{$type} // $season->{$type} // conf->get( 'registration', $type );
 
-                my $type_datetime = $meet_start->add( days => $meet->{ $type . '_days' } )->set(
+                my $type_datetime = $meet_start->subtract( days => $meet->{ $type . '_days' } )->set(
                     hour   => 23,
                     minute => 59,
                     second => 59,

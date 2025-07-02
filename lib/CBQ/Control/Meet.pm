@@ -48,29 +48,37 @@ sub schedule ($self) {
             } );
         }
         elsif ( $method eq 'POST' and my $reg = $self->req->json ) {
-            my $authorized_org_ids   = $self->stash('user')->org_and_region_ids->{orgs};
-            my $submitted_orgs_count = $reg->{orgs}->@*;
-            $reg->{orgs}             = [
-                grep {
-                    my $org = $_;
-                    grep { $org->{org_id} == $_ } @$authorized_org_ids;
-                } $reg->{orgs}->@*
-            ];
+            if ( $current_next_meet->{registration_closed} ) {
+                $self->render( json => {
+                    class   => 'error',
+                    message => 'Meet registration closed.',
+                } );
+            }
+            else {
+                my $authorized_org_ids   = $self->stash('user')->org_and_region_ids->{orgs};
+                my $submitted_orgs_count = $reg->{orgs}->@*;
+                $reg->{orgs}             = [
+                    grep {
+                        my $org = $_;
+                        grep { $org->{org_id} == $_ } @$authorized_org_ids;
+                    } $reg->{orgs}->@*
+                ];
 
-            CBQ::Model::Registration->new->create( {
-                user_id   => $self->stash('user')->id,
-                region_id => $self->stash('req_info')->{region}{id},
-                info      => $reg,
-            } );
+                CBQ::Model::Registration->new->create( {
+                    user_id   => $self->stash('user')->id,
+                    region_id => $self->stash('req_info')->{region}{id},
+                    info      => $reg,
+                } );
 
-            $self->render( json => {
-                class   => 'success',
-                message => 'Meet registration data saved.' . (
-                    ( $submitted_orgs_count != $reg->{orgs}->@* )
-                        ? '.. but not all team organizations were authorized.'
-                        : ''
-                ),
-            } );
+                $self->render( json => {
+                    class   => 'success',
+                    message => 'Meet registration data saved.' . (
+                        ( $submitted_orgs_count != $reg->{orgs}->@* )
+                            ? '.. but not all team organizations were authorized.'
+                            : ''
+                    ),
+                } );
+            }
         }
         else {
             $self->stash( memo => {
