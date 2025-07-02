@@ -9,6 +9,11 @@ default:
             - gd824qfOpPOF6qUWya0QT0nU9U82JKVu
         session:
             cookie_name: cbq_site_session
+    template:
+        email:
+            include_path:
+                - templates/emails
+                - templates/components
     bcrypt:
         salt: 54XYZdnG4FjvcTJD
     crypt:

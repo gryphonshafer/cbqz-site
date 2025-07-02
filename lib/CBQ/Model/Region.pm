@@ -26,8 +26,11 @@ sub path ($self) {
 sub settings ($self) {
     return unless ( $self->path );
 
-    my $data_merge = Data::ModeMerge->new( config => { parse_prefix => 0, options_key => undef } );
     my $settings   = {};
+    my $data_merge = Data::ModeMerge->new( config => {
+        parse_prefix => 0,
+        default_mode => 'ADD',
+    } );
 
     $self
         ->path
@@ -212,11 +215,11 @@ sub current_season ( $self, $seasons_or_region ) {
 
     my $now = time;
     my ($current_season) =
-        sort { $a->{stop_time} <=> $b->{stop_time} }
+        sort { $b->{stop_time} <=> $a->{stop_time} }
         grep { $_->{start_time} <= $now and $_->{stop_time} >= $now }
         $seasons->@*;
 
-    ($current_season) = sort { $b->{start_time} <=> $b->{start_time} } $seasons->@* unless ($current_season);
+    ($current_season) = sort { $b->{start_time} <=> $a->{start_time} } $seasons->@* unless ($current_season);
 
     my $seen_current_next_meet;
     for my $meet ( $current_season->{meets}->@* ) {
@@ -225,11 +228,41 @@ sub current_season ( $self, $seasons_or_region ) {
         if ( $meet->{stop_time} > $now and not $seen_current_next_meet ) {
             $seen_current_next_meet       = 1;
             $meet->{is_current_next_meet} = 1;
-            $meet->{registration_closed}  = 1 if ( $meet->{deadline_time} < $now );
+            $meet->{registration_closed}  = 1
+                if ( not $meet->{deadline_time} or $meet->{deadline_time} < $now );
         }
     }
 
     return $current_season;
+}
+
+sub all_current_next_meets ($self) {
+    my $settings = $self->all_settings_processed;
+
+    return [
+        grep { defined }
+        map {
+            my $key = $_;
+            my ($current_next_meet) =
+                grep { $_->{is_current_next_meet} }
+                $self->current_season( $settings->{$key}{settings}{seasons} )->{meets}->@*;
+
+            $current_next_meet->{region} = { map { $_ => $settings->{$key}{$_} } qw( id key name ) }
+                if ($current_next_meet);
+
+            $current_next_meet;
+        }
+        keys %$settings
+    ];
+}
+
+sub reminder_meets ($self) {
+    my $now = time;
+    return [ grep {
+        not $_->{registration_closed}
+        and $_->{deadline}
+        and abs( $_->{reminder_time} - $now ) < 60 * 60 * 24
+    } $self->all_current_next_meets->@* ];
 }
 
 1;
@@ -337,6 +370,16 @@ regions.
 
 Requires either an arrayref of seasons or the key/acronym for a region. Will
 return the current season with the current or next meet marked as such.
+
+=head2 all_current_next_meets
+
+Returns an arrayref of hashrefs, each representing a meet that is the current
+next meet for any region, season, and meet set.
+
+=head2 reminder_meets
+
+Returns an arrayref of hashrefs like C<all_current_next_meets> but filtered to
+only include meets that should have reminders sent for them on the current day.
 
 =head1 CONFIGURATION
 

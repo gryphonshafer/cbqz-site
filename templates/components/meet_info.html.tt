@@ -24,9 +24,9 @@
                 ( meet.material != meet.new_material AND meet.material != meet.old_material )
             %]
                 <ul>
-                    [% IF meet.material     %]<li><b>Full:</b> [% meet.material     %][% END %]
-                    [% IF meet.old_material %]<li><b>Old:</b>  [% meet.old_material %][% END %]
-                    [% IF meet.new_material %]<li><b>New:</b>  [% meet.new_material %][% END %]
+                    [% IF meet.material     %]<li><i>Full:</i> [% meet.material     %][% END %]
+                    [% IF meet.old_material %]<li><i>Old:</i>  [% meet.old_material %][% END %]
+                    [% IF meet.new_material %]<li><i>New:</i>  [% meet.new_material %][% END %]
                 </ul>
             [% ELSE %]
                 [% meet.material %]

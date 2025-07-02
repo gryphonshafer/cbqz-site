@@ -149,6 +149,45 @@ sub get_data ( $self, $region_id ) {
     };
 }
 
+sub coach_user_ids ( $self, $region_id ) {
+    return $self->dq->sql(q{
+        WITH grouped_user_data AS (
+            WITH user_data AS (
+                SELECT
+                    u.user_id,
+                    u.info AS u_info,
+                    r.info AS r_info
+                FROM user AS u
+                JOIN user_region AS ur USING (user_id)
+                LEFT JOIN registration AS r USING (user_id)
+                WHERE
+                    ur.region_id = ? AND
+                    u.active
+                ORDER BY r.created DESC
+            )
+            SELECT
+                user_id,
+                u_info,
+                r_info
+            FROM user_data
+            GROUP BY user_id
+        )
+        SELECT user_id
+        FROM grouped_user_data
+        WHERE
+            EXISTS (
+                SELECT 1
+                FROM JSON_EACH( u_info, '$.roles' )
+                WHERE value = 'Coach'
+            ) OR
+            EXISTS (
+                SELECT 1
+                FROM JSON_EACH( r_info, '$.user.roles' )
+                WHERE value = 'Coach'
+            )
+    })->run($region_id)->column;
+}
+
 1;
 
 =head1 NAME
@@ -189,6 +228,12 @@ registration data).
 =head2 get_data
 
 Returns registration data for a given region.
+
+=head2 coach_user_ids
+
+Given a region ID, this method will return all active users who are coaches, as
+defined by either the user selecting "Coach" as a user role or selecting "Coach"
+as a meet role in the most recent registration from that user.
 
 =head1 WITH ROLE
 
