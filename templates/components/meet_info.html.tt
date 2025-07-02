@@ -73,5 +73,5 @@
         </li>
     [% END %]
 
-    [% IF meet.notes %]<li><b>Notes:</b> [% meet.notes %]</li>[% END %]
+    [% IF meet.notes %]<li><b>Notes:</b> [% meet.notes.replace( '</?p>', '' ) %]</li>[% END %]
 </ul>
