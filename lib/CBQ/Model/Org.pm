@@ -38,7 +38,12 @@ sub regions ( $self, $regions = undef ) {
     unless ($regions) {
         return [ CBQ::Model::Region->new->every_data({
             region_id => [
-                $self->dq->sql('SELECT region_id FROM org_region WHERE org_id = ?')->run( $self->id )->column
+                $self->dq->sql( q{
+                    SELECT or.region_id
+                    FROM org_region AS or
+                    JOIN region AS r USING (region_id)
+                    WHERE or.org_id = ? AND r.active
+                } )->run( $self->id )->column
             ],
         }) ];
     }
@@ -71,7 +76,12 @@ sub users ($self) {
     return unless ( $self->id );
     return [ CBQ::Model::User->new->every_data({
         user_id => [
-            $self->dq->sql('SELECT user_id FROM user_org WHERE org_id = ?')->run( $self->id )->column
+            $self->dq->sql( q{
+                SELECT uo.user_id
+                FROM user_org AS uo
+                JOIN user AS u USING (user_id)
+                WHERE uo.org_id = ? AND u.active
+            } )->run( $self->id )->column
         ],
     }) ];
 }

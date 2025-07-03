@@ -161,8 +161,22 @@ sub profile ( $self, $params ) {
 sub org_and_region_ids ($self) {
     return unless ( $self->id );
     return {
-        orgs    => [ $self->dq->get( 'user_org',    ['org_id'],    { user_id => $self->id } )->run->column ],
-        regions => [ $self->dq->get( 'user_region', ['region_id'], { user_id => $self->id } )->run->column ],
+        orgs => [
+            $self->dq->sql(q{
+                SELECT uo.org_id
+                FROM user_org AS uo
+                JOIN org AS o USING (org_id)
+                WHERE uo.user_id = ? AND o.active
+            })->run( $self->id )->column
+        ],
+        regions => [
+            $self->dq->sql(q{
+                SELECT ur.region_id
+                FROM user_region AS ur
+                JOIN region AS r USING (region_id)
+                WHERE ur.user_id = ? AND r.active
+            })->run( $self->id )->column
+        ],
     };
 }
 

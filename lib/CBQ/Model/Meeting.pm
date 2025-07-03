@@ -62,7 +62,8 @@ sub past_meetings ( $self, $user ) {
             SUM( CASE WHEN um.user_id = ? THEN 1 ELSE 0 END ) AS attended
         FROM meeting AS m
         JOIN user_meeting AS um USING (meeting_id)
-        WHERE JSON_EXTRACT( m.info, '$.closed' ) = 1
+        JOIN user AS u USING (user_id)
+        WHERE JSON_EXTRACT( m.info, '$.closed' ) = 1 AND u.active
         GROUP BY 1
     } )->run( $user->id )->all({});
 }
@@ -82,7 +83,7 @@ sub attendees ($self) {
             u.phone
         FROM user AS u
         JOIN user_meeting AS um USING (user_id)
-        WHERE um.meeting_id = ?
+        WHERE um.meeting_id = ? AND u.active
     } )->run( $self->id )->all({});
 }
 
@@ -125,7 +126,10 @@ sub unvote ( $self, $user, $params ) {
 
 sub votes ( $self, $user ) {
     return from_json( $self->dq->sql( q{
-        SELECT info FROM user_meeting WHERE user_id = ? AND meeting_id = ?
+        SELECT um.info
+        FROM user_meeting AS um
+        JOIN user AS u
+        WHERE u.user_id = ? AND um.meeting_id = ? AND u.active
     } )->run( $user->id, $self->id )->value // '{}' )->{votes};
 }
 

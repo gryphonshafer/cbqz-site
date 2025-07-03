@@ -40,6 +40,7 @@ my $user = CBQ::Model::User->new->create({
     first_name => 'first_name',
     last_name  => 'last_name',
     phone      => '1234567890',
+    active     => 1,
 });
 
 ok( lives { $obj->viewed($user) }, 'viewed' ) or note $@;

@@ -111,7 +111,7 @@ sub get_data ( $self, $region_id ) {
                 FROM registration AS r
                 JOIN user AS u USING (user_id)
                 LEFT JOIN registration_org AS ro USING (registration_id)
-                WHERE r.region_id = ?
+                WHERE r.region_id = ? AND u.active
                 ORDER BY r.created DESC
             )
             SELECT *
