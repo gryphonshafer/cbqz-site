@@ -3,8 +3,10 @@ package CBQ::Model::Region;
 use exact -class, -conf;
 use Bible::Reference;
 use Data::ModeMerge;
+use Git::Repository;
 use Mojo::File;
 use Omniframe::Class::Time;
+use Omniframe::Util::Bcrypt 'bcrypt';
 use Text::MultiMarkdown 'markdown';
 use YAML::XS;
 
@@ -265,6 +267,70 @@ sub reminder_meets ($self) {
     } $self->all_current_next_meets->@* ];
 }
 
+sub cms_update ( $self, $settings ) {
+    $self->notice('Region CMS update triggered');
+    my $result;
+
+    my $regions = $self->every(
+        ( $settings->{all} ) ? {} : {
+            acronym => $settings->{key},
+            secret  => bcrypt( $settings->{secret} ),
+            active  => 1,
+        }
+    );
+
+    unless ( $regions->@* ) {
+        $result->{success} = 0;
+        $result->{message} = 'No authenticated regions to update';
+    }
+
+    for my $region ( $regions->@* ) {
+        my $update = {
+            acronym => $region->data->{acronym},
+            path    => $region->path,
+        };
+
+        try {
+            $update->{message} = Git::Repository->new( work_tree => $update->{path} )->run('pull');
+            $update->{success} = 1;
+
+            $self->info( $update->{message} );
+        }
+        catch ($e) {
+            $update->{message} = deat $e;
+            $update->{success} = 0;
+            $result->{success} = 0;
+
+            $self->error( $update->{message} );
+        }
+
+        push( @{ $result->{updates} }, $update );
+    }
+
+    if (
+        $settings->{app} and
+        $settings->{app}->mode eq 'production' and
+        $result and
+        $result->{updates} and
+        $result->{updates}->@* and
+        grep { $_->{success} } $result->{updates}->@*
+    ) {
+        my $ppid = getppid();
+        if ( $ppid and kill( 0, $ppid ) ) {
+            $self->info('Issuing hot deployment restart');
+            kill( 'USR2', $ppid );
+            $result->{restart}{success} = 1;
+        }
+        else {
+            $result->{restart}{success} = 0;
+            $result->{success}          = 0;
+        }
+    }
+
+    $result->{success} //= 1;
+    return $result;
+}
+
 1;
 
 =head1 NAME
@@ -380,6 +446,16 @@ next meet for any region, season, and meet set.
 
 Returns an arrayref of hashrefs like C<all_current_next_meets> but filtered to
 only include meets that should have reminders sent for them on the current day.
+
+=head2 cms_update
+
+Requires a hashref of values. If provided a C<key> (region acronym) and
+C<secret>, it will attempt to update that region's content. If provided the key
+of C<all> with a positive value, it'll attempt to update all regions' content.
+If provided an C<app> value of a Mojolicious application running in production
+mode, it'll attempt a hot deployment restart if any regional update happened.
+
+In all cases, the method will return a hashref explaining the results.
 
 =head1 CONFIGURATION
 

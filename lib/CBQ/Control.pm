@@ -226,6 +226,8 @@ sub startup ($self) {
         $all->any('/iq.rss')->requires( region => 0 )->to('main#iq_rss');
     }
 
+    $all->any('/update')->to('main#cms_update');
+
     $all->any('/')->requires( region => 0 )->to('main#index');
     $all->any( '/*name', { name => 'index.md' } )->to('main#content');
 }

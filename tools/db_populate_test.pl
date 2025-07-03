@@ -1,5 +1,5 @@
 #!/usr/bin/env perl
-use exact -conf;
+use exact -conf, -cli;
 use CBQ::Model::Region;
 
 my $dq = CBQ::Model::Region->new->dq;
@@ -43,3 +43,18 @@ $sth->run(@$_) for (
     [ 'IPC', 'WWA' ],
     [ 'IPC', 'INW' ],
 );
+
+=head1 NAME
+
+db_populate_test.pl - Fill local/test database with enough data to app test
+
+=head1 SYNOPSIS
+
+    db_populate_test.pl OPTIONS
+        -h|help
+        -m|man
+
+=head1 DESCRIPTION
+
+This program will fill a local/test database with enough data to enable using
+the web app.

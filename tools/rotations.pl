@@ -1,5 +1,5 @@
 #!/usr/bin/env perl
-use exact;
+use exact -cli;
 use Bible::Reference;
 
 my $settings = {
@@ -313,3 +313,17 @@ sub stats ($counts) {
         print "\n";
     }
 }
+
+=head1 NAME
+
+rotations.pl - Calculate a material rotations analysis report
+
+=head1 SYNOPSIS
+
+    rotations.pl OPTIONS
+        -h|help
+        -m|man
+
+=head1 DESCRIPTION
+
+This program will calculate a material rotations analysis report.

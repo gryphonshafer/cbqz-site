@@ -1,6 +1,7 @@
 package CBQ::Control::Main;
 
 use exact -conf, 'Mojolicious::Controller';
+use CBQ::Model::Region;
 use Mojo::DOM;
 use Mojo::File 'path';
 use Omniframe::Class::Time;
@@ -105,6 +106,19 @@ sub iq_rss ($self) {
     );
 }
 
+sub cms_update ($self) {
+    my $result = CBQ::Model::Region->new->cms_update({
+        key    => $self->param('key')    || 1,
+        secret => $self->param('secret') || 1,
+        app    => $self->app,
+    });
+
+    $self->render(
+        status => ( ( $result->{success} ) ? 200 : 400 ),
+        json   => $result,
+    );
+}
+
 1;
 
 =head1 NAME
@@ -133,6 +147,11 @@ Handler for Inside Quizzing podcast page.
 =head2 iq_rss
 
 Handler for Inside Quizzing RSS feed.
+
+=head2 cms_update
+
+Webhook to update regional CMS content. Requires "key" (a region's acronym) and
+"secret" parameters. Returns result as JSON.
 
 =head1 INHERITANCE
 
