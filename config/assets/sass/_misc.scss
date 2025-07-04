@@ -27,3 +27,14 @@ div.box {
 .hidden {
     display: none;
 }
+
+form.rules_change {
+    label {
+        margin-bottom: 1em;
+    }
+
+    textarea {
+        width : calc( 100% - 1em );
+        height: 10em;
+    }
+}

@@ -1,0 +1,29 @@
+<title>CBQ: Rules Change Proposal</title>
+
+<p><i>Transcribe the current rule.</i></p>
+
+<p>[% current_rule %]</p>
+
+<p><i>Concisely write the desired rule change (as short as possible, but not shorter).</i></p>
+
+<p>[% desired_rule_change %]</p>
+
+<p><i>Detail the value, cost, and multi-order effects both positive and negative as it pertains to missional outcomes.</i></p>
+
+<p>[% roi %]</p>
+
+<p><i>Comment on how the change adheres to rules tenets and rules system architecture.</i></p>
+
+<p>[% tenents_and_architecture %]</p>
+
+<p><i>Prove the change does not fall into the "hard cases make bad law" category. Detail the inciting incidents, which must be at least 2 where at least 50% are not based on your own teams or quizzers.</i></p>
+
+<p>[% hard_cases %]</p>
+
+<p><i>Prove use of model thinking framework leverage and thinking at a taxonomy level of 4 or greater.</i></p>
+
+<p>[% taxonomy_level %]</p>
+
+<p><i>Steelman the null case plus at least 1 alternative.</i></p>
+
+<p>[% steelman %]</p>

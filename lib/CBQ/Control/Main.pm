@@ -119,6 +119,42 @@ sub cms_update ($self) {
     );
 }
 
+sub rules_change ($self) {
+    my @fields = qw(
+        current_rule
+        desired_rule_change
+        roi
+        tenents_and_architecture
+        hard_cases
+        taxonomy_level
+        steelman
+    );
+
+    $self->stash( $self->req->params->to_hash->%* );
+    my $fields_filled = grep { length( $self->param($_) ) } @fields;
+
+    if ( $fields_filled > 0 ) {
+        if ( $fields_filled != @fields ) {
+            $self->stash( memo => {
+                class   => 'error',
+                message => 'Submitted form was incomplete.',
+            } );
+        }
+        else {
+            Omniframe::Class::Email->new( type => 'rules_change' )->send({
+                to   => conf->get( qw( email from ) ),
+                data => $self->req->params->to_hash,
+            });
+
+            $self->flash( memo => {
+                class   => 'success',
+                message => 'Form submitted successfully.',
+            } );
+            $self->redirect_to('/');
+        }
+    }
+}
+
 1;
 
 =head1 NAME
@@ -152,6 +188,10 @@ Handler for Inside Quizzing RSS feed.
 
 Webhook to update regional CMS content. Requires "key" (a region's acronym) and
 "secret" parameters. Returns result as JSON.
+
+=head2 rules_change
+
+Handler for rule change proposal submissions.
 
 =head1 INHERITANCE
 

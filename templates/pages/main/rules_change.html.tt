@@ -1,0 +1,73 @@
+[% page.title = 'Submit a Change Proposal' %]
+
+<h1>[% page.title %]</h1>
+
+[% UNLESS user %]
+    <p>You must be logged in to submit a rules change proposal.</p>
+    <p>
+        <a class="button" href="[% c.url_for( path_part_prefix _ '/user/sign_up' ) %]">Sign-Up</a>
+        or
+        <a class="button" href="[% c.url_for('/user/login') %]">Login</a>
+    </p>
+[% ELSE %]
+    <p>To submit a rules change proposal:</p>
+
+    <ol>
+        <li>
+            <i>Analyze</i> (at minimum) the rules change using all the concepts and
+            devices described on the
+            <a href="[% c.url_for('/CBQ_system/rules_changes.md') %]">rules changes page</a>.
+        </li>
+        <li>Submit the following form <i>fully filled out</i>:</li>
+    </ol>
+
+    <form class="rules_change" method="post">
+        <fieldset class="left">
+            <legend>Rules Change Proposal</legend>
+
+            <label>
+                Transcribe the current rule.
+                <br><textarea name="current_rule">[% current_rule %]</textarea>
+            </label>
+
+            <label>
+                Concisely write the desired rule change (as short as possible,
+                but not shorter).
+                <br><textarea name="desired_rule_change">[% desired_rule_change %]</textarea>
+            </label>
+
+            <label>
+                Detail the value, cost, and multi-order effects both positive
+                and negative as it pertains to missional outcomes.
+                <br><textarea name="roi">[% roi %]</textarea>
+            </label>
+
+            <label>
+                Comment on how the change adheres to rules tenets and rules
+                system architecture.
+                <br><textarea name="tenents_and_architecture">[% tenents_and_architecture %]</textarea>
+            </label>
+
+            <label>
+                Prove the change does not fall into the "hard cases make bad law"
+                category. Detail the inciting incidents, which must be at least
+                2 where at least 50% are not based on your own teams or quizzers.
+                <br><textarea name="hard_cases">[% hard_cases %]</textarea>
+            </label>
+
+            <label>
+                Prove use of model thinking framework leverage and thinking at
+                a taxonomy level of 4 or greater.
+                <br><textarea name="taxonomy_level">[% taxonomy_level %]</textarea>
+            </label>
+
+            <label>
+                <a href="https://en.wikipedia.org/wiki/Straw_man#Steelmanning">Steelman</a>
+                the null case plus at least 1 alternative.
+                <br><textarea name="steelman">[% steelman %]</textarea>
+            </label>
+
+            <button>Submit Change Proposal</button>
+        </fieldset>
+    </form>
+[% END %]
