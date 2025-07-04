@@ -25,6 +25,8 @@ sub index ($self) {
         my $trailing_slash = $self->req->url->path->trailing_slash;
         my $hrefify        = sub ($href) {
             return unless ($href);
+            return '//' . $self->stash('req_info')->{domain} . '/' . $href if ( $href =~ s|^\*/|| );
+            return if ( $self->stash->{req_info}{subdomain} );
             return
                 ( $href =~ m|^/|      ) ? '/' . $key . $href :
                 ( not $trailing_slash ) ? $key . '/' . $href : undef;
@@ -36,7 +38,6 @@ sub index ($self) {
                 if (
                     ( $type eq 'md' or $type eq 'html' )
                     and $self->stash->{req_info}{region}
-                    and not $self->stash->{req_info}{subdomain}
                 ) {
                     $payload =~ s|(\[[^\]]*\]\s*\()([^\)]*)(\))| $1 . ( $hrefify->($2) // $2 ) . $3 |ge
                         if ( $type eq 'md' );

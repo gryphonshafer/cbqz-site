@@ -74,7 +74,7 @@ sub startup ($self) {
             );
 
             splice( @$docs_nav, 1, 0, {
-                folder => 'Current Season',
+                folder => 'Meets and Rules',
                 nodes  => [
                     {
                         href  => '/meet/schedule',
