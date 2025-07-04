@@ -39,10 +39,10 @@ sub regions ( $self, $regions = undef ) {
         return [ CBQ::Model::Region->new->every_data({
             region_id => [
                 $self->dq->sql( q{
-                    SELECT or.region_id
-                    FROM org_region AS or
+                    SELECT orr.region_id
+                    FROM org_region AS orr
                     JOIN region AS r USING (region_id)
-                    WHERE or.org_id = ? AND r.active
+                    WHERE orr.org_id = ? AND r.active
                 } )->run( $self->id )->column
             ],
         }) ];
