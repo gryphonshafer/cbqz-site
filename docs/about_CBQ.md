@@ -1,5 +1,3 @@
-*A word from the author: As a former Bible Quizzer, and current coach, official, and fan—all at the highest level achievable for me—I believe there is no Christian program for youth more capable of transforming a life for the better than this one. You could fill many paragraphs with testimony after testimony of the positive influence Bible Quizzing has had on individuals, families, and sometimes whole churches. However, in this guide I'll stick to giving you a basic understanding of what CBQ is, and letting you decide for yourself whether you'd like to join in.*
-
 # What is Bible Quizzing?
 
 Christian Bible Quizzing, or CBQ, is primarily three things: a competitive sport with a high degree of both accessibility and strategy, a Christian youth ministry with a focus on Scriptural literacy, and a community that emphasizes faith, fellowship, and fun.
@@ -87,8 +85,7 @@ The Quiz Magistrate (QM) will begin each prompt with a preamble, announcing the 
 Teams gain points with each correct response. A number of factors can affect how many points are gained each query, including:
 
 - Response Type
-    - The three response types are worth different amounts of points based on their relative difficulty: **Open-book** is worth a very small amount [^2], **synonymous** is the default and gets you a modest amount, and as **verbatim** is the hardest to pull off, it's worth the most by quite a bit.
-[^2]: With some notable exceptions – see “Open-Book Strategy for Veteran Quizzers” for more information
+    - The three response types are worth different amounts of points based on their relative difficulty: **Open-book** is worth a very small amount (with some notable exceptions), **synonymous** is the default and gets you a modest amount, and as **verbatim** is the hardest to pull off, it's worth the most by quite a bit.
 - Add-Ons
     - The **With Reference** and **Add a Verse** bonuses can be selected by a quizzer on most queries, each granting a bonus point if the quizzer responds correctly and completes the Add-On's requirement.
 - Team Bonuses
@@ -124,3 +121,5 @@ The middle school introvert in me groans at this word, but it is absolutely one 
 # Exhortation
 
 In this guide I've only briefly touched on the vastness of the sport, and indeed the world, of Bible Quizzing. If you want to dive deeper into how the sport works, the best place to start is just reading through the official CBQ rulebook (available here), but the truth is, the only way to be truly acquainted with this program is to step in and give it a try. Whether you stay for a few weeks, a few years, or for a good chunk of your adult life is up to you, and you needn’t ever feel locked in. Just count on this: whatever effort you invest into this program, great or small, it will be repaid to you tenfold in ways you can’t even imagine yet.
+
+**A word from the author:** _As a former Bible Quizzer, and current coach, official, and fan—all at the highest level achievable for me—I believe there is no Christian program for youth more capable of transforming a life for the better than this one. You could fill many paragraphs with testimony after testimony of the positive influence Bible Quizzing has had on individuals, families, and sometimes whole churches. However, in this guide I'll stick to giving you a basic understanding of what CBQ is, and letting you decide for yourself whether you'd like to join in._

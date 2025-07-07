@@ -1,8 +1,8 @@
-[% page.title = 'User Account Login' %]
+[% page.title = 'Account Login' %]
 
 <h1>[% page.title %]</h1>
 
-<form method="post" action="[% c.url_for %]">
+<form method="post">
     <fieldset>
         <legend>Login</legend>
 

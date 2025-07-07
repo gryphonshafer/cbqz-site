@@ -1,0 +1,50 @@
+[%
+    PROCESS macros;
+    page.title = 'Meetings List';
+%]
+
+<h1>[% page.title %]</h1>
+
+[% IF open_meetings AND open_meetings.size %]
+    <h2>Open Meetings</h2>
+
+    <table>
+        <tr>
+            <th>Scheduled Start</th>
+            <th>State</th>
+        </tr>
+        [% FOR this_meeting IN open_meetings %]
+            <tr>
+                <td><a href="[%
+                    c.url_for( '/meeting/' _ this_meeting.data.meeting_id )
+                %]">[% time( this_meeting.data.start, '%a, %b %-d, %Y at %-I:%M %p %Z' ) %]</a></td>
+                <td>[% ( this_meeting.is_active ) ? 'Active' : 'Scheduled' %]</td>
+            </tr>
+        [% END %]
+    </table>
+[% END %]
+
+[% IF user.is_qualified_delegate %]
+    <p>
+        <a href="[% c.url_for('/meeting/create') %]">Create a Meeting</a>
+    </p>
+[% END %]
+
+[% IF past_meetings AND past_meetings.size %]
+    <h2>Past Meetings</h2>
+
+    <table>
+        <tr>
+            <th>Scheduled Start</th>
+            <th>You Attended</th>
+        </tr>
+        [% FOR this_meeting IN past_meetings %]
+            <tr>
+                <td><a href="[%
+                    c.url_for( '/meeting/' _ this_meeting.meeting_id )
+                %]">[% time( this_meeting.start, '%a, %b %-d, %Y at %-I:%M %p %Z' ) %]</a></td>
+                <td>[% ( this_meeting.attended ) ? 'Yes' : 'No' %]</td>
+            </tr>
+        [% END %]
+    </table>
+[% END %]

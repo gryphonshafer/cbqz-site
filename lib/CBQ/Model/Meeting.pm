@@ -62,7 +62,8 @@ sub past_meetings ( $self, $user ) {
             SUM( CASE WHEN um.user_id = ? THEN 1 ELSE 0 END ) AS attended
         FROM meeting AS m
         JOIN user_meeting AS um USING (meeting_id)
-        WHERE JSON_EXTRACT( m.info, '$.closed' ) = 1
+        JOIN user AS u USING (user_id)
+        WHERE JSON_EXTRACT( m.info, '$.closed' ) = 1 AND u.active
         GROUP BY 1
     } )->run( $user->id )->all({});
 }
@@ -82,7 +83,7 @@ sub attendees ($self) {
             u.phone
         FROM user AS u
         JOIN user_meeting AS um USING (user_id)
-        WHERE um.meeting_id = ?
+        WHERE um.meeting_id = ? AND u.active
     } )->run( $self->id )->all({});
 }
 
@@ -109,9 +110,26 @@ sub vote ( $self, $user, $params ) {
     } )->run( to_json($info), $user->id, $self->id );
 }
 
+sub unvote ( $self, $user, $params ) {
+    return unless ( $self->is_active );
+
+    my $info = from_json( $self->dq->sql( q{
+        SELECT info FROM user_meeting WHERE user_id = ? AND meeting_id = ?
+    } )->run( $user->id, $self->id )->value // '{}' );
+
+    delete $info->{votes}{ $params->{motion} };
+
+    $self->dq->sql( q{
+        UPDATE user_meeting SET info = ? WHERE user_id = ? AND meeting_id = ?
+    } )->run( to_json($info), $user->id, $self->id );
+}
+
 sub votes ( $self, $user ) {
     return from_json( $self->dq->sql( q{
-        SELECT info FROM user_meeting WHERE user_id = ? AND meeting_id = ?
+        SELECT um.info
+        FROM user_meeting AS um
+        JOIN user AS u
+        WHERE u.user_id = ? AND um.meeting_id = ? AND u.active
     } )->run( $user->id, $self->id )->value // '{}' )->{votes};
 }
 
@@ -149,8 +167,6 @@ CBQ::Model::Meeting
 =head1 DESCRIPTION
 
 This class is the model for meeting objects.
-
-=head1 EXTENDED METHOD
 
 =head1 OBJECT METHODS
 
@@ -195,6 +211,10 @@ Create a motion for the meeting.
 =head2 vote
 
 Vote on a motion of the meeting.
+
+=head2 unvote
+
+Remove vote on a motion of the meeting.
 
 =head2 votes
 

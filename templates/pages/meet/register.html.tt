@@ -1,0 +1,356 @@
+[%
+    page.title = 'Meet Registration';
+    IF meet;
+        page.vue = 1;
+        page.js.module.push('register');
+        page.js.defer.push('util/memo');
+    END;
+%]
+
+<h1>[% page.title %]: [% meet.name.replace( '</?p>', '' ) %]</h1>
+
+[% IF NOT meet %]
+    <p>There doesn't appear to be an upcoming meet scheduled.</p>
+[% ELSE %]
+    [% PROCESS meet_info.html.tt %]
+
+    <div id="register" v-cloak>
+        <form>
+            <fieldset class="left">
+                <legend>Your Personal Registration</legend>
+                <p>
+                    Are you <i>personally</i> attending this meet?
+                    <template v-if="can_edit">
+                        <label><input type="radio" value="1" v-model="reg.user.attend"> Yes</label>
+                        <label><input type="radio" value="0" v-model="reg.user.attend"> No</label>
+                    </template>
+                    <template v-else>
+                        <b>{{ ( reg.user.attend == 1 ) ? 'Yes' : 'No' }}</b>
+                    </template>
+                </p>
+
+                <template v-if="reg.user.attend == 1">
+                    <fieldset class="left">
+                        <legend>Your Meet Roles</legend>
+                        <p>
+                            <template v-if="can_edit">
+                                <label v-for="role in roles">
+                                    <input type="checkbox" v-bind:value="role" v-model="reg.user.roles">
+                                    {{ role }}
+                                </label>
+                            </template>
+                            <template v-else>
+                                <ul><li v-for="role in roles">{{ reg.user.role }}</li></ul>
+                            </template>
+                        </p>
+                    </fieldset>
+
+                    <fieldset class="left">
+                        <legend>
+                            Driving
+                            <span v-if="meet.host.housing"> and Housing</span>
+                            <span v-if="meet.host.lunch"> and Lunch</span>
+                        </legend>
+                        <p>
+                            Are you driving a vehicle you could use to transport passengers to a host home?
+                            <template v-if="can_edit">
+                                <label><input type="radio" value="1" v-model="reg.user.drive"> Yes</label>
+                                <label><input type="radio" value="0" v-model="reg.user.drive"> No</label>
+                            </template>
+                            <template v-else>
+                                <b>{{ ( reg.user.drive == 1 ) ? 'Yes' : 'No' }}</b>
+                            </template>
+                        </p>
+
+                        <p v-if="meet.host.housing">
+                            Do you need overnight housing?
+                            <template v-if="can_edit">
+                                <label><input type="radio" value="1" v-model="reg.user.housing"> Yes</label>
+                                <label><input type="radio" value="0" v-model="reg.user.housing"> No</label>
+                            </template>
+                            <template v-else>
+                                <b>{{ ( reg.user.housing == 1 ) ? 'Yes' : 'No' }}</b>
+                            </template>
+                        </p>
+
+                        <p v-if="meet.host.lunch">
+                            Would you like host-provided lunch?
+                            <template v-if="can_edit">
+                                <label><input type="radio" value="1" v-model="reg.user.lunch"> Yes</label>
+                                <label><input type="radio" value="0" v-model="reg.user.lunch"> No</label>
+                            </template>
+                            <template v-else>
+                                <b>{{ ( reg.user.lunch == 1 ) ? 'Yes' : 'No' }}</b>
+                            </template>
+                        </p>
+                    </fieldset>
+                </template>
+            </fieldset>
+        </form>
+
+        <div v-if="cant_register_teams">
+            <p>
+                Only coaches are allowed to register quizzers and teams. If you
+                are a coach, select the coach role above or add "Coach" to your
+                <a v-bind:href="urls.user_edit">account profile</a>.
+            </p>
+        </div>
+        <div v-else v-for="( org, org_index ) in reg.orgs">
+            <h2>{{ org.name }} ({{ org.acronym }})</h2>
+
+            <h3>Quizzers from {{ org.name }}</h3>
+
+            <p>
+                Use this section to provide quizzer and team registration
+                information only. Please provide as much information per quizzer
+                as possible. (Don't include non-quizzer registration information
+                here.)
+            </p>
+
+            <p v-if="org.teams.length == 0">
+                There are currently no quizzers registered from {{ org.name }}.
+            </p>
+            <p v-else>
+                The following is the quizzer registration data for {{ org.name }}:
+            </p>
+
+            <ul class="show_if_small" v-if="org.teams.length">
+                <li><b>Rk:</b> Rookie</li>
+                <li><b>At:</b> Attend</li>
+                <li v-if="meet.host.housing"><b>Hs:</b> House</li>
+                <li v-if="meet.host.lunch"><b>Ln:</b> Lunch</li>
+            </ul>
+
+            <div v-for="( team, team_index ) in org.teams">
+                <h4>{{ org.acronym }} {{ team_index + 1 }}</h4>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th v-if="can_edit"></th>
+                            <th>Name</th>
+                            <th>Bible</th>
+                            <th>M/F</th>
+                            <th>
+                                <span class="hide_if_small">Rookie</span>
+                                <span class="show_if_small">Rk</span>
+                            </th>
+                            <th>
+                                <span class="hide_if_small">Attend</span>
+                                <span class="show_if_small">At</span>
+                            </th>
+                            <th v-if="meet.host.housing">
+                                <span class="hide_if_small">House</span>
+                                <span class="show_if_small">Hs</span>
+                            </th>
+                            <th v-if="meet.host.lunch">
+                                <span class="hide_if_small">Lunch</span>
+                                <span class="show_if_small">Ln</span>
+                            </th>
+                            <th v-if="can_edit"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="( quizzer, person_index ) in team"
+                            v-bind:class="{ inactive: ! quizzer.attend }"
+                        >
+                            <td v-if="can_edit">
+                                <span class="material-symbols-outlined inline"
+                                    v-on:click="reorder( -1, org_index, team_index, person_index )"
+                                    >arrow_upward</span>
+                                <span class="material-symbols-outlined inline"
+                                    v-on:click="reorder( 1, org_index, team_index, person_index )"
+                                    >arrow_downward</span>
+                            </td>
+                            <td>
+                                <template v-if="can_edit">
+                                    <input type="text" name="name" v-model="quizzer.name">
+                                </template>
+                                <template v-else>
+                                    {{ quizzer.name }}
+                                </template>
+                            </td>
+                            <td>
+                                <template v-if="can_edit">
+                                    <select name="bible" v-model="quizzer.bible">
+                                        <option v-for="bible in bibles" v-bind:value="bible"
+                                            >{{ bible }}</option>
+                                    </select>
+                                </template>
+                                <template v-else>
+                                    {{ quizzer.bible }}
+                                </template>
+                            </td>
+                            <td>
+                                <template v-if="can_edit">
+                                    <select name="m_f" v-model="quizzer.m_f">
+                                        <option>M</option>
+                                        <option>F</option>
+                                    </select>
+                                </template>
+                                <template v-else>
+                                    {{ quizzer.m_f }}
+                                </template>
+                            </td>
+                            <td class="center">
+                                <template v-if="can_edit">
+                                    <input type="checkbox" v-model="quizzer.rookie">
+                                </template>
+                                <template v-else>
+                                    {{ ( quizzer.rookie ) ? "Yes" : "No" }}
+                                </template>
+                            </td>
+                            <td class="center">
+                                <template v-if="can_edit">
+                                    <input type="checkbox" v-model="quizzer.attend">
+                                </template>
+                                <template v-else>
+                                    {{ ( quizzer.attend ) ? "Yes" : "No" }}
+                                </template>
+                            </td>
+                            <td v-if="meet.host.housing" class="center">
+                                <template v-if="can_edit">
+                                    <input type="checkbox" v-model="quizzer.housing"
+                                        v-bind:disabled="! quizzer.attend">
+                                </template>
+                                <template v-else>
+                                    {{ ( quizzer.housing ) ? "Yes" : "No" }}
+                                </template>
+                            </td>
+                            <td v-if="meet.host.lunch" class="center">
+                                <template v-if="can_edit">
+                                    <input type="checkbox" v-model="quizzer.lunch"
+                                        v-bind:disabled="! quizzer.attend">
+                                </template>
+                                <template v-else>
+                                    {{ ( quizzer.lunch ) ? "Yes" : "No" }}
+                                </template>
+                            </td>
+                            <td v-if="can_edit">
+                                <span class="material-symbols-outlined inline"
+                                    v-on:click="delete_quizzer( org_index, team_index, person_index )"
+                                    >delete</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <caption v-if="can_edit" align="bottom">
+                        <button v-on:click="add_quizzer(team)">Add a Quizzer</button>
+                    </caption>
+                </table>
+            </div>
+            <p v-if="can_edit">
+                <button v-on:click="add_team(org)">Add a Team</button>
+            </p>
+
+            <h3>Other Non-Quizzers from {{ org.acronym }}</h3>
+
+            <p>
+                Use this section to provide registration information for any
+                non-you non-quizzers. Please coordinate with these non-quizzers
+                to ensure there won't be duplicate registrations for them.
+                that will appear on the
+                <a v-bind:href="urls.meet_data">Quiz Meet Registration Data</a>
+                page.
+            </p>
+
+            <ul class="show_if_small" v-if="org.nonquizzers.length">
+                <li><b>Rk:</b> Rookie</li>
+                <li><b>At:</b> Attend</li>
+                <li v-if="meet.host.housing"><b>Hs:</b> House</li>
+                <li v-if="meet.host.lunch"><b>Ln:</b> Lunch</li>
+            </ul>
+
+            <table v-if="org.nonquizzers.length">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>
+                            <span class="hide_if_small">Attend</span>
+                            <span class="show_if_small">At</span>
+                        </th>
+                        <th v-if="meet.host.housing">
+                            <span class="hide_if_small">House</span>
+                            <span class="show_if_small">Hs</span>
+                        </th>
+                        <th v-if="meet.host.lunch">
+                            <span class="hide_if_small">Lunch</span>
+                            <span class="show_if_small">Ln</span>
+                        </th>
+                        <th v-if="can_edit"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="( nonquizzer, person_index ) in org.nonquizzers"
+                        v-bind:class="{ inactive: ! nonquizzer.attend }"
+                    >
+                        <td>
+                            <template v-if="can_edit">
+                                <input type="text" name="name" v-model="nonquizzer.name">
+                            </template>
+                            <template v-else>
+                                {{ nonquizzer.name }}
+                            </template>
+                        </td>
+                        <td class="center">
+                            <template v-if="can_edit">
+                                <input type="checkbox" v-model="nonquizzer.attend">
+                            </template>
+                            <template v-else>
+                                {{ ( nonquizzer.attend ) ? "Yes" : "No" }}
+                            </template>
+                        </td>
+                        <td class="center" v-if="meet.host.housing">
+                            <template v-if="can_edit">
+                                <input type="checkbox" v-model="nonquizzer.housing">
+                            </template>
+                            <template v-else>
+                                {{ ( nonquizzer.housing ) ? "Yes" : "No" }}
+                            </template>
+                        </td>
+                        <td class="center" v-if="meet.host.lunch">
+                            <template v-if="can_edit">
+                                <input type="checkbox" v-model="nonquizzer.lunch">
+                            </template>
+                            <template v-else>
+                                {{ ( nonquizzer.lunch ) ? "Yes" : "No" }}
+                            </template>
+                        </td>
+                        <td v-if="can_edit">
+                            <span class="material-symbols-outlined inline"
+                                v-on:click="delete_nonquizzer( org_index, person_index )"
+                                >delete</span>
+                        </td>
+                    </tr>
+                </tbody>
+                <caption align="bottom" v-if="can_edit">
+                    <button v-on:click="add_nonquizzer(org_index)">Add a Non-Quizzer</button>
+                </caption>
+            </table>
+            <p v-else><button v-on:click="add_nonquizzer(org_index)">Add a Non-Quizzer</button></p>
+        </div>
+
+        <form>
+            <fieldset class="notes">
+                <legend>Registration Notes and/or Requests</legend>
+
+                <template v-if="can_edit">
+                    <textarea v-model="reg.notes"></textarea>
+                </template>
+                <template v-else>
+                    <b>{{ reg.notes }}</b>
+                </template>
+            </fieldset>
+        </form>
+
+        <div v-if="can_edit && changed">
+            <h2>Save Registration Data</h2>
+            <p>
+                You can save registration data as many times as you'd like up until
+                the deadline.
+            </p>
+            <p>
+                <button v-on:click="save_registration" class="colored">Save Registration Data</button>
+            </p>
+        </div>
+    </div>
+[% END %]

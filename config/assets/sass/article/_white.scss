@@ -6,6 +6,7 @@ article {
         border-radius   : 1rem;
         text-align      : center;
         padding         : 2rem 1rem 1rem 1rem;
+        border          : 1px solid colors.$lines;
 
         div.flex_container {
             display        : flex;

@@ -28,6 +28,24 @@ article {
     }
 }
 
-span.inline {
-    vertical-align: bottom;
+span {
+    &.inline {
+        vertical-align: bottom;
+    }
+
+    &.middle {
+        vertical-align: middle;
+    }
+
+    &.size {
+        font-size: 1em;
+    }
+
+    &.margin {
+        margin-left: 1.125em;
+    }
+}
+
+abbr {
+    border: none;
 }

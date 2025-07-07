@@ -1,6 +1,7 @@
 package CBQ::Control::Main;
 
 use exact -conf, 'Mojolicious::Controller';
+use CBQ::Model::Region;
 use Mojo::DOM;
 use Mojo::File 'path';
 use Omniframe::Class::Time;
@@ -9,20 +10,61 @@ sub index ($self) {
     $self->stash( title => conf->get( qw( docs home_title ) ) );
 }
 
-sub content ($self) {
-    $self->document(
-        conf->get( qw( docs dir ) ) . '/' . $self->stash('name'),
-        undef,
-        conf->get( qw( docs dir ) ) . '/',
-    );
+{
+    my $docs_dir = conf->get( qw( docs dir ) );
+    sub content ($self) {
+        my $docs_path = (
+            ( $self->stash->{req_info}{region} )
+                ? $self->stash->{req_info}{region}{path} . '/'
+                : ''
+        ) . $docs_dir . '/';
 
-    if ( $self->res->code and $self->res->code == 404 ) {
-        $self->stash( 'mojo.finished' => 0 );
-        $self->flash( memo => {
-            class   => 'error',
-            message => 'Unable to find the resource previously requested. Redirected to home page.',
-        } );
-        $self->redirect_to('/');
+        my $key = ( $self->stash->{req_info}{region} )
+            ? $self->stash->{req_info}{region}{key}
+            : undef;
+        my $trailing_slash = $self->req->url->path->trailing_slash;
+        my $hrefify        = sub ($href) {
+            return unless ($href);
+            return '//' . $self->stash('req_info')->{domain} . '/' . $href if ( $href =~ s|^\*/|| );
+            return if ( $self->stash->{req_info}{subdomain} );
+            return
+                ( $href =~ m|^/|      ) ? '/' . $key . $href :
+                ( not $trailing_slash ) ? $key . '/' . $href : undef;
+        };
+
+        $self->document(
+            $docs_path . $self->stash('name'),
+            sub ( $payload, $type ) {
+                if (
+                    ( $type eq 'md' or $type eq 'html' )
+                    and $self->stash->{req_info}{region}
+                ) {
+                    $payload =~ s|(\[[^\]]*\]\s*\()([^\)]*)(\))| $1 . ( $hrefify->($2) // $2 ) . $3 |ge
+                        if ( $type eq 'md' );
+
+                    if ( $payload =~ /</ ) {
+                        my $dom = Mojo::DOM->new($payload);
+                        $dom->find('a')->each( sub {
+                            if ( my $href = $hrefify->( $_->attr('href') ) ) {
+                                $_->attr( href => $href );
+                            }
+                        } );
+                        $payload = $dom->to_string;
+                    }
+                }
+                return $payload;
+            },
+            $docs_path,
+        );
+
+        if ( $self->res->code and $self->res->code == 404 ) {
+            $self->stash( 'mojo.finished' => 0 );
+            $self->flash( memo => {
+                class   => 'error',
+                message => 'Unable to find the resource previously requested. Redirected to home page.',
+            } );
+            $self->redirect_to('/');
+        }
     }
 }
 
@@ -58,6 +100,62 @@ sub iq ($self) {
     );
 }
 
+sub iq_rss ($self) {
+    $self->res->headers->content_type('application/rss+xml; charset=UTF-8');
+    $self->render(
+        data => path( conf->get( qw( config_app root_dir ) ) )->child( conf->get('iq_rss') )->slurp('UTF-8'),
+    );
+}
+
+sub cms_update ($self) {
+    my $result = CBQ::Model::Region->new->cms_update({
+        key    => $self->param('key')    || 1,
+        secret => $self->param('secret') || 1,
+        app    => $self->app,
+    });
+
+    $self->render(
+        status => ( ( $result->{success} ) ? 200 : 400 ),
+        json   => $result,
+    );
+}
+
+sub rules_change ($self) {
+    my @fields = qw(
+        current_rule
+        desired_rule_change
+        roi
+        tenents_and_architecture
+        hard_cases
+        taxonomy_level
+        steelman
+    );
+
+    $self->stash( $self->req->params->to_hash->%* );
+    my $fields_filled = grep { length( $self->param($_) ) } @fields;
+
+    if ( $fields_filled > 0 ) {
+        if ( $fields_filled != @fields ) {
+            $self->stash( memo => {
+                class   => 'error',
+                message => 'Submitted form was incomplete.',
+            } );
+        }
+        else {
+            Omniframe::Class::Email->new( type => 'rules_change' )->send({
+                to   => conf->get( qw( email from ) ),
+                data => $self->req->params->to_hash,
+            });
+
+            $self->flash( memo => {
+                class   => 'success',
+                message => 'Form submitted successfully.',
+            } );
+            $self->redirect_to('/');
+        }
+    }
+}
+
 1;
 
 =head1 NAME
@@ -82,6 +180,19 @@ Handler for everything under "/docs" served via the documents feeder.
 =head2 iq
 
 Handler for Inside Quizzing podcast page.
+
+=head2 iq_rss
+
+Handler for Inside Quizzing RSS feed.
+
+=head2 cms_update
+
+Webhook to update regional CMS content. Requires "key" (a region's acronym) and
+"secret" parameters. Returns result as JSON.
+
+=head2 rules_change
+
+Handler for rule change proposal submissions.
 
 =head1 INHERITANCE
 

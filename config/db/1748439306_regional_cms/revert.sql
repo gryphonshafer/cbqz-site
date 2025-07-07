@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS registration_org;
+DROP TABLE IF EXISTS registration;
+DROP TABLE IF EXISTS org_region;
+DROP TABLE IF EXISTS user_region;
+DROP TABLE IF EXISTS user_org;
+DROP TABLE IF EXISTS region;
+DROP TABLE IF EXISTS org;

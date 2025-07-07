@@ -7,6 +7,8 @@ $nav_line_height_multiple: 1.2;
 $nav_secondary_smoosh    : 2;
 
 nav {
+    z-index: 1000;
+
     ul {
         margin: 0;
     }

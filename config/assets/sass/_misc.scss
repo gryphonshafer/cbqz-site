@@ -1,0 +1,40 @@
+@use 'colors';
+
+div.current_next_meet {
+    background-color: colors.$background;
+    border          : 1px solid colors.$lines;
+    padding         : 0 1.25em;
+    border-radius   : 0.4em;
+    width           : fit-content;
+}
+
+div.box {
+    background-color: colors.$background;
+    border          : 1px solid colors.$lines;
+    padding         : 0.5em;
+    border-radius   : 0.5em;
+    width           : fit-content;
+
+    p:first-of-type {
+        margin-top: 0;
+    }
+
+    p:last-of-type {
+        margin-bottom: 0;
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+form.rules_change {
+    label {
+        margin-bottom: 1em;
+    }
+
+    textarea {
+        width : calc( 100% - 1em );
+        height: 10em;
+    }
+}

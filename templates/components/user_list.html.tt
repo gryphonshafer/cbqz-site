@@ -1,0 +1,95 @@
+[%
+    page.js.defer.push('user_list');
+    PROCESS macros;
+
+    FOR this_user IN users;
+        this_user.roles = [];
+        FOR role IN this_user.info.roles;
+            this_role = role | html;
+            this_user.roles.push(this_role);
+        END;
+    END;
+%]
+
+<div class="user_list">
+    <form>
+        <fieldset class="left">
+            <legend>Filter by Roles</legend>
+            [% FOR role IN roles %]
+                <label>
+                    <input type="checkbox" name="[% role %]">
+                    [% role %]
+                </label>
+            [% END %]
+        </fieldset>
+        <fieldset class="left">
+            <legend>Render Display Style</legend>
+            <label>
+                <input type="checkbox" name="simplified_emails_list">
+                Simplified Emails List
+            </label>
+        </fieldset>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Roles</th>
+                <th>Last Login</th>
+            </tr>
+        </thead>
+        <tbody>
+            [% FOR this_user IN users %]
+                <tr data-roles="[% this_user.roles.join('|') %]">
+                    <td>
+                        [% IF user.is_admin AND c.session.flash.become %]
+                            <a href="[% c.url_for('/user/become').query( user => this_user.user_id ) %]"><span
+                                class="material-symbols-outlined inline">manage_accounts</span></a>
+                        [% END %]
+                        [% this_user.first_name %] [% this_user.last_name %]
+                    </td>
+                    <td>
+                        [%
+                            mailto =
+                                this_user.first_name _ ' ' _
+                                this_user.last_name _ ' ' _
+                                '<' _ this_user.email _ '>'
+                        %]
+                        <a href="mailto:[% mailto %]">[% this_user.email %]</a>
+                    </td>
+                    <td>
+                        <a href="tel:[% this_user.phone %]">[%
+                            this_user.phone.substr( 0, 3 ) _ '-' _
+                            this_user.phone.substr( 3, 3 ) _ '-' _
+                            this_user.phone.substr( 6, 4 )
+                        %]</a>
+                    </td>
+                    <td>
+                        [% this_user.info.roles.join(', ') %]
+                    </td>
+                    <td>
+                        [%
+                            ( this_user.last_login )
+                                ? time( this_user.last_login, '%b %-d, %Y' )
+                                : ''
+                        %]
+                    </td>
+                </tr>
+            [% END %]
+        </tbody>
+    </table>
+
+    <div class="hidden box">
+        [% FOR this_user IN users %]
+            <span data-roles="[% this_user.roles.join('|') %]">
+                [% this_user.first_name %]
+                [% this_user.last_name %]
+                &lt;<a href="mailto:[% this_user.email %]">[% this_user.email %]</a>&gt;
+                [% UNLESS loop.last %]<br>[% END %]
+            </span>
+        [% END %]
+    </div>
+</div>

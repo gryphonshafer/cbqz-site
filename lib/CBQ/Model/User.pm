@@ -108,6 +108,78 @@ sub login ( $self, $email, $passwd ) {
     return $self;
 }
 
+sub profile ( $self, $params ) {
+    if ( $self->id ) {
+        $self->dq->begin_work;
+
+        if ( $params->{dormant} and $params->{dormant} eq 'on' ) {
+            $self->data->{info}{dormant} = 1;
+        }
+        else {
+            delete $self->data->{info}{dormant};
+        }
+
+        if ( ref $params->{roles} eq 'ARRAY' and $params->{roles}->@* ) {
+            $self->data->{info}{roles} = $params->{roles};
+        }
+        else {
+            delete $self->data->{info}{roles};
+        }
+
+        $self->save;
+
+        for my $type ( qw( region org ) ) {
+            if ( $params->{ $type . 's' } ) {
+                $params->{ $type . 's' } = [ $params->{ $type . 's' } ]
+                    unless ( ref $params->{ $type . 's' } eq 'ARRAY' );
+
+                my $ids = $self->dq
+                    ->get( 'user_' . $type, [ $type . '_id' ], { user_id => $self->id } )
+                    ->run->column;
+
+                $self->dq->add( 'user_' . $type, { user_id => $self->id, $type . '_id' => $_ } ) for (
+                    grep {
+                        my $id = $_;
+                        not grep { $id == $_ } $ids->@*;
+                    } $params->{ $type . 's' }->@*
+                );
+
+                $self->dq->rm( 'user_' . $type, { user_id => $self->id, $type . '_id' => $_ } ) for (
+                    grep {
+                        my $id = $_;
+                        not grep { $id == $_ } $params->{ $type . 's' }->@*;
+                    } $ids->@*
+                );
+            }
+        }
+
+        $self->dq->commit;
+    }
+    return $self;
+}
+
+sub org_and_region_ids ($self) {
+    return unless ( $self->id );
+    return {
+        orgs => [
+            $self->dq->sql(q{
+                SELECT uo.org_id
+                FROM user_org AS uo
+                JOIN org AS o USING (org_id)
+                WHERE uo.user_id = ? AND o.active
+            })->run( $self->id )->column
+        ],
+        regions => [
+            $self->dq->sql(q{
+                SELECT ur.region_id
+                FROM user_region AS ur
+                JOIN region AS r USING (region_id)
+                WHERE ur.user_id = ? AND r.active
+            })->run( $self->id )->column
+        ],
+    };
+}
+
 sub is_qualified_delegate ($self) {
     return 1 if (
         $self->dq->sql( q{
@@ -131,6 +203,18 @@ sub is_qualified_delegate ($self) {
     } )->run( $self->id, 4 )->value;
 
     return ( $attendance >= 3 ) ? 1 : 0;
+}
+
+sub add_org ( $self, $org_id )  {
+    return unless ( $self->id );
+    $self->dq->add( 'user_org', { user_id => $self->id, org_id => $org_id } );
+    return;
+}
+
+sub is_admin ( $self, $email = undef ) {
+    return unless ( $email or $self->id );
+    $email //= $self->data->{email};
+    return ( grep { $_ eq $email } ( conf->get('administrators') // [] )->@* ) ? 1 : 0;
 }
 
 1;
@@ -228,10 +312,31 @@ to find and login the user. If successful, it will return a loaded user object.
 
     my $logged_in_user = CBQ::Model::User->new->login( 'username', 'passwd' );
 
+=head2 profile
+
+This method saves additional profile data for the user account, such as roles,
+dormant status, organizations, and/or regions. It expects a hashref of parameter
+data. Internally, this method calls C<save> on the user object.
+
+=head2 org_and_region_ids
+
+Returns a hashref with keys C<orgs> and C<regions>, each containing an arrayref
+of IDs of these that the user is associated with.
+
 =head2 is_qualified_delegate
 
 Returns true if the user is a qualified delegate as defined by attendance
 (viewing) of 3 of the last 4 meetings.
+
+=head2 add_org
+
+Given an organization ID, will subscribe/add the user to that organization.
+
+=head2 is_admin
+
+Will return a boolean if the loaded user's email is listed as one of the
+C<administrators> in the configuration. Alternatively, you can pass in an
+explicit email address to check.
 
 =head1 WITH ROLE
 

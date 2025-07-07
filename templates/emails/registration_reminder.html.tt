@@ -1,0 +1,98 @@
+<title>CBQ: Registration Reminder</title>
+
+<p>Greetings [% user.first_name %],</p>
+
+<p>
+    This is a registration data check reminder email sent prior to the
+    registration deadline for the following meet:
+</p>
+
+<p>
+    <b>Meet Name:</b> [% meet.name.replace( '</?p>', '' ) %]
+    <br>
+    <b>Region:</b> [% meet.region.name %] ([% meet.region.key.upper %])
+</p>
+
+[% PROCESS meet_info.html.tt %]
+
+<p>
+    Please review the following data. If it is correct, you don't need to do
+    anything. If it is incorrect, please update it via the
+    [% url = 'https://' _ meet.region.key _ '.cbqz.org/meet/register' %]
+    <b><a href="[% url %]">Meet Registration</a></b>
+    web page.
+    <i>(<a href="[% url %]">[% url %]</a>)</i>
+    The below will be your registration data should you not make any changes
+    prior to the deadline. If you have any questions about anything, please
+    email:
+    <a href="mailto:[% from_email %]">[% from_email %]</a>
+</p>
+
+[% FOR org IN reg_data.orgs %]
+    [% IF org.teams.size OR org.nonquizzers.size %]
+        <p><b>[% org.name %] ([% org.acronym %])</b></p>
+        <ul>
+            [% IF org.teams.size %]
+                <li>
+                    <i>Teams</i>
+                    <ul>
+                        [% FOR team IN org.teams %]
+                            <li>
+                                <b>[% org.acronym %] [% loop.count %]</b>
+                                <ul>
+                                    [% FOR quizzer IN team %]
+                                        <li>
+                                            <b>[% quizzer.name %]</b>
+                                            <ul>
+                                                <li><i>Bible:</i>  [% quizzer.bible  %]</li>
+                                                <li><i>M/F:</i>    [% quizzer.m_f    %]</li>
+                                                <li><i>Rookie:</i> [% quizzer.rookie ? 'Yes' : 'No' %]</li>
+                                                [% IF meet.host.housing %]<li><i>House:</i> [%
+                                                    quizzer.housing ? 'Yes' : 'No' %]</li>[% END %]
+                                                [% IF meet.host.lunch   %]<li><i>Lunch:</i> [%
+                                                    quizzer.lunch ? 'Yes' : 'No' %]</li>[% END %]
+                                            </ul>
+                                        </li>
+                                    [% END %]
+                                </ul>
+                            </li>
+                        [% END %]
+                    </ul>
+                </li>
+            [% END %]
+            [% IF org.nonquizzers.size %]
+                <li>
+                    <i>Other Non-Quizzers</i>
+                    <ul>
+                        [% FOR nonquizzer IN org.nonquizzers %]
+                            <li>
+                                <b>[% nonquizzer.name %]</b>
+                                [% IF meet.host.housing OR meet.host.lunch %]
+                                    <ul>
+                                        [% IF meet.host.housing %]<li><i>House:</i> [%
+                                            nonquizzer.housing ? 'Yes' : 'No' %]</li>[% END %]
+                                        [% IF meet.host.lunch   %]<li><i>Lunch:</i> [%
+                                            nonquizzer.lunch ? 'Yes' : 'No' %]</li>[% END %]
+                                    </ul>
+                                [% END %]
+                            </li>
+                        [% END %]
+                    </ul>
+                </li>
+            [% END %]
+        </ul>
+    [% END %]
+[% END %]
+
+<p><b>Registrant (You)</b></p>
+<ul>
+    [% IF reg_data.user.roles.size %]<li><i>Roles:</i> [% reg_data.user.roles.sort.join(', ') %]</li>[% END %]
+    <li><i>Drive:</i> [% reg_data.user.drive ? 'Yes' : 'No' %]</li>
+    [% IF meet.host.housing %]<li><i>House:</i> [% reg_data.user.housing ? 'Yes' : 'No' %]</li>[% END %]
+    [% IF meet.host.lunch   %]<li><i>Lunch:</i> [% reg_data.user.lunch   ? 'Yes' : 'No' %]</li>[% END %]
+</ul>
+
+[% IF reg_data.notes %]
+    <p><b>Notes</b></p>
+    [% reg_data.notes %]
+[% END %]

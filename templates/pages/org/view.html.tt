@@ -1,0 +1,42 @@
+[% page.title = 'Organization: ' _ org.data.acronym %]
+
+<h1>Organization: [% org.data.acronym %]</h1>
+
+<ul>
+    <li><b>Name:</b> [% org.data.name %]</li>
+    <li><b>Acronym:</b> [% org.data.acronym %]</li>
+    <li>
+        <b>Address:</b>
+        <a href="https://google.com/maps/dir//[% org.org_address | url %]"
+            >[% org.data.address %]</a>
+    </li>
+
+    [% IF regions AND regions.size %]
+        [% IF regions.size == 1 %]
+            <li><b>Region:</b> [% regions.0.name %] ([% regions.0.acronym %])</li>
+        [% ELSE %]
+            <li><b>Regions:</b>
+                <ul>
+                    [% FOR region IN regions %]
+                        <li>[% region.name %] ([% region.acronym %])</li>
+                    [% END %]
+                </ul>
+            </li>
+        [% END %]
+    [% ELSE %]
+        <li><b>Region:</b> [% org.data.acronym %] not associated with any region</li>
+    [% END %]
+</ul>
+
+[% IF users AND users.size %]
+    <h2>People Associated with [% org.data.acronym %]</h2>
+
+    [% PROCESS user_list.html.tt, users %]
+
+    [% IF user.org_and_region_ids.orgs.grep( org.id ).size %]
+        <p><a class="button colored" href="[% c.url_for( path_part_prefix _ '/org/edit/' _ org.id ) %]"
+            >Edit Team Organization</a></p>
+    [% END %]
+[% ELSE %]
+    <p>No people are associated with this organization.
+[% END %]

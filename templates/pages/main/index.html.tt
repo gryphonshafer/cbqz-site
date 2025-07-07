@@ -70,7 +70,7 @@
         collaboration, fellowship, and mutual encouragement.
     </p>
     <p>
-        At its core, Quizzing has always been about writing God's Word on
+        At its core, Quizzing is about writing God's Word on
         hearts. By appealing to the transformational power of Scripture,
         Quizzing is the catalyst that changes many lives across the world.
         Quizzing thrives in several countries beginning with its origin in
@@ -81,7 +81,16 @@
         Bible Quizzing is a powerful ministry that claims God's promise
         that no word of God will return empty.
     </p>
-    <!-- <button>Connect to Learn More</button> -->
+</div>
+
+<div class="youtube">
+    <iframe
+        src="https://www.youtube.com/embed/4ZGv3KYFOso"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+
+    <a href="mailto:q@cbqz.org" class="button">Contact Us to Learn More
+        <span class="material-symbols-outlined inline">mail</span></a>
 </div>
 
 <div class="counts">

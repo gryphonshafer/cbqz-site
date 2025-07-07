@@ -1,0 +1,51 @@
+[%
+    USE date;
+
+    IF current_season;
+        season_year =
+            date.format( current_season.start, '%Y' ) _ '-' _
+            date.format( current_season.stop, '%Y' );
+
+        season_name = current_season.name.replace( '</?p>', '' ).replace( '\s+$', '' );
+
+        page.title = season_year _ ' Season Schedule';
+    ELSE;
+        page.title = 'Season Schedule';
+    END;
+%]
+
+[% IF current_season %]
+    <h1>[% page.title %]: [% season_name %]</h1>
+
+    <p>
+        The following are the dates and material ranges for meets in the
+        [% season_year %] [% season_name %] season.
+    </p>
+
+    [% FOR meet IN current_season.meets %]
+        <div class="[% IF meet.is_current_next_meet %]current_next_meet[% END %]">
+            <h5>[% meet.name %]</h5>
+
+            [% PROCESS meet_info.html.tt %]
+
+            [% IF meet.is_current_next_meet AND user %]
+                <p class="right">
+                    [% UNLESS meet.registration_closed %]
+                        <a href="[% c.url_for( path_part_prefix _ '/meet/register' ) %]"
+                            class="button colored">Submit Registration</a>
+                    [% END %]
+                    [% IF meet.deadline %]
+                        <a href="[% c.url_for( path_part_prefix _ '/meet/data' ) %]"
+                            class="button">View Meet Data</a>
+                    [% END %]
+                </p>
+            [% END %]
+        </div>
+    [% END %]
+[% ELSE %]
+    <h1>[% page.title %]</h1>
+    <p>
+        There doesn't appear to be a current season from which to render a
+        meet schedule.
+    </p>
+[% END %]

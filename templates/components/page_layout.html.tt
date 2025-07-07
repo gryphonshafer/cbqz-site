@@ -1,21 +1,55 @@
-[% page.rss = c.url_for('/iq.rss') %]
+[%
+    IF iq_rss;
+        page.rss = c.url_for('/iq.rss');
+    END;
+%]
 
 <div id="logo">
-    <img src="[% c.url_for('/logo/source.svg') %]" width="32" height="32">
-    <span class="c">Christian</span>
-    <span class="bq">Bible Quizzing</span>
+    <a href="[% c.url_for( req_info.domain ? '//' _ req_info.domain : '/' ) %]">
+        <img src="[% c.url_for('/logo/source.svg') %]" width="32" height="32">
+    </a>
+    <a href="[% c.url_for( req_info.domain ? '//' _ req_info.domain : '/' ) %]">
+        <span class="c">Christian</span>
+        <span class="bq">Bible Quizzing</span>
+    </a>
     <a href="#menu" class="toggle-menu"><span class="material-symbols-outlined">menu</span></a>
 </div>
 
 <header>
-    <a href="[% c.url_for('/about_CBQ.md') %]"
-        class="button colored">About CBQ</a>
-    <a href="mailto:q@cbqz.org" class="button">Contact
-        <span class="material-symbols-outlined inline">mail</span></a>
-    <a href="[% c.url_for('/slack') %]" class="button">Join Slack
-        <span class="material-symbols-outlined inline">forum</span></a>
-    <a href="[% c.url_for('/FAQs.md') %]"
-        class="button colored">FAQs</a>
+    [% UNLESS user %]
+        <a href="[% c.url_for('/about_CBQ.md') %]"
+            class="button colored">About CBQ</a>
+        <a href="mailto:q@cbqz.org" class="button">Contact
+            <span class="material-symbols-outlined inline">mail</span></a>
+        <a href="[% c.url_for('/slack') %]" class="button">Slack
+            <span class="material-symbols-outlined inline">forum</span></a>
+        <a href="[% c.url_for('/FAQs.md') %]"
+            class="button colored">FAQs</a>
+
+        <div class="login">
+            <a href="[% c.url_for( path_part_prefix _ '/user/sign_up' ) %]">Sign-Up</a>
+            or
+            <a href="[% c.url_for('/user/login') %]">Login</a>
+        </div>
+    [% ELSE %]
+        [% UNLESS req_info.region %]
+            <a href="[% c.url_for( '/user/tools') %]" class="button colored">Tools</a>
+        [% ELSE %]
+            <a href="[% c.url_for( path_part_prefix _ '/meet/schedule' ) %]"
+                class="button colored">Meets</a>
+        [% END %]
+
+        <a href="[% c.url_for( path_part_prefix _ '/user/list' ) %]" class="button">People
+            <span class="material-symbols-outlined inline">group</span></a>
+
+        <a href="[% c.url_for( path_part_prefix _ '/org/list' ) %]" class="button">Orgs
+            <span class="material-symbols-outlined inline">hive</span></a>
+
+        <a href="[% c.url_for('/slack') %]" class="button">Slack
+            <span class="material-symbols-outlined inline">forum</span></a>
+
+        <div class="login">Logged in as: [% user.data.email %]</div>
+    [% END %]
 </header>
 
 <article>
@@ -29,7 +63,27 @@
             [% FOREACH node IN docs %]
                 <li>
                     [% IF node.folder OR node.name %]
-                        [% IF node.href %]<a href="[% c.url_for( node.href ) %]"
+                        [%
+                            home_domain = 0;
+                            this_href   = '';
+
+                            IF node.href.substr( 0, 1 ) == '*';
+                                home_domain = 1;
+                                this_href   =
+                                    '//' _
+                                    ( req_info.domain || c.req.url.to_abs.host_port ) _
+                                    node.href.substr(1);
+                            ELSIF node.href;
+                                this_href = ( node.subdomain AND req_info.domain )
+                                    ? '//' _ node.subdomain _ '.' _ req_info.domain
+                                    : (
+                                        ( req_info.region AND req_info.path_part )
+                                            ? '../../' _ req_info.region.key
+                                            : ''
+                                    ) _ node.href;
+                            END;
+                        %]
+                        [% IF this_href %]<a href="[% c.url_for(this_href) %]"
                             title="[% node.title OR node.folder OR node.name %]"
                             [% IF c.url_for( node.href ) == c.req.url.to_abs.path %]
                                 class="current"
@@ -37,6 +91,9 @@
                         >[% END %][%
                             node.folder OR node.name
                         %][% IF node.href %]</a>[% END %]
+                        [% IF home_domain %]
+                            <span class="material-symbols-outlined inline size margin">reply</span>
+                        [% END %]
                     [% END %]
                     [% IF node.nodes %]
                         [% PROCESS nav docs = node.nodes %]
@@ -61,21 +118,21 @@
             <a href="https://www.facebook.com/Christian-Bible-Quizzing-111992838545191"><img
                 alt="Facebook"
                 src="[% c.url_for('/svg/facebook.svg') %]"></a>
-            <!--
-            <a href="[% c.url_for('/iq') %]"><img
-                alt="Inside Quizzing" class="rss"
-                src="[% c.url_for('/svg/rss.svg') %]"></a>
-            -->
+            [% IF iq_rss %]
+                <a href="[% c.url_for('/iq') %]"><img
+                    alt="Inside Quizzing" class="rss"
+                    src="[% c.url_for('/svg/rss.svg') %]"></a>
+            [% END %]
         </span>
         <span class="text_links">
             [% UNLESS user %]
-                <a href="[% c.url_for('/user/sign_up') %]">Sign-Up</a>
+                <a href="[% c.url_for( path_part_prefix _ '/user/sign_up' ) %]">Sign-Up</a>
                 or
                 <a href="[% c.url_for('/user/login') %]">Login</a>
             [% ELSE %]
-                <a href="[% c.url_for('/user/tools') %]">User Tools</a>
+                <a href="[% c.url_for( path_part_prefix _ '/user/tools' ) %]">Tools</a>
                 or
-                <a href="[% c.url_for('/user/logout') %]">Logout</a>
+                <a href="[% c.url_for( path_part_prefix _ '/user/logout' ) %]">Logout</a>
             [% END %]
         </span>
     </div>

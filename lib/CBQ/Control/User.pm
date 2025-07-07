@@ -3,6 +3,21 @@ package CBQ::Control::User;
 use exact -conf, 'Mojolicious::Controller';
 use CBQ::Model::User;
 use CBQ::Model::Meeting;
+use CBQ::Model::Org;
+use CBQ::Model::Region;
+
+sub _account_common ( $self, $usage = 'sign_up' ) {
+    $self->stash(
+        usage   => $usage,
+        roles   => conf->get('roles'),
+        regions => [ sort { $a->{name} cmp $b->{name} } CBQ::Model::Region->every_data ],
+        orgs    => CBQ::Model::Org->orgs(
+            ( $self->stash->{req_info}{region} ) ? $self->stash->{req_info}{region}{key}: undef
+        ),
+        ( ( $self->stash('user') ) ? ( org_and_region_ids => $self->stash('user')->org_and_region_ids ) : () ),
+    );
+    $self->render( template => 'user/account' );
+}
 
 sub sign_up ($self) {
     my %params = $self->req->params->to_hash->%*;
@@ -20,6 +35,7 @@ sub sign_up ($self) {
             my $user = CBQ::Model::User->new->create({ map { $_ => $params{$_} } @fields });
 
             if ( $user and $user->data ) {
+                $user->profile(\%params);
                 $user->send_email( 'verify_email', $self->url_for('/user/verify') );
 
                 my $email = {
@@ -42,7 +58,7 @@ sub sign_up ($self) {
                         ),
                     }
                 );
-                $self->redirect_to('/');
+                $self->redirect_to( $self->stash('path_part_prefix') . '/' );
             }
         }
         catch ($e) {
@@ -65,8 +81,7 @@ sub sign_up ($self) {
         }
     }
 
-    $self->stash( usage => 'sign_up' );
-    $self->render( template => 'user/account' );
+    $self->_account_common('sign_up');
 }
 
 sub edit ($self) {
@@ -77,7 +92,7 @@ sub edit ($self) {
     if ( $params{usage} and $params{usage} eq 'edit' ) {
         try {
             $self->stash('user')->data->{$_} = $params{$_} for ( grep { $params{$_} } @fields );
-            $self->stash('user')->save;
+            $self->stash('user')->profile(\%params);
 
             $self->flash(
                 memo => {
@@ -86,7 +101,7 @@ sub edit ($self) {
                 }
             );
 
-            $self->redirect_to('/user/tools');
+            $self->redirect_to( $self->stash('path_part_prefix') . '/' );
         }
         catch ($e) {
             $e =~ s/\s+at\s+(?:(?!\s+at\s+).)*[\r\n]*$//;
@@ -102,8 +117,7 @@ sub edit ($self) {
         }
     }
 
-    $self->stash( usage => 'edit' );
-    $self->render( template => 'user/account' );
+    $self->_account_common('edit');
 }
 
 sub verify ($self) {
@@ -239,17 +253,23 @@ sub logout ($self) {
     $self->redirect_to('/');
 }
 
-sub tools ($self) {
-    my $meeting = CBQ::Model::Meeting->new;
+sub list ($self) {
+    my $users  = CBQ::Model::User->new->every;
+    my $region = $self->stash->{req_info}{region};
+
+    $users = [ grep {
+        grep { $_ == $region->{id} } $_->org_and_region_ids->{regions}->@*
+    } @$users ] if ($region);
 
     $self->stash(
-        open_meetings => $meeting->open_meetings,
-        past_meetings => $meeting->past_meetings( $self->stash('user') ),
-        users         => [
+        roles => conf->get('roles'),
+        users => [
             sort {
                 $a->{first_name} cmp $b->{first_name} or
-                $a->{last_name} cmp $b->{last_name}
-            } CBQ::Model::User->new->every_data
+                $a->{last_name}  cmp $b->{last_name}
+            }
+            map { $_->data }
+            @$users
         ],
     );
 }
@@ -270,6 +290,30 @@ sub tools ($self) {
 
         return;
     }
+}
+
+sub become ($self) {
+    my $is_admin = $self->stash('user')->is_admin;
+    my $user_id  = $self->param('user');
+
+    unless ($user_id) {
+        $self->flash( become => 1 ) if ($is_admin);
+        $self->redirect_to('/user/list');
+    }
+    else {
+        $self->session(
+            user_id     => $user_id,
+            was_user_id => $self->stash('user')->id,
+        ) if ($is_admin);
+        $self->redirect_to('/');
+    }
+}
+
+sub unbecome ($self) {
+    if ( my $was_user_id = delete $self->session->{was_user_id} ) {
+        $self->session( user_id => $was_user_id );
+    }
+    $self->redirect_to('/');
 }
 
 1;
@@ -313,9 +357,17 @@ Handler for login.
 
 Handler for logout.
 
-=head2 tools
+=head2 list
 
-Handler for user tools.
+Handler for users list.
+
+=head2 become
+
+Become a user (if you are an administrator).
+
+=head2 unbecome
+
+Return to your original user if you are an administrator and became someone else.
 
 =head1 INHERITANCE
 

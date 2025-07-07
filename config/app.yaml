@@ -9,6 +9,11 @@ default:
             - gd824qfOpPOF6qUWya0QT0nU9U82JKVu
         session:
             cookie_name: cbq_site_session
+    template:
+        email:
+            include_path:
+                - templates/emails
+                - templates/components
     bcrypt:
         salt: 54XYZdnG4FjvcTJD
     crypt:
@@ -19,14 +24,58 @@ default:
         home_type : md
         home_title: Christian Bible Quizzing
         home_name : CBQ Home
-    iq_rss: ../iq/iq.rss
+    # iq_rss: ../iq/iq.rss
     email:
         from: Christian Bible Quizzing <q@cbqz.org>
     captcha:
         ttf: static/externals/google_fonts/fonts/poppins/poppins-v*-latin_latin-ext-700.ttf
-        x: 15
+        x  : 15
     min_passwd_length: 8
-    token_expiration: 86400 # 1 day
+    token_expiration : 86400 # 1 day
+    regional_cms:
+        path_suffix : ../regions
+        settings    : config
+        nav_position: 4
+    redirects:
+        /slack  : https://join.slack.com/t/biblequizzing/shared_invite/zt-dkkz0wlh-x3~NlagTgtdvT3m2jh~dig
+        /rules  : /CBQ_system/rule_book.md
+        /ioc    : /_ioc_2025.md
+        /ioc2025: /_ioc_2025.md
+    roles:
+        - Quizzer
+        - Coach
+        - Parent
+        - Official
+        - Regional Board
+        - Pastor
+        - Volunteer
+        - Spectator
+    registration:
+        deadline: 14
+        reminder: 7
+        roles:
+            - Coach
+            - Parent
+            - Official
+            - Volunteer
+            - Spectator
+        bibles:
+            - AKJV
+            - AMP
+            - BSB
+            - ESV
+            - HCSB
+            - HWP
+            - KJ21
+            - KJV
+            - NASB
+            - NASB5
+            - NIV
+            - NIV84
+            - NKJV
+            - NLT
+            - NRSVA
+            - RSV
 tauntaun:
     database:
         log:

@@ -32,7 +32,14 @@
         [% END %]
 
         [% IF votes AND votes.$motion %]
-            <p><i>You voted: [% votes.$motion %]</i></p>
+            <p><i>
+                You voted: [% votes.$motion %]
+                [% IF meeting.is_active %]
+                    (<a href="[%
+                        c.url_for( '/meeting/' _ meeting.id _ '/unvote' ).query( motion => motion )
+                    %]">Unvote</a>)
+                [% END %]
+            </i></p>
         [% ELSIF meeting.is_active AND user.is_qualified_delegate %]
             <p><i>
                 <b>Vote:</b>
