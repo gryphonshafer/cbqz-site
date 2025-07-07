@@ -2,6 +2,10 @@
     IF iq_rss;
         page.rss = c.url_for('/iq.rss');
     END;
+
+    IF NOT page.title OR page.title == 'Index';
+        page.title = ( req_info.region ) ? 'CBQ: ' _ req_info.region.name : 'Christian Bible Quizzing';
+    END;
 %]
 
 <div id="logo">
