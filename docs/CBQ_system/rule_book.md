@@ -1,19 +1,19 @@
 # Rule Book for Christian Bible Quizzing (CBQ)
 
-- Version: 1.5.1
-- Published: March 30, 2025
+- Version: 1.5.2
+- Published: July 7, 2025
 
-Bible Quizzing is a Christian sport in which teams of participants called _quizzers_ compete on Scriptural recitation in matches called _quizzes_. Quizzing tournaments called _meets_ consist of a set of _quizzes_. Quizzing _seasons_ consist of a set of meets. _Christian Bible Quizzing (CBQ)_ is the organization that oversees and supports local and regional Quizzing operations internationally with the mission to encourage the most people to memorize the most verses of Scripture. This is the official rule book for CBQ competitions.
+Bible Quizzing is a Christian sport in which teams of participants called quizzers compete on Scriptural recitation in matches called quizzes. Quizzing tournaments called meets consist of a set of quizzes. Quizzing seasons consist of a set of meets. Christian Bible Quizzing (CBQ) is the organization that oversees and supports Quizzing operations with the mission to encourage the most people to memorize the most verses of Scripture. This is the official rule book for CBQ competitions.
 
 ## 1. Materials
 
-In addition to this rule book, Quizzing uses _material_, which is a library that contains all the content quizzers study and compete on for a quiz along with a thesaurus for evaluating synonyms.
+In addition to this rule book, Quizzing uses material, which is a library that contains all the content quizzers study and compete on for a quiz along with a thesaurus for evaluating synonyms.
 
 ### 1.1. Reference Ranges, Weights, and Translations
 
-A quiz’s material contains, in part, Scripture references and associated verse content from a set of Bible _translations_. Translations must be word-for-word or thought-for-thought translations; paraphrased publications are not translations. Any verse that does not exist as standard, non-footnote content across all included translations is excluded from the material.
+A quiz’s material contains, in part, Scripture references and associated verse content from a set of Bible translations (or simply “bibles”). _Translations must be word-for-word or thought-for-thought translations; paraphrased publications are not translations._ Any verse that does not exist as standard, non-footnote content across all included translations is excluded from the material.
 
-Materials may separate the Scripture references and associated verse content into multiple sets, each with a reference _range_. For example, “Romans 1-4; James” is a single reference range. These reference ranges may have different weights, noted as positive integers, representing the probability of verse content selection from each range in quizzes. For example, “Romans 1-4; James (1) Romans 5-8 (3)” contains 2 ranges, the first with a 25% probability of selection and the second with a 75% probability of selection. Including all ranges, weights, and translations results in a complete material description. For example, “Romans 1-4; James (1) Romans 5-8 (3) ESV NASB NIV” is a material description.
+Materials may separate the Scripture references and associated verse content into multiple sets, each with a reference range. For example, “Romans 1-4; James” is a single reference range. These reference ranges may have different weights, noted as positive integers, representing the probability of verse content selection from each range in quizzes. For example, “Romans 1-4; James (1) Romans 5-8 (3)” contains 2 ranges, the first with a 25% probability of selection and the second with a 75% probability of selection. Including all ranges, weights, and translations results in a complete material description. For example, “Romans 1-4; James (1) Romans 5-8 (3) ESV NASB NIV” is a material description.
 
 Translation acronyms may be appended with an asterisk to indicate it’s an auxiliary translation. A material description must include at least 1 primary (non-auxiliary) translation. For example, “Romans 1-4; James (1) Romans 5-8 (3) NASB* NASB1995” is a material description where “NASB” is an auxiliary translation and “NASB1995” is a primary translation.
 
@@ -23,15 +23,15 @@ Each verse contains words, which are uninterrupted sequences of alphanumeric cha
 
 Sequences of words in a verse may be separated by sentence breaks, which occur only and always upon a period, an exclamation mark, or a question mark. A phrase is a sequences of 2 or more sequential words within a sentence.
 
-A quiz’s material also contains a thesaurus with an entry for at minimums each word deduplicated across the whole of the verse content. A thesaurus may also contain entries for phrases. Most entries contain _meanings_, but some entries, such as most proper names, may not include any meanings. Meanings consist of a description, word type, and list of synonyms (which can be words or phrases), with each synonym given a verity level between 1 and 3, with 3 being the highest or strongest verity. For example, the word “open” has multiple meanings, 1 of which is as a verb meaning to “begin” and another as an adjective meaning to be “honest, objective”. A synonym of the verb’s meaning with a verity of 3 is “commence”, and a synonym with of the adjective’s meaning with a verity of 1 is “unbiased”.
+A quiz’s material also contains a thesaurus with an entry for at minimums each word deduplicated across the whole of the verse content. A thesaurus may also contain entries for phrases. Most entries contain meanings, but some entries, such as most proper names, may not include any meanings. Meanings consist of a description, word type (such as verb, adjective, etc.), and list of synonyms (which can be words or phrases), with each synonym given a verity level between 1 and 3, with 3 being the highest or strongest verity. For example, the word “open” has multiple meanings, 1 of which is as a verb meaning to “begin” and another as an adjective meaning to be “honest, objective”. A synonym of the verb’s meaning with a verity of 3 is “commence”, and a synonym with of the adjective’s meaning with a verity of 1 is “unbiased”.
 
 ## 2. Quizzes
 
-A quiz is a single match between a set of teams, **typically though not always 3**. Each team consists of **between 1 to 3 quizzers**. Each quiz contains a set of _queries_. A query contains a _prompt_ and ideal _reply_, both of which are derived from the material. Each quiz is governed by a _quiz magistrate (QM)_ who is ultimately responsible for the fair and timely conduct of the quiz. The QM may choose to delegate a portion of their responsibilities to other officials.
+A quiz is a single match between a set of teams, _typically though not always 3_. Each team consists of _between 1 to 3 quizzers_. Each quiz contains a set of queries. A query contains a prompt and ideal reply, both of which are derived from the material. Each quiz is governed by a quiz magistrate (QM) who is ultimately responsible for issuing rulings and the fair and timely conduct of the quiz. The QM may choose to delegate a portion of their responsibilities to other officials.
 
-Quizzers sit in a row of chairs facing the audience and officials’ table. An officials’ table occupies space between the quizzers and the audience. The officials sit at the officials table facing the quizzers.
+_Quizzers sit in a row of chairs facing the audience and officials’ table. An officials’ table occupies space between the quizzers and the audience. The officials sit at the officials table facing the quizzers._
 
-Teams may but are not required to designate a coach for each quiz. Designated coaches sit in the front row of the audience.
+_Each team may but is not required to designate 1 coach for each quiz. Designated coaches are given priority seating in front row of the audience._
 
 ### 2.1. Query Process
 
@@ -39,23 +39,23 @@ For each query in the quiz, the QM follows the following process:
 
 #### 2.1.1. Announcement
 
-Each query begins with the QM announcement. The QM announces the query’s _identifier_, the teams eligible to _trigger_ an indication of their desire to respond to the query, the query’s _base subtype_, and the translation from which the query originates. Then once the QM is satisfied the teams and the means of trigger indication are ready, the QM says, “Ready. Begin.” For example: “Query 2A for all 3 teams is a phrase from the NASB. Ready. Begin.”
+Each query begins with the QM announcement. The QM announces the query’s identifier, the teams eligible to trigger an indication of their desire to respond to the query, the query’s base subtype, and the translation from which the query originates. Then once the QM is satisfied the teams and the means of trigger indication are ready, the QM says, “Ready. Begin.” For example: “Query 2A for all 3 teams is a phrase from the NASB. Ready. Begin.”
 
 #### 2.1.2. Prompt Reading
 
-The QM then reads the query’s prompt. Quizzers may trigger an indication of their desire to respond at any point after the QM says, “Ready. Begin.” The QM immediately stops reading the query upon trigger indication.
+The QM then recites the query’s prompt. Quizzers may trigger an indication of their desire to respond at any point after the QM says, “Ready. Begin.” The QM stops reciting the query as abruptly as possible upon trigger indication.
 
-Should there be no trigger indication by the end of the QM reading the prompt, the QM pauses for **7 seconds**. After this pause, the QM calls, “Time,” which will close trigger eligibility for the query. When trigger eligibility for the query is closed and the quiz is not complete, the QM proceeds with the next numerical query.
+Should there be no trigger indication by the end of the QM reciting the full prompt, the QM pauses for _7 seconds_. After this pause, the QM calls, “Time,” which will close trigger eligibility for the query. When trigger eligibility for the query is closed and the quiz is not complete, the QM proceeds with the next numerical query.
 
 #### 2.1.3. Call and Timer
 
-If a quizzer triggered prior to the QM calling the close of trigger eligibility, the QM simultaneously starts a silent **40-second** countdown timer and calls the name of the quizzer who was first to trigger an indication of their desire to respond.
+If a quizzer triggered prior to the QM calling the close of trigger eligibility, the QM simultaneously starts a silent _40-second_ countdown timer and calls _the name of the quizzer_ who was first to trigger an indication of their desire to respond.
 
 The called quizzer may decide to forfeit the query by sitting in their chair should they have previously stood or by voicing their decision.
 
 #### 2.1.4. Response and Ruling
 
-The QM may not communicate to quizzers during the _response_ period. For the purpose of judging the response and rendering a _ruling_, the QM considers everything the quizzer says that the QM can audibly understand. During the response phase, the quizzer is either: not yet correct, correct, or incorrect. The moment the QM judges the quizzer correct or incorrect, the QM pronounces such.
+None may communicate with any quizzers during the response period. For the purpose of judging the response and rendering a ruling, the QM considers everything the quizzer says that the QM can audibly understand. During the response phase, the quizzer is either: not yet correct, correct, or incorrect. The moment the QM judges the quizzer correct or incorrect, the QM pronounces such.
 
 ### 2.2. Query Identifiers and Quiz Flow
 
@@ -63,11 +63,11 @@ Each query in a quiz has a unique identifier consisting of a number and a letter
 
 All teams are eligible to trigger on query 1A. When a QM rules a quizzer’s response to a query incorrect, that quizzer’s team is ineligible to trigger on any following query with the same numerical component in their identifier. If all teams are ineligible, the QM will treat the next query as if the previous query was ruled correct.
 
-The quiz ends immediately prior to the query identifier’s number incrementing beyond **the product of 4 and the number of teams in the quiz**. For example, a quiz with 3 teams ends immediately prior to query “13A”.
+The quiz ends immediately prior to the query identifier’s number incrementing beyond _the product of 4 and the number of teams in the quiz. For example, a quiz with 3 teams ends immediately prior to query “13A”._
 
 ### 2.3. Query Types
 
-Each query has a _type_, which consists of a combination of a base subtype plus 1 or more quizzer-selected subtypes.
+Each query has a type, which consists of a combination of a base subtype plus 1 or more quizzer-selected subtypes.
 
 #### 2.3.1. Base Subtypes
 
@@ -75,11 +75,11 @@ The following are query base subtypes. Each query has 1 and only 1 base subtype.
 
 ##### 2.3.1.1. Phrase (P)
 
-A phrase query’s prompt is a phrase consisting of consecutive words from a verse. The prompt must be unique across the whole of the material from the translation used. The prompt must be **at least 7 words long**. The query’s reply are all the following words from the verse up to a sentence-ending punctuation mark (a period, question mark, or exclamation mark) or the end of the verse, whichever is shorter. The reply must be **at least 1 word long**.
+A phrase query’s prompt is a phrase consisting of consecutive words from a verse. The prompt must be unique across the whole of the material from the translation used. The prompt must be _at least 7 words long_. The query’s reply are all the following words from the verse up to a sentence-ending punctuation mark (a period, question mark, or exclamation mark) or the end of the verse, whichever is shorter. The reply must be _at least 1 word long_.
 
 ##### 2.3.1.2. Chapter Reference (C)
 
-A chapter reference query’s prompt contains a chapter reference followed by a phrase consisting of consecutive words from a verse. The prompt will begin with “according to” followed by the book name, “chapter” followed by the chapter number, then the phrase. The phrase is comprised of 2 parts. The first part of the phrase must be **at least 3 words long** and be unique to the whole of the chapter of the material from the translation used and exist in at least 1 other location across the whole of the material from the translation used. The second part of the phrase must be **at least 4 words long**. The query’s reply are all the following words from the verse up to a sentence-ending punctuation mark (a period, question mark, or exclamation mark) or the end of the verse, whichever is shorter. The reply must be **at least 1 word long**.
+A chapter reference query’s prompt contains a chapter reference followed by a phrase consisting of consecutive words from a verse. The prompt will begin with “according to” followed by the book name, “chapter” followed by the chapter number, then the phrase. The phrase is comprised of 2 parts. The first part of the phrase must be _at least 3 words long_ and be unique to the whole of the chapter of the material from the translation used and exist in at least 1 other location across the whole of the material from the translation used. The second part of the phrase must be _at least 4 words long_. The query’s reply are all the following words from the verse up to a sentence-ending punctuation mark (a period, question mark, or exclamation mark) or the end of the verse, whichever is shorter. The reply must be _at least 1 word long_.
 
 ##### 2.3.1.3. Quote (Q)
 
@@ -89,13 +89,13 @@ The QM announcement for quote queries does not include a translation.
 
 ##### 2.3.1.4. Finish (F)
 
-A finish query’s prompt are the first **5 or more words** of a verse. The prompt must be unique across the whole of the material from the translation used. The query’s reply are all the following words from the verse. The reply must be **at least 1 word long**.
+A finish query’s prompt are the first _5 or more words_ of a verse. The prompt must be unique across the whole of the material from the translation used. The query’s reply are all the following words from the verse. The reply must be _at least 1 word long_.
 
 #### 2.3.2. Quizzer-Selected Subtypes
 
-The following are query quizzer-selected subtypes. The responding quizzer may set 1 or more quizzer-selected subtypes on a per-query basis by calling their names, acronyms, or synonyms at any time prior to providing a complete response. Unless otherwise altered by the responding quizzer, the QM assumes queries have the synonymous subtype.
+The following are query quizzer-selected subtypes. The responding quizzer may set _1 or more_ quizzer-selected subtypes on a per-query basis by calling their names, acronyms, or synonyms at any time prior to providing a complete response. _Unless otherwise altered by the responding quizzer, queries have the synonymous subtype._
 
-The responding quizzer may not remove or change any previously selected quizzer-selected subtypes; however, if the quizzer calls for an “open book” subtype and has not previously called for a “synonymous” or “verbatim” subtype, the QM will accept the “open book” call and unset any other previously called subtypes.
+The responding quizzer may not remove or change any previously selected quizzer-selected subtypes; except, if the quizzer calls for an “open book” subtype and has not previously called for a “synonymous” or “verbatim” subtype, the QM will accept the “open book” call and unset any other previously called subtypes.
 
 Should the responding quizzer call for a valid quizzer-selected subtype, the QM ignores any response (excluding quizzer-selected subtype declarations) from the quizzer given prior to the call. The QM ignores calls for invalid quizzer-selected subtypes.
 
@@ -103,7 +103,7 @@ Should the responding quizzer call for a valid quizzer-selected subtype, the QM 
 
 The QM judges responses to queries of the synonymous quizzer-selected subtype correct should the responses contain all words of the reply and any words of the prompt the QM did not at least partially speak. The QM accepts as equivalent to the original word from the text:
 
-- Any synonym of that word or phrase from the material’s thesaurus with a verity level **of at least 1**
+- Any synonym of that word or phrase from the material’s thesaurus with a verity level _of at least 1_
 - Any associated antecedent of a pronoun, but not any other pronoun
 - Any word that is a conjugation, alternate tense, or alternate singular versus plural word of an otherwise acceptable word
 
@@ -143,9 +143,9 @@ Queries with the same numerical identifier have the same base subtype and transl
 
 In every quiz, each numerically identified query has a base subtype based on a sequential flow through all base subtypes in order, then randomized. For example, in a 3-team quiz with 12 numerical identified queries, the pre-randomized base subtype set is: PCQFPCQFPCQF.
 
-Each numerically identified query (except queries with the quote base subtype) has a translation based on the set of primary translations from a quiz’s material, filtered by the translations quizzers in each quiz use, then randomized, then sequentially repeated, skipping queries with the quote base subtype. For example, if a quiz’s material contains translations “A”, “B”, and “C” with quizzers in a particular quiz having memorized either “A” or “B” (but no quizzer in the particular having memorized “C”), the translations “A” and “B” are then randomized resulting in the sequence “BA”, which is then repeated for every query that doesn’t have the quote base subtype. In a 2-team quiz, the set of numerical identified queries may the translation sequence “BA\_BAB\_A” (where “\_” indicates no translation due to the query having the quote base subtype).
+Each numerically identified query (except queries with the quote base subtype) has a translation based on the set of primary translations from a quiz’s material, filtered by the translations quizzers in each quiz use, then randomized, then sequentially repeated, skipping queries with the quote base subtype. For example, if a quiz’s material contains translations “A”, “B”, and “C” with quizzers in a particular quiz having memorized either “A” or “B” (but no quizzer in the particular having memorized “C”), the translations “A” and “B” are then randomized resulting in the sequence “BA”, which is then repeated for every query that doesn’t have the quote base subtype. In a 2-team quiz, the set of numerical identified queries may the translation sequence “BA\BAB\A” (where “\” indicates no translation due to the query having the quote base subtype).
 
-The meet director or QM publishes query base subtypes and translation distribution for a quiz prior to the quiz.
+Meet directors or QMs publish or announce query base subtypes and translation distribution for quizzes prior to the quiz.
 
 ### 2.5. Rulings
 
@@ -163,7 +163,7 @@ The QM renders a ruling of a quizzer’s response according to the translation o
 
 #### 2.5.1. Context
 
-On all queries with base subtypes quote, finish, and chapter reference, the QM must count a quizzer immediately incorrect if they should fall out of context when responding. A quizzer is out of context when the quizzer says any **2-word or longer** globally unique phrase from the material content of the translation on the quizzer’s registration where **at least 1 word** of the phrase is outside the context of the query.
+On all queries with base subtypes quote, finish, and chapter reference, the QM must count a quizzer immediately incorrect if they should fall out of context when responding. A quizzer is out of context when the quizzer says any _2-word or longer_ globally unique phrase from the material content of the translation on the quizzer’s registration where _at least 1 word_ of the phrase is outside the context of the query.
 
 - Context for a quote and a finish query is the verse from which the query originates.
 - Context for a chapter reference query is the verse from which the query originates plus up to 5 verses prior and following in chapter.
@@ -175,29 +175,29 @@ If a quizzer selects the add a verse subtype, context will increase:
 
 #### 2.5.2. Appeals
 
-When a quizzer or coach engaged in the quiz perceives a violation of any rule in the rule book regarding an immediately preceding query, that quizzer or coach may issue an appeal prior to the QM calling “ready” for the next query or the QM calling the quiz closed if the appeal involves the quiz’s final query. The quizzer or coach must ensure the QM hears them say the word “appeal” and may interrupt the QM if necessary. The QM then allows the quizzer or coach up to **40 seconds** to explain their rationale.
+When a quizzer or coach engaged in the quiz perceives a violation of any rule in the rule book regarding an immediately preceding query, that quizzer or coach may issue an appeal prior to the QM calling “ready” for the next query or the QM calling the quiz closed if the appeal involves the quiz’s final query. The quizzer or coach must ensure the QM hears them say the word “appeal” and may interrupt the QM if necessary. The QM then allows the quizzer or coach up to _40 seconds_ to explain their rationale.
 
 The QM may solicit input from any source the QM feels useful to judge the appeal. Should the QM ask for input from any team or coach other than the quizzer or coach who issued the appeal, the QM must equally ask all teams and coaches.
 
 The QM must then provide a ruling on the appeal, an explanation of the ruling, including answering any follow-up questions any participants may ask, and a description of how the quiz will be altered to integrate the ruling. The QM’s ruling on the appeal is limited only to correcting violations of rules from the rule book; however, it is not limited to any rationales or other input received during the appeal process.
 
-If there is not consensus of agreement from the coaches, any disagreeing coach may ask to confer. Upon such request, the officials and coaches confer for no longer than **3 minutes**. The QM calls in the meet director to issue judgment should any coach request it at any time during this period. Should no coach request the meet director and the conference period end without consensus, the QM issues judgment. If the coaches are unanimous, that position overrides the QM.
+If there is not consensus of agreement from the coaches, any disagreeing coach may ask to confer. Upon such request, the officials and coaches confer for no longer than _3 minutes_. The QM calls upon a meet director who has no standing in the appeal to issue judgment should any coach request it at any time during this period. Should no coach request the meet director and the conference period end without consensus, the QM issues judgment. If the coaches are unanimous, that position overrides the QM.
 
-A team may not call for an appeal in a quiz after their second declined appeal in that quiz.
+_A team may not call for an appeal in a quiz after their second declined appeal in that quiz._
 
 ### 2.6. Ceilings
 
 A quizzer remains eligible to trigger for queries until they accrue correct rulings on:
 
-- **4 queries** should none of the first 3 of those queries be open book
-- **3 queries** should **any 1 but only 1** of the first 2 queries be open book
-- **2 queries** should all be open book
+- _4 queries_ should none of the first 3 of those queries be open book
+- _3 queries_ should _any 1 but only 1_ of the first 2 queries be open book
+- _2 queries_ should all be open book
 
-A team is limited to 3 correct open book queries per quiz.
+_A team is limited to 3 correct open book queries per quiz._
 
 ### 2.7. Fouls
 
-The QM assesses a _foul_ on any quizzer should that quizzer:
+The QM assesses a foul on any quizzer should that quizzer:
 
 - Speak prior to the QM calling the quizzer’s name
 - Fail to close any open reference material prior to the conclusion of the announcement phase
@@ -219,25 +219,25 @@ Quizzers earn points when the QM counts them correct. Quizzer points accrue to b
 
 The value of correct rulings depends on the query type.
 
-- All queries of the open book subtype are worth **a maximum of +1 point**.
-- All queries of the synonymous subtype are worth **+2 points**.
-- All queries of the verbatim subtype are worth **+4 points**.
-- All queries with the “with reference” subtype are worth **+1 additional point**.
-- All queries with the “add a verse” subtype are worth **+1 additional point** if responded to synonymously or **+2 additional points** if responded to verbatim.
+- All queries of the open book subtype are worth _a maximum of +1 point_.
+- All queries of the synonymous subtype are worth _+2 points_.
+- All queries of the verbatim subtype are worth _+4 points_.
+- All queries with the “with reference” subtype are worth _+1 additional point_.
+- All queries with the “add a verse” subtype are worth _+1 additional point_ if responded to synonymously or _+2 additional points_ if responded to verbatim.
 
-For example, a query of type phrase, verbatim, with reference is worth +5 points.
+_For example, a query of type phrase, verbatim, with reference is worth +5 points._
 
-In addition, should a quizzer reach their ceiling without being counted incorrect and not selecting open book for any query, they receive **an additional +3 points**.
+In addition, should a quizzer reach their ceiling without being counted incorrect and not selecting open book for any query, they receive _an additional +3 points_.
 
 #### 2.8.2. Bonus Team Points
 
-When the second and every following quizzer on a team earn a correct ruling for the first time in the quiz, that team earns **+1 bonus team point, incrementing by the number of following quizzers**. For example, the second quizzer earns +1 bonus team points, and the third quizzer earns +2 bonus team points.
+When the second and every following quizzer on a team earn a correct ruling for the first time in the quiz, that team earns _+1 bonus team point, incrementing by the number of following quizzers. For example, the second quizzer earns +1 bonus team points, and the third quizzer earns +2 bonus team points._
 
-In addition, a quizzer who responds to a query correctly following a different quizzer from the same team who responded correctly on a numerically immediately preceding query, that following quizzer earns their team **an additional +1 point**.
+In addition, a quizzer who responds to a query correctly following a different quizzer from the same team who responded correctly on a numerically immediately preceding query, that following quizzer earns their team _an additional +1 point_.
 
 ### 2.9. Timeouts
 
-Any participating quizzer or coach may call a timeout at any time between queries prior to the QM calling “ready” for the next query. Each team may call up to **1 timeout per quiz**. Timeouts are **40 seconds** in duration.
+Any participating quizzer or coach may call a timeout at any time between queries prior to the QM calling “ready” for the next query. Each team may call up to _1 timeout per quiz_. Timeouts are _40 seconds_ in duration.
 
 During a timeout, designated coaches and those they designate may approach quizzers seated in front of the officials table. At no other time may anyone approach quizzers seated in front of the officials table.
 
@@ -253,11 +253,11 @@ Team positions for each quiz are determined at the end of a quiz using the follo
 
 ### 2.11. Coach Authority
 
-Coaches may call to remove a quizzer from a quiz after the “Response and Ruling” and prior to the “Prompt Reading” of the next query. The QM will support any such call.
+A coach may call to remove from a quiz or to cause to be ineligible to trigger on the next query 1 or more quizzers from their team after the “Response and Ruling” and prior to the “Prompt Reading” of the next query. The QM will enforce such calls.
 
 ## 3. Meets
 
-Meets are Quizzing tournaments that consist of a set of quizzes. A meet operates 1 or more quiz rooms, each with a QM, serving multiple quizzes across a schedule. Each meet has a meet director who oversees the construction, organization, and operation of a meet.
+Meets are Quizzing tournaments that consist of a set of quizzes. A meet operates 1 or more quiz rooms, each with a QM, serving multiple quizzes across a schedule. Meets have meet directors who oversees the construction, organization, and operation of meets.
 
 ### 3.1. Registration
 
