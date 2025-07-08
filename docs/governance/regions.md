@@ -14,11 +14,11 @@ A “provisional region” is a proto-region, a group who are likely to become a
 
 ## Subsidiary
 
-A subsidiary region operates as independent region in terms of quiz meet and team organization leadership operations, but it runs its governance and treasury through CBQ. Subsidiary regions must agree to conform to all applicable provisions of applicable CBQ [articles](articles.md), [bylaws](bylaws.md), [SOPs](SOPs.md), and other policies such as applicable youth protection policies.
+A subsidiary region operates as independent region in terms of quiz meet and team organization leadership operations, but it runs its governance and treasury through CBQ. Subsidiary regions must agree to conform to all applicable provisions of CBQ [articles](articles.md), [bylaws](bylaws.md), [SOPs](SOPs.md), and other policies such as youth protection policies.
 
 ## Incorporated
 
-Incorporated regions are self-instantiating organizations, entirely self-governing, and manage their own treasuries. Incorporated regions operate almost like CBQ franchises, though without any cost or fees required by CBQ. To self-instantiate, a region must establish its own articles of incorporation and bylaws for self-governance.
+Incorporated regions are self-instantiating organizations, entirely self-governing, and managing their own treasuries. Incorporated regions operate almost like CBQ franchises, though without any cost or fees required by CBQ. To self-instantiate, a region must establish its own articles of incorporation and bylaws for self-governance.
 
 CBQ requires the following of each incorporated region:
 
