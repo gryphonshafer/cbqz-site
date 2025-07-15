@@ -128,3 +128,22 @@ details {
         font-weight: bold;
     }
 }
+
+@media print {
+    details {
+        margin-top      : 0;
+        margin-bottom   : 0;
+        padding         : 0 0.5em 0 2em;
+        background-color: transparent;
+        border          : none;
+
+        & > summary {
+            display: block;
+        }
+
+        & > summary::marker,
+        & > summary::-webkit-details-marker {
+            display: none !important;
+        }
+    }
+}

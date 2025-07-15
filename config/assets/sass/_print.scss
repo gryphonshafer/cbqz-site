@@ -25,4 +25,14 @@
         text-decoration: none;
         color: black;
     }
+
+    .not_print {
+        display: none;
+    }
+}
+
+@media not print {
+    .print_only {
+        display: none;
+    }
 }

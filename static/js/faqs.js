@@ -25,6 +25,15 @@ window.addEventListener( 'DOMContentLoaded', () => {
             details.appendChild(summary);
             content.forEach( node => details.appendChild(node) );
         }
-
     } );
+
+    const details_set = document.querySelectorAll('details');
+    window.addEventListener(
+        'beforeprint',
+        () => details_set.forEach( details => details.setAttribute( 'open', '' ) ),
+    );
+    window.addEventListener(
+        'afterprint',
+        () => details_set.forEach( details => details.removeAttribute('open') ),
+    );
 } );

@@ -1,6 +1,6 @@
 # Frequently Asked Questions
 
-The following are some frequently asked questions (FAQs). If you don't see your question answered here, please [contact us](mailto:q@cbqz.org), and we'll respond promptly.
+The following are some frequently asked questions (FAQs). If you don't see your question answered here, please [contact us](mailto:q@cbqz.org)<span class="print_only"> (q@cbqz.org)</span>, and we'll respond promptly.
 
 ## Quizzing and Mission
 
@@ -8,7 +8,7 @@ The following are some frequently asked questions (FAQs). If you don't see your 
 
 Bible Quizzing is a Christian sport, ministry, and community in which teams of participants called quizzers compete on Scriptural recitation in matches called quizzes. Quizzing tournaments called meets consist of a set of quizzes. Quizzing seasons consist of a set of meets.
 
-Learn more by reading the [About CBQ](/about_CBQ.md#whatisbiblequizzing) page.
+<span class="not_print">Learn more by reading the [About CBQ](/about_CBQ.md#whatisbiblequizzing) page.</span>
 
 ### What is Christian Bible Quizzing (CBQ)?
 
@@ -121,7 +121,7 @@ No training is required; however, CBQ recommends coaches who are new to CBQ ask 
 
 ### How can I get help to start a team organization?
 
-[Contact us immediately by email](mailto:q@cbqz.org) and ask for for help. We are *extremely eager* to help new team organizations get stared in whatever ways we can.
+[Contact us immediately by email](mailto:q@cbqz.org)<span class="print_only"> (q@cbqz.org)</span> and ask for for help. We are *extremely eager* to help new team organizations get stared in whatever ways we can.
 
 ## Establishing a Region
 
@@ -137,6 +137,6 @@ Regions need meet directors to run meets and quiz magistrates (QMs) to run quizz
 
 ### How can I get help to start a region?
 
-[Contact us immediately by email](mailto:q@cbqz.org) and ask for for help. We are *extremely eager* to help new team organizations get stared in whatever ways we can.
+[Contact us immediately by email](mailto:q@cbqz.org)<span class="print_only"> (q@cbqz.org)</span> and ask for for help. We are *extremely eager* to help new team organizations get stared in whatever ways we can.
 
-<script defer src="/js/faqs.js"></script>
+<script defer src="/js/faqs.js?version=1752587466"></script>
