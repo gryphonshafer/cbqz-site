@@ -1,20 +1,23 @@
-# Lesser Magistrates
+# Lesser Magistrate (LM) Trigger Sets
 
 Lesser Magistrates (or “LMs” for short) are the hand-held triggers and light console systems preferred for use with Christian Bible Quizzing.
-
-[Jonathan Van Schenck](https://github.com/jonathanvanschenck) designed and wrote the documentation for LMs. Prior to Jonathan’s elegant solution, Bible Quizzing had a fairly high barrier to entry, which included high-cost triggering systems, typically in the area of US$700+ for seat pad sets or well over US$1500+ for bench sets. Some of these sets were prone to failures after heavy use and were difficult for the typical coach to repair.
-
-By contrast, Jonathan’s LM design’s parts can be purchased for roughly US$90. They are extremely robust by contrast to legacy systems. And the parts list, build instructions, and 3D-printing STK/CAD files are published and all open source:
-
-[https://github.com/jonathanvanschenck/lesser-magistrate](https://github.com/jonathanvanschenck/lesser-magistrate)
 
 Lesser Magistrates are:
 
 - Simple, providing only the required functionality necessary to magistrate a quiz
-- Low cost, with easily available parts
-- Easily manufacture-able without special tooling
+- Able to support to 9 simultaneous participants by default but expandable to support up to 15
 - Modular in design, allowing for rapid, easy replacement in-quiz of any part that may go bad
-- Able to support up to 15 simultaneous participants
+- Lowest cost possible, with easily available parts
+
+<a href="/order_lms" class="button colored">Order Lesser Magistrates (LMs)</a>
+
+## Lesser Magistrate History and Design
+
+[Jonathan Van Schenck](https://github.com/jonathanvanschenck) designed and wrote the documentation for LMs. Prior to Jonathan’s elegant solution, Bible Quizzing had a fairly high barrier to entry, which included high-cost triggering systems, typically in the area of US$700+ for seat pad sets or well over US$1500+ for bench sets. Some of these sets were prone to failures after heavy use and were difficult for the typical coach to repair.
+
+By contrast, Jonathan’s LM design’s parts in their default configuration can be purchased for US$90. They are extremely robust by contrast to legacy systems. And the parts list, build instructions, and 3D-printing STK/CAD files are published and all open source:
+
+[https://github.com/jonathanvanschenck/lesser-magistrate](https://github.com/jonathanvanschenck/lesser-magistrate)
 
 ## On the Proper Care and Storage of LMs
 

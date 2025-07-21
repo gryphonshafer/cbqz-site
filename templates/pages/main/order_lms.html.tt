@@ -1,0 +1,213 @@
+[%
+    page.title = 'Order Lesser Magistrates (LMs)';
+
+    page.vue = 1;
+    page.js.module.push('order_lms');
+    page.js.defer.push('util/memo');
+%]
+
+<h1>[% page.title %]</h1>
+
+<p>
+    On this page you can submit orders for Lesser Magistrates (LMs). Each LM
+    "set" consists of a number of components:
+</p>
+
+<ul>
+    <li>
+        A <b>main console box</b> contains ports for other components to connect
+        to plus trigger or reset-state indication LEDs.
+    </li>
+    <li>
+        The main console box gets power from a <b>USB power cable</b>, which can
+        be connected to any power source, including a laptop.
+    </li>
+    <li>
+        <b>Network cords</b> connect from the main console box out to
+        <b>junction boxes</b>. The main console box can support up to 3 junction
+        boxes.
+    </li>
+    <li>
+        <b>Telephone cords</b> connect from the junction boxes to handheld
+        <b>triggers</b>, 1 trigger per quizzer. Junction boxes can support up to
+        5 triggers each, though the default set ships with 3 per junction box.
+    </li>
+    <li>
+        The main console box also has a single telephone jack, which connects
+        via a telephone cord to a final trigger, which the Quiz Magistrate (QM)
+        uses to reset the indication LEDs.
+    </li>
+</ul>
+
+<p><i>
+    Due to a grant from Christian Bible Quizzing (CBQ), first-season team
+    organizations will have the cost of their first LM, under a default
+    configuration, fully covered.
+</i></p>
+
+<h2>Primary Components</h2>
+
+<div id="order_lms" v-cloak>
+    <form>
+        <fieldset>
+            <legend>Your Information</legend>
+
+            <label>
+                Your Name
+                <input type="text" v-model="person_name" autocomplete="full-name" required
+                    placeholder="Your Name">
+            </label>
+            <label>
+                Your Email Address
+                <input type="email" v-model="person_email" autocomplete="email" required
+                    placeholder="Your Email Address">
+            </label>
+            <label>
+                Your Telephone Number
+                <input type="tel" v-model="person_phone" autocomplete="tel" required
+                    placeholder="Your Telephone Number">
+            </label>
+            <label>
+                Your Full Postal Address
+                <input type="text" v-model="person_address" autocomplete="street-address" required
+                    placeholder="Your Postal Address">
+            </label>
+
+            <br>
+            <label class="left">
+                <input type="checkbox" v-model="arrange_pick">
+                I would like to arrange pick up from {{ shipped_from }}<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <i>(instead of having the orders shipped)</i>
+            </label>
+
+            <template v-if="! arrange_pick">
+                <br>
+                <label>
+                    Shipping Address
+                    <input type="text" v-model="shipping_address" autocomplete="street-address" required
+                        placeholder="Shipping Address">
+                </label>
+                <br>
+            </template>
+
+            <label class="left">
+                <input type="checkbox" v-model="rookie_org">
+                This order is for a first-season team organization
+            </label>
+
+            <template v-if="rookie_org">
+                <br>
+                <label>
+                    Organization Name
+                    <input type="text" v-model="org_name"
+                        placeholder="Organization Name">
+                </label>
+                <label>
+                    Organization Acronym
+                    <input type="text" v-model="org_acronym"
+                        placeholder="Organization Acronym">
+                </label>
+                <label>
+                    Full Organization Address
+                    <input type="text" v-model="org_address"
+                        placeholder="Organization Address">
+                </label>
+                <label>
+                    Region Name
+                    <input type="text" v-model="region_name"
+                        placeholder="Region Name">
+                </label>
+            </template>
+        </fieldset>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Component</th>
+                    <th>Cost Per</th>
+                    <th>Units</th>
+                    <th>Sum Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="component in components">
+                    <td>{{ component.name }}</td>
+                    <td class="right">{{ currency( component.cost_per ) }}</td>
+                    <td class="input">
+                        <input class="right"
+                            type="number" :min="min_units(component)" max="100" step="1"
+                            v-model="component.count">
+                    </td>
+                    <td class="right">{{ currency( component.cost ) }}</td>
+                </tr>
+                <tr>
+                    <td>Shipping</td>
+                    <td class="right">{{ currency(shipping) }}</td>
+                    <td class="right">{{ arrange_pick ? 0 : 1 }}</td>
+                    <td class="right">{{ currency( arrange_pick ? 0 : shipping ) }}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="right">{{ currency( sum_cost ) }}</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <button class="colored" @click.prevent="submit_order">Submit LM Components Order</button>
+    </form>
+</div>
+
+<h2>Auxiliary Components</h2>
+
+<p>
+    The following are suggested optional supplementary components for
+    Lesser Magistrate (LM) sets, which you can order directly from
+    <a href="https://amazon.com">Amazon</a>
+    <span class="material-symbols-outlined size middle">arrow_outward</span>.
+</p>
+
+<ul>
+    <li>
+        <a href="https://amazon.com/dp/B0F2GBJH17">Backpack Carrier</a>
+        <span class="material-symbols-outlined size middle">arrow_outward</span>
+    </li>
+    <li>
+        <a href="https://amazon.com/dp/B09PDLBFKY">6-Foot Surge Protector Power Hub</a>
+        <span class="material-symbols-outlined size middle">arrow_outward</span>
+    </li>
+    <li>
+        <a href="https://amazon.com/dp/B0B2K9CPN8">6-Foot Extension Cord</a>
+        <span class="material-symbols-outlined size middle">arrow_outward</span>
+    </li>
+    <li>
+        <a href="https://amazon.com/dp/B0CR46XRT1">2 Prong to 3 Prong Outlet Adapter</a>
+        <span class="material-symbols-outlined size middle">arrow_outward</span>
+    </li>
+    <li>
+        <a href="https://amazon.com/dp/B0CNVWRB9W">100 1.9-Inch Wooden Clothespins</a>
+        <span class="material-symbols-outlined size middle">arrow_outward</span>
+    </li>
+</ul>
+
+<h2>Charitable Donations</h2>
+
+<p>
+    Would you like to make a tax-deductible charitable donation to
+    Christian Bible Quizzing (CBQ) to offset costs for first-season team
+    organization Lesser Magistrate (LM) acquisitions? It's an easy and
+    profoundly valuable way anyone can help support Bible Quizzing.
+    If so, please:
+</p>
+
+<ol>
+    <li>Write a check or money order to "<b>Christian Bible Quizzing</b>"</li>
+    <li>Include your full legal name and home postal address</li>
+    <li>
+        Mail to:<br>
+        <b>Christian Bible Quizzing<br>
+        Box 1949<br>
+        Port Orchard WA 98366</b>
+    </li>
+</ol>

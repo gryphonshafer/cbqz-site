@@ -1,0 +1,90 @@
+<title>CBQ: LMs Order</title>
+
+<style>
+    table {
+        border-collapse: collapse;
+        border-spacing : 0;
+        padding        : 0;
+
+        thead th {
+            font-weight: bold;
+            text-align : left;
+        }
+
+        thead th,
+        tfoot td {
+            background-color: lightgray;
+        }
+
+        th,
+        td {
+            padding: 0.06125em 0.25em;
+        }
+
+        td.right {
+            text-align: right;
+        }
+    }
+
+    table,
+    table th,
+    table td {
+        border: 1px solid silver;
+    }
+</style>
+
+<p>The following is a Lesser Magistrate (LM) order from the CBQ web site:</p>
+
+<ul>
+    <li>Person Name: <b>[% person_name %]</b></li>
+    <li>Person Email: <b>[% person_email %]</b></li>
+    <li>Person Phone: <b>[% person_phone %]</b></li>
+    <li>Person Address: <b>[% person_address %]</li></b>
+</ul>
+
+[% IF arrange_pick %]
+    <p>[% person_name %] would like to arrange pick up instead of having the order shipped.</p>
+[% ELSE %]
+    <p>Shipping Address: <b>[% shipping_address %]</b></p>
+[% END %]
+
+[% IF rookie_org %]
+    <p>The organization is a first-year organization:</p>
+    <ul>
+        <li>Org. Name: <b>[% org_name %]</b></li>
+        <li>Org. Acronym: <b>[% org_acronym %]</b></li>
+        <li>Org. Address: <b>[% org_address %]</b></li>
+        <li>Region Name: <b>[% region_name %]</b></li>
+    </ul>
+[% END %]
+
+<table>
+    <thead>
+        <tr>
+            <th>Component</th>
+            <th>Count</th>
+            <th>Cost</th>
+        </tr>
+    </thead>
+    <tbody>
+        [% FOR component IN components %]
+            <tr>
+                <td>[% component.name %]</td>
+                <td class="right">[% component.count %]</td>
+                <td class="right">$[% component.cost | format('%0.2f') %]</td>
+            </tr>
+        [% END %]
+        [% UNLESS arrange_pick %]
+            <tr>
+                <td>Shipping</td>
+                <td class="right">1</td>
+                <td class="right">$[% shipping | format('%0.2f') %]</td>
+            </tr>
+        [% END %]
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="right">$[% total_cost | format('%0.2f') %]</td>
+        </tr>
+    </tfoot>
+</table>

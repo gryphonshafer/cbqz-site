@@ -38,3 +38,19 @@ form.rules_change {
         height: 10em;
     }
 }
+
+div#order_lms {
+    td.input {
+        padding: 0;
+
+        input[type="number"] {
+            width: 3em;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            margin-left: 0.25em;
+            opacity: 1;
+        }
+    }
+}

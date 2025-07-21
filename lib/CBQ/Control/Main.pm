@@ -156,6 +156,26 @@ sub rules_change ($self) {
     }
 }
 
+sub order_lms ($self) {
+    my ( $method, $format ) = ( $self->req->method, $self->stash('format') );
+    my $order_lms = conf->get('order_lms');
+
+    if ( $method eq 'GET' and $format and $format eq 'json' ) {
+        $self->render( json => $order_lms );
+    }
+    elsif ( $method eq 'POST' and my $order = $self->req->json ) {
+        Omniframe::Class::Email->new( type => 'order_lms' )->send({
+            to   => join( ', ', $order_lms->{email}->@* ),
+            data => $order,
+        });
+
+        $self->render( json => {
+            class   => 'success',
+            message => 'Lesser Magistrate (LM) order submitted successfully.',
+        } );
+    }
+}
+
 1;
 
 =head1 NAME
@@ -193,6 +213,10 @@ Webhook to update regional CMS content. Requires "key" (a region's acronym) and
 =head2 rules_change
 
 Handler for rule change proposal submissions.
+
+=head2 order_lms
+
+Handler for ordering Lesser Magistrates.
 
 =head1 INHERITANCE
 

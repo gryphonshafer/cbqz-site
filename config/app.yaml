@@ -76,6 +76,33 @@ default:
             - NLT
             - NRSVA
             - RSV
+    order_lms:
+        components  :
+          - name    : Main Console Box
+            default : 1
+            cost_per: 30
+          - name    : USB Power Cord
+            default : 1
+            cost_per: 2
+          - name    : Junction Box
+            default : 3
+            cost_per: 2
+          - name    : Network Cord, Standard
+            default : 3
+            cost_per: 4
+          - name    : Network Cord, "Exodus"
+            default : 0
+            cost_per: 12
+          - name    : Trigger, Handheld
+            default : 10
+            cost_per: 3
+          - name    : Telephone Cord
+            default : 10
+            cost_per: 1
+        shipping    : 9
+        shipped_from: Corvallis, Oregon
+        email:
+            - Christian Bible Quizzing <q@cbqz.org>
 tauntaun:
     database:
         log:

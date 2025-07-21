@@ -228,6 +228,9 @@ sub startup ($self) {
 
     $all->any('/update')->to('main#cms_update');
     $all->any('/rules_change')->to('main#rules_change');
+    $all
+        ->any( '/order_lms' => [ format => ['json'] ] )
+        ->to( 'main#order_lms', format => undef );
 
     $all->any('/')->requires( region => 0 )->to('main#index');
     $all->any( '/*name', { name => 'index.md' } )->to('main#content');
