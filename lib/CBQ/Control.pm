@@ -37,21 +37,32 @@ sub startup ($self) {
     my $static_paths = [ @{ $self->static->paths } ];
     my $www_docs_nav = $self->docs_nav( @{ conf->get('docs') }{ qw( dir home_type home_name home_title ) } );
 
-    splice( @$www_docs_nav, $regions_nav_position, 0, {
-        folder => 'Regions',
-        nodes  => [
-            map {
-                +{
-                    href      => '/' . $_,
-                    subdomain => $_,
-                    name      => ( $regions->{$_}{name} // uc($_) ),
-                    title     => uc($_) .
-                        ( ( $regions->{$_}{name} ) ? ' - ' . $regions->{$_}{name} : '' ),
-                };
-            }
-            sort keys %$regions,
-        ],
-    } ) if ( defined $regions_nav_position and $regions and %$regions );
+    my $quizsage_nav_node = {
+        href  => 'https://quizsage.org',
+        name  => 'QuizSage',
+        title => 'QuizSage Bible Quizzing Software',
+    };
+
+    if ( defined $regions_nav_position and $regions and %$regions ) {
+        splice( @$www_docs_nav, $regions_nav_position, 0, {
+            folder => 'Regions',
+            nodes  => [
+                map {
+                    +{
+                        href      => '/' . $_,
+                        subdomain => $_,
+                        name      => ( $regions->{$_}{name} // uc($_) ),
+                        title     => uc($_) .
+                            ( ( $regions->{$_}{name} ) ? ' - ' . $regions->{$_}{name} : '' ),
+                    };
+                }
+                sort keys %$regions,
+            ],
+        } );
+
+        my ($cbq_system) = grep { $_->{folder} eq 'CBQ System' } @$www_docs_nav;
+        push( $cbq_system->{nodes}->@*, $quizsage_nav_node ) if ($cbq_system);
+    }
 
     push( @$www_docs_nav, {
         href  => '/iq',
@@ -86,6 +97,7 @@ sub startup ($self) {
                         name  => 'Rule Book',
                         title => 'Rule Book for Christian Bible Quizzing (CBQ)',
                     },
+                    $quizsage_nav_node,
                 ],
             } );
 

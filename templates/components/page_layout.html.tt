@@ -68,8 +68,9 @@
                 <li>
                     [% IF node.folder OR node.name %]
                         [%
-                            home_domain = 0;
-                            this_href   = '';
+                            home_domain    = 0;
+                            foreign_domain = 0;
+                            this_href      = '';
 
                             IF node.href.substr( 0, 1 ) == '*';
                                 home_domain = 1;
@@ -77,6 +78,9 @@
                                     '//' _
                                     ( req_info.domain || c.req.url.to_abs.host_port ) _
                                     node.href.substr(1);
+                            ELSIF node.href.match('^\w+://');
+                                foreign_domain = 1;
+                                this_href = node.href;
                             ELSIF node.href;
                                 this_href = ( node.subdomain AND req_info.domain )
                                     ? '//' _ node.subdomain _ '.' _ req_info.domain
@@ -97,6 +101,9 @@
                         %][% IF node.href %]</a>[% END %]
                         [% IF home_domain %]
                             <span class="material-symbols-outlined inline size margin">reply</span>
+                        [% END %]
+                        [% IF foreign_domain %]
+                            <span class="material-symbols-outlined inline size margin">arrow_outward</span>
                         [% END %]
                     [% END %]
                     [% IF node.nodes %]

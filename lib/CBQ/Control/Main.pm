@@ -25,7 +25,10 @@ sub index ($self) {
         my $trailing_slash = $self->req->url->path->trailing_slash;
         my $hrefify        = sub ($href) {
             return unless ($href);
-            return '//' . $self->stash('req_info')->{domain} . '/' . $href if ( $href =~ s|^\*/|| );
+            return
+                ( $self->stash('req_info')->{domain} ? '//' . $self->stash('req_info')->{domain} : '' ) .
+                '/' . $href
+                if ( $href =~ s|^\*/|| );
             return if ( $self->stash->{req_info}{subdomain} );
             return
                 ( $href =~ m|^/|      ) ? '/' . $key . $href :
@@ -44,11 +47,17 @@ sub index ($self) {
 
                     if ( $payload =~ /</ ) {
                         my $dom = Mojo::DOM->new($payload);
-                        $dom->find('a')->each( sub {
-                            if ( my $href = $hrefify->( $_->attr('href') ) ) {
-                                $_->attr( href => $href );
-                            }
-                        } );
+
+                        for my $tag (
+                            [ qw( a href ) ],
+                            [ qw( img src ) ],
+                        ) {
+                            $dom->find( $tag->[0] )->each( sub {
+                                my $target = $hrefify->( $_->attr( $tag->[1] ) );
+                                $_->attr( $tag->[1] => $target ) if ($target);
+                            } );
+                        }
+
                         $payload = $dom->to_string;
                     }
                 }
