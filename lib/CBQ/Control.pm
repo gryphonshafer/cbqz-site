@@ -60,7 +60,7 @@ sub startup ($self) {
             ],
         } );
 
-        my ($cbq_system) = grep { $_->{folder} eq 'CBQ System' } @$www_docs_nav;
+        my ($cbq_system) = grep { $_->{folder} and $_->{folder} eq 'CBQ System' } @$www_docs_nav;
         push( $cbq_system->{nodes}->@*, $quizsage_nav_node ) if ($cbq_system);
     }
 
