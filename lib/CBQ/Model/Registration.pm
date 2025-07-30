@@ -121,31 +121,59 @@ sub get_data ( $self, $region_id ) {
     ];
 
     my $registrants = { map { $_->{user_id} => $_ } grep { $_->{info}{user}{attend} } @$reg_data };
+    my $orgs        = [
+        sort { $a->{acronym} cmp $b->{acronym} }
+        map {
+            my $org_id = $_->{org_id};
+            my ($org) = grep { $org_id == $_->{org_id} } $_->{info}{orgs}->@*;
+            $org->{created} = $_->{created};
+
+            $org->{teams} = [
+                grep { @$_ }
+                map { [ grep { $_->{attend} } @$_ ] }
+                $org->{teams}->@*
+            ];
+
+            $org->{nonquizzers} = [
+                grep { $_->{attend} }
+                $org->{nonquizzers}->@*
+            ];
+
+            $org;
+        }
+        grep { $_->{org_id} }
+        @$reg_data
+    ];
+
+    my $quizzers_by_verses = [];
+    for my $org (@$orgs) {
+        my $number = 0;
+        for my $team ( $org->{teams}->@* ) {
+            $number++;
+            for my $quizzer (@$team) {
+                push( @$quizzers_by_verses, {
+                    %$quizzer,
+                    team => {
+                        name    => $org->{name},
+                        acronym => $org->{acronym},
+                        number  => $number,
+                    },
+                } );
+            }
+        }
+    }
 
     return {
-        orgs => [
-            sort { $a->{acronym} cmp $b->{acronym} }
-            map {
-                my $org_id = $_->{org_id};
-                my ($org) = grep { $org_id == $_->{org_id} } $_->{info}{orgs}->@*;
-
-                $org->{teams} = [
-                    grep { @$_ }
-                    map { [ grep { $_->{attend} } @$_ ] }
-                    $org->{teams}->@*
-                ];
-
-                $org->{nonquizzers} = [
-                    grep { $_->{attend} }
-                    $org->{nonquizzers}->@*
-                ];
-
-                $org;
+        registrants        => [ sort { $a->{name} cmp $b->{name} } values %$registrants ],
+        orgs               => $orgs,
+        quizzers_by_verses => [
+            sort {
+                $b->{verses} cmp $a->{verses} or
+                $b->{name} cmp $a->{name}
             }
-            grep { $_->{org_id} }
-            @$reg_data
+            @$quizzers_by_verses
         ],
-        registrants => [ sort { $a->{name} cmp $b->{name} } values %$registrants ],
+        orgs_by_reg_date => [ sort { $b->{created} cmp $a->{created} } @$orgs ],
     };
 }
 

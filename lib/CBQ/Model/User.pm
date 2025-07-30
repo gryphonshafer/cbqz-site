@@ -119,7 +119,9 @@ sub profile ( $self, $params ) {
             delete $self->data->{info}{dormant};
         }
 
-        if ( ref $params->{roles} eq 'ARRAY' and $params->{roles}->@* ) {
+        if ( $params->{roles} ) {
+            $params->{roles} = [ $params->{roles} ]
+                unless ( ref $params->{roles} eq 'ARRAY' and $params->{roles}->@* );
             $self->data->{info}{roles} = $params->{roles};
         }
         else {

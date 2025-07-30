@@ -57,6 +57,11 @@ div#register {
                     }
                 }
 
+                input[name="verses"] {
+                    text-align: right;
+                    width     : 4em;
+                }
+
                 span.material-symbols-outlined:hover {
                     cursor: pointer;
                 }
@@ -98,7 +103,7 @@ div#meet_data {
         display: none;
     }
 
-    @media (max-width: 725px) {
+    @media (max-width: 760px) {
         p.display_as label {
             margin-left: 2em;
             display    : block;

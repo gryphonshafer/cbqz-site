@@ -119,6 +119,7 @@
                 <li><b>At:</b> Attend</li>
                 <li v-if="meet.host.housing"><b>Hs:</b> House</li>
                 <li v-if="meet.host.lunch"><b>Ln:</b> Lunch</li>
+                <li><b>Vs:</b> Verses</li>
             </ul>
 
             <div v-for="( team, team_index ) in org.teams">
@@ -146,6 +147,10 @@
                             <th v-if="meet.host.lunch">
                                 <span class="hide_if_small">Lunch</span>
                                 <span class="show_if_small">Ln</span>
+                            </th>
+                            <th>
+                                <span class="hide_if_small">Verses</span>
+                                <span class="show_if_small">Vs</span>
                             </th>
                             <th v-if="can_edit"></th>
                         </tr>
@@ -224,6 +229,14 @@
                                 </template>
                                 <template v-else>
                                     {{ ( quizzer.lunch ) ? "Yes" : "No" }}
+                                </template>
+                            </td>
+                            <td>
+                                <template v-if="can_edit">
+                                    <input type="text" name="verses" v-model="quizzer.verses">
+                                </template>
+                                <template v-else>
+                                    {{ quizzer.verses }}
                                 </template>
                             </td>
                             <td v-if="can_edit">

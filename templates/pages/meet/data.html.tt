@@ -1,4 +1,5 @@
 [%
+    USE date;
     page.title = 'Meet Registration Data';
     page.js.defer.push('meet_data');
 %]
@@ -72,9 +73,10 @@
 
                 <p class="display_as">
                     <b>Display as:</b>
-                    <label><input type="radio" name="quizzer_display" value="table"> Full Data Table</label>
+                    <label><input type="radio" name="quizzer_display" value="table"> Full Data</label>
                     <label><input type="radio" name="quizzer_display" value="roster"> Roster</label>
-                    <label><input type="radio" name="quizzer_display" value="teams"> Teams List</label>
+                    <label><input type="radio" name="quizzer_display" value="teams"> Teams</label>
+                    <label><input type="radio" name="quizzer_display" value="verses"> Counts</label>
                 </p>
 
                 <ul class="show_if_small">
@@ -134,6 +136,7 @@
                         [% END %]
                     </tbody>
                 </table>
+
                 <div id="quizzers_roster" class="quizzer_display hidden box">
                     [% FOR org IN reg_data.orgs %]
                         [% FOR team IN org.teams %]
@@ -151,15 +154,44 @@
                         [% END %]
                     [% END %]
                 </div>
+
                 <div id="quizzers_teams" class="quizzer_display hidden box">
-                    [% FOR org IN reg_data.orgs %]
-                        [% FOR team IN org.teams %]
-                            [% team_number = loop.count %]
-                            <abbr title="[% org.name %]">[% org.acronym %]</abbr> [% team_number %]
-                            [% UNLESS loop.last %]<br>[% END %]
-                        [% END %]
+                    [%
+                        teams = [];
+                        FOR org IN reg_data.orgs;
+                            FOR team IN org.teams;
+                                teams.push({
+                                    name    => org.name,
+                                    acronym => org.acronym,
+                                    number  => loop.count,
+                                });
+                            END;
+                        END;
+                    %]
+                    [% FOR team IN teams %]
+                        <abbr title="[% team.name %]">[% team.acronym %]</abbr> [% team.number %]
+                        [% UNLESS loop.last %]<br>[% END %]
                     [% END %]
                 </div>
+
+                <table id="quizzers_verses" class="quizzer_display hidden">
+                    <thead>
+                        <tr>
+                            <th>Quizzer</th>
+                            <th>Org.</th>
+                            <th>Verses</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        [% FOR quizzer IN reg_data.quizzers_by_verses %]
+                            <tr>
+                                <td>[% quizzer.name %]</td>
+                                <td>[% quizzer.team.acronym %]</td>
+                                <td class="right">[% quizzer.verses %]</td>
+                            </tr>
+                        [% END %]
+                    </tbody>
+                </table>
             [% END %]
 
             [% IF reg_data.registrants.size %]
@@ -320,6 +352,28 @@
 
             <a href="[% c.url_for( path_part_prefix _ c.url_for _ '.csv' ) %]"
                 class="button colored">Download CSV Data</a>
+
+            [% IF reg_data.orgs_by_reg_date.size > 0 %]
+                <h2>Registration by Last Date Submitted</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Team Organization</th>
+                            <th>Acronym</th>
+                            <th>Last Registration Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        [% FOR org IN reg_data.orgs_by_reg_date %]
+                            <tr>
+                                <td>[% org.name %]</td>
+                                <td>[% org.acronym %]</td>
+                                <td>[% date.format( org.created, '%a, %b %-d, %Y at %l:%M %p' ) %]</td>
+                            </tr>
+                        [% END %]
+                    </tbody>
+                </table>
+            [% END %]
         </div>
     [% END %]
 [% END %]

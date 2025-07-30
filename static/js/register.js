@@ -52,6 +52,7 @@ fetch( new URL( url.pathname + '.json', url ) )
                             attend : true,
                             housing: false,
                             lunch  : true,
+                            verses : 0,
                         };
                         team.push(quizzer);
                     },
