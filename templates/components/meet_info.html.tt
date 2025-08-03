@@ -4,12 +4,12 @@
     [% IF meet.days > 1 %]
         <li>
             <b>Dates:</b>
-            [% date.format( meet.start, '%a, %b %-d, %Y' ) %]
-            to
+            [% date.format( meet.start, '%a, %b %-d, %Y at %l:%M %p' ) %]
+            through
             [% date.format( meet.stop, '%a, %b %-d, %Y' ) %]
         </li>
     [% ELSE %]
-        <li><b>Date:</b> [% date.format( meet.start, '%a, %b %-d, %Y' ) %]</li>
+        <li><b>Start:</b> [% date.format( meet.start, '%a, %b %-d, %Y at %l:%M %p' ) %]</li>
     [% END %]
 
     [% IF
