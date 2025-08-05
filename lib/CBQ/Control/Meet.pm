@@ -18,7 +18,22 @@ sub _current_next_meet ($self) {
 }
 
 sub schedule ($self) {
-    $self->stash( current_season => $self->_current_season );
+    my $current_season = $self->_current_season;
+
+    if (
+        not $current_season or
+        ref $current_season->{meets} ne 'ARRAY' or
+        not $current_season->{meets}->@*
+    ) {
+        $self->flash( memo => {
+            class   => 'error',
+            message => 'There is an error in the settings for the region. Please notify the administration.',
+        } );
+        $self->redirect_to('/');
+    }
+    else {
+        $self->stash( current_season => $current_season );
+    }
 }
 
 {

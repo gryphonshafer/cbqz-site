@@ -16,7 +16,9 @@ sub startup ($self) {
 
     my $iq_rss               = conf->get('iq_rss');
     my $regions_nav_position = conf->get( qw( regional_cms nav_position ) );
-    my $regions              = CBQ::Model::Region->new->all_settings_processed;
+    my $region_obj           = CBQ::Model::Region->new;
+    my $regions              = $region_obj->all_settings_processed;
+    my $yaml_errors          = [ @{ $region_obj->yaml_errors } ];
     my $redirects            = {
         www => conf->get('redirects'),
         grep { defined }
@@ -140,6 +142,7 @@ sub startup ($self) {
         }
 
         $c->stash(
+            yaml_errors      => $yaml_errors,
             req_info         => $req_info,
             path_part_prefix => ( $req_info->{region} and $req_info->{path_part} )
                 ? (

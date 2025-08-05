@@ -99,3 +99,11 @@
         <a href="[% c.url_for('/download') %]">Download Application Database</a>
     </li>
 </ul>
+
+[% IF yaml_errors.size %]
+    <h4>Region Data Errors</h4>
+    [% FOR yaml_error IN yaml_errors %]
+        <pre>[% yaml_error | trim %]</pre>
+        [% UNLESS loop.last %]<hr>[% END %]
+    [% END %]
+[% END %]

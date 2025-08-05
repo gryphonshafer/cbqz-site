@@ -15,6 +15,7 @@ with 'Omniframe::Role::Model';
 class_has active       => 1;
 class_has regional_cms => conf->get('regional_cms');
 class_has docs_dir     => conf->get( qw( docs dir ) );
+class_has yaml_errors  => sub { [] };
 
 my $time = Omniframe::Class::Time->new;
 my $bref = Bible::Reference->new( simplify => 1 );
@@ -50,7 +51,9 @@ sub settings ($self) {
                 $settings = $result->{result};
             }
             catch ($e) {
-                $self->error( 'Failed YAML parse/integrate: ' . $_->to_string . ' -- ' . deat($e) );
+                my $message = 'Failed YAML parse/integrate: ' . $_->to_string . ' -- ' . deat($e);
+                push( $self->yaml_errors->@*, $message );
+                $self->error($message);
             }
         } );
 

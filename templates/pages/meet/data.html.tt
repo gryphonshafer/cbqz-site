@@ -4,7 +4,7 @@
     page.js.defer.push('meet_data');
 %]
 
-<h1>[% page.title %]: [% meet.name.replace( '</?p>', '' ) %]</h1>
+<h1>[% page.title %][% IF meet.name %]: [% meet.name.replace( '</?p>', '' ) %][% END %]</h1>
 
 [% IF NOT meet %]
     <p>There doesn't appear to be an upcoming meet scheduled.</p>
