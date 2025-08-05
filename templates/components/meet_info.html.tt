@@ -24,13 +24,35 @@
                 ( meet.material != meet.new_material AND meet.material != meet.old_material )
             %]
                 <ul>
-                    [% IF meet.material     %]<li><i>Full:</i> [% meet.material     %][% END %]
-                    [% IF meet.old_material %]<li><i>Old:</i>  [% meet.old_material %][% END %]
-                    [% IF meet.new_material %]<li><i>New:</i>  [% meet.new_material %][% END %]
+                    [% IF meet.material %]
+                        <li>
+                            <i>Full:</i> [% meet.material %]
+                            [% IF meet.material_inherited_from_foreign %]
+                                <br><i>(via host region's schedule)</i>
+                            [% END %]
+                        </li>
+                    [% END %]
+                    [% IF meet.old_material %]<li><i>Old:</i> [% meet.old_material %]</li>[% END %]
+                    [% IF meet.new_material %]<li><i>New:</i> [% meet.new_material %]</li>[% END %]
                 </ul>
             [% ELSE %]
                 [% meet.material %]
+                [% IF meet.material_inherited_from_foreign %]
+                    <br><i>(via host region's schedule)</i>
+                [% END %]
             [% END %]
+        </li>
+    [% END %]
+
+    [% IF meet.region %]
+        <li>
+            <b>Host Region:</b>
+            [% host_region_key = meet.region.lower %]
+            <a href="[% '//' _ (
+                (path_part_prefix)
+                    ? req_info.domain _ '/' _ host_region_key
+                    : host_region_key _ '.' _ req_info.domain
+            ) _ '/meet/schedule' %]">[% req_info.regions.$host_region_key.name %] ([% meet.region %])</a>
         </li>
     [% END %]
 

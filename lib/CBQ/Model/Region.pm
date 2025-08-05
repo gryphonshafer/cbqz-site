@@ -178,34 +178,79 @@ sub settings_processed ( $self, $settings = undef ) {
 sub all_settings_processed ( $self, $all_settings = undef ) {
     $all_settings //= $self->all_settings;
 
-    for my $key ( keys %$all_settings ) {
-        next unless (
-            $all_settings->{$key}{settings} and
-            $all_settings->{$key}{settings}{seasons}
-        );
+    my $do_for_every_remote_meet = sub ($code) {
+        for my $key ( keys %$all_settings ) {
+            next unless (
+                $all_settings->{$key}{settings} and
+                $all_settings->{$key}{settings}{seasons}
+            );
 
-        for my $season ( $all_settings->{$key}{settings}{seasons}->@* ) {
-            next unless ( $season->{meets} );
+            for my $season ( $all_settings->{$key}{settings}{seasons}->@* ) {
+                next unless ( $season->{meets} );
 
-            for my $remote_meet ( grep { $_->{region} } $season->{meets}->@* ) {
-                my ($foreign_season) =
-                    grep { $_->{name} eq $season->{name} }
-                    $all_settings->{ lc $remote_meet->{region} }{settings}{seasons}->@*;
-                next unless ( $foreign_season and $foreign_season->{meets} );
+                for my $remote_meet ( grep { $_->{region} } $season->{meets}->@* ) {
+                    my ($foreign_season) =
+                        grep { $_->{name} eq $season->{name} }
+                        $all_settings->{ lc $remote_meet->{region} }{settings}{seasons}->@*;
+                    next unless ( $foreign_season and $foreign_season->{meets} );
 
-                my ($foreign_meet) = grep { $_->{name} eq $remote_meet->{name} } $foreign_season->{meets}->@*;
-                next unless ($foreign_meet);
+                    my ($foreign_meet) =
+                        grep { $_->{name} eq $remote_meet->{name} }
+                        $foreign_season->{meets}->@*;
+                    next unless ($foreign_meet);
 
-                $remote_meet->{$_} //= $foreign_meet->{$_} for ( keys %$foreign_meet );
+                    $code->( $remote_meet, $foreign_meet );
+                }
             }
         }
-    }
+    };
+
+    $do_for_every_remote_meet->( sub ( $remote_meet, $foreign_meet ) {
+        $remote_meet->{$_} //= $foreign_meet->{$_} for ( keys %$foreign_meet );
+    } );
 
     $self->_process($_) for (
         map { $all_settings->{$_}{settings} }
         grep { $all_settings->{$_}{settings} }
         keys %$all_settings
     );
+
+    $do_for_every_remote_meet->( sub ( $remote_meet, $foreign_meet ) {
+        # when there's a remote meet where the foreign meet's "full" material doesn't match the remote meet's
+        if ( $remote_meet->{material} ne $foreign_meet->{material} ) {
+            # use the host/foreign meet for "full" material
+            $remote_meet->{material} = $foreign_meet->{material};
+
+            # calculate "old" as whatever's in the inherited "full" that's been covered by the local region
+            my $material_verses;
+            if ( $remote_meet->{old_material} ) {
+                $material_verses->{old}     = $bref->clear->in( $remote_meet->{old_material} )->as_verses;
+                $material_verses->{foreign} = $bref->clear->in( $foreign_meet->{material}    )->as_verses;
+
+                $material_verses->{old} = [ grep {
+                    my $ref = $_;
+                    grep { $_ eq $ref } $material_verses->{old}->@*;
+                } $material_verses->{foreign}->@* ];
+
+                $remote_meet->{old_material} = $bref->clear->in(
+                    join( '; ', $material_verses->{old}->@* )
+                )->refs;
+            }
+
+            # set "new" as the balance
+            $remote_meet->{new_material} = $bref->clear->in(
+                join( '; ',
+                    grep {
+                        my $ref = $_;
+                        not grep { $_ eq $ref } $material_verses->{old}->@*;
+                    } $material_verses->{foreign}->@*
+                )
+            )->refs if ( $remote_meet->{new_material} );
+
+            # set indication that "full" was inherited
+            $remote_meet->{material_inherited_from_foreign} = 1;
+        }
+    } );
 
     return $all_settings;
 }
