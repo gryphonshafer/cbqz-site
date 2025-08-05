@@ -185,6 +185,18 @@ sub order_lms ($self) {
     }
 }
 
+sub download ($self) {
+    my $file = path( conf->get( qw( config_app root_dir ) ) )->child( conf->get( qw( database file ) ) );
+
+    $self->res->headers->header(@$_) for (
+        [ 'Content-Type'        => 'application/x-sqlite'                           ],
+        [ 'Content-Disposition' => 'attachment; filename="' . $file->basename . '"' ],
+    );
+
+    $self->res->body( $file->slurp );
+    $self->rendered;
+}
+
 1;
 
 =head1 NAME
@@ -226,6 +238,10 @@ Handler for rule change proposal submissions.
 =head2 order_lms
 
 Handler for ordering Lesser Magistrates.
+
+=head2 download
+
+Handler to download the application database.
 
 =head1 INHERITANCE
 

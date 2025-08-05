@@ -233,6 +233,8 @@ sub startup ($self) {
         ->requires( region => 1 )
         ->to( 'meet#data', format => undef );
 
+    $users->any('/download')->to('main#download');
+
     if ($iq_rss) {
         $all->any('/iq')->requires( region => 0 )->to('main#iq');
         $all->any('/iq.rss')->requires( region => 0 )->to('main#iq_rss');

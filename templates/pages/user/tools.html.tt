@@ -95,4 +95,7 @@
         <a href="https://github.com/gryphonshafer/cbqz-site/issues">Report Issue</a>
         <span class="material-symbols-outlined size middle">arrow_outward</span>
     </li>
+    <li>
+        <a href="[% c.url_for('/download') %]">Download Application Database</a>
+    </li>
 </ul>
