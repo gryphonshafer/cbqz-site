@@ -114,9 +114,32 @@ sub startup ($self) {
 
         $req_info->{regions} = $regions;
 
-        $req_info->{region} =
-            $regions->{ $req_info->{subdomain} // '' } //
-            $regions->{ lc( $c->req->url->path->parts->[0] // '' ) };
+        $req_info->{subdomain} = lc( $req_info->{subdomain} // '' );
+        if ( $req_info->{subdomain} ) {
+            if ( exists $regions->{ $req_info->{subdomain} } ) {
+                $req_info->{region} = $regions->{ $req_info->{subdomain} };
+            }
+            else {
+                my ($region_key) =
+                    grep {
+                        grep { $_ eq $req_info->{subdomain} } $regions->{$_}{settings}{alternate_names}->@*
+                    }
+                    keys %$regions;
+                if ($region_key) {
+                    $req_info->{region} = $regions->{$region_key};
+
+                    my $redirect = $c->req->url->to_abs->clone;
+                    $redirect->host( $region_key . '.' . lc( $req_info->{domain} ) );
+                    $c->redirect_to($redirect);
+                }
+            }
+        }
+        $req_info->{region} //= $regions->{ lc( $c->req->url->path->parts->[0] // '' ) };
+        if ( $req_info->{subdomain} and not $req_info->{region} ) {
+            my $redirect = $c->req->url->to_abs->clone;
+            $redirect->host( lc( $req_info->{domain} ) );
+            $c->redirect_to($redirect);
+        }
 
         $req_info->{path_part} = (
             $req_info->{region} and
