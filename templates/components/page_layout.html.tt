@@ -89,7 +89,7 @@
                                     ? '//' _ node.subdomain _ '.' _ req_info.domain
                                     : (
                                         ( req_info.region AND req_info.path_part )
-                                            ? '../../' _ req_info.region.key
+                                            ? path_part_prefix
                                             : ''
                                     ) _ node.href;
                             END;

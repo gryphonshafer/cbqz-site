@@ -17,9 +17,6 @@ The Chancellor shall strive to cause either by direct action or delegation the p
 
 The Council of Elders will support as they’re able the Chancellor’s efforts above.
 
-## International Open Championships (IOC)
+## Quizzer Eligibility
 
-The International Open Championships (IOC) is a Quizzing-wide season-end tournament event held annually, open to all teams who’d like to participate.
-
-- IOC should be held at the end of a Quizzing season and ideally before July 4.
-- Dates and locations for future IOC meets should be announced as early as practicable but ideally no later than September.
+Coaches are the best able due to their proximity to and time with Quizzing participants to determine the appropriateness of eligibility of each participant for their Quizzing teams. Therefore, head coaches are the ultimate decision-makers as to any given quizzer's eligibility for participation. Any youth who will be 18 or younger at any point during the quiz season and has adequately to their local group's head coach demonstrated maturity sufficient to be a quizzer may participate.

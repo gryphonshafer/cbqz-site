@@ -31,8 +31,8 @@ sub index ($self) {
                 if ( $href =~ s|^\*/|| );
             return if ( $self->stash->{req_info}{subdomain} );
             return
-                ( $href =~ m|^/|      ) ? '/' . $key . $href :
-                ( not $trailing_slash ) ? $key . '/' . $href : undef;
+                ( $href =~ m|^/| ) ? '/' . $key . $href :
+                ($trailing_slash)  ? $key . '/' . $href : undef;
         };
 
         $self->document(
