@@ -32,7 +32,7 @@ Below is a table of recent Christian Bible Quizzing (CBQ) rules changes, includi
 | Change Title | Version | Date Applied |
 |-|-|-|
 | [Bible Distribution](_rules_changes/2025-03-17_bible_distribution.md) | [1.5](https://github.com/gryphonshafer/cbqz-site/commit/afb599082582432d6693fe36cdd20d3c4922b9fd) | March 17, 2025 |
-| [Open Book](_rules_changes/2025-07-31_open_book.md) | [1.4](https://github.com/gryphonshafer/cbqz-site/commit/3d5cd863b94de2c69718fff9840022ed82fa9952) | July 31, 2024 |
+| [Open Book](_rules_changes/2024-07-31_open_book.md) | [1.4](https://github.com/gryphonshafer/cbqz-site/commit/3d5cd863b94de2c69718fff9840022ed82fa9952) | July 31, 2024 |
 
 ## Thinking Through Rules
 
