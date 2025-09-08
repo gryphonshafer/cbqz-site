@@ -20,6 +20,8 @@ sub _account_common ( $self, $usage = 'sign_up' ) {
 }
 
 sub sign_up ($self) {
+    $self->redirect_to( $self->stash('path_part_prefix') . '/' ) if ( $self->stash('user') );
+
     my %params = $self->req->params->to_hash->%*;
 
     if ( $params{usage} and $params{usage} eq 'sign_up' ) {
