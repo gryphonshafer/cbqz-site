@@ -96,6 +96,14 @@ sub vote_create ( $self, $motion ) {
     return $self;
 }
 
+sub vote_delete ( $self, $motion ) {
+    unless ( $self->data->{info}{closed} ) {
+        $self->data->{info}{motions} = [ grep { $_ ne $motion } $self->data->{info}{motions}->@* ];
+        $self->save;
+    }
+    return $self;
+}
+
 sub vote ( $self, $user, $params ) {
     return unless ( $self->is_active );
 
@@ -207,6 +215,10 @@ List of users who attended the meeting.
 =head2 vote_create
 
 Create a motion for the meeting.
+
+=head2 vote_delete
+
+Delete a motion from the meeting.
 
 =head2 vote
 

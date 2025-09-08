@@ -53,6 +53,14 @@ sub vote_create ($self) {
     $self->redirect_to( '/meeting/' . $self->param('meeting_id') );
 }
 
+sub vote_delete ($self) {
+    return $self->redirect_to('/user/tools') unless ( $self->stash('user')->is_qualified_delegate );
+
+    my $meeting = CBQ::Model::Meeting->new->load( $self->param('meeting_id') );
+    $meeting->vote_delete( $self->param('motion') );
+    $self->redirect_to( '/meeting/' . $self->param('meeting_id') );
+}
+
 sub vote ($self) {
     return $self->redirect_to('/user/tools') unless ( $self->stash('user')->is_qualified_delegate );
 
@@ -114,6 +122,10 @@ Handler for viewing a meeting.
 =head2 vote_create
 
 Handler for creating a vote item (something to be voted on) in a meeting.
+
+=head2 vote_delete
+
+Handler for deleting a vote item (something to be voted on) in a meeting.
 
 =head2 vote
 

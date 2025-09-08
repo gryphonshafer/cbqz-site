@@ -228,6 +228,7 @@ sub startup ($self) {
         [ list        => 'list'                    ],
         [ create      => 'create'                  ],
         [ vote_create => ':meeting_id/vote/create' ],
+        [ vote_delete => ':meeting_id/vote/delete' ],
         [ vote        => ':meeting_id/vote'        ],
         [ unvote      => ':meeting_id/unvote'      ],
         [ close       => ':meeting_id/close'       ],
