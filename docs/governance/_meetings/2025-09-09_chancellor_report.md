@@ -9,7 +9,7 @@ Section 1.2 of the [CBQ Bylaws version 2024-07-27](https://cbqz.org/governance/b
     - Passcode: 519422
     - Telephone: 253 215 8782
 
-If haven’t already done so, please [sign-up for a CBQ account](https://cbqz.org/user/sign_up). 
+If haven’t already done so, please [sign-up for a CBQ account](https://cbqz.org/user/sign_up).
 
 Just prior to the meeting, please login and then click on the 2025-09-09 meeting link.
 
