@@ -54,3 +54,8 @@
         %]
     </li>
 </ul>
+
+[% IF user.id == view_user.data.user_id %]
+    <a class="button colored" href="[% c.url_for( path_part_prefix _ '/user/edit' ) %]"
+        >Edit My Account Data</a>
+[% END %]
