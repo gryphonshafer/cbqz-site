@@ -1,0 +1,56 @@
+[%
+    PROCESS macros;
+
+    full_name = view_user.data.first_name _ ' ' _ view_user.data.last_name;
+    page.title = 'Person: ' _ full_name;
+
+    view_user.roles = [];
+    FOR role IN view_user.data.info.roles;
+        this_role = role | html;
+        view_user.roles.push(this_role);
+    END;
+%]
+
+<h1>[% page.title %]</h1>
+
+<ul>
+    <li>
+        <b>Name:</b>
+        [% full_name %]
+    </li>
+    <li>
+        <b>Email:</b>
+        <a href="mailto:[% view_user.data.email %]">[% view_user.data.email %]</a>
+    </li>
+    <li>
+        <b>Phone:</b>
+        [% view_user.data.phone %]
+    </li>
+    <li>
+        <b>Role(s):</b>
+        <ul>
+            [% FOR role IN view_user.roles %]
+                <li>[% role %]</li>
+            [% END %]
+        </ul>
+    </li>
+    <li>
+        <b>Org(s):</b>
+        <ul>
+            [% FOR org IN view_user.orgs %]
+                <li>
+                    <a href="[% c.url_for( '/org/view/' _ org.org_id) %]"
+                        >[% org.acronym %]: [% org.name %]</a>
+                </li>
+            [% END %]
+        </ul>
+    </li>
+    <li>
+        <b>Last Login:</b>
+        [%
+            ( view_user.data.last_login )
+                ? time( view_user.data.last_login, '%b %-d, %Y' )
+                : ''
+        %]
+    </li>
+</ul>

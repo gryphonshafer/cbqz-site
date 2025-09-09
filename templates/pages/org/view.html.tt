@@ -31,7 +31,9 @@
 [% IF users AND users.size %]
     <h2>People Associated with [% org.data.acronym %]</h2>
 
-    [% PROCESS user_list.html.tt, users %]
+    [% PROCESS user_list.html.tt,
+        data = { users => users, show_orgs => 0, show_phone => 1, show_email => 0 }
+    %]
 
     [% IF user.org_and_region_ids.orgs.grep( org.id ).size %]
         <p><a class="button colored" href="[% c.url_for( path_part_prefix _ '/org/edit/' _ org.id ) %]"

@@ -1,8 +1,7 @@
 [%
     page.js.defer.push('user_list');
-    PROCESS macros;
 
-    FOR this_user IN users;
+    FOR this_user IN data.users;
         this_user.roles = [];
         FOR role IN this_user.info.roles;
             this_role = role | html;
@@ -35,47 +34,44 @@
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Roles</th>
-                <th>Last Login</th>
+                [% IF data.show_email %]<th>Email</th>[% END %]
+                [% IF data.show_phone %]<th>Phone</th>[% END %]
+                [% IF data.show_orgs %]<th>Org(s)</th>[% END %]
+                <th>Role(s)</th>
             </tr>
         </thead>
         <tbody>
-            [% FOR this_user IN users %]
+            [% FOR this_user IN data.users %]
                 <tr data-roles="[% this_user.roles.join('|') %]">
                     <td>
                         [% IF user.is_admin AND c.session.flash.become %]
                             <a href="[% c.url_for('/user/become').query( user => this_user.user_id ) %]"><span
                                 class="material-symbols-outlined inline">manage_accounts</span></a>
                         [% END %]
-                        [% this_user.first_name %] [% this_user.last_name %]
+                        <a href="[% c.url_for( '/user/view/' _ this_user.user_id ) %]"
+                            >[% this_user.first_name %] [% this_user.last_name %]</a>
                     </td>
-                    <td>
-                        [%
-                            mailto =
-                                this_user.first_name _ ' ' _
-                                this_user.last_name _ ' ' _
-                                '<' _ this_user.email _ '>'
-                        %]
-                        <a href="mailto:[% mailto %]">[% this_user.email %]</a>
-                    </td>
-                    <td>
-                        <a href="tel:[% this_user.phone %]">[%
-                            this_user.phone.substr( 0, 3 ) _ '-' _
-                            this_user.phone.substr( 3, 3 ) _ '-' _
-                            this_user.phone.substr( 6, 4 )
-                        %]</a>
-                    </td>
+                    [% IF data.show_email %]
+                        <td>
+                            <a href="mailto:[% this_user.email %]">[% this_user.email %]</a>
+                        </td>
+                    [% END %]
+                    [% IF data.show_phone %]
+                        <td>
+                            [% this_user.phone %]
+                        </td>
+                    [% END %]
+                    [% IF data.show_orgs %]
+                        <td>
+                            [% FOR org IN this_user.orgs %]
+                                <a href="[% c.url_for( '/org/view/' _ org.org_id) %]"
+                                    >[% org.acronym %]: [% org.name %]</a>
+                                [% UNLESS loop.last %]<br>[% END %]
+                            [% END %]
+                        </td>
+                    [% END %]
                     <td>
                         [% this_user.info.roles.join(', ') %]
-                    </td>
-                    <td>
-                        [%
-                            ( this_user.last_login )
-                                ? time( this_user.last_login, '%b %-d, %Y' )
-                                : ''
-                        %]
                     </td>
                 </tr>
             [% END %]
@@ -83,7 +79,7 @@
     </table>
 
     <div class="hidden box">
-        [% FOR this_user IN users %]
+        [% FOR this_user IN data.users %]
             <span data-roles="[% this_user.roles.join('|') %]">
                 [% this_user.first_name %]
                 [% this_user.last_name %]

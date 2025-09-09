@@ -58,3 +58,13 @@ div#order_lms {
 img.border {
     border: 1px solid colors.$lines;
 }
+
+@media (min-width: 500px) {
+    div.user_list {
+        table {
+            td:first-child {
+                white-space: nowrap;
+            }
+        }
+    }
+}

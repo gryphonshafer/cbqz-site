@@ -182,6 +182,18 @@ sub org_and_region_ids ($self) {
     };
 }
 
+sub orgs ($self) {
+    return unless ( $self->id );
+    return $self->dq->sql(q{
+        SELECT o.org_id, o.name, o.acronym
+        FROM user_org AS uo
+        JOIN org AS o USING (org_id)
+        WHERE uo.user_id = ? AND o.active
+        GROUP BY o.org_id
+        ORDER BY o.name
+    })->run( $self->id )->all({});
+}
+
 sub is_qualified_delegate ($self) {
     return 1 if (
         $self->dq->sql( q{
@@ -324,6 +336,11 @@ data. Internally, this method calls C<save> on the user object.
 
 Returns a hashref with keys C<orgs> and C<regions>, each containing an arrayref
 of IDs of these that the user is associated with.
+
+=head2 orgs
+
+For the current user of the object, returns an array of hashrefs containing
+org ID, org name, and org acronym.
 
 =head2 is_qualified_delegate
 

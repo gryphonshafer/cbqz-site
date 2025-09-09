@@ -86,6 +86,19 @@ sub sign_up ($self) {
     $self->_account_common('sign_up');
 }
 
+sub view ($self) {
+    try {
+        $self->stash( view_user => CBQ::Model::User->new->load( $self->stash('user_id') ) );
+    }
+    catch ($e) {
+        $self->flash( memo => {
+            class   => 'error',
+            message => 'Unable to view user. Try selecting a user from the list.',
+        } );
+        $self->redirect_to('/user/list');
+    }
+}
+
 sub edit ($self) {
     my %params = ( $self->stash('user')->data->%*, $self->req->params->to_hash->%* );
     my @fields = qw( email passwd first_name last_name phone );
@@ -270,7 +283,12 @@ sub list ($self) {
                 $a->{first_name} cmp $b->{first_name} or
                 $a->{last_name}  cmp $b->{last_name}
             }
-            map { $_->data }
+            map {
+                +{
+                    orgs => $_->orgs,
+                    $_->data->%*,
+                };
+            }
             @$users
         ],
     );
@@ -334,6 +352,10 @@ for "user" actions.
 =head2 sign_up
 
 Handler for new user account sign-up.
+
+=head2 view
+
+Handler for user view page.
 
 =head2 edit
 
