@@ -44,10 +44,6 @@
             [% FOR this_user IN data.users %]
                 <tr data-roles="[% this_user.roles.join('|') %]">
                     <td>
-                        [% IF user.is_admin AND c.session.flash.become %]
-                            <a href="[% c.url_for('/user/become').query( user => this_user.user_id ) %]"><span
-                                class="material-symbols-outlined inline">manage_accounts</span></a>
-                        [% END %]
                         <a href="[% c.url_for( '/user/view/' _ this_user.user_id ) %]"
                             >[% this_user.first_name %] [% this_user.last_name %]</a>
                     </td>

@@ -58,4 +58,7 @@
 [% IF user.id == view_user.data.user_id %]
     <a class="button colored" href="[% c.url_for( path_part_prefix _ '/user/edit' ) %]"
         >Edit My Account Data</a>
+[% ELSIF user.is_admin AND NOT c.session.flash.become %]
+    <a href="[% c.url_for('/user/become').query( user => view_user.data.user_id ) %]"><span
+        class="material-symbols-outlined inline">manage_accounts</span></a>
 [% END %]
