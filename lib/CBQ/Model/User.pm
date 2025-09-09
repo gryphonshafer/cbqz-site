@@ -194,6 +194,18 @@ sub orgs ($self) {
     })->run( $self->id )->all({});
 }
 
+sub regions ($self) {
+    return unless ( $self->id );
+    return $self->dq->sql(q{
+        SELECT r.region_id, r.name, r.acronym
+        FROM user_region AS ur
+        JOIN region AS r USING (region_id)
+        WHERE ur.user_id = ? AND r.active
+        GROUP BY r.region_id
+        ORDER BY r.name
+    })->run( $self->id )->all({});
+}
+
 sub is_qualified_delegate ($self) {
     return 1 if (
         $self->dq->sql( q{
@@ -341,6 +353,11 @@ of IDs of these that the user is associated with.
 
 For the current user of the object, returns an array of hashrefs containing
 org ID, org name, and org acronym.
+
+=head2 regions
+
+For the current user of the object, returns an array of hashrefs containing
+region ID, region name, and region acronym.
 
 =head2 is_qualified_delegate
 

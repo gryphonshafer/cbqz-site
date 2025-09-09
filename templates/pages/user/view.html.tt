@@ -46,6 +46,16 @@
         </ul>
     </li>
     <li>
+        <b>Regions(s):</b>
+        <ul>
+            [% FOR region IN view_user.regions %]
+                <li>
+                    [% region.acronym %]: [% region.name %]
+                </li>
+            [% END %]
+        </ul>
+    </li>
+    <li>
         <b>Last Login:</b>
         [%
             ( view_user.data.last_login )
