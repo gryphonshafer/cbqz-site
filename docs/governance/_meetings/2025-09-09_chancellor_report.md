@@ -7,7 +7,7 @@ Section 1.2 of the [CBQ Bylaws version 2024-07-27](https://cbqz.org/governance/b
     - [Zoom Meeting Link](https://us02web.zoom.us/j/88298299188?pwd=sXyaI5BzgQYt1A8XGEnPa5m6I06gyJ.1)
     - Meeting ID: 882 9829 9188
     - Passcode: 519422
-    - Telephone: 253 215 8782 
+    - Telephone: 253 215 8782
 
 If haven’t already done so, please [sign-up for a CBQ account](https://cbqz.org/user/sign_up). 
 
