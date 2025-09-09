@@ -51,7 +51,7 @@ sub crud ($self) {
                     $org = CBQ::Model::Org->new->create( {
                         map { $_ => $params{$_} } qw( name acronym address )
                     } );
-                    $self->stash('user')->add_org( $params{org_id} );
+                    $self->stash('user')->add_org( $org->id );
                 }
                 elsif ( $usage =~ /edit/i ) {
                     die 'Current user is not authorized to edit the organization' unless (
@@ -61,8 +61,7 @@ sub crud ($self) {
                 }
                 $org->regions( $params{regions} );
             }
-
-            $self->redirect_to( '../' . $self->stash('path_part_prefix') . '/user/tools' );
+            $self->redirect_to( $self->stash('path_part_prefix') . '/user/tools' );
         }
         catch ($e) {
             $self->notice($e);
