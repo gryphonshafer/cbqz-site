@@ -38,7 +38,7 @@
             <th>Scheduled Start</th>
             <th>You Attended</th>
         </tr>
-        [% FOR this_meeting IN past_meetings %]
+        [% FOR this_meeting IN past_meetings.sort('start').reverse %]
             <tr>
                 <td><a href="[%
                     c.url_for( '/meeting/' _ this_meeting.meeting_id )
