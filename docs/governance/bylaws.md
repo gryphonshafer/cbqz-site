@@ -2,14 +2,14 @@
 
 The following are the bylaws of the Organization known as Christian Bible Quizzing (CBQ), a non-profit organization, hereinafter referred to as Quizzing, incorporated under the laws of the State of Washington on July 27, 2024. Quizzing may also operate as Bible Quizzing.
 
--   Bylaws Version: 2024-07-27
+-   Bylaws Version: 2025-09-09
 
 ## Article 1 - General Assembly and Qualified Delegates
 
 - 1.1. The general assembly ("General Assembly") of Quizzing shall consist of all those persons who in some active role as defined by Quizzing's rule book ("Rule Book") or standard operating procedures ("SOPs") participate in any meeting or event sponsored by Quizzing in the previous 12 calendar months and are at least 18 years old.
 - 1.2. There shall be 2 official General Assembly meetings per calendar year.
     - 1.2.1. Official General Assembly meetings shall be held via live remote teleconference.
-    - 1.2.2. The first of the 2 meetings will be held between January and March, and the second will be held between July and September.
+    - 1.2.2. The first of the 2 meetings will be held between November and April, and the second will be held between May and October.
     - 1.2.3. Official General Assembly meetings shall be announced, at a minimum, on the Organization's website and through a publicly subscribable email distribution, no less than 45 days in advance.
 - 1.3. A qualified delegate ("Qualified Delegate") is a member of the General Assembly who:
     - 1.3.1. Participates in at least 3 of the most recent prior 4 official General Assembly meetings or who is appointed by the Organization's Articles of Incorporation should there have yet to be 4 such meetings, and
