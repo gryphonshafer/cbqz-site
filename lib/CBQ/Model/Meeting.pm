@@ -77,6 +77,7 @@ sub viewed ( $self, $user ) {
 sub attendees ($self) {
     return $self->dq->sql( q{
         SELECT
+            u.user_id,
             u.first_name,
             u.last_name,
             u.email,
@@ -84,6 +85,7 @@ sub attendees ($self) {
         FROM user AS u
         JOIN user_meeting AS um USING (user_id)
         WHERE um.meeting_id = ? AND u.active
+        ORDER BY u.first_name, u.last_name
     } )->run( $self->id )->all({});
 }
 

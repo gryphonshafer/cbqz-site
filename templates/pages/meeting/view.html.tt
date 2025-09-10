@@ -88,21 +88,14 @@
 [% attendees = meeting.attendees %]
 [% IF attendees AND attendees.size %]
     <h2>Attendees: [% attendees.size %]</h2>
-
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-        </tr>
+    <ul>
         [% FOR this_user IN attendees %]
-            <tr>
-                <td>[% this_user.first_name %] [% this_user.last_name %]</td>
-                <td><a href="mailto:[% this_user.email %]">[% this_user.email %]</a></td>
-                <td>[% this_user.phone %]</td>
-            </tr>
+            <li>
+                <a href="[% c.url_for( '/user/view/' _ this_user.user_id ) %]"
+                    >[% this_user.first_name %] [% this_user.last_name %]</a>
+            </li>
         [% END %]
-    </table>
+    </ul>
 [% END %]
 
 [% IF meeting.is_active AND user.is_qualified_delegate %]
