@@ -40,5 +40,6 @@
 
     <br>
     <input type="hidden" name="usage" value="[% usage %]">
+    <input type="hidden" name="org_id" value="[% org_id %]">
     <button type="submit" class="colored">Save Organization</button>
 </form>
