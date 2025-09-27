@@ -174,8 +174,9 @@ sub get_data ( $self, @region_keys ) {
         orgs               => $orgs,
         quizzers_by_verses => [
             sort {
-                $b->{verses} cmp $a->{verses} or
-                $b->{name} cmp $a->{name}
+                $b->{verses} <=> $a->{verses} or
+                $a->{team}{acronym} cmp $b->{team}{acronym} or
+                $a->{name} cmp $b->{name}
             }
             @$quizzers_by_verses
         ],
