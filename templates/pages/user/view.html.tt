@@ -26,35 +26,41 @@
         <b>Phone:</b>
         [% view_user.data.phone %]
     </li>
-    <li>
-        <b>Role(s):</b>
-        <ul>
-            [% FOR role IN view_user.roles %]
-                <li>[% role %]</li>
-            [% END %]
-        </ul>
-    </li>
-    <li>
-        <b>Org(s):</b>
-        <ul>
-            [% FOR org IN view_user.orgs %]
-                <li>
-                    <a href="[% c.url_for( '/org/view/' _ org.org_id) %]"
-                        >[% org.acronym %]: [% org.name %]</a>
-                </li>
-            [% END %]
-        </ul>
-    </li>
-    <li>
-        <b>Regions(s):</b>
-        <ul>
-            [% FOR region IN view_user.regions %]
-                <li>
-                    [% region.acronym %]: [% region.name %]
-                </li>
-            [% END %]
-        </ul>
-    </li>
+    [% IF view_user.roles.size %]
+        <li>
+            <b>Role(s):</b>
+            <ul>
+                [% FOR role IN view_user.roles %]
+                    <li>[% role %]</li>
+                [% END %]
+            </ul>
+        </li>
+    [% END %]
+    [% IF view_user.orgs.size %]
+        <li>
+            <b>Org(s):</b>
+            <ul>
+                [% FOR org IN view_user.orgs %]
+                    <li>
+                        <a href="[% c.url_for( '/org/view/' _ org.org_id) %]"
+                            >[% org.acronym %]: [% org.name %]</a>
+                    </li>
+                [% END %]
+            </ul>
+        </li>
+    [% END %]
+    [% IF view_user.regions.size %]
+        <li>
+            <b>Regions(s):</b>
+            <ul>
+                [% FOR region IN view_user.regions %]
+                    <li>
+                        [% region.acronym %]: [% region.name %]
+                    </li>
+                [% END %]
+            </ul>
+        </li>
+    [% END %]
     <li>
         <b>Last Login:</b>
         [%

@@ -153,6 +153,9 @@ sub profile ( $self, $params ) {
                     } $ids->@*
                 );
             }
+            else {
+                $self->dq->rm( 'user_' . $type, { user_id => $self->id } );
+            }
         }
 
         $self->dq->commit;

@@ -256,12 +256,14 @@
                         <li>
                             <b>[% registrant.name %]</b>
                             <ul>
-                                <li>
-                                    [% FOR org IN registrant.info.orgs %]
-                                        [% org.name %] ([% org.acronym %])[% UNLESS
-                                            loop.last %], [% END %]
-                                    [% END %]
-                                </li>
+                                [% IF registrant.info.orgs.size %]
+                                    <li>
+                                        [% FOR org IN registrant.info.orgs %]
+                                            [% org.name %] ([% org.acronym %])[% UNLESS
+                                                loop.last %], [% END %]
+                                        [% END %]
+                                    </li>
+                                [% END %]
                                 <li>
                                     [% mailto = registrant.name _ ' ' _ '<' _ registrant.email _ '>' %]
                                     <a href="mailto:[% mailto %]">[% registrant.email %]</a>;
@@ -365,11 +367,13 @@
                     </thead>
                     <tbody>
                         [% FOR org IN reg_data.orgs_by_reg_date %]
-                            <tr>
-                                <td>[% org.name %]</td>
-                                <td>[% org.acronym %]</td>
-                                <td>[% date.format( org.created, '%a, %b %-d, %Y at %l:%M %p' ) %]</td>
-                            </tr>
+                            [% IF org.name %]
+                                <tr>
+                                    <td>[% org.name %]</td>
+                                    <td>[% org.acronym %]</td>
+                                    <td>[% date.format( org.created, '%a, %b %-d, %Y at %l:%M %p' ) %]</td>
+                                </tr>
+                            [% END %]
                         [% END %]
                     </tbody>
                 </table>
