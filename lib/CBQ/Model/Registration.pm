@@ -99,35 +99,34 @@ sub get_data ( $self, @region_keys ) {
             $_;
         }
         $self->dq->sql(q{
-            WITH reg_rows AS (
-                SELECT
-                    u.user_id,
-                    u.email,
-                    u.first_name || ' ' || u.last_name AS name,
-                    u.phone,
-                    r.info,
-                    r.created,
-                    ro.org_id
-                FROM registration AS r
-                JOIN user AS u USING (user_id)
-                LEFT JOIN registration_org AS ro USING (registration_id)
-                WHERE
-                    r.region_id IN (
-                        SELECT region_id FROM region WHERE acronym IN ( } .
-                            join( ', ', map { $self->dq->quote( uc $_ ) } @region_keys ) .
-                        q{ )
-                    )
-                    AND u.active
-                ORDER BY r.created DESC
-            )
-            SELECT *
-            FROM reg_rows
-            GROUP BY org_id
+            SELECT
+                u.user_id,
+                u.email,
+                u.first_name || ' ' || u.last_name AS name,
+                u.phone,
+                r.info,
+                r.created,
+                ro.org_id
+            FROM registration AS r
+            JOIN user AS u USING (user_id)
+            LEFT JOIN registration_org AS ro USING (registration_id)
+            WHERE
+                r.region_id IN (
+                    SELECT region_id FROM region WHERE acronym IN ( } .
+                        join( ', ', map { $self->dq->quote( uc $_ ) } @region_keys ) .
+                    q{ )
+                )
+                AND u.active
+            ORDER BY r.created DESC
         })->run->all({})->@*
     ];
 
     my $registrants = { map { $_->{user_id} => $_ } grep { $_->{info}{user}{attend} } @$reg_data };
-    my $orgs        = [
+
+    my $seen;
+    $reg_data = [ grep { defined } map { ( $seen->{ $_->{org_id} }++ ) ? undef : $_ } @$reg_data ];
+
+    my $orgs = [
         sort { $a->{acronym} cmp $b->{acronym} }
         map {
             my $org_id = $_->{org_id};
