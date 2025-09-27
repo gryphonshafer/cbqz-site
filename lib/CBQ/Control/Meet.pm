@@ -105,9 +105,42 @@ sub schedule ($self) {
 }
 
 sub data ($self) {
+    my $region     = CBQ::Model::Region->new;
+    my $next_meets = { map {
+        my ($next_meet) =
+            grep { $_->{is_current_next_meet} }
+            $region->current_season(
+                $self->stash->{req_info}{regions}{$_}{settings}{seasons}
+            )->{meets}->@*;
+        $_ => $next_meet;
+    } keys %{ $self->stash->{req_info}{regions} } };
+
+    my $my_region_next_meet = delete $next_meets->{ $self->stash('req_info')->{region}{key} };
+
+    my @other_regions = grep {
+        $next_meets->{$_}{start} eq $my_region_next_meet->{start} and
+        $next_meets->{$_}{days} eq $my_region_next_meet->{days}
+        and
+        (
+            (
+                $next_meets->{$_}{host}{address} and
+                $my_region_next_meet->{host}{address} and
+                $next_meets->{$_}{host}{address} eq $my_region_next_meet->{host}{address}
+            ) or
+            (
+                $next_meets->{$_}{host}{name} and
+                $my_region_next_meet->{host}{name} and
+                $next_meets->{$_}{host}{name} eq $my_region_next_meet->{host}{name}
+            )
+        )
+    } keys %$next_meets;
+
     my $data = {
-        reg_data => CBQ::Model::Registration->new->get_data( $self->stash('req_info')->{region}{id} ),
         meet     => $self->_current_next_meet,
+        reg_data => CBQ::Model::Registration->new->get_data(
+            $self->stash('req_info')->{region}{key},
+            @other_regions,
+        ),
     };
 
     unless ( $self->stash('format') ) {

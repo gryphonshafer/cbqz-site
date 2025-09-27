@@ -92,7 +92,7 @@ sub get_reg ( $self, $region_id, $user ) {
     return $reg;
 }
 
-sub get_data ( $self, $region_id ) {
+sub get_data ( $self, @region_keys ) {
     my $reg_data = [
         map {
             $_->{info} = $self->thaw($_)->{info};
@@ -111,13 +111,19 @@ sub get_data ( $self, $region_id ) {
                 FROM registration AS r
                 JOIN user AS u USING (user_id)
                 LEFT JOIN registration_org AS ro USING (registration_id)
-                WHERE r.region_id = ? AND u.active
+                WHERE
+                    r.region_id IN (
+                        SELECT region_id FROM region WHERE acronym IN ( } .
+                            join( ', ', map { $self->dq->quote( uc $_ ) } @region_keys ) .
+                        q{ )
+                    )
+                    AND u.active
                 ORDER BY r.created DESC
             )
             SELECT *
             FROM reg_rows
             GROUP BY org_id
-        })->run($region_id)->all({})->@*
+        })->run->all({})->@*
     ];
 
     my $registrants = { map { $_->{user_id} => $_ } grep { $_->{info}{user}{attend} } @$reg_data };
