@@ -121,10 +121,19 @@ sub get_data ( $self, @region_keys ) {
         })->run->all({})->@*
     ];
 
-    my $registrants = { map { $_->{user_id} => $_ } grep { $_->{info}{user}{attend} } @$reg_data };
+    my $registrants = {
+        map { $_->{user_id} => $_ }
+        grep { $_->{info}{user}{attend} }
+        reverse @$reg_data
+    };
 
     my $seen;
-    $reg_data = [ grep { defined } map { ( $seen->{ $_->{org_id} }++ ) ? undef : $_ } @$reg_data ];
+    $reg_data = [
+        grep { defined }
+        map { ( $seen->{ $_->{org_id} }++ ) ? undef : $_ }
+        grep { $_->{org_id} }
+        @$reg_data
+    ];
 
     my $orgs = [
         sort { $a->{acronym} cmp $b->{acronym} }
