@@ -40,7 +40,7 @@ sub schedule ($self) {
     my $reg_conf = conf->get('registration');
     sub register ($self) {
         my ( $method, $format ) = ( $self->req->method, $self->stash('format') );
-        my $current_next_meet = $self->_current_next_meet if ($method eq 'GET');
+        my $current_next_meet = $self->_current_next_meet;
 
         if ( $method eq 'GET' and not $format ) {
             $self->stash( meet => $current_next_meet );
@@ -56,14 +56,17 @@ sub schedule ($self) {
                 meet   => $current_next_meet,
                 roles  => $reg_conf->{roles},
                 bibles => $reg_conf->{bibles},
-                urls   => {
-                    user_edit => $url_prefix . '/user/edit',
-                    meet_data => $url_prefix . '/meet/data',
-                },
+
+                admin_edit_override => ( $self->session->{was_user_id} ) ? 1 : 0,
             } );
         }
         elsif ( $method eq 'POST' and my $reg = $self->req->json ) {
-            if ( $current_next_meet->{registration_closed} ) {
+            if (
+                not $self->session->{was_user_id} and (
+                    not $current_next_meet or
+                    $current_next_meet->{registration_closed}
+                )
+            ) {
                 $self->render( json => {
                     class   => 'error',
                     message => 'Meet registration closed.',

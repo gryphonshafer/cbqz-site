@@ -92,7 +92,7 @@
             <p>
                 Only coaches are allowed to register quizzers and teams. If you
                 are a coach, select the coach role above or add "Coach" to your
-                <a v-bind:href="urls.user_edit">account profile</a>.
+                <a href="[% c.url_for('/user/edit') %]">account profile</a>.
             </p>
         </div>
         <div v-else v-for="( org, org_index ) in reg.orgs">
@@ -261,8 +261,8 @@
                 Use this section to provide registration information for any
                 non-you non-quizzers. Please coordinate with these non-quizzers
                 to ensure there won't be duplicate registrations for them.
-                that will appear on the
-                <a v-bind:href="urls.meet_data">Quiz Meet Registration Data</a>
+                This data will appear on the
+                <a href="[% c.url_for('/meet/data') %]">Quiz Meet Registration Data</a>
                 page.
             </p>
 
@@ -339,10 +339,11 @@
                     <button v-on:click="add_nonquizzer(org_index)">Add a Non-Quizzer</button>
                 </caption>
             </table>
-            <p v-else><button v-on:click="add_nonquizzer(org_index)">Add a Non-Quizzer</button></p>
+            <p v-if="can_edit && ! org.nonquizzers.length"><button
+                v-on:click="add_nonquizzer(org_index)">Add a Non-Quizzer</button></p>
         </div>
 
-        <form>
+        <form v-if="reg.notes || can_edit">
             <fieldset class="notes">
                 <legend>Registration Notes and/or Requests</legend>
 

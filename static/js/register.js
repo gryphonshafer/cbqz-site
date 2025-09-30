@@ -34,7 +34,7 @@ fetch( new URL( url.pathname + '.json', url ) )
                     },
 
                     can_edit() {
-                        return ! this.meet.registration_closed;
+                        return this.admin_edit_override || ! this.meet.registration_closed;
                     },
                 },
 

@@ -30,7 +30,7 @@
 
             [% IF meet.is_current_next_meet AND user %]
                 <p class="right">
-                    [% UNLESS meet.registration_closed %]
+                    [% IF NOT meet.registration_closed OR c.session.was_user_id %]
                         <a href="[% c.url_for( path_part_prefix _ '/meet/register' ) %]"
                             class="button colored">Submit Registration</a>
                     [% END %]
