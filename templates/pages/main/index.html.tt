@@ -151,16 +151,19 @@
         Encouraging the most people to memorize the most verses of Scripture.
     </p>
     <p>
-        <a href="[% c.url_for('/about_CBQ.md') %]"
+        <a href="[% c.url_for( ( req_info.domain ? '//' _ req_info.domain : '/' ) _ '/about_CBQ.md' ) %]"
             class="button colored">Discover More About CBQ</a>
         <br>
         <a href="mailto:q@cbqz.org" class="button">Contact Us
             <span class="material-symbols-outlined inline">mail</span></a>
         <br>
-        <a href="[% c.url_for('/slack') %]" class="button">Join Our Slack Forum
+
+        <a href="[% c.url_for( ( req_info.domain ? '//' _ req_info.domain : '/' ) _ '/slack' ) %]"
+            class="button">Join Our Slack Forum
             <span class="material-symbols-outlined inline">forum</span></a>
         <br>
-        <a href="[% c.url_for('/FAQs.md') %]" class="button colored">Frequently Asked Questions</a>
+        <a href="[% c.url_for( ( req_info.domain ? '//' _ req_info.domain : '/' ) _ '/FAQs.md' ) %]"
+            class="button colored">Frequently Asked Questions</a>
     </p>
 
     <img src="[% c.url_for( photos.shift ) %]">

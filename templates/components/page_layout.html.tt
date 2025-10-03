@@ -49,7 +49,8 @@
         <a href="[% c.url_for( path_part_prefix _ '/org/list' ) %]" class="button">Orgs
             <span class="material-symbols-outlined inline">hive</span></a>
 
-        <a href="[% c.url_for('/slack') %]" class="button">Slack
+        <a href="[% c.url_for( ( req_info.domain ? '//' _ req_info.domain : '/' ) _ '/slack' ) %]"
+            class="button">Slack
             <span class="material-symbols-outlined inline">forum</span></a>
 
         <div class="login">
