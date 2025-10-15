@@ -1,7 +1,7 @@
 # Rule Book for Christian Bible Quizzing (CBQ)
 
-- Version: 1.5.2
-- Published: July 7, 2025
+- Version: 1.5.3
+- Published: October 15, 2025
 
 Bible Quizzing is a Christian sport in which teams of participants called quizzers compete on Scriptural recitation in matches called quizzes. Quizzing tournaments called meets consist of a set of quizzes. Quizzing seasons consist of a set of meets. Christian Bible Quizzing (CBQ) is the organization that oversees and supports Quizzing operations with the mission to encourage the most people to memorize the most verses of Scripture. This is the official rule book for CBQ competitions.
 
@@ -127,7 +127,7 @@ Should the quizzer open or consult any paper-based references without first call
 
 ##### 2.3.2.4. With Reference (R)
 
-If the quizzer calls for the “with reference” or “add a reference” subtype, the QM requires the quizzer provide a full reference including book, chapter, and verse number to be counted correct. The QM only considers the first full reference the quizzer provides.
+If the quizzer calls for the “with reference” or “add a reference” subtype, the QM requires the quizzer provide the complete reference to be counted correct, which consists of all book names, chapters, and verse numbers of the correct reference. The QM only considers the first complete reference the quizzer provides that exists in the quiz’s material. Ambiguous references are incomplete, not immediately erroneous.
 
 Quote base subtype queries automatically include the “with reference” quizzer-selected subtype, but the quizzer will not be required to provide the reference.
 
@@ -135,7 +135,7 @@ Quote base subtype queries automatically include the “with reference” quizze
 
 If the quizzer calls to “add a verse”, the single verse source is expanded by 1 additional verse, the immediate next verse from the material. It is invalid for a quizzer to call “add a verse” for the last verse in any book. If the quizzer additionally calls for “with reference”, the reference they provide must contain both verses.
 
-In the case of “phrase” or “chapter reference” base subtypes, calling for “add a verse” results in the response required expanding to include the whole verse and added verse.
+In the case of “phrase” or “chapter reference” base subtypes, calling for “add a verse” results in the response required expanding forward to include any remaining portion of the initial verse and the whole of the added verse.
 
 ### 2.4. Query Base Subtype and Translation Distribution
 
