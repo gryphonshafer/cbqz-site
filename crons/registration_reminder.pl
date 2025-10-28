@@ -12,7 +12,7 @@ my $email = Omniframe::Class::Email->new( type => 'registration_reminder' );
 $email->log_level('warning') unless ( $settings->{loud} );
 ( my $from_email = conf->get( qw( email from ) ) ) =~ s/^[^<]*<([^>]+)>.*$/$1/;
 
-for my $reminder_meet ( CBQ::Model::Region->new->reminder_meets->@* ) {
+for my $reminder_meet ( CBQ::Model::Region->new( abs_path => 1 )->reminder_meets->@* ) {
     my $coach_user_ids = ( $settings->{id} )
         ? [ $settings->{id} ]
         : $reg->coach_user_ids( $reminder_meet->{region}{id} );

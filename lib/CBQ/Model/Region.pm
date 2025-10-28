@@ -17,12 +17,17 @@ class_has regional_cms => conf->get('regional_cms');
 class_has docs_dir     => conf->get( qw( docs dir ) );
 class_has yaml_errors  => sub { [] };
 
+has abs_path => 0;
+
 my $time = Omniframe::Class::Time->new;
 my $bref = Bible::Reference->new( simplify => 1 );
 
 sub path ($self) {
     return unless ( $self->id );
-    my $path = Mojo::File::path( $self->regional_cms->{path_suffix} )->child( lc $self->data->{acronym} );
+    my $path = Mojo::File::path(
+        ( ( $self->abs_path ) ? conf->get( qw( config_app root_dir ) ) . '/' : '' ) .
+        $self->regional_cms->{path_suffix}
+    )->child( lc $self->data->{acronym} );
     return ( -r $path ) ? $path : undef;
 }
 
@@ -67,13 +72,16 @@ sub all_settings ($self) {
             -d $_->{path} and
             -f $_->{path}->child( $self->docs_dir . '/index.md' )
         }
-        map { +{
-            id             => $_->id,
-            key            => lc $_->data->{acronym},
-            name           => $_->data->{name},
-            path           => $_->path,
-            maybe settings => $_->settings,
-        } }
+        map {
+            $_->abs_path( $self->abs_path );
+            +{
+                id             => $_->id,
+                key            => lc $_->data->{acronym},
+                name           => $_->data->{name},
+                path           => $_->path,
+                maybe settings => $_->settings,
+            };
+        }
         $self->every->@*
     };
 }
@@ -319,13 +327,13 @@ sub cms_update ( $self, $settings ) {
     $self->notice('Region CMS update triggered');
     my $result;
 
-    my $regions = $self->every(
+    my $regions = [ map { $_->abs_path( $self->abs_path ) } $self->every(
         ( $settings->{all} ) ? {} : {
             acronym => $settings->{key},
             secret  => bcrypt( $settings->{secret} ),
             active  => 1,
         }
-    );
+    )->@* ];
 
     unless ( $regions->@* ) {
         $result->{success} = 0;
@@ -392,6 +400,36 @@ CBQ::Model::Region
 =head1 DESCRIPTION
 
 This class is the model for region objects and associated scalar and list methods.
+
+=head1 CLASS PROPERTIES
+
+=head2 active
+
+Support for the L<Omniframe::Role::Model> C<active> column support.
+
+=head2 regional_cms
+
+The regional CMS parent directory, which by default is pulled from the
+C<regional_cms> configuration setting.
+
+=head2 docs_dir
+
+The documents directory, which by default is pulled from the C<docs/dir>
+configuration setting.
+
+=head2 yaml_errors
+
+Arrayref into which we'll store any YAML errors.
+
+=head1 OBJECT PROPERTIES
+
+=head2 abs_path
+
+Defaults to false, but if set to true, the C<path> method will use an absolute
+path instead of a relative path. Because of some of the internal quirks in this
+(hastily-written) class, it needs to operate with a relative path when in a web
+app context, but it needs to operate with an absolute path when in a cron or
+otherwise not-in-the-app-root-dir context. This property is a hack around that.
 
 =head1 METHODS
 
