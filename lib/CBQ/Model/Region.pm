@@ -308,7 +308,7 @@ sub all_current_next_meets ($self) {
 
 sub reminder_meets ($self) {
     my $now = time;
-    return [ grep {
+    return [ sort { $a->{region}{key} cmp $b->{region}{key} } grep {
         not $_->{registration_closed}
         and $_->{deadline}
         and abs( $_->{reminder_time} - $now ) < 60 * 60 * 24

@@ -44,7 +44,7 @@
         </li>
     [% END %]
 
-    [% IF meet.region %]
+    [% IF meet.region AND NOT meet.region.ref %]
         <li>
             <b>Host Region:</b>
             [% host_region_key = meet.region.lower %]

@@ -1,8 +1,8 @@
 #!/usr/bin/env perl
 use exact -cli, -conf;
 use CBQ::Model::Region;
-use CBQ::Model::User;
 use CBQ::Model::Registration;
+use CBQ::Model::User;
 use Omniframe::Class::Email;
 
 my $settings = options( qw( id|i=i email|e=s force|f loud|l ) );
@@ -14,7 +14,7 @@ $email->log_level('warning') unless ( $settings->{loud} );
 
 for my $reminder_meet ( CBQ::Model::Region->new->reminder_meets->@* ) {
     my $coach_user_ids = ( $settings->{id} )
-        ? [ ( $settings->{loud} ) ]
+        ? [ $settings->{id} ]
         : $reg->coach_user_ids( $reminder_meet->{region}{id} );
     next unless (@$coach_user_ids);
 

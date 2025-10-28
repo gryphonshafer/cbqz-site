@@ -3,8 +3,8 @@
 <p>Greetings [% user.first_name %],</p>
 
 <p>
-    This is a registration data check reminder email sent prior to the
-    registration deadline for the following meet:
+    This is an automated registration data check reminder email sent prior to
+    the registration deadline for the following meet:
 </p>
 
 <p>
@@ -16,15 +16,16 @@
 [% PROCESS meet_info.html.tt %]
 
 <p>
-    Please review the following data. If it is correct, you don't need to do
-    anything. If it is incorrect, please update it via the
+    Please review the following data.
+    The below will be your registration data should you not make any changes
+    prior to the deadline.
+    If it is completely correct, you don't need to do anything. If it is not
+    completely correct, please update it via the
     [% url = 'https://' _ meet.region.key _ '.cbqz.org/meet/register' %]
     <b><a href="[% url %]">Meet Registration</a></b>
     web page.
     <i>(<a href="[% url %]">[% url %]</a>)</i>
-    The below will be your registration data should you not make any changes
-    prior to the deadline. If you have any questions about anything, please
-    email:
+    If you have any questions about anything, please email:
     <a href="mailto:[% from_email %]">[% from_email %]</a>
 </p>
 

@@ -2,6 +2,7 @@ package CBQ::Model::Registration;
 
 use exact -class, -conf;
 use Mojo::JSON qw( to_json from_json );
+use CBQ::Model::Org;
 
 with 'Omniframe::Role::Model';
 
@@ -228,6 +229,7 @@ sub coach_user_ids ( $self, $region_id ) {
                 FROM JSON_EACH( r_info, '$.user.roles' )
                 WHERE value = 'Coach'
             )
+        ORDER BY user_id
     })->run($region_id)->column;
 }
 
