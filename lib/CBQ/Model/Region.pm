@@ -320,6 +320,7 @@ sub reminder_meets ($self) {
         not $_->{registration_closed}
         and $_->{deadline}
         and abs( $_->{reminder_time} - $now ) < 60 * 60 * 24
+        and $_->{reminder_time} >= $now
     } $self->all_current_next_meets->@* ];
 }
 
