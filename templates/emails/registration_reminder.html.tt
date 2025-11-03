@@ -16,10 +16,8 @@
 [% PROCESS meet_info.html.tt %]
 
 <p>
-    Please review the following data.
-    The below will be your registration data should you not make any changes
-    prior to the deadline.
-    If it is completely correct, you don't need to do anything. If it is not
+    Please review the following data. The below will be your registration data
+    should you not make any changes prior to the deadline. If it is not
     completely correct, please update it via the
     [% url = 'https://' _ meet.region.key _ '.cbqz.org/meet/register' %]
     <b><a href="[% url %]">Meet Registration</a></b>
@@ -52,6 +50,7 @@
                                                     quizzer.housing ? 'Yes' : 'No' %]</li>[% END %]
                                                 [% IF meet.host.lunch   %]<li><i>Lunch:</i> [%
                                                     quizzer.lunch ? 'Yes' : 'No' %]</li>[% END %]
+                                                <li><i>Verses:</i> [% quizzer.verses %]</li>
                                             </ul>
                                         </li>
                                     [% END %]

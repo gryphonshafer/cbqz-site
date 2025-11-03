@@ -172,6 +172,7 @@ sub org_and_region_ids ($self) {
                 FROM user_org AS uo
                 JOIN org AS o USING (org_id)
                 WHERE uo.user_id = ? AND o.active
+                ORDER BY o.name
             })->run( $self->id )->column
         ],
         regions => [
@@ -180,6 +181,7 @@ sub org_and_region_ids ($self) {
                 FROM user_region AS ur
                 JOIN region AS r USING (region_id)
                 WHERE ur.user_id = ? AND r.active
+                ORDER BY r.name
             })->run( $self->id )->column
         ],
     };

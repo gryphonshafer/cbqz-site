@@ -32,8 +32,8 @@ sub get_reg ( $self, $region_id, $user ) {
                 SELECT
                     r.user_id,
                     r.info,
-                    r.created,
-                    ro.org_id
+                    ro.org_id,
+                    r.created
                 FROM registration AS r
                 LEFT JOIN registration_org AS ro USING (registration_id)
                 WHERE
@@ -43,11 +43,15 @@ sub get_reg ( $self, $region_id, $user ) {
                         ) . q{ ) OR
                         ( ro.registration_id IS NULL AND user_id = ? )
                     )
-                ORDER BY created DESC
             )
-            SELECT *
+            SELECT
+                user_id,
+                info,
+                org_id,
+                MAX(created) AS created
             FROM reg_rows
-            GROUP BY org_id
+            GROUP BY org_id, user_id
+            ORDER BY created DESC
         })->run(
             $region_id,
             $user->id,
@@ -69,26 +73,33 @@ sub get_reg ( $self, $region_id, $user ) {
         },
     };
 
-    $reg->{orgs} //= [
-        map { +{
-            org_id      => $_->{org_id},
-            name        => $_->{name},
-            acronym     => $_->{acronym},
-            teams       => [],
-            nonquizzers => [],
-        } }
-        CBQ::Model::Org->new->every_data({
-            org_id => $user->org_and_region_ids->{orgs},
-        })->@*
-    ];
+    $reg->{orgs} = [
+        grep { defined }
+        map {
+            my $org_id = $_;
+            my $reg;
 
-    for my $reg_row ( grep { defined $_->{org_id} } @$grouped_reg_rows ) {
-        my ($org_block) = grep { $reg_row->{org_id} == $_->{org_id} } $reg_row->{info}{orgs}->@*;
-        if ($org_block) {
-            $reg->{orgs} = [ grep { $reg_row->{org_id} != $_->{org_id} } $reg->{orgs}->@* ];
-            push( @{ $reg->{orgs} }, $org_block );
+            my ($row) = grep { $_->{org_id} and $_->{org_id} == $org_id } @$grouped_reg_rows;
+            ($reg)    = grep { $_->{org_id} and $_->{org_id} == $org_id } $row->{info}{orgs}->@* if ($row);
+
+            unless ($reg) {
+                try {
+                    my $org_data = CBQ::Model::Org->new->load($org_id)->data;
+                    $reg = {
+                        org_id      => $org_data->{org_id},
+                        name        => $org_data->{name},
+                        acronym     => $org_data->{acronym},
+                        teams       => [],
+                        nonquizzers => [],
+                    };
+                }
+                catch ($e) {}
+            }
+
+            $reg;
         }
-    }
+        $user->org_and_region_ids->{orgs}->@*
+    ];
 
     return $reg;
 }
@@ -207,7 +218,6 @@ sub coach_user_ids ( $self, $region_id ) {
                 WHERE
                     ur.region_id = ? AND
                     u.active
-                ORDER BY r.created DESC
             )
             SELECT
                 user_id,
@@ -219,15 +229,21 @@ sub coach_user_ids ( $self, $region_id ) {
         SELECT user_id
         FROM grouped_user_data
         WHERE
-            EXISTS (
-                SELECT 1
-                FROM JSON_EACH( u_info, '$.roles' )
-                WHERE value = 'Coach'
-            ) OR
-            EXISTS (
-                SELECT 1
-                FROM JSON_EACH( r_info, '$.user.roles' )
-                WHERE value = 'Coach'
+            (
+                JSON_EXTRACT( u_info, '$.dormant' ) IS NULL OR
+                JSON_EXTRACT( u_info, '$.dormant' ) != 1
+            )
+            AND (
+                EXISTS (
+                    SELECT 1
+                    FROM JSON_EACH( u_info, '$.roles' )
+                    WHERE value = 'Coach'
+                ) OR
+                EXISTS (
+                    SELECT 1
+                    FROM JSON_EACH( r_info, '$.user.roles' )
+                    WHERE value = 'Coach'
+                )
             )
         ORDER BY user_id
     })->run($region_id)->column;
