@@ -269,7 +269,7 @@ sub logout ($self) {
 }
 
 sub list ($self) {
-    my $users  = CBQ::Model::User->new->every;
+    my $users  = [ grep { not $_->data->{info}{dormant} } CBQ::Model::User->new->every->@* ];
     my $region = $self->stash->{req_info}{region};
 
     $users = [ grep {
