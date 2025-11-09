@@ -250,7 +250,7 @@
                     </tbody>
                 </table>
 
-                <h3>Registrant Details</h3>
+                <h3>Attending Registrant Details</h3>
                 [% FOR registrant IN reg_data.registrants %]
                     <ul>
                         <li>
@@ -282,6 +282,47 @@
                                 [% IF registrant.info.notes %]
                                     <li><i>Notes:</i> <b>[% registrant.info.notes %]</b></li>
                                 [% END %]
+                                <li>
+                                    <i>Last Updated:</i>
+                                    [% date.format( registrant.created, '%a, %b %-d, %Y at %l:%M %p' ) %]
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                [% END %]
+            [% END %]
+
+            [% IF reg_data.notes_from_not_attending_registrants %]
+                <h3>Non-Attending Registrant Details</h3>
+                [% FOR registrant IN reg_data.notes_from_not_attending_registrants %]
+                    <ul>
+                        <li>
+                            <b>[% registrant.name %]</b>
+                            <ul>
+                                [% IF registrant.info.orgs.size %]
+                                    <li>
+                                        [% FOR org IN registrant.info.orgs %]
+                                            [% org.name %] ([% org.acronym %])[% UNLESS
+                                                loop.last %], [% END %]
+                                        [% END %]
+                                    </li>
+                                [% END %]
+                                <li>
+                                    [% mailto = registrant.name _ ' ' _ '<' _ registrant.email _ '>' %]
+                                    <a href="mailto:[% mailto %]">[% registrant.email %]</a>;
+                                    <a href="tel:[% registrant.phone %]">[%
+                                        registrant.phone.substr( 0, 3 ) _ '-' _
+                                        registrant.phone.substr( 3, 3 ) _ '-' _
+                                        registrant.phone.substr( 6, 4 )
+                                    %]</a>
+                                </li>
+                                [% IF registrant.info.notes %]
+                                    <li><i>Notes:</i> <b>[% registrant.info.notes %]</b></li>
+                                [% END %]
+                                <li>
+                                    <i>Last Updated:</i>
+                                    [% date.format( registrant.created, '%a, %b %-d, %Y at %l:%M %p' ) %]
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -368,7 +409,14 @@
                     <tbody>
                         [% FOR org IN reg_data.orgs_by_reg_date %]
                             [% IF org.name %]
-                                <tr>
+                                <tr class="[%
+                                    last_updated_time = date.format( org.created, '%s' );
+                                    (
+                                        last_updated_time >= meet.reminder_time AND
+                                        last_updated_time <= meet.deadline_time
+                                    ) ? 'current' :
+                                    ( last_updated_time > meet.deadline_time ) ? 'past_due' : 'legacy';
+                                %]">
                                     <td>[% org.name %]</td>
                                     <td>[% org.acronym %]</td>
                                     <td>[% date.format( org.created, '%a, %b %-d, %Y at %l:%M %p' ) %]</td>

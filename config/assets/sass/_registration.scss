@@ -116,4 +116,12 @@ div#meet_data {
             display: none;
         }
     }
+
+    tr.current td {
+        background-color: #cfc;
+    }
+
+    tr.past_due td {
+        background-color: #fcc;
+    }
 }

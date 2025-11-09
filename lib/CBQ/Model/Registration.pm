@@ -133,11 +133,17 @@ sub get_data ( $self, @region_keys ) {
         })->run->all({})->@*
     ];
 
-    my $registrants = {
-        map { $_->{user_id} => $_ }
+    my $registrants = { map { $_->{user_id} => $_ } reverse @$reg_data };
+    my @registrants = values %$registrants;
+    $registrants    = [
+        sort { $a->{name} cmp $b->{name} }
         grep { $_->{info}{user}{attend} }
-        reverse @$reg_data
-    };
+        @registrants
+    ];
+    my $notes_from_not_attending_registrants = [
+        grep { not $_->{info}{user}{attend} and $_->{info}{notes} }
+        @registrants
+    ];
 
     my $seen;
     $reg_data = [
@@ -167,7 +173,7 @@ sub get_data ( $self, @region_keys ) {
 
             $org;
         }
-        grep { $_->{org_id} }
+        grep { $_->{org_id} and $_->{info}{user}{attend} }
         @$reg_data
     ];
 
@@ -190,7 +196,7 @@ sub get_data ( $self, @region_keys ) {
     }
 
     return {
-        registrants        => [ sort { $a->{name} cmp $b->{name} } values %$registrants ],
+        registrants        => $registrants,
         orgs               => $orgs,
         quizzers_by_verses => [
             sort {
@@ -200,7 +206,8 @@ sub get_data ( $self, @region_keys ) {
             }
             @$quizzers_by_verses
         ],
-        orgs_by_reg_date => [ sort { $b->{created} cmp $a->{created} } @$orgs ],
+        orgs_by_reg_date                     => [ sort { $b->{created} cmp $a->{created} } @$orgs ],
+        notes_from_not_attending_registrants => $notes_from_not_attending_registrants,
     };
 }
 
