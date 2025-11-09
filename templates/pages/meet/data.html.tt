@@ -292,7 +292,7 @@
                 [% END %]
             [% END %]
 
-            [% IF reg_data.notes_from_not_attending_registrants %]
+            [% IF reg_data.notes_from_not_attending_registrants.size > 0 %]
                 <h3>Non-Attending Registrant Details</h3>
                 [% FOR registrant IN reg_data.notes_from_not_attending_registrants %]
                     <ul>
