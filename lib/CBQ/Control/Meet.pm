@@ -6,14 +6,15 @@ use CBQ::Model::Registration;
 use Text::CSV_XS 'csv';
 use Mojo::Util 'slugify';
 
-sub _current_season ($self) {
+sub _current_season ( $self, $time = undef ) {
     return CBQ::Model::Region->new->current_season(
-        $self->stash->{req_info}{region}{settings}{seasons}
+        $self->stash->{req_info}{region}{settings}{seasons},
+        $time,
     );
 }
 
-sub _current_next_meet ($self) {
-    my ($current_next_meet) = grep { $_->{is_current_next_meet} } $self->_current_season->{meets}->@*;
+sub _current_next_meet ( $self, $time = undef ) {
+    my ($current_next_meet) = grep { $_->{is_current_next_meet} } $self->_current_season($time)->{meets}->@*;
     return $current_next_meet;
 }
 
@@ -113,7 +114,8 @@ sub data ($self) {
         my ($next_meet) =
             grep { $_->{is_current_next_meet} }
             $region->current_season(
-                $self->stash->{req_info}{regions}{$_}{settings}{seasons}
+                $self->stash->{req_info}{regions}{$_}{settings}{seasons},
+                $self->param('time'),
             )->{meets}->@*;
         $_ => $next_meet;
     } keys %{ $self->stash->{req_info}{regions} } };
@@ -139,8 +141,9 @@ sub data ($self) {
     } keys %$next_meets;
 
     my $data = {
-        meet     => $self->_current_next_meet,
+        meet     => $self->_current_next_meet( $self->param('time') ),
         reg_data => CBQ::Model::Registration->new->get_data(
+            $self->param('time'),
             $self->stash('req_info')->{region}{key},
             @other_regions,
         ),

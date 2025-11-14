@@ -266,15 +266,16 @@ sub all_settings_processed ( $self, $all_settings = undef ) {
     return $all_settings;
 }
 
-sub current_season ( $self, $seasons_or_region ) {
+sub current_season ( $self, $seasons_or_region, $time = undef ) {
+    $time //= time;
+
     my $seasons = ( ref $seasons_or_region )
         ? $seasons_or_region
         : $self->all_settings_processed->{ lc $seasons_or_region }{settings}{seasons};
 
-    my $now = time;
     my ($current_season) =
         sort { $b->{stop_time} <=> $a->{stop_time} }
-        grep { $_->{start_time} <= $now and $_->{stop_time} >= $now }
+        grep { $_->{start_time} <= $time and $_->{stop_time} >= $time }
         $seasons->@*;
 
     ($current_season) = sort { $b->{start_time} <=> $a->{start_time} } $seasons->@* unless ($current_season);
@@ -283,11 +284,11 @@ sub current_season ( $self, $seasons_or_region ) {
     for my $meet ( $current_season->{meets}->@* ) {
         delete $meet->{$_} for ( qw( is_current_next_meet registration_closed ) );
 
-        if ( $meet->{stop_time} > $now and not $seen_current_next_meet ) {
+        if ( $meet->{stop_time} >= $time and not $seen_current_next_meet ) {
             $seen_current_next_meet       = 1;
             $meet->{is_current_next_meet} = 1;
             $meet->{registration_closed}  = 1
-                if ( not $meet->{deadline_time} or $meet->{deadline_time} < $now );
+                if ( not $meet->{deadline_time} or $meet->{deadline_time} < $time );
         }
     }
 

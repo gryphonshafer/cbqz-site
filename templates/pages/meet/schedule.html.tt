@@ -28,6 +28,14 @@
 
             [% PROCESS meet_info.html.tt %]
 
+            [% IF meet.deadline AND meet.stop_time < date.now %]
+                <p class="legacy_meet_data">
+                    <a href="[%
+                        c.url_for( path_part_prefix _ '/meet/data' ).query( time => meet.stop_time )
+                    %]">View Legacy Meet Registration Data</a>
+                </p>
+            [% END %]
+
             [% IF meet.is_current_next_meet AND user %]
                 <p class="right">
                     [% IF NOT meet.registration_closed OR c.session.was_user_id %]

@@ -104,7 +104,7 @@ sub get_reg ( $self, $region_id, $user ) {
     return $reg;
 }
 
-sub get_data ( $self, @region_keys ) {
+sub get_data ( $self, $time = undef, @region_keys ) {
     my $reg_data = [
         map {
             $_->{info} = $self->thaw($_)->{info};
@@ -129,6 +129,7 @@ sub get_data ( $self, @region_keys ) {
                     q{ )
                 )
                 AND u.active
+                } . ( ($time) ? q{ AND STRFTIME( '%s', r.created ) <= } . $self->dq->quote($time) : '' ) . q{
             ORDER BY r.created DESC
         })->run->all({})->@*
     ];
