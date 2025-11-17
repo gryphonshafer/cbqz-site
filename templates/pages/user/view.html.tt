@@ -24,7 +24,7 @@
     </li>
     <li>
         <b>Phone:</b>
-        [% view_user.data.phone %]
+        [% link_phone( view_user.data.phone ) %]
     </li>
     [% IF view_user.roles.size %]
         <li>

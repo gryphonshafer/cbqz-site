@@ -1,4 +1,6 @@
 [%
+    PROCESS macros;
+
     page.js.defer.push('user_list');
 
     FOR this_user IN data.users;
@@ -53,9 +55,7 @@
                         </td>
                     [% END %]
                     [% IF data.show_phone %]
-                        <td>
-                            [% this_user.phone %]
-                        </td>
+                        <td>[% link_phone( this_user.phone ) %]</td>
                     [% END %]
                     [% IF data.show_orgs %]
                         <td>
