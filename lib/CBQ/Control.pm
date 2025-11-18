@@ -146,7 +146,10 @@ sub startup ($self) {
             not $regions->{ $req_info->{subdomain} // '' }
         ) ? 1 : 0;
 
-        $c->app->sessions->cookie_domain( ( $req_info->{domain} ) ? '.' . $req_info->{domain} : undef );
+        ( $req_info->{domain_sans_port} = $req_info->{domain} ) =~ s/:\d+$// if ( $req_info->{domain} );
+        $c->app->sessions->cookie_domain(
+            ( $req_info->{domain_sans_port} ) ? '.' . $req_info->{domain_sans_port} : undef
+        );
 
         shift @{ $c->req->url->path->parts } if ( $req_info->{region} and $req_info->{path_part} );
 
