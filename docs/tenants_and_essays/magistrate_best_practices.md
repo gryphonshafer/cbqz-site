@@ -84,6 +84,14 @@ If there’s ruling that seems wrong to a QM, the QM should rule that way anyway
 
 Quizzers with time remaining on their countdown timers are not incorrect if they provide incomplete information. For example, a quizzer saying “Luke 3:1” instead of “Luke 3:1-2” after calling for add a verse with reference is not incorrect; they are simply incomplete. If, however, a quizzer’s response is incomplete once their countdown timer reaches 0, the quizzer is incorrect.
 
+### Replacing Queries
+
+QMs should only replace a query when there’s a breach of the rules; however, when there’s a breach of the rules, QMs should replace the query.
+
+Replacing a query is roughly the CBQ equivalent to a court judge calling a mistrial. It’s generally an action of last resort, used only when there’s a pollution of process, a breach of the rules. In CBQ, the QM is required to replace the query if there’s a breach of the rules, like if the QM calls someone correct or incorrect who wasn’t yet correct or incorrect and the timer hadn’t yet run out.
+
+A quizzer being “thrown off” or distracted is always totally irrelevant. Breaching the rules is the only criteria. If a QM hiccups during a prompt recitation, the QM shouldn’t replace the query. However, if a QM reads the prompt incorrectly (for example, says a different word than what’s written), then calls on a quizzer, then realizes the mistake as the quizzer is responding, the QM should replace the query immediately. It’s irrelevant if the quizzer would have responded correctly or not.
+
 ### Scores
 
 Magistrates, as ambassadors, should detail all scoring events where there are team points or whenever a quizzer earns more than 2 points. For example, “Synonymous 2, with reference +1, add a verse +1, third-quizzer bonus +2, follow-on bonus +1; for a total of 7.”
