@@ -86,11 +86,9 @@ Quizzers with time remaining on their countdown timers are not incorrect if they
 
 ### Replacing Queries
 
-QMs should only replace a query when there’s a breach of the rules; however, when there’s a breach of the rules, QMs should replace the query.
+QMs should only replace a query when there’s a breach of the rules; however, when there’s a breach of the rules, QMs should replace the query. Replacing a query is roughly the CBQ equivalent to a court judge calling a mistrial. It’s generally an action of last resort, used only when there’s a pollution of process, a breach of the rules.
 
-Replacing a query is roughly the CBQ equivalent to a court judge calling a mistrial. It’s generally an action of last resort, used only when there’s a pollution of process, a breach of the rules. In CBQ, the QM is required to replace the query if there’s a breach of the rules, like if the QM calls someone correct or incorrect who wasn’t yet correct or incorrect and the timer hadn’t yet run out.
-
-A quizzer being “thrown off” or distracted is always totally irrelevant. Breaching the rules is the only criteria. If a QM hiccups during a prompt recitation, the QM shouldn’t replace the query. However, if a QM reads the prompt incorrectly (for example, says a different word than what’s written), then calls on a quizzer, then realizes the mistake as the quizzer is responding, the QM should replace the query immediately. It’s irrelevant if the quizzer would have responded correctly or not.
+A quizzer being “thrown off” or distracted is always irrelevant; breaching the rules is the only criteria. If a QM hiccups or varies wildly their pace during a prompt recitation, the QM shouldn’t replace the query. However, if a QM reads the prompt incorrectly (for example, says a different word than what’s written), then calls on a quizzer, then realizes the mistake as the quizzer is responding, the QM should replace the query immediately. It’s irrelevant if the quizzer would have responded correctly or not.
 
 ### Scores
 
