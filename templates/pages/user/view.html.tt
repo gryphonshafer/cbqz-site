@@ -20,7 +20,8 @@
     </li>
     <li>
         <b>Email:</b>
-        <a href="mailto:[% view_user.data.email %]">[% view_user.data.email %]</a>
+        [% mailto = full_name _ ' ' _ '<' _ view_user.data.email _ '>' %]
+        <a href="mailto:[% mailto %]">[% view_user.data.email %]</a>
     </li>
     <li>
         <b>Phone:</b>
