@@ -109,7 +109,7 @@ sub startup ($self) {
     };
 
     $self->hook( before_dispatch => sub ($c) {
-        lc( $c->req->url->to_abs->host_port ) =~ /(?:(?<subdomain>[^\.]+)\.)?(?<domain>[^\.]+\.[^\.]+)$/;
+        lc( $c->req->url->to_abs->host_port // '' ) =~ /(?:(?<subdomain>[^\.]+)\.)?(?<domain>[^\.]+\.[^\.]+)$/;
         my $req_info = {%+};
 
         $req_info->{regions} = $regions;
