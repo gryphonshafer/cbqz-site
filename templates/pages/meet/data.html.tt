@@ -29,7 +29,7 @@
                 END;
                 FOR team IN org.teams;
                     totals.teams = totals.teams + 1;
-                    FOR quizzer IN team;
+                    FOR quizzer IN team.quizzers;
                         totals.quizzers = totals.quizzers + 1;
                         IF quizzer.rookie;
                             totals.rookies = totals.rookies + 1;
@@ -114,11 +114,16 @@
                         [% FOR org IN reg_data.orgs %]
                             [% FOR team IN org.teams %]
                                 [% team_number = loop.count %]
-                                [% FOR quizzer IN team %]
+                                [% FOR quizzer IN team.quizzers %]
                                     <tr>
                                         <td>
-                                            <abbr title="[% org.name %]">[% org.acronym %]</abbr>
-                                            [% team_number %]
+                                            <abbr title="[%
+                                                org.name _ ' ' _ team_number _ (
+                                                    ( team.nickname ) ? ' - ' _ team.nickname : ''
+                                                )
+                                            %]">
+                                                [% org.acronym %] [% team_number %]
+                                            </abbr>
                                         </td>
                                         <td>[% quizzer.name  %]</td>
                                         <td>[% quizzer.bible %]</td>
@@ -143,8 +148,9 @@
                             [% team_number = loop.count %]
                             <p>
                                 <b><abbr title="[% org.name %]">[% org.acronym %]</abbr> [% team_number %]</b>
+                                [% IF team.nickname %]<i> - [% team.nickname %]</i>[% END %]
                                 <br>
-                                [% FOR quizzer IN team %]
+                                [% FOR quizzer IN team.quizzers %]
                                     [% quizzer.name  %]
                                     [% quizzer.bible %]
                                     [% quizzer.rookie ? '(Rookie)' : '' %]
@@ -156,20 +162,13 @@
                 </div>
 
                 <div id="quizzers_teams" class="quizzer_display hidden box">
-                    [%
-                        teams = [];
-                        FOR org IN reg_data.orgs;
-                            FOR team IN org.teams;
-                                teams.push({
-                                    name    => org.name,
-                                    acronym => org.acronym,
-                                    number  => loop.count,
-                                });
-                            END;
-                        END;
-                    %]
-                    [% FOR team IN teams %]
-                        <abbr title="[% team.name %]">[% team.acronym %]</abbr> [% team.number %]
+                    [% FOR org IN reg_data.orgs %]
+                        [% FOR team IN org.teams %]
+                            [% team_number = loop.count %]
+                            <abbr title="[% org.name %]">[% org.acronym %]</abbr> [% team_number %]
+                            [% IF team.nickname %]<i> - [% team.nickname %]</i>[% END %]
+                            [% UNLESS loop.last %]<br>[% END %]
+                        [% END %]
                         [% UNLESS loop.last %]<br>[% END %]
                     [% END %]
                 </div>

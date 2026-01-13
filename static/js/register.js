@@ -40,7 +40,7 @@ fetch( new URL( url.pathname + '.json', url ) )
 
                 methods: {
                     add_team(org) {
-                        var team = [];
+                        var team = { quizzers: [] };
                         org.teams.push(team);
                         this.add_quizzer(team);
                     },
@@ -54,41 +54,41 @@ fetch( new URL( url.pathname + '.json', url ) )
                             lunch  : true,
                             verses : 0,
                         };
-                        team.push(quizzer);
+                        team.quizzers.push(quizzer);
                     },
 
                     reorder( direction, org_index, team_index, person_index ) {
                         const teams   = this.reg.orgs[org_index].teams;
-                        const element = teams[team_index].splice( person_index, 1 )[0];
+                        const element = teams[team_index].quizzers.splice( person_index, 1 )[0];
 
                         if ( direction == -1 ) {
                             if ( person_index != 0 ) {
-                                teams[team_index].splice( person_index - 1, 0, element );
+                                teams[team_index].quizzers.splice( person_index - 1, 0, element );
                             }
                             else {
                                 var target = team_index - 1;
                                 if ( target < 0 ) target = teams.length - 1;
-                                teams[target].push(element);
+                                teams[target].quizzers.push(element);
                             }
                         }
                         else if ( direction == 1 ) {
-                            if ( person_index != teams[team_index].length ) {
-                                teams[team_index].splice( person_index + 1, 0, element );
+                            if ( person_index != teams[team_index].quizzers.length ) {
+                                teams[team_index].quizzers.splice( person_index + 1, 0, element );
                             }
                             else {
                                 var target = team_index + 1;
                                 if ( target > teams.length - 1 ) target = 0;
-                                teams[target].unshift(element);
+                                teams[target].quizzers.unshift(element);
                             }
                         }
 
-                        if ( teams[team_index].length == 0 ) teams.splice( team_index, 1 );
+                        if ( teams[team_index].quizzers.length == 0 ) teams.splice( team_index, 1 );
                     },
 
                     delete_quizzer( org_index, team_index, person_index ) {
                         const teams = this.reg.orgs[org_index].teams;
-                        teams[team_index].splice( person_index, 1 );
-                        if ( teams[team_index].length == 0 ) teams.splice( team_index, 1 );
+                        teams[team_index].quizzers.splice( person_index, 1 );
+                        if ( teams[team_index].quizzers.length == 0 ) teams.splice( team_index, 1 );
                     },
 
                     add_nonquizzer(org_index) {

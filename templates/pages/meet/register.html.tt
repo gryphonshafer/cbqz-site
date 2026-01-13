@@ -32,17 +32,21 @@
                 <template v-if="reg.user.attend == 1">
                     <fieldset class="left">
                         <legend>Your Meet Roles</legend>
-                        <p>
-                            <template v-if="can_edit">
+                        <template v-if="can_edit">
+                            <p>
                                 <label v-for="role in roles">
                                     <input type="checkbox" v-bind:value="role" v-model="reg.user.roles">
                                     {{ role }}
                                 </label>
-                            </template>
-                            <template v-else>
-                                <ul><li v-for="role in roles">{{ reg.user.role }}</li></ul>
-                            </template>
-                        </p>
+                            </p>
+                        </template>
+                        <template v-else>
+                            <ul>
+                                <template v-for="role in roles">
+                                    <li v-if="reg.user.roles.includes(role)">{{ role }}</li>
+                                </template>
+                            </ul>
+                        </template>
                     </fieldset>
 
                     <fieldset class="left">
@@ -125,7 +129,19 @@
             <div v-for="( team, team_index ) in org.teams">
                 <h4>{{ org.acronym }} {{ team_index + 1 }}</h4>
 
-                <table>
+                <p>
+                    <template v-if="can_edit">
+                        <b>Nickname:</b>
+                        <input type="text" class="nickname" v-model="team.nickname">
+                        <i>(Optional)</i>
+                    </template>
+                    <template v-else>
+                        <b>Nickname:</b>
+                        {{ team.nickname }}
+                    </template>
+                </p>
+
+                <table v-bind:class="{ cannot_edit: ! can_edit }">
                     <thead>
                         <tr>
                             <th v-if="can_edit"></th>
@@ -156,7 +172,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="( quizzer, person_index ) in team"
+                        <tr v-for="( quizzer, person_index ) in team.quizzers"
                             v-bind:class="{ inactive: ! quizzer.attend }"
                         >
                             <td v-if="can_edit">
@@ -231,7 +247,7 @@
                                     {{ ( quizzer.lunch ) ? "Yes" : "No" }}
                                 </template>
                             </td>
-                            <td>
+                            <td class="right">
                                 <template v-if="can_edit">
                                     <input type="text" name="verses" v-model="quizzer.verses">
                                 </template>
@@ -273,7 +289,7 @@
                 <li v-if="meet.host.lunch"><b>Ln:</b> Lunch</li>
             </ul>
 
-            <table v-if="org.nonquizzers.length">
+            <table v-if="org.nonquizzers.length" v-bind:class="{ cannot_edit: ! can_edit }">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -344,14 +360,14 @@
         </div>
 
         <form v-if="reg.notes || can_edit">
-            <fieldset class="notes">
+            <fieldset v-bind:class="{ notes: true, cannot_edit: ! can_edit }">
                 <legend>Registration Notes and/or Requests</legend>
 
                 <template v-if="can_edit">
                     <textarea v-model="reg.notes"></textarea>
                 </template>
                 <template v-else>
-                    <b>{{ reg.notes }}</b>
+                    {{ reg.notes }}
                 </template>
             </fieldset>
         </form>

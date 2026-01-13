@@ -21,7 +21,16 @@ div#register {
                 width : calc( 100% - 0.75em );
                 height: 5em;
             }
+
+            &.cannot_edit {
+                text-align: left;
+            }
         }
+    }
+
+    input.nickname {
+        margin-left : 0.5em;
+        margin-right: 0.5em;
     }
 
     .show_if_small {
@@ -83,6 +92,12 @@ div#register {
             margin-top: 0.5em;
             text-align: right;
             font-style: normal;
+        }
+
+        &.cannot_edit {
+            tbody tr td {
+                padding: 0 0.25em;
+            }
         }
     }
 

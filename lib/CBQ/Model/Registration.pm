@@ -95,6 +95,14 @@ sub get_reg ( $self, $region_id, $user ) {
                 }
                 catch ($e) {}
             }
+            # migrate any v1 reg data instance to v2 structure
+            elsif (
+                ref $reg->{teams} eq 'ARRAY' and
+                @{ $reg->{teams} } and
+                ref $reg->{teams}[0] eq 'ARRAY'
+            ) {
+                $_ = { quizzers => $_ } for ( @{ $reg->{teams} } );
+            }
 
             $reg;
         }
@@ -161,9 +169,21 @@ sub get_data ( $self, $time = undef, @region_keys ) {
             my ($org) = grep { $org_id == $_->{org_id} } $_->{info}{orgs}->@*;
             $org->{created} = $_->{created};
 
+            # migrate any v1 reg data instance to v2 structure
+            if (
+                ref $org->{teams} eq 'ARRAY' and
+                @{ $org->{teams} } and
+                ref $org->{teams}[0] eq 'ARRAY'
+            ) {
+                $_ = { quizzers => $_ } for ( @{ $org->{teams} } );
+            }
+
             $org->{teams} = [
-                grep { @$_ }
-                map { [ grep { $_->{attend} } @$_ ] }
+                grep { @{ $_->{quizzers} } }
+                map {
+                    $_->{quizzers} = [ grep { $_->{attend} } @{ $_->{quizzers} || [] } ];
+                    $_;
+                }
                 $org->{teams}->@*
             ];
 
@@ -183,13 +203,14 @@ sub get_data ( $self, $time = undef, @region_keys ) {
         my $number = 0;
         for my $team ( $org->{teams}->@* ) {
             $number++;
-            for my $quizzer (@$team) {
+            for my $quizzer ( @{ $team->{quizzers} || [] } ) {
                 push( @$quizzers_by_verses, {
                     %$quizzer,
                     team => {
-                        name    => $org->{name},
-                        acronym => $org->{acronym},
-                        number  => $number,
+                        name           => $org->{name},
+                        acronym        => $org->{acronym},
+                        number         => $number,
+                        maybe nickname => $team->{nickname},
                     },
                 } );
             }
