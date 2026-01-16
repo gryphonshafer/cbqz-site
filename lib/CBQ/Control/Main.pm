@@ -2,8 +2,9 @@ package CBQ::Control::Main;
 
 use exact -conf, 'Mojolicious::Controller';
 use CBQ::Model::Region;
+use DBD::SQLite::Constants 'SQLITE_OPEN_READONLY';
 use Mojo::DOM;
-use Mojo::File 'path';
+use Mojo::File qw( path tempfile );
 use Omniframe::Class::Time;
 
 sub index ($self) {
@@ -186,15 +187,30 @@ sub order_lms ($self) {
 }
 
 sub download ($self) {
-    my $file = path( conf->get( qw( config_app root_dir ) ) )->child( conf->get( qw( database file ) ) );
+    try{
+        my $dbh  = $self->stash('user')->dq->clone({ sqlite_open_flags => SQLITE_OPEN_READONLY });
+        my $temp = tempfile( SUFFIX => '.sqlite' );
 
-    $self->res->headers->header(@$_) for (
-        [ 'Content-Type'        => 'application/x-sqlite'                           ],
-        [ 'Content-Disposition' => 'attachment; filename="' . $file->basename . '"' ],
-    );
+        $dbh->sqlite_backup_to_file($temp);
+        $dbh->disconnect;
 
-    $self->res->body( $file->slurp );
-    $self->rendered;
+        $self->res->headers->content_type('application/x-sqlite');
+        $self->res->headers->content_disposition(
+            'attachment; filename="' . path( $dbh->{Name} )->basename . '"'
+        );
+        $self->res->body( $temp->slurp );
+        $self->rendered;
+    }
+    catch ($e) {
+        $self->notice( 'Download database error: ' . $e );
+        $self->flash(
+            memo => {
+                class   => 'error',
+                message => 'There was a problem preparing or downloading the database',
+            },
+        );
+        $self->redirect_to('/user/tools');
+    }
 }
 
 1;
