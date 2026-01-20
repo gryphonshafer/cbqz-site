@@ -315,13 +315,16 @@ sub all_current_next_meets ($self) {
     ];
 }
 
-sub reminder_meets ($self) {
+sub reminder_meets ( $self, $ignore = {} ) {
     my $now = time;
     return [ sort { $a->{region}{key} cmp $b->{region}{key} } grep {
-        not $_->{registration_closed}
-        and $_->{deadline}
-        and abs( $_->{reminder_time} - $now ) < 60 * 60 * 24
-        and $_->{reminder_time} >= $now
+        ( not $_->{registration_closed} or $ignore->{registration_closed} )
+        and ( $_->{deadline} or $ignore->{deadline} )
+        and (
+            abs( $_->{reminder_time} - $now ) < 60 * 60 * 24
+            and $_->{reminder_time} >= $now
+            or $ignore->{reminder_time}
+        )
     } $self->all_current_next_meets->@* ];
 }
 

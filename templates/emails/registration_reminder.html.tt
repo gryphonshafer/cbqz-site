@@ -38,8 +38,9 @@
                         [% FOR team IN org.teams %]
                             <li>
                                 <b>[% org.acronym %] [% loop.count %]</b>
+                                [% IF team.nickname %]<i> - [% team.nickname %]</i>[% END %]
                                 <ul>
-                                    [% FOR quizzer IN team %]
+                                    [% FOR quizzer IN team.quizzers %]
                                         <li>
                                             <b>[% quizzer.name %]</b>
                                             <ul>

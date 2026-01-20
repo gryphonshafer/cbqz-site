@@ -12,23 +12,30 @@ my $email = Omniframe::Class::Email->new( type => 'registration_reminder' );
 $email->log_level('warning') unless ( $settings->{loud} );
 ( my $from_email = conf->get( qw( email from ) ) ) =~ s/^[^<]*<([^>]+)>.*$/$1/;
 
-for my $reminder_meet ( CBQ::Model::Region->new( abs_path => 1 )->reminder_meets->@* ) {
-    my $coach_user_ids = ( $settings->{id} )
-        ? [ $settings->{id} ]
-        : $reg->coach_user_ids( $reminder_meet->{region}{id} );
+for my $reminder_meet (
+    CBQ::Model::Region->new( abs_path => 1 )->reminder_meets(
+        ( $settings->{force} ) ? { reminder_time => 1 } : undef
+    )->@*
+) {
+    my $coach_user_ids = $reg->coach_user_ids( $reminder_meet->{region}{id} );
     next unless (@$coach_user_ids);
+
+    if ( $settings->{id} ) {
+        next unless ( grep { $_ == $settings->{id} } @$coach_user_ids );
+        $coach_user_ids = [ $settings->{id} ];
+    }
 
     for my $user ( map { CBQ::Model::User->new->load($_) } @$coach_user_ids ) {
         my $reg_data = $reg->get_reg( $reminder_meet->{region}{id}, $user );
 
         for my $o ( reverse 0 .. $reg_data->{orgs}->@* - 1 ) {
             for my $t ( reverse 0 .. $reg_data->{orgs}[$o]{teams}->@* - 1 ) {
-                for my $q ( reverse 0 .. $reg_data->{orgs}[$o]{teams}[$t]->@* - 1 ) {
-                    splice( $reg_data->{orgs}[$o]{teams}[$t]->@*, $q, 1 )
-                        if ( not $reg_data->{orgs}[$o]{teams}[$t][$q]{attend} );
+                for my $q ( reverse 0 .. $reg_data->{orgs}[$o]{teams}[$t]{quizzers}->@* - 1 ) {
+                    splice( $reg_data->{orgs}[$o]{teams}[$t]{quizzers}->@*, $q, 1 )
+                        if ( not $reg_data->{orgs}[$o]{teams}[$t]{quizzers}[$q]{attend} );
                 }
                 splice( $reg_data->{orgs}[$o]{teams}->@*, $t, 1 )
-                    if ( not $reg_data->{orgs}[$o]{teams}[$t]->@* );
+                    if ( not $reg_data->{orgs}[$o]{teams}[$t]{quizzers}->@* );
             }
             delete $reg_data->{orgs}[$o]{teams}
                 if ( not $reg_data->{orgs}[$o]{teams}->@* );
