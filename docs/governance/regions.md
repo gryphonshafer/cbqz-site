@@ -1,6 +1,6 @@
 # Regional Organizations
 
-Christian Bible Quizzing (CBQ) is operates collaboratively across our **regions**. A region is typically though not necessarily geographic, small enough to support in-person meets but large enough to include as many teams as possible.
+Christian Bible Quizzing (CBQ) operates collaboratively across our **regions**. A region is typically though not necessarily geographic, small enough to support in-person meets but large enough to include as many teams as possible.
 
 Regions may include youth or adult leagues or a combination of leagues. Regions may overlap their geographies, and they may merge or split in whatever ways they deem optimum to support the mission.
 

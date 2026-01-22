@@ -121,7 +121,7 @@ No training is required; however, CBQ recommends coaches who are new to CBQ ask 
 
 ### How can I get help to start a team organization?
 
-[Contact us immediately by email](mailto:q@cbqz.org)<span class="print_only"> (q@cbqz.org)</span> and ask for for help. We are *extremely eager* to help new team organizations get stared in whatever ways we can.
+[Contact us immediately by email](mailto:q@cbqz.org)<span class="print_only"> (q@cbqz.org)</span> and ask for for help. We are *extremely eager* to help new team organizations get started in whatever ways we can.
 
 ## Establishing a Region
 
@@ -137,6 +137,6 @@ Regions need meet directors to run meets and quiz magistrates (QMs) to run quizz
 
 ### How can I get help to start a region?
 
-[Contact us immediately by email](mailto:q@cbqz.org)<span class="print_only"> (q@cbqz.org)</span> and ask for for help. We are *extremely eager* to help new team organizations get stared in whatever ways we can.
+[Contact us immediately by email](mailto:q@cbqz.org)<span class="print_only"> (q@cbqz.org)</span> and ask for for help. We are *extremely eager* to help new team organizations get started in whatever ways we can.
 
 <script defer src="/js/faqs.js?version=1752587466"></script>
