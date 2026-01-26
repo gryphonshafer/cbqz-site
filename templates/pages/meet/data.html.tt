@@ -1,5 +1,6 @@
 [%
     USE date;
+    PROCESS macros;
     page.title = 'Meet Registration Data';
     page.js.defer.push('meet_data');
 %]
@@ -266,11 +267,7 @@
                                 <li>
                                     [% mailto = registrant.name _ ' ' _ '<' _ registrant.email _ '>' %]
                                     <a href="mailto:[% mailto %]">[% registrant.email %]</a>;
-                                    <a href="tel:[% registrant.phone %]">[%
-                                        registrant.phone.substr( 0, 3 ) _ '-' _
-                                        registrant.phone.substr( 3, 3 ) _ '-' _
-                                        registrant.phone.substr( 6, 4 )
-                                    %]</a>
+                                    [% link_phone( registrant.phone ) %]
                                 </li>
                                 [% IF registrant.info.user.roles.size %]
                                     <li>
@@ -279,7 +276,10 @@
                                     </li>
                                 [% END %]
                                 [% IF registrant.info.notes %]
-                                    <li><i>Notes:</i> <b>[% registrant.info.notes %]</b></li>
+                                    <li>
+                                        <b><i>Notes:</i></b>
+                                        <div class="notes">[% registrant.info.notes | html_line_break %]</div>
+                                    </li>
                                 [% END %]
                                 <li>
                                     <i>Last Updated:</i>
@@ -309,11 +309,7 @@
                                 <li>
                                     [% mailto = registrant.name _ ' ' _ '<' _ registrant.email _ '>' %]
                                     <a href="mailto:[% mailto %]">[% registrant.email %]</a>;
-                                    <a href="tel:[% registrant.phone %]">[%
-                                        registrant.phone.substr( 0, 3 ) _ '-' _
-                                        registrant.phone.substr( 3, 3 ) _ '-' _
-                                        registrant.phone.substr( 6, 4 )
-                                    %]</a>
+                                    [% link_phone( registrant.phone ) %]
                                 </li>
                                 [% IF registrant.info.notes %]
                                     <li><i>Notes:</i> <b>[% registrant.info.notes %]</b></li>
