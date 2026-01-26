@@ -249,7 +249,8 @@
                             </td>
                             <td class="right">
                                 <template v-if="can_edit">
-                                    <input type="text" name="verses" v-model="quizzer.verses">
+                                    <input type="number" min="0" step="1" name="verses"
+                                        v-model="quizzer.verses">
                                 </template>
                                 <template v-else>
                                     {{ quizzer.verses }}
