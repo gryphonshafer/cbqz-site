@@ -9,6 +9,15 @@ default:
             - gd824qfOpPOF6qUWya0QT0nU9U82JKVu
         session:
             cookie_name: cbq_site_session
+        linda:
+            watch:
+                - app.psgi
+                - config/app.yaml
+                - config/assets
+                - lib
+                - static/js
+                - templates
+                - ../../omniframe
     template:
         email:
             include_path:
