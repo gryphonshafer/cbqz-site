@@ -114,6 +114,9 @@ default:
             - Christian Bible Quizzing <q@cbqz.org>
 tauntaun:
     database:
+        pragmas:
+            journal_mode: DELETE
+            synchronous : FULL
         log:
             all: local/app.sql
 optional_include: local/config.yaml
