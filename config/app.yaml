@@ -18,6 +18,7 @@ default:
                 - static/js
                 - templates
                 - ../../omniframe
+                - ../regions
     template:
         email:
             include_path:
