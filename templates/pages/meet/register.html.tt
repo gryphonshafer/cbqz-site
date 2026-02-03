@@ -111,6 +111,19 @@
                 here.)
             </p>
 
+            <p>
+                <b>Note about "Verses":</b>
+                <i>
+                    "Verses" should be a whole, non-negative integer expressing
+                    the total number of verses the quizzer has memorized in the
+                    current season to the moment of this registration
+                    submission. Exactly what "memorized" means is up to the
+                    coach to determine but is generally held to be the ability
+                    to recite the verse's contents wholly from memory and not
+                    immediately after having read or heard the contents.
+                </i>
+            </p>
+
             <p v-if="org.teams.length == 0">
                 There are currently no quizzers registered from {{ org.name }}.
             </p>
