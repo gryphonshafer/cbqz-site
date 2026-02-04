@@ -2,6 +2,7 @@
 
 - Version: 1.5.3
 - Published: October 15, 2025
+- *(Version 1.0.0 Published: December 25, 2022)*
 
 Bible Quizzing is a Christian sport in which teams of participants called quizzers compete on Scriptural recitation in matches called quizzes. Quizzing tournaments called meets consist of a set of quizzes. Quizzing seasons consist of a set of meets. Christian Bible Quizzing (CBQ) is the organization that oversees and supports Quizzing operations with the mission to encourage the most people to memorize the most verses of Scripture. This is the official rule book for CBQ competitions.
 

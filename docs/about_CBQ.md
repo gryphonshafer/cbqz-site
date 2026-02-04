@@ -1,18 +1,22 @@
 # What is Bible Quizzing?
 
-Christian Bible Quizzing, or CBQ, is primarily three things: a competitive sport with a high degree of both accessibility and strategy, a Christian youth ministry with a focus on Scriptural literacy, and a community that emphasizes faith, fellowship, and fun.
+Christian Bible Quizzing, or CBQ, is primarily 3 things:
 
-## A Sport
-
-As a sport, CBQ  has the complexity that allows teams and individuals to work out unique strategies that play to specific strengths. Numerous and varied routes to success means that you can approach the competition of CBQ in the way that works best for you, and still achieve success within the field.
-
-This also means that CBQ is incredibly accessible to any individual interested in participating. No matter your level of experience or preparation, you'll have ample opportunity to contribute to your team's success.
+2. A Christian youth ministry with a focus on Scriptural literacy
+1. A competitive sport with a high degree of both accessibility and strategy
+3. A community that emphasizes faith, fellowship, and fun
 
 ## A Ministry
 
 As a youth ministry, Christian Bible Quizzing equips you with a deep understanding of the Scriptures. With memorization at the forefront, not only will the verses you learn stay with you through the years, but you'll also acquire techniques and skills for retaining knowledge that can apply to other areas of your life.
 
 Having a good understanding of the Scriptures will contribute to a young Christian's spiritual journey, contextualizing and giving perspective on many events that occur along the path of life, and even increase your ability to discern sound—and, by extension, misleading—teaching within the church itself.
+
+## A Sport
+
+As a sport, CBQ  has the complexity that allows teams and individuals to work out unique strategies that play to specific strengths. Numerous and varied routes to success means that you can approach the competition of CBQ in the way that works best for you, and still achieve success within the field.
+
+This also means that CBQ is incredibly accessible to any individual interested in participating. No matter your level of experience or preparation, you'll have ample opportunity to contribute to your team's success.
 
 ## A Community
 

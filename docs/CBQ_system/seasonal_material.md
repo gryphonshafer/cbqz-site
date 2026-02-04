@@ -29,9 +29,8 @@ and their weights is up to each region.
                     'Recommended',
                     `
                         The "Recommended" preset incorporates the "Traditional" preset
-                        (the original preset from the 1940s that includes 16 books),
-                        removes the genealogies,
-                        and adds all but Mark and Revelation from the New Testament.
+                        (the original preset inspired by 1940s Bible Quizzing that includes 16 books),
+                        removes the genealogies, and adds all but Mark and Revelation from the New Testament.
                     `,
                     [  879, 'John'                                                             ],
                     [  711, 'Hebrews', '1 Peter', '2 Peter', '1 Timothy', '2 Timothy', 'Titus' ],
@@ -52,8 +51,8 @@ and their weights is up to each region.
                     'Traditional',
                     `
                         The "Traditional" preset includes 16 books of the New Testament in the traditional
-                        order, groupings, and rotation from the 1940s. This is what nearly all non-CBQ
-                        Bible Quizzing programs use.
+                        order, groupings, and rotation inspired by 1940s Bible Quizzing. This is what nearly
+                        all non-CBQ Bible Quizzing programs use.
                     `,
                     [  879, 'John'                                                            ],
                     [  469, 'Hebrews', '1 Peter', '2 Peter'                                   ],
