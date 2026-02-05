@@ -174,24 +174,29 @@
                     [% END %]
                 </div>
 
-                <table id="quizzers_verses" class="quizzer_display hidden">
-                    <thead>
-                        <tr>
-                            <th>Quizzer</th>
-                            <th>Org.</th>
-                            <th>Verses</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        [% FOR quizzer IN reg_data.quizzers_by_verses %]
+                <div id="quizzers_verses" class="quizzer_display hidden">
+                    <table>
+                        <thead>
                             <tr>
-                                <td>[% quizzer.name %]</td>
-                                <td>[% quizzer.team.acronym %]</td>
-                                <td class="right">[% quizzer.verses %]</td>
+                                <th>Quizzer</th>
+                                <th>Org.</th>
+                                <th>Verses</th>
                             </tr>
-                        [% END %]
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            [% FOR quizzer IN reg_data.quizzers_by_verses %]
+                                <tr>
+                                    <td>[% quizzer.name %]</td>
+                                    <td>[% quizzer.team.acronym %]</td>
+                                    <td class="right">[% quizzer.verses %]</td>
+                                </tr>
+                            [% END %]
+                        </tbody>
+                    </table>
+
+                    <a href="[% c.url_for( path_part_prefix _ c.url_for _ '/verses.csv' ) %]"
+                        class="button">Download Season Verses Counts as CSV</a>
+                </div>
             [% END %]
 
             [% IF reg_data.registrants.size %]
@@ -389,7 +394,7 @@
             </ul>
 
             <a href="[% c.url_for( path_part_prefix _ c.url_for _ '.csv' ) %]"
-                class="button colored">Download CSV Data</a>
+                class="button colored">Download Registration Data as CSV</a>
 
             [% IF reg_data.orgs_by_reg_date.size > 0 %]
                 <h2>Registration by Last Date Submitted</h2>

@@ -278,6 +278,33 @@ sub coach_user_ids ( $self, $region_id ) {
     })->run($region_id)->column;
 }
 
+sub last_info ( $self, $org_acronym, $season_start, $last_created, $regions ) {
+    my $info = $self->dq->sql( q{
+        SELECT r.info
+        FROM registration AS r
+        JOIN user AS u USING (user_id)
+        JOIN user_org USING (user_id)
+        JOIN org AS o USING (org_id)
+        JOIN org_region USING (org_id)
+        JOIN region AS g USING (region_id)
+        WHERE
+            u.active AND
+            o.active AND
+            o.acronym = ? AND
+            UNIXEPOCH( r.created ) BETWEEN ? AND ? AND
+            JSON_ARRAY_LENGTH( JSON_EXTRACT( r.info, '$.orgs' ) ) > 0 AND
+            g.acronym IN ( } . join( ', ', map { $self->dq->quote( uc $_ ) } @$regions ) . q{ )
+        ORDER BY r.created DESC
+        LIMIT 1
+    } )->run(
+        $org_acronym,
+        $season_start,
+        $last_created,
+    )->value;
+
+    return ($info) ? from_json($info) : undef;
+}
+
 1;
 
 =head1 NAME
@@ -324,6 +351,13 @@ Returns registration data for a given region.
 Given a region ID, this method will return all active users who are coaches, as
 defined by either the user selecting "Coach" as a user role or selecting "Coach"
 as a meet role in the most recent registration from that user.
+
+=head2 last_info
+
+Requires an org acronym, the season start time, a last created start time limit,
+and an arrayref of region acronyms. Will return the last registration C<info>
+data structure for the organization that was created after the season start time
+and before the last created start time limit.
 
 =head1 WITH ROLE
 

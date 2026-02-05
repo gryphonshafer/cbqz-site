@@ -109,43 +109,16 @@ sub schedule ($self) {
 }
 
 sub data ($self) {
-    my $region     = CBQ::Model::Region->new;
-    my $next_meets = { map {
-        my ($next_meet) =
-            grep { $_->{is_current_next_meet} }
-            $region->current_season(
-                $self->stash->{req_info}{regions}{$_}{settings}{seasons},
-                $self->param('time'),
-            )->{meets}->@*;
-        $_ => $next_meet;
-    } keys %{ $self->stash->{req_info}{regions} } };
-
-    my $my_region_next_meet = delete $next_meets->{ $self->stash('req_info')->{region}{key} };
-
-    my @other_regions = grep {
-        $next_meets->{$_}{start} eq $my_region_next_meet->{start} and
-        $next_meets->{$_}{days} eq $my_region_next_meet->{days}
-        and
-        (
-            (
-                $next_meets->{$_}{host}{address} and
-                $my_region_next_meet->{host}{address} and
-                $next_meets->{$_}{host}{address} eq $my_region_next_meet->{host}{address}
-            ) or
-            (
-                $next_meets->{$_}{host}{name} and
-                $my_region_next_meet->{host}{name} and
-                $next_meets->{$_}{host}{name} eq $my_region_next_meet->{host}{name}
-            )
-        )
-    } keys %$next_meets;
-
     my $data = {
         meet     => $self->_current_next_meet( $self->param('time') ),
         reg_data => CBQ::Model::Registration->new->get_data(
             $self->param('time'),
             $self->stash('req_info')->{region}{key},
-            @other_regions,
+            CBQ::Model::Region->new->other_regions(
+                $self->stash->{req_info}{region},
+                $self->stash->{req_info}{regions},
+                $self->param('time'),
+            )->@*,
         ),
     };
 
@@ -158,7 +131,7 @@ sub data ($self) {
     elsif ( $self->stash('format') eq 'csv' ) {
         csv( out => \my $csv, in => [
             [
-                qw( Organization Acronym Team Name Bible M/F Rookie ),
+                qw( Organization Acronym Team Nickname Name Bible M/F Rookie ),
                 ( $data->{meet}{host}{housing} ? 'Housing' : undef ),
                 ( $data->{meet}{host}{lunch} ? 'Lunch' : undef ),
                 'Notes',
@@ -171,12 +144,15 @@ sub data ($self) {
                     my $team_count = 0;
 
                     map {
-                        my $team = $acronym . ' ' . ++$team_count;
+                        my $team     = $acronym . ' ' . ++$team_count;
+                        my $nickname = ( ref $_ eq 'HASH' and $_->{nickname} ) ? $_->{nickname} : '';
+
                         map {
                             [ grep { defined }
                                 $org_name,
                                 $acronym,
                                 $team,
+                                $nickname,
                                 $_->{name},
                                 $_->{bible},
                                 $_->{m_f},
@@ -185,7 +161,8 @@ sub data ($self) {
                                 ( $data->{meet}{host}{lunch} ? $_->{lunch} : undef ),
                                 '',
                             ];
-                        } @$_;
+                        }
+                        ( ref $_ eq 'HASH' ) ? $_->{quizzers}->@* : @$_;
                     }
                     $_->{teams}->@*;
                 }
@@ -243,8 +220,97 @@ sub data ($self) {
 
         $self->res->headers->content_type('text/csv; charset=utf-8');
         $self->res->headers->content_disposition(qq{attachment; filename="$filename"});
+
         $self->render( data => $csv );
     }
+}
+
+sub verses ($self) {
+    my $reg            = CBQ::Model::Registration->new;
+    my $time           = time;
+    my $current_season = $self->_current_season;
+    my $regions        = [
+        $self->stash('req_info')->{region}{key},
+        CBQ::Model::Region->new->other_regions(
+            $self->stash->{req_info}{region},
+            $self->stash->{req_info}{regions},
+            $time,
+        )->@*,
+    ];
+    my $reg_data = $reg->get_data( $time, @$regions );
+
+    my @meets;
+    while ( my $meet = shift $current_season->{meets}->@* ) {
+        next unless ( $meet->{deadline} );
+        chomp( $meet->{name} );
+        $meet->{name} =~ s/<[^>]+>//g;
+        push( @meets, $meet );
+        last unless ( $meet->{stop_time} <= $time );
+    }
+
+    my $verses_data;
+    for my $org_acronym ( map { $_->{acronym} } $reg_data->{orgs}->@* ) {
+        for my $meet (@meets) {
+            my $info = $reg->last_info(
+                $org_acronym,
+                $current_season->{start_time},
+                $meet->{start_time},
+                $regions,
+            );
+            next unless ($info);
+
+            my $quizzer_verses = {
+                map { $_->{name}  => $_->{verses} }
+                grep { $_->{name} }
+                map { ( ref $_ eq 'HASH' ) ? $_->{quizzers}->@* : @$_ }
+                map { $_->{teams}->@* }
+                $info->{orgs}->@*
+            };
+
+            $verses_data->{ $_->{team}{acronym} }{ $_->{name} }{ $meet->{name} } =
+                0 + $quizzer_verses->{ $_->{name} }
+                for ( grep { exists $quizzer_verses->{ $_->{name} } } $reg_data->{quizzers_by_verses}->@* );
+        }
+    }
+
+    my @meet_names = map { $_->{name} } @meets;
+    my @rows;
+    for my $org_acronym ( keys %$verses_data ) {
+        for my $quizzer_name ( keys $verses_data->{$org_acronym}->%* ) {
+            push( @rows, [
+                $quizzer_name,
+                $org_acronym,
+                map { $verses_data->{$org_acronym}{$quizzer_name}{$_} // '' } @meet_names,
+            ] );
+        }
+    }
+
+    @rows = sort {
+        my $s = 0;
+        for ( reverse 2 .. @$a - 1 ) {
+            my $ts = ( $b->[$_] || 0 ) <=> ( $a->[$_] || 0 );
+            if ( $ts != 0 ) {
+                $s = $ts;
+                last;
+            }
+        }
+        $s or $a->[0] cmp $b->[0];
+    }
+    @rows;
+
+    unshift( @rows, [
+        'Quizzer',
+        'Org.',
+        @meet_names,
+    ] );
+
+    csv( out => \my $csv, in => \@rows );
+    my $filename = 'ytd_verses.csv';
+
+    $self->res->headers->content_type('text/csv; charset=utf-8');
+    $self->res->headers->content_disposition(qq{attachment; filename="$filename"});
+
+    $self->render( data => $csv );
 }
 
 1;
@@ -271,6 +337,10 @@ Handler for meet registration.
 =head2 data
 
 Handler for meet data.
+
+=head2 verses
+
+Handler for downloading season verse counts as CSV.
 
 =head1 INHERITANCE
 

@@ -264,6 +264,8 @@ sub startup ($self) {
         ->requires( region => 1 )
         ->to( 'meet#data', format => undef );
 
+    $users->any( '/meet/data/verses.csv' )->requires( region => 1 )->to('meet#verses');
+
     $users->any('/download')->to('main#download');
 
     if ($iq_rss) {

@@ -392,6 +392,40 @@ sub cms_update ( $self, $settings ) {
     return $result;
 }
 
+sub other_regions ( $self, $region, $regions, $time = undef ) {
+    my $next_meets = { map {
+        my ($next_meet) =
+            grep { $_->{is_current_next_meet} }
+            $self->current_season(
+                $regions->{$_}{settings}{seasons},
+                $time,
+            )->{meets}->@*;
+        $_ => $next_meet;
+    } keys %$regions };
+
+    my $my_region_next_meet = delete $next_meets->{ $region->{key} };
+
+    return [
+        grep {
+            $next_meets->{$_}{start} eq $my_region_next_meet->{start} and
+            $next_meets->{$_}{days} eq $my_region_next_meet->{days}
+            and
+            (
+                (
+                    $next_meets->{$_}{host}{address} and
+                    $my_region_next_meet->{host}{address} and
+                    $next_meets->{$_}{host}{address} eq $my_region_next_meet->{host}{address}
+                ) or
+                (
+                    $next_meets->{$_}{host}{name} and
+                    $my_region_next_meet->{host}{name} and
+                    $next_meets->{$_}{host}{name} eq $my_region_next_meet->{host}{name}
+                )
+            )
+        } keys %$next_meets
+    ];
+}
+
 1;
 
 =head1 NAME
@@ -547,6 +581,20 @@ If provided an C<app> value of a Mojolicious application running in production
 mode, it'll attempt a hot deployment restart if any regional update happened.
 
 In all cases, the method will return a hashref explaining the results.
+
+=head2 other_regions
+
+Requires C<region> and C<regions> nodes (usually found in C<req_info> in the
+session). Optionally but usually necessary also provide the time.
+
+    my @other_regions = CBQ::Model::Region->new->other_regions(
+        $self->stash->{req_info}{region},
+        $self->stash->{req_info}{regions},
+        $self->param('time'),
+    )->@*;
+
+Returns an arrayref of regions other than the current region that are included
+in the next current meet.
 
 =head1 CONFIGURATION
 
