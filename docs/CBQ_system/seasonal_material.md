@@ -32,11 +32,11 @@ and their weights is up to each region.
                         (the original preset inspired by 1940s Bible Quizzing that includes 16 books),
                         removes the genealogies, and adds all but Mark and Revelation from the New Testament.
                     `,
-                    [  879, 'John'                                                             ],
+                    [  866, 'John'                                                             ],
                     [  711, 'Hebrews', '1 Peter', '2 Peter', '1 Timothy', '2 Timothy', 'Titus' ],
-                    [ 1054, 'Matthew 1:18-25; 2-28'                                            ],
-                    [  674, 'James', 'Romans', '1 John', '2 John', '3 John'                    ],
-                    [ 1007, 'Acts'                                                             ],
+                    [ 1051, 'Matthew 1:18-25; 2-28'                                            ],
+                    [  672, 'James', 'Romans', '1 John', '2 John', '3 John'                    ],
+                    [ 1003, 'Acts'                                                             ],
                     [
                         689,
                         'Galatians', 'Ephesians', 'Philippians', 'Colossians',
@@ -44,7 +44,7 @@ and their weights is up to each region.
                         'Philemon',
                         'Jude',
                     ],
-                    [ 1136, 'Luke 1-2; 3:1-23; 4-24'         ],
+                    [ 1134, 'Luke 1-2; 3:1-23; 4-24'         ],
                     [  694, '1 Corinthians', '2 Corinthians' ],
                 ],
                 [
@@ -54,13 +54,13 @@ and their weights is up to each region.
                         order, groupings, and rotation inspired by 1940s Bible Quizzing. This is what nearly
                         all non-CBQ Bible Quizzing programs use.
                     `,
-                    [  879, 'John'                                                            ],
+                    [  866, 'John'                                                            ],
                     [  469, 'Hebrews', '1 Peter', '2 Peter'                                   ],
-                    [ 1071, 'Matthew'                                                         ],
-                    [  541, 'James', 'Romans'                                                 ],
-                    [ 1007, 'Acts'                                                            ],
+                    [ 1068, 'Matthew'                                                         ],
+                    [  540, 'James', 'Romans'                                                 ],
+                    [ 1003, 'Acts'                                                            ],
                     [  528, 'Galatians', 'Ephesians', 'Philippians', 'Colossians', 'Philemon' ],
-                    [ 1151, 'Luke'                                                            ],
+                    [ 1149, 'Luke'                                                            ],
                     [  694, '1 Corinthians', '2 Corinthians'                                  ],
                 ],
                 [
@@ -69,13 +69,13 @@ and their weights is up to each region.
                         The "Minimalist" preset is starts with the "Traditional" preset and removes portions
                         of material from Matthew, Acts, and Luke.
                     `,
-                    [ 879, 'John'                                                ],
+                    [ 866, 'John'                                                ],
                     [ 469, 'Hebrews', '1 Peter', '2 Peter'                       ],
-                    [ 860, 'Matthew 1:18-25; 2-12; 14-22; 26-28'                 ],
-                    [ 541, 'James', 'Romans'                                     ],
-                    [ 741, 'Acts 1-20'                                           ],
+                    [ 858, 'Matthew 1:18-25; 2-12; 14-22; 26-28'                 ],
+                    [ 540, 'James', 'Romans'                                     ],
+                    [ 739, 'Acts 1-20'                                           ],
                     [ 503, 'Galatians', 'Ephesians', 'Philippians', 'Colossians' ],
-                    [ 792, 'Luke 1-2; 3:1-23; 9-11; 13-19; 21-24'                ],
+                    [ 790, 'Luke 1-2; 3:1-23; 9-11; 13-19; 21-24'                ],
                     [ 694, '1 Corinthians', '2 Corinthians'                      ],
                 ],
                 [
@@ -85,11 +85,11 @@ and their weights is up to each region.
                         It starts with the "Minimalist" preset and adds books included in the "Recommended"
                         preset but not the "Traditional" preset.
                     `,
-                    [ 879, 'John'                                                             ],
+                    [ 866, 'John'                                                             ],
                     [ 711, 'Hebrews', '1 Peter', '2 Peter', '1 Timothy', '2 Timothy', 'Titus' ],
-                    [ 860, 'Matthew 1:18-25; 2-12; 14-22; 26-28'                              ],
-                    [ 674, 'James', 'Romans', '1 John', '2 John', '3 John'                    ],
-                    [ 741, 'Acts 1-20'                                                        ],
+                    [ 858, 'Matthew 1:18-25; 2-12; 14-22; 26-28'                              ],
+                    [ 672, 'James', 'Romans', '1 John', '2 John', '3 John'                    ],
+                    [ 739, 'Acts 1-20'                                                        ],
                     [
                         689,
                         'Galatians', 'Ephesians', 'Philippians', 'Colossians',
@@ -97,7 +97,7 @@ and their weights is up to each region.
                         'Philemon',
                         'Jude',
                     ],
-                    [ 792, 'Luke 1-2; 3:1-23; 9-11; 13-19; 21-24' ],
+                    [ 790, 'Luke 1-2; 3:1-23; 9-11; 13-19; 21-24' ],
                     [ 694, '1 Corinthians', '2 Corinthians'       ],
                 ],
             ],
@@ -140,8 +140,8 @@ and their weights is up to each region.
                         The "Comprehensive" material cycle includes all Old Testament books
                         plus the New Testament books not included in the "Recommended" youth preset.
                     `,
-                    [ 425, 'Mark 1-10'                                      ],
-                    [ 253, 'Mark 11-16'                                     ],
+                    [ 422, 'Mark 1-10'                                      ],
+                    [ 239, 'Mark 11-16'                                     ],
                     [ 404, 'Revelation'                                     ],
                     [ 235, 'Genesis 1-9'                                    ],
                     [ 424, 'Genesis 10-24'                                  ],
@@ -170,7 +170,7 @@ and their weights is up to each region.
                     [ 295, '2 Samuel 1-12'                                  ],
                     [ 400, '2 Samuel 13-24'                                 ],
                     [ 434, '1 Kings 1-11'                                   ],
-                    [ 385, '1 Kings 12-25'                                  ],
+                    [ 382, '1 Kings 12-22'                                  ],
                     [ 317, '2 Kings 1-11'                                   ],
                     [ 402, '2 Kings 12-25'                                  ],
                     [ 407, '1 Chronicles 1-9'                               ],
