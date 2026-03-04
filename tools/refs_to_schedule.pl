@@ -11,7 +11,7 @@ my $opt = options( qw{
     meets_number|n=i
 } );
 
-$opt->{season_start} //= conf->get('season_start');
+$opt->{season_start} //= '08-01';
 $opt->{meet_every}   //= '1 month, 2 weeks';
 $opt->{meets_number} //= 5;
 
@@ -56,7 +56,7 @@ my $chunks_used     = 0;
 my $season_week     = 0;
 my $sum_to_date     = 0;
 
-say '| Week | Start       | End         | References                | Verses | Sum to Meet | Sum to Date |';
+say '| Week | Start       | End         | Refs / Meet               | Verses | Sum to Meet | Sum to Date |';
 say '| ---: | ----------- | ----------- | ------------------------- | -----: | ----------: | ----------: |';
 
 for my $meet_number ( 1 .. $opt->{meets_number} ) {
@@ -106,7 +106,7 @@ refs_to_schedule.pl - Convert a references string into a rough season schedule
 
     refs_to_schedule.pl OPTIONS
         -r, --range        REFERENCES
-        -s, --season_start DATE        # default: configuration's "season_start"
+        -s, --season_start DATE        # default: "08-01"
         -e, --meet_every   DURATION    # default: "1 month, 2 weeks"
         -n, --meets_number INTEGER     # default: 5
         -h, --help
