@@ -40,7 +40,7 @@ jobs:
                 fi
                 git clone -b $branch --single-branch --depth 1 \
                 https://github.com/gryphonshafer/omniframe.git $GITHUB_WORKSPACE/../omniframe
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v6
               with:
                 path: site
             - uses: perl-actions/install-with-cpanm@v1
