@@ -25,3 +25,8 @@ google_fonts:
         formats:
             - woff2
             - woff
+vue:
+    dest: static/externals/vue
+    libs:
+        vue/dist/vue.global.js     : vue.global.js
+        vue/dist/vue.global.prod.js: vue.global.prod.js
