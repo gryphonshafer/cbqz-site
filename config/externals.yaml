@@ -21,8 +21,7 @@ google_fonts:
                 - ttf
     icons:
         types:
-            - 'Material Icons'
-            - 'Material Icons Outlined'
+            - 'Material Symbols Outlined'
         formats:
             - woff2
             - woff
