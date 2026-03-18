@@ -3,6 +3,9 @@
     template_url.pathname  = '/html/study_schedule.html';
     const template_promise = fetch(template_url).then( response => response.text() );
 
+    const url         = new URL( window.location.href );
+    const cookie_name = url.host + url.pathname;
+
     function date_display(date) {
         return date.toLocaleDateString( 'en-US', {
             weekday: 'short',
@@ -91,8 +94,19 @@
     }
 
     function build_display_table( data, div, event ) {
+        const saved_settings     = ( ! event ) ? omniframe.cookies.get(cookie_name) : null;
+        let changed_scheduled_by = false;
+
+        if (saved_settings) {
+            const schedule_by = div.querySelector('form fieldset label select.schedule_by');
+            if ( schedule_by.value != saved_settings[0] ) {
+                schedule_by.value    = saved_settings[0];
+                changed_scheduled_by = true;
+            }
+        }
+
         // clean and setup selects
-        if ( event?.target.className == 'schedule_by' ) {
+        if ( event?.target.className == 'schedule_by' || changed_scheduled_by ) {
             const select_labels = div.querySelectorAll('form fieldset label:not(:first-child)');
             for ( let i = select_labels.length - 1; i > 0; i-- ) {
                 select_labels[i].remove();
@@ -114,6 +128,16 @@
                 } );
             }
         }
+
+        if (saved_settings) div
+            .querySelectorAll('form fieldset label:not(:first-child) select')
+            .forEach( ( select, index ) => select.value = saved_settings[ index + 1 ] );
+
+        if (event) omniframe.cookies.set(
+            cookie_name,
+            [ ...div.querySelectorAll('form fieldset label select') ].map( select => select.value ),
+            365,
+        );
 
         const data_to_render = display_table_data(
             data,
