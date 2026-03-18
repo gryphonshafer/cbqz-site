@@ -28,7 +28,7 @@
                 ] : [] ),
                 'Meet / Label',
             ],
-            sets: select_values.map( select_value => {
+            sets: select_values.map( ( select_value, index ) => {
                 const date_cursor = new Date( data['Meet Dates'].at(-1)['Date'] );
                 date_cursor.setDate(
                     date_cursor.getDate() -
@@ -71,7 +71,7 @@
                         ! meet && ! is_christmas ||
                         meet && meet['Name'] == 'Scramble'
                     ) {
-                        const material = data.blocks[block_name][0].body[ material_i++ ];
+                        const material = data.blocks[block_name][index].body[ material_i++ ];
                         if (material) {
                             row.material = material;
 
@@ -185,7 +185,7 @@
                     return [
                         ( item && item.material ) ? item.material['Material'] :
                             ( item && item.is_christmas ) ? '<i>Christmas</i>' :
-                            (meet) ? '<i>Review</i>' : '',
+                            ( item || meet ) ? '<i>Review</i>' : '',
                         ( item && item.material ) ? item.material['Verses']   : '',
                         ...extra_verse_counts,
                     ];
