@@ -160,7 +160,8 @@
 
                     return [
                         ( item && item.material ) ? item.material['Material'] :
-                            ( item && item.is_christmas ) ? '<i>Christmas</i>' : '',
+                            ( item && item.is_christmas ) ? '<i>Christmas</i>' :
+                            (meet) ? '<i>Review</i>' : '',
                         ( item && item.material ) ? item.material['Verses']   : '',
                         ...extra_verse_counts,
                     ];
