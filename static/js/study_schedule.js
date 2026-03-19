@@ -1,3 +1,32 @@
+function cbqz_study_schedule_material_label_copy_to_clipboard(text) {
+    if ( navigator.clipboard && window.isSecureContext ) {
+        return navigator.clipboard.writeText(text);
+    }
+    else {
+        const textArea          = document.createElement("textarea");
+        textArea.value          = text;
+        textArea.style.position = "fixed";
+        textArea.style.left     = "-9999px";
+
+        document.body.appendChild(textArea);
+        textArea.select();
+
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+    }
+
+    omniframe.memo({
+        option : 'OK',
+        class  : 'notice',
+        message: 'Practice label copied to clipboard (and also displayed below). '
+            + 'You will almost certainly need to manually edit it to suit your specific needs. '
+            + '<br><br><i>'
+            + text
+            + '</i><br><br>'
+            + 'Please email <a href="mailto:q@cbqz.org">q@cbqz.org</a> for assistance',
+    });
+}
+
 ( () => {
     const template_url     = new URL( document.currentScript.src );
     template_url.pathname  = '/html/study_schedule.html';
@@ -26,6 +55,7 @@
                     'Sum',
                     'Total',
                 ] : [] ),
+                'P.L.',
                 'Meet / Label',
             ],
             sets: select_values.map( ( select_value, index ) => {
@@ -159,6 +189,8 @@
             Object.assign( document.createElement('th'), { textContent: label } )
         ) );
 
+        const material_labels = Array( data_to_render.sets.length ).fill().map( () => [] );
+
         [
             ...new Map(
                 data_to_render.sets.flat().map( item => [ item.week_start.getTime(), item.week_start ] )
@@ -176,11 +208,13 @@
                 date_display(week_start),
                 date_display( items.find( item => item ).week_end ),
 
-                ...items.flatMap( item => {
+                ...items.flatMap( ( item, index ) => {
                     const extra_verse_counts = ( data_to_render.sets.length == 1 ) ? [
                         ( item && item.sum_verses_to_meet   != null ) ? item.sum_verses_to_meet   : '',
                         ( item && item.total_verses_to_date != null ) ? item.total_verses_to_date : '',
                     ] : [];
+
+                    if ( item && item.material ) material_labels[index].push( item.material['Material'] );
 
                     return [
                         ( item && item.material ) ? item.material['Material'] :
@@ -190,6 +224,12 @@
                         ...extra_verse_counts,
                     ];
                 } ),
+
+                '<a href="javascript:cbqz_study_schedule_material_label_copy_to_clipboard(\''
+                    + material_labels.filter( set => set.length ).map( set => set.join('; ') ).join(' (1) ')
+                    + ( ( material_labels.filter( set => set.length ).length > 1 ) ? ' (1)' : '' )
+                    + '\')"><span class="material-symbols-outlined inline">new_label</span></a>',
+
                 (meet) ? '<b>' + meet['Name'] + '</b><br>' + meet['Label'] : '',
             ].forEach( value => tr.appendChild(
                 Object.assign( document.createElement('td'), {
