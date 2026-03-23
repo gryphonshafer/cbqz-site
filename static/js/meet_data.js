@@ -1,3 +1,5 @@
+'use strict';
+
 window.addEventListener( 'DOMContentLoaded', () => {
     const quizzer_displays = window.document.querySelectorAll('.quizzer_display');
     window.document.querySelectorAll('input[name="quizzer_display"]').forEach( ( input, index ) => {

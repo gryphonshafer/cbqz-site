@@ -1,3 +1,5 @@
+'use strict';
+
 window.addEventListener( 'DOMContentLoaded', () => {
     const table = window.document.querySelector('div.user_list table');
     const box   = window.document.querySelector('div.user_list div.box');

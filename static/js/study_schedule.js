@@ -1,4 +1,5 @@
 'use strict';
+
 window.cbqz_study_schedule_material_label_copy_to_clipboard = (text) => {
     if ( navigator.clipboard && window.isSecureContext ) {
         navigator.clipboard.writeText(text);

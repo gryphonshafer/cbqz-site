@@ -1,3 +1,5 @@
+'use strict';
+
 ( () => {
     const url = new URL( window.location.href );
     fetch( new URL( url.pathname + '.json', url ) )

@@ -1,3 +1,5 @@
+'use strict';
+
 window.addEventListener( 'DOMContentLoaded', () => {
     const headings = document.querySelectorAll('h2, h3');
 
