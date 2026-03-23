@@ -1,6 +1,7 @@
-function cbqz_study_schedule_material_label_copy_to_clipboard(text) {
+'use strict';
+window.cbqz_study_schedule_material_label_copy_to_clipboard = (text) => {
     if ( navigator.clipboard && window.isSecureContext ) {
-        return navigator.clipboard.writeText(text);
+        navigator.clipboard.writeText(text);
     }
     else {
         const textArea          = document.createElement("textarea");
@@ -25,7 +26,7 @@ function cbqz_study_schedule_material_label_copy_to_clipboard(text) {
             + '</i><br><br>'
             + 'Please email <a href="mailto:q@cbqz.org">q@cbqz.org</a> for assistance',
     });
-}
+};
 
 ( () => {
     const template_url     = new URL( document.currentScript.src );
