@@ -393,7 +393,7 @@
                 [% END %]
             </ul>
 
-            <a href="[% c.url_for( path_part_prefix _ c.url_for _ '.csv' ) %]"
+            <a href="[% c.url_with( path_part_prefix _ c.url_for _ '.csv' ) %]"
                 class="button colored">Download Registration Data as CSV</a>
 
             [% IF reg_data.orgs_by_reg_date.size > 0 %]
