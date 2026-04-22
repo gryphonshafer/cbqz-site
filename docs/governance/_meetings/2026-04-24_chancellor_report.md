@@ -8,7 +8,7 @@ Section 1.2 of the [CBQ Bylaws](https://cbqz.org/governance/bylaws.md) requires 
     - Meeting ID: 825 2716 6204
     - Passcode: 948844
 
-If haven’t already done so, please [sign-up for a CBQ account](https://cbqz.org/user/sign_up). 
+If haven’t already done so, please [sign-up for a CBQ account](https://cbqz.org/user/sign_up).
 
 Just prior to the meeting, please login, click the “Tools” button (upper right), click the “CBQ Meetings List” link,  and then click on the Fri, Apr 24, 2026 meeting link.
 
