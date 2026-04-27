@@ -3,10 +3,11 @@ package CBQ::Model::Region;
 use exact -class, -conf;
 use Bible::Reference;
 use Data::ModeMerge;
-use Git::Repository;
+use Digest::SHA 'hmac_sha256_hex';
 use Mojo::File;
 use Omniframe::Class::Time;
 use Omniframe::Util::Bcrypt 'bcrypt';
+use String::Compare::ConstantTime 'equals';
 use Text::MultiMarkdown 'markdown';
 use YAML::XS;
 
@@ -328,68 +329,50 @@ sub reminder_meets ( $self, $ignore = {} ) {
     } $self->all_current_next_meets->@* ];
 }
 
-sub cms_update ( $self, $settings ) {
+sub cms_update ( $self, $params ) {
     $self->notice('Region CMS update triggered');
-    my $result;
 
-    my $regions = [ map { $_->abs_path( $self->abs_path ) } $self->every(
-        ( $settings->{all} ) ? {} : {
-            acronym => $settings->{key},
-            secret  => bcrypt( $settings->{secret} ),
-            active  => 1,
-        }
-    )->@* ];
-
-    unless ( $regions->@* ) {
-        $result->{success} = 0;
-        $result->{message} = 'No authenticated regions to update';
-    }
-
-    for my $region ( $regions->@* ) {
-        my $update = {
-            acronym => $region->data->{acronym},
-            path    => $region->path,
-        };
-
-        try {
-            $update->{message} = Git::Repository->new( work_tree => $update->{path} )->run('pull');
-            $update->{success} = 1;
-
-            $self->info( $update->{message} );
-        }
-        catch ($e) {
-            $update->{message} = deat $e;
-            $update->{success} = 0;
-            $result->{success} = 0;
-
-            $self->error( $update->{message} );
-        }
-
-        push( @{ $result->{updates} }, $update );
-    }
-
-    if (
-        $settings->{app} and
-        $settings->{app}->mode eq 'production' and
-        $result and
-        $result->{updates} and
-        $result->{updates}->@* and
-        grep { $_->{success} } $result->{updates}->@*
+    unless (
+        ( $params->{json} and $params->{json}{ref} // '' ) eq
+            'refs/heads/' . conf->get( qw( regional_cms branch ) )
     ) {
-        my $ppid = getppid();
-        if ( $ppid and kill( 0, $ppid ) ) {
-            $self->info('Issuing hot deployment restart');
-            kill( 'USR2', $ppid );
-            $result->{restart}{success} = 1;
-        }
-        else {
-            $result->{restart}{success} = 0;
-            $result->{success}          = 0;
-        }
+        $self->info( 'Branch pushed is not: ' . conf->get( qw( regional_cms branch ) ) );
+        return 1;
     }
 
-    $result->{success} //= 1;
-    return $result;
+    ( my $acronym = uc( $params->{json}{repository}{name} // '' ) ) =~ s/^cbqz\-//;
+    try {
+        $self->load({ acronym => $acronym });
+    }
+    catch ($e) {
+        $self->notice( deat $e );
+        return 0;
+    }
+
+    unless (
+        equals(
+            $params->{signature},
+            'sha256=' . hmac_sha256_hex( $params->{body}, $self->data->{secret} ),
+        )
+    ) {
+        $self->notice('Secret does not match region');
+        return 0;
+    }
+
+    my $root_dir = Mojo::File::path( conf->get( qw( config_app root_dir ) ) );
+    system(
+        'sudo',
+        $root_dir->child('tools/cms_update.bash')->to_string,
+        $root_dir
+            ->child( conf->get( qw( regional_cms path_suffix ) ) )
+            ->child( lc $acronym )
+            ->to_string,
+        conf->get( qw( regional_cms branch ) ),
+        conf->get( qw( regional_cms service ) ),
+    );
+
+    $self->info('Region CMS update success');
+    return 1;
 }
 
 sub other_regions ( $self, $region, $regions, $time = undef ) {
@@ -574,13 +557,26 @@ only include meets that should have reminders sent for them on the current day.
 
 =head2 cms_update
 
-Requires a hashref of values. If provided a C<key> (region acronym) and
-C<secret>, it will attempt to update that region's content. If provided the key
-of C<all> with a positive value, it'll attempt to update all regions' content.
-If provided an C<app> value of a Mojolicious application running in production
-mode, it'll attempt a hot deployment restart if any regional update happened.
+This method handles a CMS content update. It requires a hashref containing
+values from a GitHub Webook of C<signature> (expected to be the
+"X-Hub-Signature-256" header), C<body>, and C<json>.
 
-In all cases, the method will return a hashref explaining the results.
+The branch pushed that triggers the webhook must match the
+C<regional_cms branch> configuration value. If it matches, then we'll attempt to
+load the region specified by the C<repository name> value of the JSON sent by
+the webhook. We'll then verify the signature using the secret stored in the
+database for that region. (See the "cms_update_secret_set.pl" tool.)
+
+If all that passes/checks, then the "cms_update.bash" script (located in the
+"tools" directory) gets called. This should C<git pull> the region that was just
+pushed to GitHub and restart the service that manages this application. This
+script needs to run as root. Therefore, to cause the script to work, you will
+likely need to (depending on your OS) add a file to `/etc/sudoers.d` with the
+following:
+
+    app_user ALL=(root) NOPASSWD: /path_to_app_root_dir/tools/cms_update.bash
+
+(Replace C<app_user> and C<path_to_app_root_dir> with appropriate values.)
 
 =head2 other_regions
 

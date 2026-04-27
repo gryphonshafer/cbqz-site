@@ -273,7 +273,7 @@ sub startup ($self) {
         $all->any('/iq.rss')->requires( region => 0 )->to('main#iq_rss');
     }
 
-    $all->any('/update')->to('main#cms_update');
+    $all->any( '/cms_update/' . conf->get( qw( regional_cms update_suffix ) ) )->to('main#cms_update');
     $all->any('/rules_change')->to('main#rules_change');
     $all
         ->any( '/order_lms' => [ format => ['json'] ] )

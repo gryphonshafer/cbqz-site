@@ -118,15 +118,15 @@ sub iq_rss ($self) {
 }
 
 sub cms_update ($self) {
-    my $result = CBQ::Model::Region->new->cms_update({
-        key    => $self->param('key')    || 1,
-        secret => $self->param('secret') || 1,
-        app    => $self->app,
+    my $result = $self->app->mode eq 'production' && CBQ::Model::Region->new->cms_update({
+        signature => $self->req->headers->header('X-Hub-Signature-256') // '',
+        body      => $self->req->body,
+        json      => $self->req->json,
     });
 
     $self->render(
-        status => ( ( $result->{success} ) ? 200 : 400 ),
-        json   => $result,
+        status => ($result) ? 200 : 403,
+        text   => ($result) ? 'OK' : 'Forbidden',
     );
 }
 
@@ -244,8 +244,12 @@ Handler for Inside Quizzing RSS feed.
 
 =head2 cms_update
 
-Webhook to update regional CMS content. Requires "key" (a region's acronym) and
-"secret" parameters. Returns result as JSON.
+Webhook handler for regional CMS content updates. Expects a GitHub Webhook of
+content type C<application/json>. If the application mode is production, it will
+call L<CBQ::Model::Region>'s C<cms_update>.
+
+Note that the exact route for this method is based on the
+C<regional_cms update_suffix> configuration value and is set in the controller.
 
 =head2 rules_change
 

@@ -19,6 +19,9 @@ default:
                 - templates
                 - ../../omniframe
                 - ../regions
+        csrf:
+            exclude:
+                - ^/cms_update/
     template:
         email:
             include_path:
@@ -43,9 +46,12 @@ default:
     min_passwd_length: 8
     token_expiration : 86400 # 1 day
     regional_cms:
-        path_suffix : ../regions
-        settings    : config
-        nav_position: 4
+        path_suffix  : ../regions
+        settings     : config
+        nav_position : 4
+        update_suffix: d14f4b2cddcd0488
+        branch       : master
+        service      : cbqz-site.service
     redirects:
         /slack  : https://join.slack.com/t/biblequizzing/shared_invite/zt-dkkz0wlh-x3~NlagTgtdvT3m2jh~dig
         /rules  : /CBQ_system/rule_book.md

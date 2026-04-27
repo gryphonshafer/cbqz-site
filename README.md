@@ -16,6 +16,13 @@ instructions in the Omniframe README "Installation" and "Project Setup" sections
 To run the project application, follow the instructions in the `~/app.psgi`
 file within this project's root directory.
 
+## Regional CMS Content Automatic Update
+
+When regional CMS content is pushed to the configuration-specified branch, a
+webhook may be configured for that region. Read the documentation for
+[CBQ::Model::Region](blob/master/lib/CBQ/Model/Region.pm)'s `cms_update` method
+for details.
+
 ## Photo Optimization
 
 Within `~/static/photos` reside many JPG photo image files. These are
