@@ -3,9 +3,9 @@ set -euo pipefail
 
 CMS_DIR=$1
 BRANCH=${2:-master}
-SERVICE=${3:-cbqz-site.service}
+INIT=${3:-cbqz-site}
 
 cd "$CMS_DIR"
 CMS_FILES_USER=$( stat -c '%U' README.md )
 sudo -u "$CMS_FILES_USER" git pull origin "$BRANCH"
-systemctl restart "$SERVICE"
+/etc/init.d/$INIT graceful

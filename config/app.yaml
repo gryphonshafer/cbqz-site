@@ -21,7 +21,7 @@ default:
                 - ../regions
         csrf:
             exclude:
-                - ^/cms_update/
+                - ^/cms_update/\w+$
     template:
         email:
             include_path:
@@ -51,7 +51,7 @@ default:
         nav_position : 4
         update_suffix: d14f4b2cddcd0488
         branch       : master
-        service      : cbqz-site.service
+        init         : cbqz-site
     redirects:
         /slack  : https://join.slack.com/t/biblequizzing/shared_invite/zt-dkkz0wlh-x3~NlagTgtdvT3m2jh~dig
         /rules  : /CBQ_system/rule_book.md

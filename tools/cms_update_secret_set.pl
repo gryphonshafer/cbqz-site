@@ -9,17 +9,17 @@ pod2usage( 'Region acronym required') unless $opt->{acronym};
 try {
     if ( my $region = CBQ::Model::Region->new->load({ acronym => uc $opt->{acronym} }) ) {
 
-        my $secret_raw = CBQ::Model::Region::bcrypt( urandom(46) );
-        my $secret_db  = CBQ::Model::Region::bcrypt($secret_raw);
+        my $secret_db = CBQ::Model::Region::bcrypt( urandom(46) );
+        my $secret_gh = CBQ::Model::Region::bcrypt($secret_db);
 
         $region->save({ secret => $secret_db }) if ( $opt->{save} );
 
-        say '     Region: ', $region->data->{name};
-        say '    Acronym: ', $region->data->{acronym};
-        say ' Repository: ', 'cbqz-' . lc $opt->{acronym};
-        say 'Payload URL: ', 'https://cbqz.org/cms_update/' . conf->get( qw( regional_cms update_suffix ) );
-        say '     Secret: ', $secret_raw;
-        say '   Database: ', ( $opt->{save} ) ? 'Saved' : 'NOT SAVED';
+        say '       Region: ', $region->data->{name};
+        say '      Acronym: ', $region->data->{acronym};
+        say '   Repository: ', 'cbqz-' . lc $opt->{acronym};
+        say '  Payload URL: ', 'https://cbqz.org/cms_update/' . conf->get( qw( regional_cms update_suffix ) );
+        say 'GitHub Secret: ', $secret_gh;
+        say '     Database: ', ( $opt->{save} ) ? 'Saved' : 'NOT SAVED';
     }
 }
 catch ($e) {

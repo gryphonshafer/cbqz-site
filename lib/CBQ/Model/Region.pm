@@ -7,6 +7,7 @@ use Digest::SHA 'hmac_sha256_hex';
 use Mojo::File;
 use Omniframe::Class::Time;
 use Omniframe::Util::Bcrypt 'bcrypt';
+use POSIX;
 use String::Compare::ConstantTime 'equals';
 use Text::MultiMarkdown 'markdown';
 use YAML::XS;
@@ -340,7 +341,7 @@ sub cms_update ( $self, $params ) {
         return 1;
     }
 
-    ( my $acronym = uc( $params->{json}{repository}{name} // '' ) ) =~ s/^cbqz\-//;
+    ( my $acronym = uc( $params->{json}{repository}{name} // '' ) ) =~ s/^CBQZ\-//i;
     try {
         $self->load({ acronym => $acronym });
     }
@@ -352,7 +353,7 @@ sub cms_update ( $self, $params ) {
     unless (
         equals(
             $params->{signature},
-            'sha256=' . hmac_sha256_hex( $params->{body}, $self->data->{secret} ),
+            'sha256=' . hmac_sha256_hex( $params->{body}, bcrypt $self->data->{secret} ),
         )
     ) {
         $self->notice('Secret does not match region');
@@ -360,16 +361,29 @@ sub cms_update ( $self, $params ) {
     }
 
     my $root_dir = Mojo::File::path( conf->get( qw( config_app root_dir ) ) );
-    system(
-        'sudo',
-        $root_dir->child('tools/cms_update.bash')->to_string,
-        $root_dir
-            ->child( conf->get( qw( regional_cms path_suffix ) ) )
-            ->child( lc $acronym )
-            ->to_string,
-        conf->get( qw( regional_cms branch ) ),
-        conf->get( qw( regional_cms service ) ),
-    );
+
+    my $pid = fork();
+    $self->error("fork failed: $!") unless defined $pid;
+    if ( $pid == 0 ) {
+        my $grandchild = fork();
+        $self->error("fork failed: $!") unless defined $pid;
+        if ( $grandchild == 0 ) {
+            POSIX::setsid();
+            exec(
+                'sudo',
+                $root_dir->child('tools/cms_update.bash')->to_string,
+                $root_dir
+                    ->child( conf->get( qw( regional_cms path_suffix ) ) )
+                    ->child( lc $acronym )
+                    ->to_string,
+                conf->get( qw( regional_cms branch ) ),
+                conf->get( qw( regional_cms init ) ),
+
+            ) or $self->error("exec failed: $!");
+        }
+        POSIX::_exit(0);
+    }
+    waitpid( $pid, 0 );
 
     $self->info('Region CMS update success');
     return 1;
