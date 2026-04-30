@@ -26,9 +26,18 @@ sub schedule ($self) {
         ref $current_season->{meets} ne 'ARRAY' or
         not $current_season->{meets}->@*
     ) {
+        my $message = 'There is an error in the settings for the region. Please notify the administration.';
+
+        # log error data for later debugging purposes...
+        $self->error({
+            message        => $message,
+            current_season => $current_season,
+            req_info       => $self->stash->{req_info},
+        });
+
         $self->flash( memo => {
             class   => 'error',
-            message => 'There is an error in the settings for the region. Please notify the administration.',
+            message => $message,
         } );
         $self->redirect_to('/');
     }

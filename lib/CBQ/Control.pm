@@ -76,7 +76,7 @@ sub startup ($self) {
         www => $www_docs_nav,
         map {
             my $docs_nav = $self->docs_nav(
-                $regions->{$_}{path}->child('docs'),
+                $regions->{$_}{path}->child('docs')->to_string,
                 'md',
                 ( $regions->{$_}{name} // uc($_) ) . ' CBQ Region',
                 (
@@ -163,7 +163,7 @@ sub startup ($self) {
         elsif ( $req_info->{region} ) {
             unshift(
                 @{ $c->app->static->paths },
-                $req_info->{region}{path}->child('static'),
+                $req_info->{region}{path}->child('static')->to_string,
             );
         }
 

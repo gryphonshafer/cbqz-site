@@ -294,6 +294,18 @@ sub current_season ( $self, $seasons_or_region, $time = undef ) {
         }
     }
 
+    # dump good/bad $season_or_region for later debugging purposes...
+    my $path = Mojo::File::path( conf->get( qw( config_app root_dir ) ) )->child(
+        'local/current_season_' . (
+            (
+                not $current_season or
+                ref $current_season->{meets} ne 'ARRAY' or
+                not $current_season->{meets}->@*
+            ) ? 'bad' : 'good'
+        ) . '.yaml'
+    );
+    $path->spew( YAML::XS::Dump($seasons_or_region), 'UTF-8' ) unless ( -f $path );
+
     return $current_season;
 }
 
