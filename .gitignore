@@ -36,3 +36,4 @@ nytprof.out
 # Application
 /static/build/
 /static/externals/
+/static/files/lm_pics
