@@ -21,11 +21,7 @@ sub _current_next_meet ( $self, $time = undef ) {
 sub schedule ($self) {
     my $current_season = $self->_current_season;
 
-    if (
-        not $current_season or
-        ref $current_season->{meets} ne 'ARRAY' or
-        not $current_season->{meets}->@*
-    ) {
+    if ( ref $current_season ne 'HASH' ) {
         my $message = 'There is an error in the settings for the region. Please notify the administration.';
 
         # log error data for later debugging purposes...
@@ -39,6 +35,7 @@ sub schedule ($self) {
             class   => 'error',
             message => $message,
         } );
+
         $self->redirect_to('/');
     }
     else {

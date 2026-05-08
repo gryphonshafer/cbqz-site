@@ -17,38 +17,45 @@
 [% IF current_season %]
     <h1>[% page.title %]: [% season_name %]</h1>
 
-    <p>
-        The following are the dates and material ranges for meets in the
-        [% season_year %] [% season_name %] season.
-    </p>
+    [% IF current_season.meets.size > 0 %]
+        <p>
+            The following are the dates and material ranges for meets in the
+            [% season_year %] [% season_name %] season.
+        </p>
 
-    [% FOR meet IN current_season.meets %]
-        <div class="[% IF meet.is_current_next_meet %]current_next_meet[% END %]">
-            <h5>[% meet.name %]</h5>
+        [% FOR meet IN current_season.meets %]
+            <div class="[% IF meet.is_current_next_meet %]current_next_meet[% END %]">
+                <h5>[% meet.name %]</h5>
 
-            [% PROCESS meet_info.html.tt %]
+                [% PROCESS meet_info.html.tt %]
 
-            [% IF user %]
-                [% IF meet.deadline AND meet.stop_time < date.now %]
-                    <p class="legacy_meet_data">
-                        <a href="[%
-                            c.url_for( path_part_prefix _ '/meet/data' ).query( time => meet.stop_time )
-                        %]">View Legacy Meet Registration Data</a>
-                    </p>
-                [% ELSIF meet.is_current_next_meet %]
-                    <p class="right">
-                        [% IF NOT meet.registration_closed OR c.session.was_user_id %]
-                            <a href="[% c.url_for( path_part_prefix _ '/meet/register' ) %]"
-                                class="button colored">Submit Registration</a>
-                        [% END %]
-                        [% IF meet.deadline %]
-                            <a href="[% c.url_for( path_part_prefix _ '/meet/data' ) %]"
-                                class="button">View Meet Data</a>
-                        [% END %]
-                    </p>
+                [% IF user %]
+                    [% IF meet.deadline AND meet.stop_time < date.now %]
+                        <p class="legacy_meet_data">
+                            <a href="[%
+                                c.url_for( path_part_prefix _ '/meet/data' ).query( time => meet.stop_time )
+                            %]">View Legacy Meet Registration Data</a>
+                        </p>
+                    [% ELSIF meet.is_current_next_meet %]
+                        <p class="right">
+                            [% IF NOT meet.registration_closed OR c.session.was_user_id %]
+                                <a href="[% c.url_for( path_part_prefix _ '/meet/register' ) %]"
+                                    class="button colored">Submit Registration</a>
+                            [% END %]
+                            [% IF meet.deadline %]
+                                <a href="[% c.url_for( path_part_prefix _ '/meet/data' ) %]"
+                                    class="button">View Meet Data</a>
+                            [% END %]
+                        </p>
+                    [% END %]
                 [% END %]
-            [% END %]
-        </div>
+            </div>
+        [% END %]
+    [% ELSE %]
+        <p>
+            There are currently no meets scheduled for the
+            [% season_year %] [% season_name %] season. Check back later for updates.
+        </p>
     [% END %]
 [% ELSE %]
     <h1>[% page.title %]</h1>

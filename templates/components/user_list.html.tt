@@ -32,47 +32,53 @@
         </fieldset>
     </form>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                [% IF data.show_email %]<th>Email</th>[% END %]
-                [% IF data.show_phone %]<th>Phone</th>[% END %]
-                [% IF data.show_orgs %]<th>Org(s)</th>[% END %]
-                <th>Role(s)</th>
-            </tr>
-        </thead>
-        <tbody>
-            [% FOR this_user IN data.users %]
-                <tr data-roles="[% this_user.roles.join('|') %]">
-                    <td>
-                        <a href="[% c.url_for( '/user/view/' _ this_user.user_id ) %]"
-                            >[% this_user.first_name %] [% this_user.last_name %]</a>
-                    </td>
-                    [% IF data.show_email %]
-                        <td>
-                            <a href="mailto:[% this_user.email %]">[% this_user.email %]</a>
-                        </td>
-                    [% END %]
-                    [% IF data.show_phone %]
-                        <td>[% link_phone( this_user.phone ) %]</td>
-                    [% END %]
-                    [% IF data.show_orgs %]
-                        <td>
-                            [% FOR org IN this_user.orgs %]
-                                <a href="[% c.url_for( '/org/view/' _ org.org_id) %]"
-                                    >[% org.acronym %]: [% org.name %]</a>
-                                [% UNLESS loop.last %]<br>[% END %]
-                            [% END %]
-                        </td>
-                    [% END %]
-                    <td>
-                        [% this_user.info.roles.join(', ') %]
-                    </td>
+    [% IF data AND data.users AND data.users.size > 0 %]
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    [% IF data.show_email %]<th>Email</th>[% END %]
+                    [% IF data.show_phone %]<th>Phone</th>[% END %]
+                    [% IF data.show_orgs %]<th>Org(s)</th>[% END %]
+                    <th>Role(s)</th>
                 </tr>
-            [% END %]
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                [% FOR this_user IN data.users %]
+                    <tr data-roles="[% this_user.roles.join('|') %]">
+                        <td>
+                            <a href="[% c.url_for( '/user/view/' _ this_user.user_id ) %]"
+                                >[% this_user.first_name %] [% this_user.last_name %]</a>
+                        </td>
+                        [% IF data.show_email %]
+                            <td>
+                                <a href="mailto:[% this_user.email %]">[% this_user.email %]</a>
+                            </td>
+                        [% END %]
+                        [% IF data.show_phone %]
+                            <td>[% link_phone( this_user.phone ) %]</td>
+                        [% END %]
+                        [% IF data.show_orgs %]
+                            <td>
+                                [% FOR org IN this_user.orgs %]
+                                    <a href="[% c.url_for( '/org/view/' _ org.org_id) %]"
+                                        >[% org.acronym %]: [% org.name %]</a>
+                                    [% UNLESS loop.last %]<br>[% END %]
+                                [% END %]
+                            </td>
+                        [% END %]
+                        <td>
+                            [% this_user.info.roles.join(', ') %]
+                        </td>
+                    </tr>
+                [% END %]
+            </tbody>
+        </table>
+    [% ELSE %]
+        <p>
+            There are currently no users to display.
+        </p>
+    [% END %]
 
     <div class="hidden box">
         [% FOR this_user IN data.users %]
