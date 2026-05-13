@@ -1,7 +1,7 @@
 # Rule Book for Christian Bible Quizzing (CBQ)
 
-- Version: 1.5.3
-- Published: October 15, 2025
+- Version: 1.6.0
+- Published: May 13, 2026
 - *(Version 1.0.0 Published: December 25, 2022)*
 
 Bible Quizzing is a Christian sport in which teams of participants called quizzers compete on Scriptural recitation in matches called quizzes. Quizzing tournaments called meets consist of a set of quizzes. Quizzing seasons consist of a set of meets. Christian Bible Quizzing (CBQ) is the organization that oversees and supports Quizzing operations with the mission to encourage the most people to memorize the most verses of Scripture. This is the official rule book for CBQ competitions.
@@ -12,7 +12,7 @@ In addition to this rule book, Quizzing uses material, which is a library that c
 
 ### 1.1. Reference Ranges, Weights, and Translations
 
-A quiz’s material contains, in part, Scripture references and associated verse content from a set of Bible translations (or simply “bibles”). _Translations must be word-for-word or thought-for-thought translations; paraphrased publications are not translations._ Any verse that does not exist as standard, non-footnote content across all included translations is excluded from the material.
+A quiz’s material contains, in part, Scripture references and associated verse content from a set of Bible translations (or simply “bibles”). _Translations must be word-for-word or thought-for-thought translations; paraphrased publications are not translations._ Any verse where no portion thereof is included as standard inline, unbracketed, non-footnote content in any included translations is excluded from the material. Included verses will contain all inline content from their source translation, including content in parentheses or brackets, except for bracketed content with spans that begin or end mid-verse and continue unbroken into an excluded verse.
 
 Materials may separate the Scripture references and associated verse content into multiple sets, each with a reference range. For example, “Romans 1-4; James” is a single reference range. These reference ranges may have different weights, noted as positive integers, representing the probability of verse content selection from each range in quizzes. For example, “Romans 1-4; James (1) Romans 5-8 (3)” contains 2 ranges, the first with a 25% probability of selection and the second with a 75% probability of selection. Including all ranges, weights, and translations results in a complete material description. For example, “Romans 1-4; James (1) Romans 5-8 (3) ESV NASB NIV” is a material description.
 
@@ -56,13 +56,13 @@ The called quizzer may decide to forfeit the query by sitting in their chair sho
 
 #### 2.1.4. Response and Ruling
 
-None may communicate with any quizzers during the response period. For the purpose of judging the response and rendering a ruling, the QM considers everything the quizzer says that the QM can audibly understand. During the response phase, the quizzer is either: not yet correct, correct, or incorrect. The moment the QM judges the quizzer correct or incorrect, the QM pronounces such.
+None may communicate with any quizzers during the response period. For the purpose of judging the response and rendering a ruling, the QM considers everything the quizzer says that the QM can audibly understand following the QM calling the name of the quizzer. During the response phase, the quizzer is either: not yet correct, correct, or incorrect. The moment the QM judges the quizzer correct or incorrect, the QM pronounces such.
 
 ### 2.2. Query Identifiers and Quiz Flow
 
 Each query in a quiz has a unique identifier consisting of a number and a letter, beginning with “1A”. When a QM rules a quizzer’s response to a query correct, the QM increments the numerical component of the next query’s identifier by 1 and sets its letter to “A”. When a QM rules a quizzer’s response to a query incorrect, the QM advances the letter component of the next query’s identifier to the next letter.
 
-All teams are eligible to trigger on query 1A. When a QM rules a quizzer’s response to a query incorrect, that quizzer’s team is ineligible to trigger on any following query with the same numerical component in their identifier. If all teams are ineligible, the QM will treat the next query as if the previous query was ruled correct.
+All teams *and quizzers* are eligible to trigger on query 1A. When a QM rules a quizzer’s response to a query incorrect, that quizzer’s team is ineligible to trigger on any following query with the same numerical component in their identifier. *Upon a quizzer’s second and each subsequent incorrect response, the quizzer will be ineligible to trigger for queries with the immediate next numerical component in their identifier.* If all teams are ineligible, the QM will treat the next query as if the previous query was ruled correct.
 
 The quiz ends immediately prior to the query identifier’s number incrementing beyond _the product of 4 and the number of teams in the quiz. For example, a quiz with 3 teams ends immediately prior to query “13A”._
 
@@ -120,11 +120,11 @@ The quizzer does not necessarily need to recite the response from beginning to e
 
 ##### 2.3.2.3. Open Book (O)
 
-If the quizzer calls for an “open book” subtype, the quizzer may then open and consult any paper-based references brought with them to their chair. The QM judges responses to open book queries as if they were synonymous, without reference.
+If the quizzer calls for an “open book” subtype, the quizzer may then open and consult any paper-based references brought to the row of quizzer's chairs either by the quizzer or by other seated quizzers with the intention they be shared. The QM judges responses to open book queries as if they were synonymous, without reference.
 
 Quote base subtype queries are ineligible for the open book quizzer-selected subtype.
 
-Should the quizzer open or consult any paper-based references without first calling “open book” or when responding to a Quote base subtype query, the QM will rule the quizzer in error.
+Should the quizzer open or consult any paper-based references without first calling “open book” or when responding to a Quote base subtype query, the QM will rule the quizzer incorrect.
 
 ##### 2.3.2.4. With Reference (R)
 
@@ -160,7 +160,7 @@ Once a quizzer is correct, nothing they say can cause the QM to judge them incor
 
 Mispronounced words the QM unambiguously understands to be correct the QM will judge correct so long as the mispronunciation is not another word.
 
-The QM renders a ruling of a quizzer’s response according to the translation on the quizzer’s registration, not the source translation of the query. Should word order differ between the source translation of the query and the translation on the quizzer’s registration, the QM will determine the position in the material content of the translation on the quizzer’s registration that corresponds to the position following the last word the QM at least partially uttered in the source translation. The QM will rule on a quizzer’s response as if the QM had read from the translation on the quizzer’s registration and stopped at this position.
+The QM renders a ruling of a quizzer’s response according to the translation on the quizzer’s registration, not the source translation of the query. Should word order differ between the source translation of the query and the translation on the quizzer’s registration, the QM will determine the position in the material content of the translation on the quizzer’s registration that corresponds to the position following the last word the QM at least partially uttered in the source translation. The QM will rule on a quizzer’s response as if the QM had read from the translation on the quizzer’s registration and stopped at this position. Should there be any punctuation differences between translations, the QM will use the punctuation from the translation on the quizzer’s registration to render a ruling.
 
 #### 2.5.1. Context
 
@@ -200,7 +200,6 @@ _A team is limited to 3 correct open book queries per quiz._
 
 The QM assesses a foul on any quizzer should that quizzer:
 
-- Speak prior to the QM calling the quizzer’s name
 - Fail to close any open reference material prior to the conclusion of the announcement phase
 - Engage in any communication after the announcement phase and prior to the conclusion of the ruling other than to provide a response if the called quizzer
 
@@ -255,6 +254,10 @@ Team positions for each quiz are determined at the end of a quiz using the follo
 ### 2.11. Coach Authority
 
 A coach may call to remove from a quiz or to cause to be ineligible to trigger on the next query 1 or more quizzers from their team after the “Response and Ruling” and prior to the “Prompt Reading” of the next query. The QM will enforce such calls.
+
+#### 2.12. Magistrate Discretion
+
+QMs may exercise discretion regarding the handling of circumstances unforeseen by these rules.
 
 ## 3. Meets
 
