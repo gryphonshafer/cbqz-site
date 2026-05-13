@@ -90,6 +90,8 @@ QMs should only replace a query when there’s a breach of the rules; however, w
 
 A quizzer being “thrown off” or distracted is always irrelevant; breaching the rules is the only criteria. If a QM hiccups or varies wildly their pace during a prompt recitation, the QM shouldn’t replace the query. However, if a QM reads the prompt incorrectly (for example, says a different word than what’s written), then calls on a quizzer, then realizes the mistake as the quizzer is responding, the QM should replace the query immediately. It’s irrelevant if the quizzer would have responded correctly or not.
 
+Quizzers must be able to hear the QM. Should there be a noise distraction during the QM reciting a query prompt, the fact that the noise was a distraction is irrelevant. The only consideration for replacing the query should be whether all quizzers could hear the query. This determination is up to the discretion of the QM, but the QM will not unreasonably withhold this determination.
+
 ### Scores
 
 Magistrates, as ambassadors, should detail all scoring events where there are team points or whenever a quizzer earns more than 2 points. For example, “Synonymous 2, with reference +1, add a verse +1, third-quizzer bonus +2, follow-on bonus +1; for a total of 7.”
@@ -103,6 +105,14 @@ The purpose of appeals is not to be right nor become right but to determine what
 QMs should always assume appeals are valid and that the prior ruling was incorrect until the QM can prove otherwise by direct reference to the rule book, query data, and source material. A QM’s response to an appeal must directly reference evidence unless it’s obvious to the QM that they made a mistake; then just correct the mistake.
 
 Before the QM moves on, the QM should ensure 100% of teams, coaches, and quizzers agree with the ruling.
+
+### Magistrate Discretion
+
+There may be times when a QM must handle exceptional situations whose best solution the rules might otherwise preclude. For example, if quiz a quizzer on a team that has no timeout remaining feels suddenly ill and needs to take a break, the QM may believe the best solution would be to call a “general timeout” that’s not included explicitly in the rules.
+
+The rules provides that QMs may exercise discretion regarding the handling of circumstances unforeseen by these rules. However, QMs should take care to exercise this discretion as fairly as possible. QMs should take into account the implications to all other quizzers, including those not quizzing in the room at the time and those not quizzing even at the meet.
+
+Whenever a QM invokes this “Magistrate Discretion” clause, the QM should note the circumstances, then afterward, when convenient, communicate the circumstances to the full magisterium.
 
 ## Migration to Excellence
 
