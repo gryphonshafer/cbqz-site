@@ -110,29 +110,29 @@ sub _node_start_stop ( $node, $days = 1 ) {
 sub _process ( $self, $settings = undef ) {
     $settings //= $self->settings;
 
-    my $material = '';
     for my $season ( $settings->{seasons}->@* ) {
+        my $material = '';
         _node_start_stop( $season, 365 );
 
         $season->{name} = markdown( $season->{name} ) if ( $season->{name} );
 
         for my $meet ( $season->{meets}->@* ) {
-            my $meet_start = _node_start_stop( $meet, 1 );
+            if ( my $meet_start = _node_start_stop( $meet, 1 ) ) {
+                for my $type ( qw( deadline reminder ) ) {
+                    next if ( defined $meet->{$type} and not $meet->{$type} );
 
-            for my $type ( qw( deadline reminder ) ) {
-                next if ( defined $meet->{$type} and not $meet->{$type} );
+                    $meet->{ $type . '_days' } //=
+                        $meet->{$type} // $season->{$type} // conf->get( 'registration', $type );
 
-                $meet->{ $type . '_days' } //=
-                    $meet->{$type} // $season->{$type} // conf->get( 'registration', $type );
+                    my $type_datetime = $meet_start->subtract( days => $meet->{ $type . '_days' } )->set(
+                        hour   => 23,
+                        minute => 59,
+                        second => 59,
+                    );
 
-                my $type_datetime = $meet_start->subtract( days => $meet->{ $type . '_days' } )->set(
-                    hour   => 23,
-                    minute => 59,
-                    second => 59,
-                );
-
-                $meet->{ $type . '_time' } = $type_datetime->epoch;
-                $meet->{ $type           } = $type_datetime->rfc3339;
+                    $meet->{ $type . '_time' } = $type_datetime->epoch;
+                    $meet->{ $type           } = $type_datetime->rfc3339;
+                }
             }
 
             $meet->{name}       = markdown( $meet->{name}  ) if ( $meet->{name}  );
