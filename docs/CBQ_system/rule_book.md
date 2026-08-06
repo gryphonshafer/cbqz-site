@@ -1,7 +1,7 @@
 # Rule Book for Christian Bible Quizzing (CBQ)
 
-- Version: 1.6.0
-- Published: May 13, 2026
+- Version: 1.6.1
+- Published: August 6, 2026
 - *(Version 1.0.0 Published: December 25, 2022)*
 
 Bible Quizzing is a Christian sport in which teams of participants called quizzers compete on Scriptural recitation in matches called quizzes. Quizzing tournaments called meets consist of a set of quizzes. Quizzing seasons consist of a set of meets. Christian Bible Quizzing (CBQ) is the organization that oversees and supports Quizzing operations with the mission to encourage the most people to memorize the most verses of Scripture. This is the official rule book for CBQ competitions.
@@ -106,7 +106,12 @@ The QM judges responses to queries of the synonymous quizzer-selected subtype co
 
 - Any synonym of that word or phrase from the material’s thesaurus with a verity level _of at least 1_
 - Any associated antecedent of a pronoun, but not any other pronoun
-- Any word that is a conjugation, alternate tense, or alternate singular versus plural word of an otherwise acceptable word
+- Any word that, of an otherwise acceptable word, is a:
+    - Conjugation
+    - Alternate tense
+    - Alternate case or declension
+    - Alternate grammatical case forms of a pronoun
+    - Alternate singular versus plural word
 
 The QM ignores articles and prepositions.
 
