@@ -53,7 +53,7 @@ sub settings ($self) {
         ->each( sub {
             my $data = {};
             try {
-                my $result = $data_merge->merge( $settings, YAML::XS::Load( $_->slurp('UTF-8') ) );
+                my $result = $data_merge->merge( $settings, YAML::XS::Load( $_->slurp ) );
                 die $result->{error} if ( $result->{error} );
                 $settings = $result->{result};
             }
@@ -304,7 +304,7 @@ sub current_season ( $self, $seasons_or_region, $time = undef ) {
             ) ? 'bad' : 'good'
         ) . '.yaml'
     );
-    $path->spew( YAML::XS::Dump($seasons_or_region), 'UTF-8' ) unless ( -f $path );
+    $path->spew( YAML::XS::Dump($seasons_or_region) ) unless ( -f $path );
 
     return $current_season;
 }
