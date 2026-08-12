@@ -1,5 +1,16 @@
 'use strict';
 
+( () => {
+    function load_js_lib(lib) {
+        const script = document.createElement('script');
+        script.src = lib;
+        document.head.appendChild(script);
+    }
+
+    load_js_lib('/js/util/cookies.js');
+    load_js_lib('/js/util/memo.js');
+} )();
+
 window.cbqz_study_schedule_material_label_copy_to_clipboard = (text) => {
     if ( navigator.clipboard && window.isSecureContext ) {
         navigator.clipboard.writeText(text);
