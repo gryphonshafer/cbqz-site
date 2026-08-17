@@ -53,11 +53,12 @@ default:
         branch       : master
         init         : cbqz-site
     redirects:
-        /slack  : https://join.slack.com/t/biblequizzing/shared_invite/zt-dkkz0wlh-x3~NlagTgtdvT3m2jh~dig
-        /rules  : /CBQ_system/rule_book.md
-        /bp     : /tenants_and_essays/magistrate_best_practices.md
-        /ioc    : /_ioc_2025.md
-        /ioc2025: /_ioc_2025.md
+        /slack   : https://join.slack.com/t/biblequizzing/shared_invite/zt-dkkz0wlh-x3~NlagTgtdvT3m2jh~dig
+        /rules   : /CBQ_system/rule_book.md
+        /bp      : /tenants_and_essays/magistrate_best_practices.md
+        /coaching: /tenants_and_essays/coaching.md
+        /ioc     : /_ioc_2025.md
+        /ioc2025 : /_ioc_2025.md
     roles:
         - Quizzer
         - Coach
