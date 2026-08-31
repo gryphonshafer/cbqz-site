@@ -67,6 +67,13 @@
                 <br><textarea name="steelman">[% steelman %]</textarea>
             </label>
 
+            <label>
+                <i>Optional:</i> If you would like to be notified as to the
+                eventual disposition of your change proposal, please provide
+                your name and contact information (email preferred).
+                <br><textarea name="contact">[% contact %]</textarea>
+            </label>
+
             <button>Submit Change Proposal</button>
         </fieldset>
     </form>

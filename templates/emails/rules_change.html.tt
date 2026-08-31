@@ -27,3 +27,7 @@
 <p><i>Steelman the null case plus at least 1 alternative.</i></p>
 
 <p>[% steelman %]</p>
+
+[% IF contact %]<p><i>Optional contact information.</i></p>
+
+<p>[% contact %]</p>[% END %]
