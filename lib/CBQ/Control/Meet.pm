@@ -5,6 +5,7 @@ use CBQ::Model::Region;
 use CBQ::Model::Registration;
 use Text::CSV_XS 'csv';
 use Mojo::Util 'slugify';
+use Omniframe::Util::Data 'deepcopy';
 
 sub _current_season ( $self, $time = undef ) {
     return CBQ::Model::Region->new->current_season(
@@ -135,7 +136,7 @@ sub data ($self) {
         $self->render( json => $data );
     }
     elsif ( $self->stash('format') eq 'csv' ) {
-        csv( out => \my $csv, in => [
+        csv( encoding => 'UTF-8', out => \my $csv, in => [
             [
                 qw( Organization Acronym Team Nickname Name Bible M/F Rookie ),
                 ( $data->{meet}{host}{housing} ? 'Housing' : undef ),
@@ -227,14 +228,14 @@ sub data ($self) {
         $self->res->headers->content_type('text/csv; charset=utf-8');
         $self->res->headers->content_disposition(qq{attachment; filename="$filename"});
 
-        $self->render( data => $csv );
+        $self->render( data => "\xEF\xBB\xBF" . $csv );
     }
 }
 
 sub verses ($self) {
     my $reg            = CBQ::Model::Registration->new;
     my $time           = time;
-    my $current_season = $self->_current_season;
+    my $current_season = deepcopy $self->_current_season;
     my $regions        = [
         $self->stash('req_info')->{region}{key},
         CBQ::Model::Region->new->other_regions(
@@ -310,13 +311,13 @@ sub verses ($self) {
         @meet_names,
     ] );
 
-    csv( out => \my $csv, in => \@rows );
+    csv( encoding => 'UTF-8', out => \my $csv, in => \@rows );
     my $filename = 'ytd_verses.csv';
 
     $self->res->headers->content_type('text/csv; charset=utf-8');
     $self->res->headers->content_disposition(qq{attachment; filename="$filename"});
 
-    $self->render( data => $csv );
+    $self->render( data => "\xEF\xBB\xBF" . $csv );
 }
 
 1;

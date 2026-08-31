@@ -416,9 +416,10 @@ sub other_regions ( $self, $region, $regions, $time = undef ) {
 
     return [
         grep {
+            $next_meets and $next_meets->{$_} and $next_meets->{$_}{start} and $next_meets->{$_}{days} and
+            $my_region_next_meet and $my_region_next_meet->{start} and $my_region_next_meet->{days} and
             $next_meets->{$_}{start} eq $my_region_next_meet->{start} and
-            $next_meets->{$_}{days} eq $my_region_next_meet->{days}
-            and
+            $next_meets->{$_}{days} eq $my_region_next_meet->{days} and
             (
                 (
                     $next_meets->{$_}{host}{address} and
