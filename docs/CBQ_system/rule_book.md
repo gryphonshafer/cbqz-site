@@ -1,7 +1,7 @@
 # Rule Book for Christian Bible Quizzing (CBQ)
 
-- Version: 1.6.1
-- Published: August 6, 2026
+- Version: 1.6.2
+- Published: September 1, 2026
 - *(Version 1.0.0 Published: December 25, 2022)*
 
 Bible Quizzing is a Christian sport in which teams of participants called quizzers compete on Scriptural recitation in matches called quizzes. Quizzing tournaments called meets consist of a set of quizzes. Quizzing seasons consist of a set of meets. Christian Bible Quizzing (CBQ) is the organization that oversees and supports Quizzing operations with the mission to encourage the most people to memorize the most verses of Scripture. This is the official rule book for CBQ competitions.
@@ -115,7 +115,7 @@ The QM judges responses to queries of the synonymous quizzer-selected subtype co
 
 The QM ignores articles and prepositions.
 
-Should the text identify a person of the Trinity, the quizzer must provide a name of that same person. Should the text include a specific title of a person of the Trinity, the quizzer must provide the specific title.
+Should the text identify a person of the Trinity, the quizzer must provide any name of that same person. Should the text include a specific title of a person of the Trinity, the quizzer must provide the specific title.
 
 ##### 2.3.2.2. Verbatim (V)
 
@@ -166,6 +166,8 @@ Once a quizzer is correct, nothing they say can cause the QM to judge them incor
 Mispronounced words the QM unambiguously understands to be correct the QM will judge correct so long as the mispronunciation is not another word.
 
 The QM renders a ruling of a quizzer’s response according to the translation on the quizzer’s registration, not the source translation of the query. Should word order differ between the source translation of the query and the translation on the quizzer’s registration, the QM will determine the position in the material content of the translation on the quizzer’s registration that corresponds to the position following the last word the QM at least partially uttered in the source translation. The QM will rule on a quizzer’s response as if the QM had read from the translation on the quizzer’s registration and stopped at this position. Should there be any punctuation differences between translations, the QM will use the punctuation from the translation on the quizzer’s registration to render a ruling.
+
+Should the content’s text identify a person by name or title, the QM will rule a quizzer correct who provides a substitute name or title recognized by any Christian tradition preserved in Hebrew, Aramaic, classical Greek or Arabic, ecclesiastical Latin or Slavonic, or Ethiopic provided the quizzer or the quizzer’s coach provide the QM, directly or indirectly, with notice of any such substitutions prior to the quiz. The QM will rule a quizzer incorrect who utters the name of God expressed by the tetragrammaton, the name represented by the letters: YHWH. Any quizzer may substitute this word by saying each of the 4 letters.
 
 #### 2.5.1. Context
 
