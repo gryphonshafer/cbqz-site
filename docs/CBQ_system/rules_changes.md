@@ -23,7 +23,7 @@ The following are rule book _architecture requirements_:
 - The rule book must be as short as possible without loss of effectiveness.
 - The rule book must not require reference to any external source for comprehensive understanding of the rules system or any rules detail.
 - Terms, definitions, and concepts in the rule book must be linearly introduced, with any references to them always following their introduction.
-- The rule book must be public, version controlled, and auditable.
+- The rule book must be public, [version controlled](https://github.com/gryphonshafer/cbqz-site/commits/master/docs/CBQ_system/rule_book.md), and [auditable](https://github.com/gryphonshafer/cbqz-site/blame/master/docs/CBQ_system/rule_book.md).
 
 ## Recent CBQ Rules Changes
 
