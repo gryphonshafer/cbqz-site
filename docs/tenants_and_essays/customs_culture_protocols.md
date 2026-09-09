@@ -16,6 +16,8 @@ An integral part of our culture is our compulsion to aid rookies and others who 
 
 We also encourage our culture of respect for hosts and their facilities, both meet locations and, when in use, housing accommodations. This means learning and abiding by use requests, respecting off-limit areas, complying with host requests, and generally treating the property of others better than we would treat our own.
 
+An important part of our culture of respect includes respecting others’ devoutly-held beliefs that may differ from our own. We treat each other with Christian hospitality, as if we were guests in others’ homes and as if others’ were guests in ours. Whilst not compromising our own devoutly-held beliefs, we should strive to accommodate the differing beliefs of others to avoid causing offense.
+
 Quizzers when quizzing should sit up reasonably straight in their chairs if able. Quizzers should be respectful at all times. Quizzers should always demonstrate good behavior, good preparation, good sportsmanship.
 
 Litigious attitudes are counter-missional. If you raise an appeal that's declined, accept the outcome graciously; don't re-litigate the issue later in the quiz or meet.
