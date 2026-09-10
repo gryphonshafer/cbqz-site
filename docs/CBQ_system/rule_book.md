@@ -1,7 +1,7 @@
 # Rule Book for Christian Bible Quizzing (CBQ)
 
-- Version: 1.6.3
-- Published: September 9, 2026
+- Version: 1.6.4
+- Published: September 10, 2026
 - *(Version 1.0.0 Published: December 25, 2022)*
 
 Bible Quizzing is a Christian sport in which teams of participants called quizzers compete on Scriptural recitation in matches called quizzes. Quizzing tournaments called meets consist of a set of quizzes. Quizzing seasons consist of a set of meets. Christian Bible Quizzing (CBQ) is the organization that oversees and supports Quizzing operations with the mission to encourage the most people to memorize the most verses of Scripture. This is the official rule book for CBQ competitions.
@@ -96,7 +96,7 @@ A finish query’s prompt are the first _5 or more words_ of a verse. The prompt
 
 The following are query quizzer-selected subtypes. The responding quizzer may set _1 or more_ quizzer-selected subtypes on a per-query basis by calling their names, acronyms, or synonyms at any time prior to providing a complete response. _Unless otherwise altered by the responding quizzer, queries have the synonymous subtype._
 
-The responding quizzer may not remove or change any previously selected quizzer-selected subtypes; except, if the quizzer calls for an “open book” subtype and has not previously called for a “synonymous” or “verbatim” subtype, the QM will accept the “open book” call and unset any other previously called subtypes.
+The responding quizzer may not remove or change any previously selected quizzer-selected subtypes.
 
 Should the responding quizzer call for a valid quizzer-selected subtype, the QM ignores any response (excluding quizzer-selected subtype declarations) from the quizzer given prior to the call. The QM ignores calls for invalid quizzer-selected subtypes.
 
