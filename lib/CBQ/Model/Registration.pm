@@ -112,8 +112,37 @@ sub get_reg ( $self, $region_id, $user ) {
     return $reg;
 }
 
-sub get_data ( $self, $time = undef, @region_keys ) {
+sub get_data ( $self, $region_keys, $current_season, $time = undef ) {
+    my $native_org_ids = $self->dq->sql(q{
+        SELECT o.org_id
+        FROM org AS o
+        JOIN org_region AS og USING (org_id)
+        JOIN region AS g USING (region_id)
+        WHERE
+            o.active AND
+            g.active AND
+            g.acronym IN ( } .
+                join( ', ', map { $self->dq->quote( uc $_ ) } @$region_keys ) .
+            q{ )
+    } )->run->column;
+
+    my $previous_meet;
+    for my $meet ( $current_season->{meets}->@* ) {
+        last if $meet->{is_current_next_meet};
+        $previous_meet = $meet;
+    }
+
     my $reg_data = [
+        grep {
+            not $previous_meet or
+            (
+                grep {
+                    my $this_org_id = $_->{org_id};
+                    grep { $_ == $this_org_id } @$native_org_ids;
+                } $_->{info}{orgs}->@*
+            ) or
+            $_->{created_time} > $previous_meet->{stop_time}
+        }
         map {
             $_->{info} = $self->thaw($_)->{info};
             $_;
@@ -126,6 +155,7 @@ sub get_data ( $self, $time = undef, @region_keys ) {
                 u.phone,
                 r.info,
                 r.created,
+                STRFTIME( '%s', r.created ) AS created_time,
                 ro.org_id
             FROM registration AS r
             JOIN user AS u USING (user_id)
@@ -133,11 +163,12 @@ sub get_data ( $self, $time = undef, @region_keys ) {
             WHERE
                 r.region_id IN (
                     SELECT region_id FROM region WHERE acronym IN ( } .
-                        join( ', ', map { $self->dq->quote( uc $_ ) } @region_keys ) .
+                        join( ', ', map { $self->dq->quote( uc $_ ) } @$region_keys ) .
                     q{ )
                 )
                 AND u.active
                 } . ( ($time) ? q{ AND STRFTIME( '%s', r.created ) <= } . $self->dq->quote($time) : '' ) . q{
+                AND r.created > DATETIME( 'NOW', '-2 years' )
             ORDER BY r.created DESC
         })->run->all({})->@*
     ];

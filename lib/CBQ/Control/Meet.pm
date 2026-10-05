@@ -119,13 +119,16 @@ sub data ($self) {
     my $data = {
         meet     => $self->_current_next_meet( $self->param('time') ),
         reg_data => CBQ::Model::Registration->new->get_data(
+            [
+                $self->stash('req_info')->{region}{key},
+                CBQ::Model::Region->new->other_regions(
+                    $self->stash->{req_info}{region},
+                    $self->stash->{req_info}{regions},
+                    $self->param('time'),
+                )->@*,
+            ],
+            deepcopy( $self->_current_season( $self->param('time') ) ),
             $self->param('time'),
-            $self->stash('req_info')->{region}{key},
-            CBQ::Model::Region->new->other_regions(
-                $self->stash->{req_info}{region},
-                $self->stash->{req_info}{regions},
-                $self->param('time'),
-            )->@*,
         ),
     };
 
@@ -244,7 +247,7 @@ sub verses ($self) {
             $time,
         )->@*,
     ];
-    my $reg_data = $reg->get_data( $time, @$regions );
+    my $reg_data = $reg->get_data( $regions, $current_season, $time );
 
     my @meets;
     while ( my $meet = shift $current_season->{meets}->@* ) {
