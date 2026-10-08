@@ -93,6 +93,8 @@ The Pines is a new cabin facility at BLBC, located on the outskirts of Harmony S
 - $152 for Friday overnight + 4 meals *(but children ages 3-8 are $85)*
 - $177 for Friday and Saturday overnights + 5 meals *(but children ages 3-8 are $106)*
 
-## Full Photo Gallery
+## Notify Us of Your Interest ASAP
 
-<a data-flickr-embed="true" data-header="true" data-footer="true" href="https://www.flickr.com/photos/24117503@N05/albums/72177720336040252" title="Black Lake Bible Camp"><img src="https://live.staticflickr.com/65535/55577450596_48206aeecc.jpg" width="100%" style="border-radius: 1em" alt="Black Lake Bible Camp"/></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+**Don't miss out** on this opportunity to fellowship with Quizzing people you might otherwise never meet and to experience what we're working hard to make the most fun quiz meet in CBQ history.
+
+There’s limited space, so please email us at [ioc@cbqz.org](mailto:ioc@cbqz.org) as soon as possible to let us know of your interest in participating, either as a team or individual. This doesn’t constitute a commitment, but rather a non-binding reservation. **We need to hear from you prior to <span style="color: #c00">Monday, November 30, 2026</span>** to ensure you don’t miss out.
