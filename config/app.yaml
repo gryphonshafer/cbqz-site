@@ -57,8 +57,7 @@ default:
         /rules   : /CBQ_system/rule_book.md
         /bp      : /tenants_and_essays/magistrate_best_practices.md
         /coaching: /tenants_and_essays/coaching.md
-        /ioc     : /_ioc_2025.md
-        /ioc2025 : /_ioc_2025.md
+        /ioc     : /international_open_championships.md
     roles:
         - Quizzer
         - Coach
