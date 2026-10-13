@@ -2,7 +2,7 @@
 
 - Version: 1.6.4
 - Published: September 10, 2026
-- *(Version 1.0.0 Published: December 25, 2022)*
+- _(Version 1.0.0 Published: December 25, 2022)_
 
 Bible Quizzing is a Christian sport in which teams of participants called quizzers compete on Scriptural recitation in matches called quizzes. Quizzing tournaments called meets consist of a set of quizzes. Quizzing seasons consist of a set of meets. Christian Bible Quizzing (CBQ) is the organization that oversees and supports Quizzing operations with the mission to encourage the most people to memorize the most verses of Scripture. This is the official rule book for CBQ competitions.
 
@@ -62,7 +62,7 @@ None may communicate with any quizzers during the response period. For the purpo
 
 Each query in a quiz has a unique identifier consisting of a number and a letter, beginning with “1A”. When a QM rules a quizzer’s response to a query correct, the QM increments the numerical component of the next query’s identifier by 1 and sets its letter to “A”. When a QM rules a quizzer’s response to a query incorrect, the QM advances the letter component of the next query’s identifier to the next letter.
 
-All teams *and quizzers* are eligible to trigger on query 1A. When a QM rules a quizzer’s response to a query incorrect, that quizzer’s team is ineligible to trigger on any following query with the same numerical component in their identifier. *Upon a quizzer’s second and each subsequent incorrect response, the quizzer will be ineligible to trigger for queries with the immediate next numerical component in their identifier.* If all teams are ineligible, the QM will treat the next query as if the previous query was ruled correct.
+All teams *and quizzers* are eligible to trigger on query 1A. When a QM rules a quizzer’s response to a query incorrect, that quizzer’s team is ineligible to trigger on any following query with the same numerical component in their identifier. _Upon a quizzer’s second and each subsequent incorrect response, the quizzer will be ineligible to trigger for queries with the immediate next numerical component in their identifier._ If all teams are ineligible, the QM will treat the next query as if the previous query was ruled correct.
 
 The quiz ends immediately prior to the query identifier’s number incrementing beyond _the product of 4 and the number of teams in the quiz. For example, a quiz with 3 teams ends immediately prior to query “13A”._
 
@@ -319,7 +319,7 @@ The “finals” bracket consists of quizzes to determine the position of the to
 
 The meet director predefines weighting of quizzer and/or team scores based on bracket. For example, finals may be ignored for quizzer per quiz average score.
 
-In addition, should there be multiple primary translations at a meet where there are quizzes with only a single translation source for queries and other quizzes with multiple translation sources for queries, individual and team points scores used in meet statistics originating from quizzes with multiple translation sources for queries will be adjusted by a factor calculated as follows: For all quizzers in all quizzes at the meet who compete in both single and multiple translation sourced quizzes, the raw individual points earned by these quizzers will be averaged in groups by sourcing type (i.e. single or multiple). Then across all such quizzers, the 2 resulting type average sets will be each averaged, then the resulting 2 averages ratioed to a resultant factor.
+_In addition, should there be multiple primary translations at a meet where there are quizzes with only a single translation source for queries and other quizzes with multiple translation sources for queries, individual and team points scores used in meet statistics originating from quizzes with multiple translation sources for queries will be adjusted by a factor calculated as follows: For all quizzers in all quizzes at the meet who compete in both single and multiple translation sourced quizzes, the raw individual points earned by these quizzers will be averaged in groups by sourcing type (i.e. single or multiple). Then across all such quizzers, the 2 resulting type average sets will be each averaged, then the resulting 2 averages ratioed to a resultant factor._
 
 ### 3.5. Meet Details Publication
 
