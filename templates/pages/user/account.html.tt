@@ -19,6 +19,16 @@
     </ol>
 </p>
 
+<p><i>
+    <b>Important Note:</b>
+    iCloud and other Apple services have been known to block email from the CBQz.org web site.
+    Please use an email address other than from iCloud or other Apple services.
+    If you have any difficulties
+    [% ( usage == 'sign_up' ) ? 'creating a new' : 'editing the current' %]
+    user account, please contact:
+    <a href="mailto:q@cbqz.org">q@cbqz.org</a>
+</i></p>
+
 <form method="post">
     <fieldset>
         <legend>Account Information</legend>

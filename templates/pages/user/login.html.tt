@@ -21,3 +21,11 @@
 </form>
 
 <p><a href="[% c.url_for('/user/forgot_password') %]">Forgot Password</a></p>
+
+<p><i>
+    <b>Important Note:</b>
+    iCloud and other Apple services have been known to block email from the CBQz.org web site.
+    Please use an email address other than from iCloud or other Apple services.
+    If you have any difficulties logging in, please contact:
+    <a href="mailto:q@cbqz.org">q@cbqz.org</a>
+<i></p>
