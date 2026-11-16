@@ -24,7 +24,7 @@ Each verse contains words, which are uninterrupted sequences of alphanumeric cha
 
 Sequences of words in a verse may be separated by sentence breaks, which occur only and always upon a period, an exclamation mark, or a question mark. A phrase is a sequences of 2 or more sequential words within a sentence.
 
-A quiz’s material also contains a thesaurus with an entry for at minimums each word deduplicated across the whole of the verse content. A thesaurus may also contain entries for phrases. Most entries contain meanings, but some entries, such as most proper names, may not include any meanings. Meanings consist of a description, word type (such as verb, adjective, etc.), and list of synonyms (which can be words or phrases), with each synonym given a verity level between 1 and 3, with 3 being the highest or strongest verity. For example, the word “open” has multiple meanings, 1 of which is as a verb meaning to “begin” and another as an adjective meaning to be “honest, objective”. A synonym of the verb’s meaning with a verity of 3 is “commence”, and a synonym with of the adjective’s meaning with a verity of 1 is “unbiased”.
+A quiz’s material also contains a thesaurus with an entry for at minimum each word deduplicated across the whole of the verse content. A thesaurus may also contain entries for phrases. Most entries contain meanings, but some entries, such as most proper names, may not include any meanings. Meanings consist of a description, word type (such as verb, adjective, etc.), and list of synonyms (which can be words or phrases), with each synonym given a verity level between 1 and 3, with 3 being the highest or strongest verity. For example, the word “open” has multiple meanings, 1 of which is as a verb meaning to “begin” and another as an adjective meaning to be “honest, objective”. A synonym of the verb’s meaning with a verity of 3 is “commence”, and a synonym with of the adjective’s meaning with a verity of 1 is “unbiased”.
 
 ## 2. Quizzes
 
@@ -102,11 +102,11 @@ Should the responding quizzer call for a valid quizzer-selected subtype, the QM 
 
 ##### 2.3.2.1. Synonymous (S)
 
-The QM judges responses to queries of the synonymous quizzer-selected subtype correct should the responses contain all words of the reply and any words of the prompt the QM did not at least partially speak. The QM accepts as equivalent to the original word from the text:
+The QM judges responses to queries of the synonymous quizzer-selected subtype correct should the responses contain all words of the reply and any words of the prompt the QM did not at least partially speak. The QM accepts as equivalent to the original word or phrase from the text:
 
-- Any synonym of that word or phrase from the material’s thesaurus with a verity level _of at least 1_
+- Any synonymous word or phrase of the original word or phrase, or root stem word or phrase of either, from the material’s thesaurus with a verity level _of at least 1_
 - Any associated antecedent of a pronoun, but not any other pronoun
-- Any word that, of an otherwise acceptable word, is a:
+- Any word or phrase of an otherwise acceptable word or phase that differs due to any combination of:
     - Conjugation
     - Alternate tense
     - Alternate case or declension
@@ -284,7 +284,7 @@ The set of unique translations from all meet registrations will be the set of tr
 
 The meet director sets the reference ranges and weights either on a per meet, per bracket, or per quiz basis to optimize for missional outcomes.
 
-The meet director will ensure thesaurus generation for each material description. The meet director may allow thesauri content to be edited prior to the meet but will not allow thesauri content to be edited during a meet.
+The meet director will ensure thesaurus generation for each material description. The meet director may set, reset, append, override, or otherwise augment thesauri content prior to the meet but will not allow thesauri content to be edited during a meet.
 
 ### 3.3. Bracket Types
 
